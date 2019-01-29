@@ -45,12 +45,14 @@ Page({
     let actualReceivAmount = item.actualReceivAmount;
     let planReceivDate = item.planReceivDate;
     let theoryReceivAmount = item.theoryReceivAmount;
+    let objectId = item.objectId;
     wx.navigateTo({
       url: '/pages/receivableregistration/receivableregistration?projectID=' + projectID +
         "&formId=" + formId +
         "&actualReceivAmount=" + actualReceivAmount +
         "&theoryReceivAmount=" + theoryReceivAmount +
-        "&planReceivDate=" + planReceivDate,
+        "&planReceivDate=" + planReceivDate +
+        "&objectId=" + objectId,
     })
   },
 

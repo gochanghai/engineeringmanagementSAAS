@@ -2,6 +2,75 @@ const httpJS = require('../utils/http.js');
 const storageJS = require('../utils/storage.js');
 const dateUtil = require('../utils/date.js');
 
+//所有消息获取
+function getAllMessage(messageList, callback) {
+    let projectList = storageJS.getProjectList();
+    let ids = "";
+    for (let item of projectList) {
+        ids += item.projectID + ",";
+    }
+    //去掉最后一个逗号(如果不需要去掉，就不用写)
+    if (ids.length > 0) {
+        ids = ids.substr(0, ids.length - 1);
+    }
+    let datalist = {
+        user: storageJS.getUser().account,
+        form: "messagedrive",
+        action: "leftJoin",
+        fields: {
+            messagedrive: [
+                "formId",
+                "messageType",
+                "messageModule",
+                "projectID",
+                "pointToID",
+                "message",
+                "createAt",
+                "status"
+            ],
+            contract: ["projectAbbreviation"]
+        },
+        join: [{
+            messagedrive: "projectID",
+            contract: "projectID"
+        }],
+        page: null,
+        condition: {
+            messagedrive: [{
+                field: "projectID",
+                value: ids,
+                symbol: "="
+            },
+            {
+                field: "status",
+                value: "未处理",
+                symbol: "="
+            }
+            ]
+        }
+    };
+    httpJS.request('/mform', datalist, function (res) {
+        try {
+            let resMesData = JSON.parse(res.data).datalist.messagedrive;
+            if (null != resMesData) {
+                for (let item of messageList) {
+                    item.messageData = resMesData.filter(function (
+                        resMessDataPage,
+                        index,
+                        array
+                    ) {
+                        return resMessDataPage.projectID == this;
+                    },
+                        item.projectID);
+                    item.messageTotal = item.messageData.length;
+                }
+            }
+            return typeof callback == 'function' && callback(messageList)
+        } catch (error) { }
+    });
+};
+
+
 //风险消息获取
 function getRiskMessage(riskMessageList, callback) {
     let projectList = storageJS.getProjectList();
@@ -185,6 +254,24 @@ function mountedTaskMessage(callback) {
     });
 };
 
+//调用函数获取所有消息
+function mountedAllMessage(callback) {
+    var messageList = [];
+    let projectList = storageJS.getProjectList();
+    for (let item of projectList) {
+        let pushBaseProject = {
+            projectID: item.projectID,
+            projectAbbreviation: item.projectAbbreviation,
+            messageTotal: 0,
+            messageData: []
+        };
+        messageList.push(pushBaseProject);
+    }
+    getAllMessage(messageList, function (res) {
+        return typeof callback == 'function' && callback(res)
+    });
+};
+
 //消息忽略
 function mesIgnore(message = { projectID: null, formId: null }, callback) {
     let datalist = {
@@ -246,5 +333,6 @@ function mesIgnore(message = { projectID: null, formId: null }, callback) {
 module.exports = {
     mountedRiskMessage: mountedRiskMessage,
     mountedTaskMessage: mountedTaskMessage,
+    mountedAllMessage: mountedAllMessage,
     mesIgnore: mesIgnore,
 }

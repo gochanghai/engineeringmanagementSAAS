@@ -27,44 +27,20 @@ Page({
   // 获取消息内容
   getMessageList() {
     let _this = this;
-    // 获取风险消息
-    messageCenterJS.mountedRiskMessage(function(res) {
-      var riskmessage = res;
-      console.log("riskmessage");
-      console.log(riskmessage.length);
-      if (riskmessage.length == 0) {
-        _this.setData({
-          IsnoneMes: true
-        })
-      } else {
-        // 格式化时间
-        for (let index in riskmessage) {
-          for (let index2 in riskmessage[index].messageData) {
-            riskmessage[index].messageData[index2].createDate = _this.dateFormat2(riskmessage[index].messageData[index2].createAt);
-            riskmessage[index].messageData[index2].createAt = _this.dateFormat(riskmessage[index].messageData[index2].createAt);
-          }
-        }
-        _this.setData({
-          riskmessage: riskmessage,
-        });
-      }
-    });
-    // 获取任务消息
-    messageCenterJS.mountedTaskMessage(function(res) {
-      var taskmessage = res;
-      console.log("taskmessage");
-      console.log(taskmessage);
+    // 获取所有消息
+    messageCenterJS.mountedAllMessage(function (res) {
+      let messages = res;
       // 格式化时间
-      for (let index in taskmessage) {
-        for (let index2 in taskmessage[index].messageData) {
-          taskmessage[index].messageData[index2].createDate = _this.dateFormat2(taskmessage[index].messageData[index2].createAt);
-          taskmessage[index].messageData[index2].createAt = _this.dateFormat(taskmessage[index].messageData[index2].createAt);
+      for (let index in messages) {
+        for (let index2 in messages[index].messageData) {
+          messages[index].messageData[index2].createDate = _this.dateFormat2(messages[index].messageData[index2].createAt);
+          messages[index].messageData[index2].createAt = _this.dateFormat(messages[index].messageData[index2].createAt);
         }
       }
       _this.setData({
-        taskmessage: taskmessage,
+        messageList: messages,
       });
-    });
+    })
   },
 
   downSwitch(event) {
@@ -79,15 +55,17 @@ Page({
     })
   },
 
-  // addTask() {
-  //   console.log("新建")
-  // },
-
+  // 跳转到消息详情页
   navMesSlove(event) {
     let message = event.currentTarget.dataset.index;
-    console.log("新建" + message);
+    console.log("新建" + message);``
     wx.navigateTo({
-      url: '/pages/messagesolve/messagesolve?formId=' + message.formId + "&messageType=" + message.messageType + "&createAt=" + message.createAt + "&message=" + message.message + "&projectID=" + message.projectID,
+      url: '/pages/messagesolve/messagesolve?formId=' + message.formId + 
+        "&messageType=" + message.messageType + 
+        "&createAt=" + message.createAt + 
+        "&messageModule=" + message.messageModule + 
+        "&message=" + message.message + 
+        "&projectID=" + message.projectID,
     })
   },
 

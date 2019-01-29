@@ -11,6 +11,7 @@ function getConfirmValueList(projectID, callback) {
         action: "leftJoin",
         fields: {
             confirmvalue: [
+                "objectId",
                 "formId",
                 "projectID",
                 "valueUploadAt",
@@ -18,7 +19,7 @@ function getConfirmValueList(projectID, callback) {
                 "status",
                 "receivableAmount"
             ],
-            contract: ["projectAbbreviation"],
+            contract: ["projectAbbreviation","ownerPayTime", "ownerPayPercent"],
             default: [
                 "date_format(confirmvalue.confirmAt,'%Y-%m-%d') as confirmAt"
             ]
@@ -104,11 +105,13 @@ function getRecievedPayList(projectID, callback) {
         action: "leftJoin",
         fields: {
             recievedpay: [
+                "objectId",
                 "formId",
                 "projectID",
                 "planReceivAt",
                 "theoryReceivAmount",
-                "actualReceivAmount"
+                "actualReceivAmount",
+                "actualReceivAt"
             ],
             contract: ["projectAbbreviation"],
             default: [

@@ -95,15 +95,15 @@
             <!-- 班组列表 -->
             <view class='information' style='height:{{WinHeightCon}}'>
               <scroll-view scroll-y style='height:{{WinHeightCon}}'>
-              <view wx:for="{{groupList}}">
-                <view class='information-item'>
-                  <text>消防水：{{item.groupName}}</text>
-                  <view>施工人数：{{item.totalNumber}}</view>
-                  <view>参保人数：{{item.insuranceFileSign}}</view>
-                  <view>安全教育：{{item.educationFileSign}}</view>
-                  <view>安全交底：{{item.discloseFileSign}}</view>
-                </view>
-                <view class='item-line'></view>
+                <view wx:for="{{groupList}}">
+                  <view class='information-item'>
+                    <text>消防水：{{item.groupName}}</text>
+                    <view>施工人数：{{item.totalNumber}}</view>
+                    <view>参保人数：{{item.insuranceFileSign}}</view>
+                    <view>安全教育：{{item.educationFileSign}}</view>
+                    <view>安全交底：{{item.discloseFileSign}}</view>
+                  </view>
+                  <view class='item-line'></view>
                 </view>
               </scroll-view>
             </view>

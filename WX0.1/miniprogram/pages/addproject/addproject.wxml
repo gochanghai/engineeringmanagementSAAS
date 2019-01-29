@@ -37,7 +37,7 @@
         <swiper-item>
           <scroll-view scroll-y style='height:{{WinHeight}};'>
             <view class='swiper-items information-item'>
-              <view class='account'>商务经理</view>
+              <view class='account'>项目经理</view>
               <view class='info-input'>
                 <input placeholder='姓名' bindinput='InputManagerName' data-index="{{0}}" type='tetx' confirm-type='next'></input>
                 <input placeholder='电话' bindinput='InputTelphoneNo' data-index="{{0}}" type='number' confirm-type='done'></input>
@@ -102,6 +102,7 @@
       <view class='layer-information-item'>
         <text>项目名称</text>
         <view>{{projectName}}</view>
+        
       </view>
       <view class='layer-information-item'>
         <text>项目简称</text>
@@ -110,6 +111,7 @@
       <view class='layer-information-item' wx:for="{{managers}}">
         <text>{{item.managerType}}</text>
         <view>{{item.managerName}}</view>
+        <view>{{item.telphoneNo}}</view>
       </view>
     </view>
     <view class='layer-btom-btns'>

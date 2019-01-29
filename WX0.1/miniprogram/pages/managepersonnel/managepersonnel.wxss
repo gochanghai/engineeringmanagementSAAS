@@ -58,7 +58,7 @@
 
 .t_info view.new-per {
   margin-top: 10rpx;
-  font-size: 28rpx;
+  font-size: 27rpx;
   color: #fff;
   font-weight: Medium;
   display: flex;
@@ -103,14 +103,14 @@
   display: block;
   color: #333;
   font-weight: Medium;
-  font-size: 33rpx;
+  font-size: 30rpx;
   line-height: 60rpx;
 }
 
 .information-item view {
   color: #666;
   font-weight: Regular;
-  font-size: 31rpx;
+  font-size: 28rpx;
   line-height: 60rpx;
 }
 

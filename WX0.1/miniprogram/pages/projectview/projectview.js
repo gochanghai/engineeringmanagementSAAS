@@ -3,6 +3,7 @@ const projectlistJS = require('../../action/projectlist.js');
 const messageCenterJS = require('../../action/messageCenter.js');
 Page({
   data: {
+    scrollLeft: "0",
     scrollY: false,
     itemWidth: '10000px',
     progressRadius: '40',
@@ -26,7 +27,6 @@ Page({
     },
     banMove: 'ban-move'
   },
-
 
   //下拉刷新
   onPullDownRefresh: function() {
@@ -64,6 +64,11 @@ Page({
 
   selProject(event) {
     let index = event.currentTarget.dataset.index;
+    if (index >= 2) {
+      this.setData({
+        scrollLeft: 98 + (index - 2) * 110
+      })
+    }
     let projectInfo = this.data.projectList[index];
     this.setData({
       swiperIndex: index,
@@ -73,7 +78,8 @@ Page({
 
   currentFun(event) {
     this.setData({
-      swiperIndex: event.detail.current
+      swiperIndex: event.detail.current,
+      scrollLeft: 98 + (event.detail.current - 2) * 110
     })
   },
 
@@ -148,22 +154,30 @@ Page({
     })
   },
 
+  // 跳转到附件上传页面
   personnerFile(e) {
     console.log(e.currentTarget.dataset.type);
-    let ByTypeTitle = "";
+    let projectID = e.currentTarget.dataset.index;
+    let byTypeTitle = "";
+    let fileSign = '';
     let txt = e.currentTarget.dataset.type;
     switch (txt) {
       case "0":
-        ByTypeTitle = "上传附件-安全技术交底";
+        byTypeTitle = "上传附件-安全技术交底";
+        fileSign = 'disclose';
         break;
       case "1":
-        ByTypeTitle = "上传附件-三级安全教育";
+        byTypeTitle = "上传附件-三级安全教育";
+        fileSign = 'education';
         break;
       case "2":
-        ByTypeTitle = "上传附件-工伤意外保险";
+        byTypeTitle = "上传附件-工伤意外保险";
+        fileSign = 'insurance';
     }
     wx.navigateTo({
-      url: '/pages/uploadfile/uploadfile?ByTypeTitle=' + ByTypeTitle,
+      url: '/pages/uploadfile/uploadfile?byTypeTitle=' + byTypeTitle + 
+        '&projectID=' + projectID +
+        '&fileSign=' + fileSign,
     })
   }
 })

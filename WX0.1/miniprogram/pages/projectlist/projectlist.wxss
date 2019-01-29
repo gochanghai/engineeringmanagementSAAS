@@ -38,7 +38,7 @@
 
 .project-item-info > text {
   padding: 10rpx 30rpx;
-  font-size: 28rpx;
+  font-size: 30rpx;
   color: #fff;
   background-color: #ffa268;
   border-radius: 0 30rpx 30rpx 0;
@@ -67,16 +67,29 @@
   color: #666;
 }
 
+.top-inform {
+  display: flex;
+  align-items: center;
+}
+
+.top-inform > text {
+  padding: 10rpx 30rpx;
+  font-size: 28rpx;
+  color: #fff;
+  background-color: #ffa268;
+  border-radius: 0 30rpx 30rpx 0;
+}
+
 .status_img {
   display: block;
   margin: 22rpx;
-  float: right;
   width: 42rpx;
   height: 42rpx;
 }
 
 .mes-info {
   margin: 0rpx auto;
+  margin-top: 16rpx;
   display: flex;
   justify-content: space-around;
   align-items: center;

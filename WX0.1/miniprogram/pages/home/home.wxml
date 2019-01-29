@@ -28,13 +28,13 @@
   <view class='data-charts'>
     <view class='visua' style=' position: relative;'>
       <text class='title'><text style='color:#FF9858;font-weight:bold'>丨</text>产值</text>
-      <canvas canvas-id="Canvas1" class="canvas1" data-canvas='产值'></canvas>
-      <view class='zzc'></view>
+      <canvas canvas-id="Canvas1" class="canvas1" data-canvas='产值' bindtap='refreshChart'></canvas>
     </view>
     <view class='visua'>
       <text class='title'><text style='color:#FF9858;font-weight:bold'>丨</text>安全</text>
       <view class='con'>
-        <canvas canvas-id="Canvas2" class="canvas2" data-canvas='安全'></canvas>
+        <canvas canvas-id="Canvas2" class="canvas2" data-canvas='安全' bindtap='refreshChart' style='margin-left:-37rpx;'>
+        </canvas>
         <view class='content-info' style='margin-left: 40rpx;'>
           <view class='info-item'>
             <text style='background-color:#B122E6'></text>
@@ -59,7 +59,7 @@
     <view class='visua'>
       <text class='title'><text style='color:#FF9858;font-weight:bold'>丨</text>进度</text>
       <view class='con'>
-        <canvas canvas-id="Canvas3" class="canvas2" data-canvas='进度' style='margin-left:-37rpx;'></canvas>
+        <canvas canvas-id="Canvas3" class="canvas2" data-canvas='进度' style='margin-left:-37rpx;' bindtap='refreshChart'></canvas>
         <view class='content-info' style='margin-left: 40rpx;'>
           <view class='info-item'>
             <text style='background-color:#B122E6'></text>

@@ -44,13 +44,19 @@ Page({
     let valueUploadAt = this.dateFormat2(item.valueUploadAt);
     let confirmAt = item.confirmAt;
     let formId = item.formId;
+    let progressNodeID = item.progressNodeID;
+    let ownerPayTime = item.ownerPayTime;
+    let objectId = item.objectId;
     wx.navigateTo({
       url: '/pages/outputvalregister/outputvalregister?projectID=' + projectID +
         "&receivableAmount=" + receivableAmount +
         "&outputValue=" + outputValue +
         "&valueUploadAt=" + valueUploadAt +
         "&formId=" + formId +
-        "&confirmAt=" + confirmAt,
+        "&confirmAt=" + confirmAt +
+        "&progressNodeID=" + progressNodeID +
+        "&ownerPayTime=" + ownerPayTime +
+        "&objectId=" + objectId,
     })
   },
 

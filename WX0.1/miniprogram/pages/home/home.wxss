@@ -44,7 +44,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  box-shadow: 0px 10rpx 30rpx 10rpx #f0f0f0;
+  box-shadow: 0px 10rpx 30rpx 5rpx #f0f0f0;
   border-radius: 16rpx;
   background-color: #fff;
   color: #e5e5e5;
@@ -64,11 +64,12 @@
   line-height: 40rpx;
   color: #999;
   width: 100%;
+  font-weight: bold;
 }
 
 .nav-item text.value {
   display: block;
-  font-size: 25.4rpx;
+  font-size: 26rpx;
   line-height: 40rpx;
   color: #f0880c;
   width: 100%;
@@ -135,6 +136,6 @@
 
 .info-item view {
   margin-left: 16rpx;
-  font-size: 25rpx;
+  font-size: 24rpx;
   color: #666;
 }

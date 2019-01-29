@@ -17,7 +17,7 @@
   </view>
 
   <view class='data_content'>
-    <view class='list-data' wx:for="{{list}}" data-index='{{item}}' bindtap='receivableRegistration'>
+    <view class='list-data' wx:for="{{list}}" data-index='{{item}}' wx:key='{{index}}' bindtap='receivableRegistration'>
       <view>回款时间：{{item.actualReceivDate}}</view>
       <view>回款总额 (元)：{{item.actualReceivAmount2}}</view>
       <view>计划回款时间：{{item.planReceivDate}}</view>

@@ -47,7 +47,8 @@ Page({
 
     if (index == 4) {
       this.setData({
-        otherVis: false
+        otherVis: false,
+        groupName: '',
       })
     } else {
       this.setData({

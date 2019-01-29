@@ -1,7 +1,10 @@
 /* pages/login/login.wxss */
 
 .container {
-  position: relative;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #EFEFEF;
 }
 
 .bg-con {
@@ -11,7 +14,7 @@
 
 .bg-img {
   width: 100%;
-  height: 1070rpx;
+  height: 1020rpx;
 }
 
 .bg-txt {
@@ -25,7 +28,7 @@
 
 .content {
   position: absolute;
-  top: 320rpx;
+  top: 240rpx;
   left: 50%;
   margin-left: -325rpx;
   width: 650rpx;

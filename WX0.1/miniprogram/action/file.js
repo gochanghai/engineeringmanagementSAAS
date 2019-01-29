@@ -14,6 +14,10 @@ let fileCategoryList = {
     fileListData = [];
 
 // 上传文件
+/**
+ * formName: "worker"||"confirmvalue"||"recievedpay"  
+ * fileBelong: worker-"安全交底"|"保险"|"安全教育"|"身份证"||confirmvalue-"确认产值"||recievedpay-"回款"
+ */
 function fileUpload(fileInfo = { projectID: null, belongIdList: null, file: null, fileName: null, fileBelong: null, formName: null }, callback) {
     let formData = {
         user: storageJS.getUser().account,
@@ -38,6 +42,9 @@ function fileUpload(fileInfo = { projectID: null, belongIdList: null, file: null
 
 // 下载
 // 缓存文件
+/**
+ * formName: "worker"||"confirmvalue"||"recievedpay"  
+ */
 function fileGetPath(fileInfo = { formName: null, formobjId: null, fileId: null, fileName: null }, callback) {
     let datalist = {
         user: storageJS.getUser().account,
@@ -54,8 +61,8 @@ function fileGetPath(fileInfo = { formName: null, formobjId: null, fileId: null,
 
 // 获取附件列表
 /**
- * @param {formName = "worker"||"confirmvalue"||"recievedpay"} 
- * @param {fileBelong = worker-"安全交底"|"保险"|"安全教育"|"身份证"||confirmvalue-"确认产值"||recievedpay-"回款"}
+ * formName: "worker"||"confirmvalue"||"recievedpay"  
+ * fileBelong: worker-"安全交底"|"保险"|"安全教育"|"身份证"||confirmvalue-"确认产值"||recievedpay-"回款"
  */
 function getFileList(fileInfo = { projectID: null, formName: null, belongIdList: null, fileBelong: null }, callback) {
     let datalist = {

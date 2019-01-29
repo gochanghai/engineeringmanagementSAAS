@@ -25,12 +25,13 @@
 }
 
 .top-total text.txt {
-  font-size: 28rpx;
+  font-size: 32rpx;
   color: #fff;
+  font-weight: bold;
 }
 
 .top-total text.val {
-  font-size: 44rpx;
+  font-size: 42rpx;
   color: #fff;
 }
 
@@ -63,8 +64,9 @@
   margin-top: -50rpx;
   width: 92%;
   background-color: #fff;
-  border-radius: 18rpx;
-  box-shadow: 0px 10rpx 20rpx 10rpx #f0f0f0;
+  border-radius: 16rpx;
+  box-shadow: 0px 10rpx 10rpx 7rpx #f0f0f0;
+  /* box-shadow: 0rpx 15rpx 40rpx #f0f0f0; */
 }
 
 .list-data {
@@ -90,4 +92,8 @@
   margin: 20rpx auto;
   width: 98%;
   border-top: 1px solid #e5e5e5;
+}
+
+.list-data:last-child view.line{
+  border: none;
 }

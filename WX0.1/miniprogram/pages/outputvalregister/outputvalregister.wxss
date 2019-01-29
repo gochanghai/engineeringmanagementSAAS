@@ -76,9 +76,22 @@
   color: #999;
 }
 
-.file_item text {
-  font-size: 30rpx;
-  color: #333;
+.file_name {
+  justify-content: space-between;
+  line-height: 80rpx;
+  font-size: 28rpx;
+  color: #999;
+  width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sel_name {
+  width: 85%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .file_download text {

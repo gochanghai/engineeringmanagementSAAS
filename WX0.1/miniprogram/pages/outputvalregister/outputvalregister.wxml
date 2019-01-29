@@ -32,18 +32,18 @@
   <!-- 附件列表 -->
   <view class='file_list'>
     <text class='file_title'>附件列表</text>
-    <view class='file_item'>
+    <view class='file_item' wx:for="{{fileList}}" wx:key="{{index}}">
       <view class='file_name'>
-        难不成会计师.png
+        {{item.fileName}}
       </view>
-      <view class='file_download'>
+      <view class='file_download' data-index='{{item}}' bindtap='review'>
         <text>预览</text>
       </view>
     </view>
   </view>
 
   <view class='file_sel file_item'>
-    <view class='file_name'>
+    <view class='file_name sel_name'>
       {{fileName}}
     </view>
     <view class='file_download'>

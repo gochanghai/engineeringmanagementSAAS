@@ -179,3 +179,24 @@
   color: #fff;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
+.none_bg {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  margin-left: -180rpx;
+  width: 360rpx;
+  height: 300rpx;
+}
+
+.none_bg text {
+  display: block;
+  text-align: center;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.none_bg image {
+  width: 360rpx;
+  height: 250rpx;
+}

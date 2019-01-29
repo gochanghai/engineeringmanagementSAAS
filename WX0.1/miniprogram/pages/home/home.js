@@ -2,16 +2,15 @@ var wxCharts = require('../../utils/wxcharts.js');
 const statisticalJS = require('../../action/statistical.js');
 // pages/home/home.js
 Page({
-
   data: {
     windowWidth: null,
     outValueDates: [],
     outValueDate: [],
     sumProjectMoney: null
   },
-
+  
   //下拉刷新
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
     // 获取项目金额数据
     this.getSumProjectMoney();
     // 获取产值数据    
@@ -21,7 +20,7 @@ Page({
   },
 
   // 产值图表
-  ChartData: function (categories, datas) {
+  ChartData: function(categories, datas) {
     new wxCharts({
       canvasId: 'Canvas1',
       type: 'line',
@@ -31,7 +30,7 @@ Page({
         name: ' ',
         data: datas,
         animation: true,
-        format: function (val, name) {
+        format: function(val, name) {
           return (val / 10000).toFixed(2) + '万';
         }
       }],
@@ -40,7 +39,7 @@ Page({
         gridColor: '#7cb5ec'
       },
       yAxis: {
-        format: function (val) {
+        format: function(val) {
           return (val / 100000000).toFixed(2);
         },
         title: '确认产值(亿元)',
@@ -54,7 +53,7 @@ Page({
         },
         lineStyle: 'curve' //曲线
       },
-      legend:false,
+      legend: false,
       width: this.data.windowWidth - 30,
       height: 160,
       dataLabel: true, //是否在图表上直接显示数据
@@ -62,7 +61,7 @@ Page({
     });
   },
   // 安全图表
-  ChartData2: function (series) {
+  ChartData2: function(series) {
     new wxCharts({
       canvasId: 'Canvas2',
       type: 'ring',
@@ -79,7 +78,7 @@ Page({
     });
   },
   // 进度图表
-  ChartData3: function (series) {
+  ChartData3: function(series) {
     new wxCharts({
       canvasId: 'Canvas3',
       type: 'ring',
@@ -96,7 +95,7 @@ Page({
     });
   },
 
-  onLoad: function (options) {
+  onLoad: function(options) {
     let _this = this;
     this.setData({
       windowWidth: wx.getSystemInfoSync().windowWidth
@@ -117,7 +116,7 @@ Page({
   // 获取项目金额数据
   getSumProjectMoney() {
     let _this = this;
-    statisticalJS.sumProjectMoney(function (res) {
+    statisticalJS.sumProjectMoney(function(res) {
       var sumProjectMoney = res;
       console.log("sumProjectMoney");
       console.log(sumProjectMoney);
@@ -160,7 +159,7 @@ Page({
   // 获取产值数据
   getGraphOutputValue() {
     let _this = this;
-    statisticalJS.getGraphOutputValue(function (res) {
+    statisticalJS.getGraphOutputValue(function(res) {
       var graphOutputValue = res;
       console.log("graphOutputValue");
       console.log(graphOutputValue);
@@ -181,7 +180,7 @@ Page({
   // 获取安全数据
   getGraphSecurity() {
     let _this = this;
-    statisticalJS.getGraphSecurity(function (res) {
+    statisticalJS.getGraphSecurity(function(res) {
       var graphSecurity = res;
       console.log("graphSecurity");
       console.log(graphSecurity);
@@ -217,6 +216,18 @@ Page({
     wx.navigateTo({
       url: '/pages/projectlist/projectlist',
     })
+  },
+
+  //图表刷新
+  refreshChart(e) {
+    let sizeCanvas = e.currentTarget.dataset.canvas;
+    if (sizeCanvas === "产值") {
+      this.getGraphOutputValue();
+    } else if (sizeCanvas === "安全") {
+      this.getGraphSecurity();
+    } else {
+      this.getSumProjectMoney();
+    }
   },
 
   //财务金额格式化

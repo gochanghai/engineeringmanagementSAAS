@@ -12,7 +12,7 @@
     </view>
     <view class='information_item'>
       <text>本期可收款金额 (元)</text>
-      <input type='text' confirm-type="next" disabled='1' value='{{actualReceivAmount}}' bindinput='InputTheoryReceivAmount' placeholder-class='input_class' />
+      <input type='text' confirm-type="next" disabled='1' value='{{theoryReceivAmount}}' bindinput='InputTheoryReceivAmount' placeholder-class='input_class' />
     </view>
     <view class='information_item'>
       <text>回款金额 (元)</text>
@@ -24,34 +24,34 @@
   <!-- 附件列表 -->
   <view class='file_list'>
     <text class='file_title'>附件列表</text>
-    <view class='file_item'>
+    <view class='file_item' wx:for="{{fileList}}" wx:key="{{index}}">
+      <view class='file_name'>
+        {{item.fileName}}
+      </view>
+      <view class='file_download' data-index='{{item}}' bindtap='fileDownload'>
+        <text>下载</text>
+      </view>
+    </view>
+    <!-- <view class='file_item'>
       <view class='file_name'>
         难不成会计师.png
       </view>
       <view class='file_download'>
         <text>下载</text>
       </view>
-    </view>
-    <view class='file_item'>
+    </view> -->
+    <!-- <view class='file_item'>
       <view class='file_name'>
         难不成会计师.png
       </view>
       <view class='file_download'>
         <text>下载</text>
       </view>
-    </view>
-    <view class='file_item'>
-      <view class='file_name'>
-        难不成会计师.png
-      </view>
-      <view class='file_download'>
-        <text>下载</text>
-      </view>
-    </view>
+    </view> -->
   </view>
 
   <view class='file_sel file_item'>
-    <view class='file_name'>
+    <view class='file_name sel_name'>
       {{fileName}}
     </view>
     <view class='file_download'>
@@ -61,6 +61,6 @@
   <view class='btom-btns'>
     <view class='ignore' bindtap='cancel'>取 消</view>
     <view class='solve' bindtap="uploadFile">上传附件</view>
-    <view class='solve' bindtap='commitOutputVal'>确 定</view>
+    <view class='solve' bindtap='commitReceivable'>确 定</view>
   </view>
 </view>

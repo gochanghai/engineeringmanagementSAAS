@@ -241,13 +241,7 @@ Page({
       belongIdList: this.data.formId,
       fileBelong: '确认产值',
     }
-    // let fileInfo = {
-    //   projectID: "SHXF-201810102",
-    //   formName: 'confirmvalue',
-    //   belongIdList: "7bbff459-a030-442f-abbc-07b7a8595cd5",
-    //   fileBelong: '确认产值',
-    // }
-    fileJS.getFileList(fileInfo, function (res) {
+    fileJS.getFileList(fileInfo, function(res) {
       _this.setData({
         fileList: res,
       })

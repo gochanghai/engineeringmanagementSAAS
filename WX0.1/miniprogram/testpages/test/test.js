@@ -16,7 +16,9 @@ const declaretimeJS = require('../../action/declaretime.js');
 const confirmvalueJS = require('../../action/confirmvalue.js');
 const recievedPayJS = require('../../action/recievedpay.js');
 const userJS = require('../../action/user.js');
-const addtaskJS = require('../../action/addtask.js')
+const addtaskJS = require('../../action/addtask.js');
+const fileWorkerJS = require('../../action/file_worker.js');
+const fileProgressJS = require('../../action/file_progress.js');
 
 Page({
 
@@ -44,6 +46,10 @@ Page({
     //   console.log("taskmessage");
     //   console.log(taskmessage);
     // });
+    // 所有项目的所有消息-2019/1/29
+    // messageCenterJS.mountedAllMessage(function(res){
+    //   console.log(res);
+    // })
     // 消息忽略-2019/1/22-2019/1/25
     // let message = { };
     // messageCenterJS.mesIgnore(message,function(res){
@@ -210,7 +216,7 @@ Page({
     // =================================calendar万年历=====================================
 
     // ==================================progress进度页====================================
-    // 产值列表-2019/1/21
+    // 产值列表-2019/1/21-2019/1/29
     // progressJS.getConfirmValueList('SHXF-201810102', function (res) {
     //   console.log(res);
     // })
@@ -218,7 +224,7 @@ Page({
     // progressJS.getConfirmValuePage('1',function(res){
     //   console.log(res);
     // })
-    // 回款列表-2019/1/21
+    // 回款列表-2019/1/21-2019/1/29
     // progressJS.getRecievedPayList('SHXF-201810102', function (res) {
     //   console.log(res);
     // })
@@ -334,6 +340,11 @@ Page({
     // confirmvalueJS.updateConfirmvalue(confirmvalue,function(res){
     //   console.log(res)
     // });
+    // 打包提交附件与产值信息-2019/1/29
+    // let confirmvalueInfo = {}, fileInfo = {};
+    // fileProgressJS.comitFileANDConfirmValue(confirmvalueInfo, fileInfo, function (res) {
+    //   console.log(res);
+    // })
     // ===============================confirmvalue产值登记页===============================
 
     // ================================recievedpay回款登记页===============================
@@ -344,6 +355,11 @@ Page({
     // 更新回款登记-2019/1/24
     // let recievedpay = {};
     // recievedPayJS.updateRecievedpay(recievedpay,function(res){
+    //   console.log(res);
+    // })
+    // 打包提交附件与回款信息-2019/1/29
+    // let recievedpayInfo = {}, fileInfo = {};
+    // fileProgressJS.comitFileANDRecievedpay(recievedpayInfo, fileInfo, function (res) {
     //   console.log(res);
     // })
     // ================================recievedpay回款登记页===============================
@@ -375,12 +391,28 @@ Page({
     // })
     // ===================================addtask新建任务页================================
 
+    // ================================教育、交底、保险上传附件=============================
+    // 获取未上传附件劳务人员列表-2019/1/28
+    // let fileSign = "insurance";// "disclose"||"education"||"insurance"
+    // fileWorkerJS.getUnSignWorkerList('SHXF-201810102',fileSign,function(res){
+    //   console.log(res);
+    // });
+    // 提交附件并更新劳务人员文件标志-2019/1/28
+    // let packageData = [];
+    // fileWorkerJS.packageComitFileANDWorkerSignList(packageData, function (res) {
+    //   console.log(res);
+    // })
+    // ================================教育、交底、保险上传附件=============================
+
+
     // 接口产生时间列表
     // 2019/1/21
     // 2019/1/22
     // 2019/1/23
     // 2019/1/24
     // 2019/1/25
+    // 2019/1/28
+    // 2019/1/29
   },
 
 })

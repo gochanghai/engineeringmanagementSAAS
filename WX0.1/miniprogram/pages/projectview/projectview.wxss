@@ -25,10 +25,10 @@
 
 .item1 image.status_img {
   position: absolute;
-  left: 46rpx;
+  left: 184rpx;
   top: 30rpx;
-  width: 24rpx;
-  height: 26rpx;
+  width: 28rpx;
+  height: 32rpx;
 }
 
 .item1 text {
@@ -182,5 +182,5 @@
 }
 
 .con-project {
-  height: 2105rpx;
+  height: 2080rpx;
 }

@@ -1,5 +1,4 @@
 // pages/login/login.js
-const storage = require('../../utils/storage.js');
 const userJS = require('../../action/user.js');
 Page({
   data: {
@@ -28,7 +27,6 @@ Page({
       // 用户登录
       userJS.signIn(this.data.userName, this.data.password, function(res) {
         if (res.code === 1) {
-          storage.setUser(_this.data.userName, _this.data.userName);
           wx.showToast({
             title: '登录成功',
             success: function() {

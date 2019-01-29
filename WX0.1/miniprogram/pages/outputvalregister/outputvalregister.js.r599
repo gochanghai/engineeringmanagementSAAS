@@ -2,7 +2,7 @@
 const fileJS = require('../../action/file.js');
 const fileUtil = require('../../utils/fileUtil.js');
 const fileProgressJS = require('../../action/file_progress.js')
-const confirmvalueJS = require('../../action/confirmvalue.js');
+
 Page({
   data: {
     valueUploadAt: '请选择日期',
@@ -14,7 +14,7 @@ Page({
     fileList: [],
   },
 
-  onLoad: function(options) {
+  onLoad: function (options) {
     // 获取数据
     // 判断金额是否为空
     let outputValue = 0.00;
@@ -41,8 +41,8 @@ Page({
       progressNodeID: options.progressNodeID,
       ownerPayTime: options.ownerPayTime,
     });
-    this.getconfirmvalue();
-    this.getFileList();    
+    this.getFileList();
+    // this.reviewFile();
   },
 
   // 产值表上传时间输入
@@ -72,36 +72,6 @@ Page({
     this.setData({
       confirmAt: e.detail.value
     })
-  },
-
-  // 获取产值信息
-  getconfirmvalue(){
-    let _this = this;
-    confirmvalueJS.getConfirmvalue(this.data.formId, function (res) {
-      console.log(res);
-      let outputValue = 0.00;
-      if (res.outputValue != null) {
-        receivableAmount = res.outputValue
-      }
-      let receivableAmount = 0.00;
-      if (res.receivableAmount != null) {
-        receivableAmount = res.receivableAmount
-      }
-      let confirmAt = 0.00;
-      if (res.confirmAt != null) {
-        confirmAt = res.confirmAt
-      }
-      _this.setData({
-        objectId: res.objectId,
-        formId: res.formId,
-        receivableAmount: receivableAmount,
-        outputValue: outputValue,
-        valueUploadAt: _this.dateFormat2(res.valueUploadAt),
-        confirmAt: _this.dateFormat2(res.confirmAt),
-        progressNodeID: res.progressNodeID,
-        ownerPayTime: res.ownerPayTime,
-      });
-    });
   },
 
   // 预览
@@ -178,7 +148,7 @@ Page({
             file: _this.data.uploadFilePath,
             fileName: _this.data.uploadFilePath.replace("http://tmp/", ""),
           };
-          fileProgressJS.comitFileANDConfirmValue(confirmvalueInfo, fileInfo, function(res) {
+          fileProgressJS.comitFileANDConfirmValue(confirmvalueInfo, fileInfo, function (res) {
             console.log(res)
             if (res.code == 1) {
               wx.showToast({
@@ -222,7 +192,7 @@ Page({
     wx.chooseImage({
       count: 1, //张数， 默认9
       sourceType: ['album', 'camera'], // 来源是相册、相机
-      success: function(res) {
+      success: function (res) {
         const tempFilePaths = res.tempFilePaths
         _this.setData({
           uploadFilePath: tempFilePaths[0],
@@ -259,11 +229,11 @@ Page({
   reviewFile(formobjId, fileId, fileName) {
     let fileInfo = {
       formName: "confirmvalue",
-      formobjId: formobjId, // 产值表objectId
-      fileId: fileId, // 文件的fileId
+      formobjId: formobjId,// 产值表objectId
+      fileId: fileId,// 文件的fileId
       fileName: fileName, // 文件全名
     }
-    fileJS.fileGetPath(fileInfo, function(res) {
+    fileJS.fileGetPath(fileInfo, function (res) {
       const downloadTask = wx.downloadFile({
         url: res.fileURL,
         success(res) {
@@ -281,7 +251,7 @@ Page({
             // .....................................preview文件预览.................................     
           }
         },
-        fail(res) {}
+        fail(res) { }
       })
       downloadTask.onProgressUpdate((res) => {
         console.log('下载进度', res.progress)
@@ -289,15 +259,6 @@ Page({
         console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
       })
     })
-  },
-
-  // 时间格式化
-  dateFormat2(val) {
-    if (val === null) {
-      return "未知";
-    }
-    let date = val.substring(0, 10);
-    return date;
   },
 
 })

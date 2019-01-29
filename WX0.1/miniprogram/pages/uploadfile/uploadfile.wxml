@@ -1,118 +1,26 @@
 <!--上传附件-->
 <view class='container'>
-  <view class='information'>
+  <view class='none_bg' wx:if="{{IsnoneMes}}">
+    <image src='/images/none_img.png'></image>
+    <text>暂无数据</text>
+  </view>
+  <view class='information' wx:if="{{list}}">
     <scroll-view scroll-y style='height:{{WinHeight}}'>
-      <view class='information-item'>
+      <view class='information-item' wx:for='{{list}}'>
         <view class='informatiob_flex'>
           <view class="file_check">
-            <checkbox style="transform:scale(.7);margin-top:0rpx;" />
+            <checkbox style="transform:scale(.7);margin-top:0rpx;" checked="{{item.checked}}" data-type="{{item.checked}}" data-index="{{index}}" bindtap="changeChecked" />
           </view>
           <view class='file_info'>
-            <view>班组：消防水</view>
-            <view>人员：张三</view>
-          </view>
-        </view>
-      </view>
-
-      <view class='information-item'>
-        <view class='informatiob_flex'>
-          <view class="file_check">
-            <checkbox style="transform:scale(.7);margin-top:0rpx;" />
-          </view>
-          <view class='file_info'>
-            <view>班组：消防水</view>
-            <view>人员：张三</view>
-          </view>
-        </view>
-      </view>
-
-      <view class='information-item'>
-        <view class='informatiob_flex'>
-          <view class="file_check">
-            <checkbox style="transform:scale(.7);margin-top:0rpx;" />
-          </view>
-          <view class='file_info'>
-            <view>班组：消防水</view>
-            <view>人员：张三</view>
-          </view>
-        </view>
-      </view>
-
-      <view class='information-item'>
-        <view class='informatiob_flex'>
-          <view class="file_check">
-            <checkbox style="transform:scale(.7);margin-top:0rpx;" />
-          </view>
-          <view class='file_info'>
-            <view>班组：消防水</view>
-            <view>人员：张三</view>
-          </view>
-        </view>
-      </view>
-
-      <view class='information-item'>
-        <view class='informatiob_flex'>
-          <view class="file_check">
-            <checkbox style="transform:scale(.7);margin-top:0rpx;" />
-          </view>
-          <view class='file_info'>
-            <view>班组：消防水</view>
-            <view>人员：张三</view>
-          </view>
-        </view>
-      </view>
-
-      <view class='information-item'>
-        <view class='informatiob_flex'>
-          <view class="file_check">
-            <checkbox style="transform:scale(.7);margin-top:0rpx;" />
-          </view>
-          <view class='file_info'>
-            <view>班组：消防水</view>
-            <view>人员：张三</view>
-          </view>
-        </view>
-      </view>
-
-      <view class='information-item'>
-        <view class='informatiob_flex'>
-          <view class="file_check">
-            <checkbox style="transform:scale(.7);margin-top:0rpx;" />
-          </view>
-          <view class='file_info'>
-            <view>班组：消防水</view>
-            <view>人员：张三</view>
-          </view>
-        </view>
-      </view>
-
-      <view class='information-item'>
-        <view class='informatiob_flex'>
-          <view class="file_check">
-            <checkbox style="transform:scale(.7);margin-top:0rpx;" />
-          </view>
-          <view class='file_info'>
-            <view>班组：消防水</view>
-            <view>人员：张三</view>
-          </view>
-        </view>
-      </view>
-
-      <view class='information-item'>
-        <view class='informatiob_flex'>
-          <view class="file_check">
-            <checkbox style="transform:scale(.7);margin-top:0rpx;" />
-          </view>
-          <view class='file_info'>
-            <view>班组：消防水</view>
-            <view>人员：张三</view>
+            <view>班组：{{item.groupName}}</view>
+            <view>人员：{{item.name}}</view>
           </view>
         </view>
       </view>
     </scroll-view>
   </view>
 
-  <view class='btn_upload'>
+  <view class='btn_upload' wx:if="{{list}}">
     <button class='btn' bindtap='uploadFile'>
       上 传
     </button>
@@ -126,7 +34,7 @@
       <view class='close' bindtap='hideModal'>关闭</view>
     </view>
     <view class="bottom_btn">
-      <button class='btn btn_file'>
+      <button class='btn btn_file' bindtap='commitFileANDWorkerUnSignList'>
         提 交
       </button>
     </view>
