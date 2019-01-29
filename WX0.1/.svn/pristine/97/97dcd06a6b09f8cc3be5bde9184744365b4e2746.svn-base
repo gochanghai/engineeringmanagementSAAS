@@ -1,0 +1,76 @@
+const httpJS = require('../utils/http.js');
+const storageJS = require('../utils/storage.js');
+
+let contractInfo = {};
+
+function getContractInfo(projectID, callback) {
+    let datalist = {
+        user: storageJS.getUser().account,
+        form: "contract",
+        action: "get",
+        distinct: false,
+        fields: [
+            "projectName",
+            "projectAbbreviation",
+            "contractNo",
+            "contractAmount",
+            "ownerApprovalTime",
+            "startFrom",
+            "endAt",
+            "ownerPayPercent",
+            "ownerPayTime",
+            "status",
+        ],
+        page: {
+            pageSize: 1,
+            pageIndex: 0
+        },
+        condition: [{
+            field: "projectID",
+            value: projectID,
+            symbol: "="
+        }],
+        group: "projectID"
+    };
+    httpJS.request('/form', datalist, function (res) {
+        if (JSON.parse(res.data).code > 0) {
+            contractInfo = JSON.parse(res.data).datalist.contract[0];
+        }
+        return typeof callback == 'function' && callback(contractInfo);
+    });
+};
+
+function updateContract(contractInfo = { projectName: null, projectAbbreviation: null, contractNo: null, contractAmount: null, ownerApprovalTime: null, startFrom: null, endAt: null, status: null, ownerPayPercent: null, ownerPayTime: null }, callback) {
+    let datalist = {
+        user: storageJS.getUser().account,
+        form: "contract",
+        action: "updateList",
+        fields: {
+            projectName: contractInfo.projectName,
+            projectAbbreviation: contractInfo.projectAbbreviation,
+            contractNo: contractInfo.contractNo,
+            contractAmount: contractInfo.contractAmount,
+            ownerApprovalTime: contractInfo.ownerApprovalTime,
+            startFrom: contractInfo.startFrom,
+            endAt: contractInfo.endAt,
+            ownerPayPercent: contractInfo.ownerPayPercent,
+            ownerPayTime: contractInfo.ownerPayTime,
+            status: contractInfo.status,
+        },
+        page: null,
+        condition: [{
+            field: "objectId",
+            value: contractInfo.objectId,
+            symbol: "="
+        }]
+    };
+    httpJS.request('/form', datalist, function (res) {
+        return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code });
+    });
+}
+
+module.exports = {
+    getContractInfo: getContractInfo,
+    updateContract: updateContract,
+
+}

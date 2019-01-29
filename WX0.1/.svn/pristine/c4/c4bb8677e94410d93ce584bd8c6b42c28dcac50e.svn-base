@@ -1,0 +1,43 @@
+// pages/projectview/projectview.js
+Page({
+  data: {
+    progressRadius: '40',
+    swiperIndex: "0",
+    projectList: [{
+      id: 0,
+      projectName: '腾讯大厦',
+    }, {
+      id: 1,
+      projectName: '汉京大厦',
+    }, {
+      id: 2,
+      projectName: '达实二扩',
+    }],
+
+    activeList: {
+      imagesel: '/images/building_sel.png',
+      image: '/images/building_nor.png',
+      color: '#fff'
+    }
+  },
+
+  selProject(event) {
+    let index = event.currentTarget.dataset.index;
+    this.setData({
+      swiperIndex: index
+    })
+  },
+
+  currentFun(event) {
+    this.setData({
+      swiperIndex: event.detail.current
+    })
+  },
+
+  navPersonnel(event) {
+    let mtype = event.currentTarget.dataset.type;
+    wx.navigateTo({
+      url: '/pages/managepersonnel/managepersonnel?typeID=' + mtype
+    })
+  }
+})

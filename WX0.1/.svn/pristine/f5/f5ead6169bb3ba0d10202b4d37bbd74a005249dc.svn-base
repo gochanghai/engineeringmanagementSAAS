@@ -1,0 +1,52 @@
+const httpJS = require('../utils/http.js');
+const storageJS = require('../utils/storage.js');
+
+let groupList = [];
+
+function getGroupList(projectID, callback) {
+    let datalist = {
+        user: storageJS.getUser().account,
+        form: "project_group",
+        action: "get",
+        fields: [
+            "formId",
+            "groupName"
+        ],
+        condition: [{
+            field: "projectID",
+            value: projectID,
+            symbol: "="
+        }],
+        page: null
+    }
+    httpJS.request('/form', datalist, function (res) {
+        if (JSON.parse(res.data).code > 0) {
+            groupList = JSON.parse(res.data).datalist.project_group;
+        }
+        return typeof callback == 'function' && callback(groupList);
+    })
+};
+
+//提交
+function addFireGroup(fireGroup = { projectID: null, groupName: null, groupId: null, type: null }, callback) {
+    let datalist = {
+        user: storageJS.getUser().account,
+        action: "add",
+        form: "project_group",
+        fields: [{
+            projectID: fireGroup.projectID,
+            groupName: fireGroup.groupName,
+            groupId: fireGroup.groupId,
+            type: fireGroup.type
+        }],
+        condition: null
+    };
+    httpJS.request('/form', datalist, function (res) {
+        return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code });
+    });
+}
+
+module.exports = {
+    getGroupList: getGroupList,
+    addFireGroup: addFireGroup
+}

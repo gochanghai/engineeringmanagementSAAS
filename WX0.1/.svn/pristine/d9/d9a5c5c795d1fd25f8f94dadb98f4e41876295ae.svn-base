@@ -1,0 +1,30 @@
+<!--回款登记-->
+<view class='container'>
+  <view class='information'>
+    <view class='information_item'>
+      <text>计划回款时间</text>
+      <picker mode="date" start="2010-01-01" end="2029-01-01" bindchange="InputPlanReceivAt">
+        <view class="picker" style='font-size:32rpx; color:#999;'>
+          {{planReceivAt}}
+        </view>
+      </picker>
+      <image src='/images/xia.png' class='down_img'></image>
+    </view>
+    <view class='information_item'>
+      <text>本期可收款金额 (元)</text>
+      <input type='text' confirm-type="next" bindinput='InputTheoryReceivAmount' placeholder-class='input_class' />
+    </view>
+    <view class='information_item'>
+      <text>回款金额 (天)</text>
+      <input type='text' confirm-type="next" bindinput='InputActualReceivAmount' placeholder-class='input_class' />
+    </view>
+  </view>
+  <view class='upload_file'>
+    <image src='/images/sc.png'></image>
+    <text>上传附件</text>
+  </view>
+  <view class='btom-btns'>
+    <view class='ignore' bindtap='cancel'>取消</view>
+    <view class='solve' bindtap='commitReceivable'>确定</view>
+  </view>
+</view>

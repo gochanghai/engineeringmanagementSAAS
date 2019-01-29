@@ -1,0 +1,68 @@
+<!--上传附件-->
+<view class='container'>
+  <view class='information'>
+    <view class='information-item'>
+      <view class='informatiob_flex'>
+        <view class='file_info'>
+          <view>附件名称：大V是否.png</view>
+          <view>人员：张三</view>
+        </view>
+        <view class="file_download">
+          下载
+        </view>
+      </view>
+      <view class='item-line'></view>
+    </view>
+    <view class='information-item'>
+      <view class='informatiob_flex'>
+        <view class='file_info'>
+          <view>附件名称：大V是否.png</view>
+          <view>人员：张三</view>
+        </view>
+        <view class="file_download">
+          下载
+        </view>
+      </view>
+      <view class='item-line'></view>
+    </view>
+    <view class='information-item'>
+      <view class='informatiob_flex'>
+        <view class='file_info'>
+          <view>附件名称：大V是否.png</view>
+          <view>人员：张三</view>
+        </view>
+        <view class="file_download">
+          下载
+        </view>
+      </view>
+      <view class='item-line'></view>
+    </view>
+  </view>
+
+  <view class='btn_upload'>
+    <button class='btn' bindtap='uploadFile'>
+      上传附件
+    </button>
+  </view>
+  <!-- <view class='file_list' bindtap='uploadFile'>
+    <image src='/images/jiaodi.png' class='img-type'></image>
+    <view>
+      <image src='/images/sc.png'></image>
+      <text>上传安全技术交底</text>
+    </view>
+  </view>
+  <view class='file_list' bindtap='uploadFile'>
+    <image src='/images/jiaoyu.png' class='img-type'></image>
+    <view>
+      <image src='/images/sc.png'></image>
+      <text>上传三级安全教育</text>
+    </view>
+  </view>
+  <view class='file_list' bindtap='uploadFile'>
+    <image src='/images/baoxian.png' class='img-type'></image>
+    <view>
+      <image src='/images/sc.png'></image>
+      <text>上传工伤意外保险</text>
+    </view>
+  </view> -->
+</view>

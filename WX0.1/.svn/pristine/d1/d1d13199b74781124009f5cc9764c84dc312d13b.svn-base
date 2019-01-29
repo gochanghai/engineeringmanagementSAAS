@@ -1,0 +1,42 @@
+<!--消息Pages-->
+<view class="container">
+  <view class='mes-list'wx:for="{{riskmessage}}">
+    <view class='mes-list-item' style='height:{{ toggleId == index ? toggleStyle.heightSel: toggleStyle.height}}'>
+      <view class="mes-title" bindtap='downSwitch' id="{{index}}">
+        <view class="name">{{item.projectAbbreviation}} （{{item.messageTotal}}条）
+          <image src="{{toggleId == index ? toggleStyle.imgSel: toggleStyle.img}}"></image>
+        </view>
+        <text catchtap='addTask'>+新建</text>
+      </view>
+      <view class='mes-container' wx:for="{{riskmessage.messageData}}">
+        <view class='progress'>
+          <image src='/images/progress.png' class='status'></image>
+          <view class='line'></view>
+          <view class='mes-con'>
+            <view class='mes-item' bindtap='navMesSlove'>
+              <text class='content'>{{item.message}}</text>
+              <text class='date'>{{item.createAt}}</text>
+              <image src='/images/details.png' class='details'></image>
+            </view>
+          </view>
+        </view>
+        <view class='security'>
+          <image src='/images/security.png' class='status'></image>
+          <view class='line'></view>
+          <view class='mes-con'>
+            <view class='mes-item'>
+              <text class='content'>李四-未进行安全交底</text>
+              <text class='date'>2019-01-09</text>
+              <image src='/images/details.png' class='details'></image>
+            </view>
+            <view class='mes-item'>
+              <text class='content'>李四-未进行安全交底</text>
+              <text class='date'>2019-01-09</text>
+              <image src='/images/details.png' class='details'></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

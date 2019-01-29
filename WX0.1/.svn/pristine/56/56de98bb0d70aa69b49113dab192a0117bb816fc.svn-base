@@ -1,0 +1,86 @@
+/* 日历 */
+
+.calendar {
+  background-color: white;
+  padding-top: 10px;
+}
+
+.calendar-header {
+  font-size: large;
+  color: #59518d;
+}
+
+.calendar-board {
+  color: #c7cbe2;
+  font-weight: bold;
+}
+
+.calendar-days {
+  display: flex;
+  flex-direction: row;
+}
+
+.calendar-cell {
+  float: left;
+}
+
+.line {
+  margin: 30rpx auto;
+  width: 92%;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.information {
+  padding-bottom: 40rpx;
+  margin: 0 auto;
+  width: 92%;
+}
+
+.chooseDay text {
+  padding-right: 12rpx;
+  font-size: 34rpx;
+}
+
+.chooseDay {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: Medium;
+}
+
+.information_cons {
+  margin-top: 10rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.type-information {
+  margin-top: 28rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.type-information text.title {
+  display: inline-block;
+  width: 250rpx;
+  font-size: 32rpx;
+  color: #333;
+  font-weight: Medium;
+}
+
+.type-information view.content {
+  flex: 1;
+  padding: 20rpx;
+  background-color: rgba(255, 162, 104, 0.3);
+  color: #666;
+  border-radius: 11rpx;
+  font-size: 31rpx;
+  font-weight: Regular;
+}
+
+.type-information view.content view {
+  width: 98%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 60rpx;
+}

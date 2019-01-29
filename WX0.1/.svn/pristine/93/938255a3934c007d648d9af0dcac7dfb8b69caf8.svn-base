@@ -1,0 +1,30 @@
+<view class="container">
+  <view class='top-info'>
+    <image src='/images/mycenter.png'></image>
+    <view class='account' wx:if="{{!IsInitial}}">
+      <image src='/images/user-unlogin.png'></image>
+      <view class='account-info'>
+        <button class='sign' open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">点击登录</button>
+      </view>
+    </view>
+    <view class='account'>
+      <image src='{{userInfo.avatarUrl}}'></image>
+      <view class='account-info'>
+        <view>{{userInfo.nickName}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class='operation'>
+    <view class='deal' hover-class='hover-row' bindtap='modifyPwd'>
+      <image class="icon iconpwd" src='/images/pwd.png'></image>
+      修改密码
+      <image class='details' src='/images/details.png'></image>
+    </view>
+    <view class='deal' hover-class='hover-row' bindtap='UpavatarUrl'>
+      <image class="icon iconcamera" src='/images/camera.png'></image>
+      修改头像
+      <image class='details' src='/images/details.png'></image>
+    </view>
+  </view>
+</view>

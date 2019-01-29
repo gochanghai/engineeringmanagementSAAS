@@ -1,0 +1,116 @@
+/* pages/outputvalregister/outputvalregister.wxss */
+
+.information_item {
+  padding-top: 30rpx;
+  margin: 0 auto;
+  width: 92%;
+  line-height: 80rpx;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.information_item text {
+  display: inline-block;
+  font-size: 32rpx;
+  color: #333;
+}
+
+.information_item input {
+  flex: 1;
+  padding-left: 20rpx;
+  height: 78rpx;
+  font-size: 32rpx;
+  color: #999;
+  text-align: right;
+}
+
+.information_item > view {
+  width: 265rpx;
+  border: 1px solid;
+  font-size: 30rpx;
+  color: #999;
+}
+
+.down_img {
+  margin-top: 32rpx;
+  margin-left: 10rpx;
+  float: right;
+  width: 20rpx;
+  height: 14rpx;
+}
+
+.input_class {
+  text-align: right;
+  font-size: 32rpx;
+  color: #999;
+}
+
+.picker {
+  text-align: right;
+  width: 400rpx;
+}
+
+.file_list {
+  margin: 50rpx auto;
+  width: 100%;
+}
+
+.file_list text.file_title {
+  display: block;
+  line-height: 30rpx;
+  padding-left: 15rpx;
+  border-left: 4rpx solid #e95207;
+  font-size: 28rpx;
+}
+
+.file_item {
+  width: 92%;
+  margin: 0 auto;
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  line-height: 80rpx;
+  border-bottom: 1px solid #e5e5e5;
+  font-size: 28rpx;
+  color: #999;
+}
+
+.file_item text {
+  font-size: 30rpx;
+  color: #333;
+}
+
+.file_download text {
+  font-size: 25rpx;
+  color: #e95207;
+}
+
+.btom-btns {
+  margin: 0 auto;
+  margin-top: 70rpx;
+  width: 84%;
+  padding-bottom: 50rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btom-btns view {
+  width: 170rpx;
+  height: 70rpx;
+  text-align: center;
+  line-height: 70rpx;
+  border-radius: 60rpx;
+  font-size: 28rpx;
+}
+
+.btom-btns view.ignore {
+  border: 1px solid #b5b5b5;
+  color: #666;
+}
+
+.btom-btns view.solve {
+  background-color: #e95207;
+  border: 1px solid #e95207;
+  color: #fff;
+}

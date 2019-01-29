@@ -1,0 +1,31 @@
+// pages/managepersonnel/managepersonnel.js
+Page({
+  data: {
+    swiperIndex: '0',
+    WinHeight: '',
+    WinHeightCon: '',
+    activeTabs: 'line'
+  },
+
+  onLoad: function(options) {
+    console.log(options.typeID);
+    this.setData({
+      WinHeight: wx.getSystemInfoSync().windowHeight - 150 + 'px',
+      WinHeightCon: wx.getSystemInfoSync().windowHeight - 217 + 'px',
+      swiperIndex: options.typeID
+    })
+  },
+
+  currentFun(event) {
+    this.setData({
+      swiperIndex: event.detail.current
+    })
+  },
+
+  changTabs(event) {
+    let index = event.currentTarget.dataset.index;
+    this.setData({
+      swiperIndex: index
+    })
+  }
+})

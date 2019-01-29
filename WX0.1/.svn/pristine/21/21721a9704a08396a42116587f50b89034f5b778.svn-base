@@ -1,0 +1,100 @@
+/* pages/outputvalregister/outputvalregister.wxss */
+
+.information_item {
+  padding-top: 30rpx;
+  margin: 0 auto;
+  width: 92%;
+  line-height: 80rpx;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.information_item text {
+  display: inline-block;
+  font-size: 32rpx;
+  color: #333;
+}
+
+.information_item input {
+  flex: 1;
+  padding-left: 20rpx;
+  height: 78rpx;
+  font-size: 32rpx;
+  color: #999;
+  text-align: right;
+}
+
+.information_item > view {
+  width: 265rpx;
+  border: 1px solid;
+  font-size: 30rpx;
+  color: #999;
+}
+
+.down_img {
+  margin-top: 34rpx;
+  margin-left: 10rpx;
+  float: right;
+  width: 20rpx;
+  height: 14rpx;
+}
+
+.input_class {
+  text-align: right;
+  font-size: 31rpx;
+  color: #999;
+}
+
+.picker {
+  display: block;
+  width: 463rpx;
+  text-align: right;
+}
+
+.btom-btns {
+  margin: 0 auto;
+  width: 80%;
+  padding-bottom: 50rpx;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 170rpx;
+}
+
+.btom-btns view {
+  width: 190rpx;
+  height: 70rpx;
+  text-align: center;
+  line-height: 70rpx;
+  border-radius: 60rpx;
+  font-size: 31rpx;
+}
+
+.btom-btns view.ignore {
+  border: 1px solid #b5b5b5;
+  color: #666;
+}
+
+.btom-btns view.solve {
+  background-color: #e95207;
+  border: 1px solid #e95207;
+  color: #fff;
+}
+
+.upload_file {
+  margin: 100rpx auto;
+  width: 70%;
+  display: flex;
+  align-items: center;
+}
+
+.upload_file image {
+  width: 38rpx;
+  height: 30rpx;
+}
+
+.upload_file text {
+  margin-left: 14rpx;
+  font-size: 30rpx;
+  color: #75baff;
+}

@@ -1,0 +1,88 @@
+const httpJS = require('../utils/http.js');
+const storageJS = require('../utils/storage.js');
+const dateUtil = require('../utils/date.js');
+
+function getRecievedpay(formId = null, callback) {
+    let receivableRow = {};
+    let datalist = {
+        user: storageJS.getUser().account,
+        action: "get",
+        form: "recievedpay",
+        fields: [
+            "formId",
+            "projectID",
+            "planReceivAt",
+            "theoryReceivAmount",
+            "actualReceivAmount",
+            "actualReceivAt"
+        ],
+        page: null,
+        condition: [
+            {
+                field: "formId",
+                symbol: "=",
+                value: formId
+            }
+        ]
+    };
+    httpJS.request('/form', datalist, function (res) {
+        try {
+            receivableRow = JSON.parse(res.data).datalist.recievedpay[0] || null;
+        } catch (error) { }
+        return typeof callback == 'function' && callback(receivableRow)
+    });
+};
+
+function updateRecievedpay(recievedpay = { formId: null, projectID: null, actualReceivAmount: null, actualReceivAt: null, }, callback) {
+    let postList = [
+        {
+            name: "recievedpay",
+            form: "recievedpay",
+            action: "update",
+            fields: {
+                actualReceivAmount: recievedpay.actualReceivAmount,
+                actualReceivAt: recievedpay.actualReceivAt
+            },
+            condition: [
+                { field: "formId", symbol: "=", value: recievedpay.formId },
+                { field: "projectID", symbol: "=", value: recievedpay.projectID }
+            ],
+            page: null
+        },
+        {
+            name: "messagedrive",
+            form: "messagedrive",
+            action: "update",
+            fields: {
+                status: "已处理"
+            },
+            condition: [
+                { field: "pointToID", symbol: "=", value: recievedpay.formId },
+                { field: "messageType", symbol: "=", value: "risk" },
+                {
+                    field: "messageModule",
+                    symbol: "=",
+                    value: "recievedpay"
+                },
+                { field: "projectID", symbol: "=", value: recievedpay.projectID }
+            ],
+            page: null
+        }
+    ];
+    let datalist = {
+        user: storageJS.getUser().account,
+        clientip: null,
+        platform: "PCW",
+        batchFun: "jsonTrans",
+        source: null,
+        batchList: postList
+    };
+    this.$post("/api/sbatch", datalist).then(res => {
+        return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code })
+    });
+};
+
+module.exports = {
+    getRecievedpay: getRecievedpay,
+    updateRecievedpay: updateRecievedpay,
+}

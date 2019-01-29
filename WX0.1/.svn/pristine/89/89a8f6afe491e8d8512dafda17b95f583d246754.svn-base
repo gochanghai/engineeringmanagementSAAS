@@ -1,0 +1,22 @@
+// pages/confirmvalue/confirmvalue.js
+Page({
+  data: {
+
+  },
+
+  onLoad: function(options) {
+
+  },
+
+  confirmRegistration(){
+    wx.navigateTo({
+      url: '/pages/outputvalregister/outputvalregister',
+    })
+  },
+
+  uploadFile(){
+    wx.navigateTo({
+      url: '/pages/uploadfile/uploadfile',
+    })
+  }
+})

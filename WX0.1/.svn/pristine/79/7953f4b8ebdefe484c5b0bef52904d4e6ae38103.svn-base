@@ -1,0 +1,105 @@
+<!--管理人员Page-->
+<view class='container'>
+  <view class='top-info'>
+    <image src='/images/personner_bg.png'></image>
+    <view class='top-tab'>
+      <view class='tab-item' data-index='0' bindtap='changTabs'>管理人员
+        <text class='{{swiperIndex == 0 ? activeTabs : ""}}'></text>
+      </view>
+      <view class='tab-item' data-index='1' bindtap='changTabs'>施工人员
+        <text class='{{swiperIndex == 1 ? activeTabs : ""}}'></text>
+      </view>
+      <view class='tab-item' data-index='2' bindtap='changTabs'>施工班组
+        <text class='{{swiperIndex == 2 ? activeTabs : ""}}'></text>
+      </view>
+    </view>
+  </view>
+
+  <view class='content'>
+    <swiper class='swiper-content' current='{{swiperIndex}}' bindchange="currentFun" style='height:{{WinHeight}}'>
+      <!-- 管理人员模块 -->
+      <block>
+        <swiper-item>
+          <view class='swiper-items'>
+            <view class='t_info'>
+              <view class='per_number'>4
+                <text>(人)</text>
+              </view>
+              <view class='new-per' bindtap='addManager'>
+                <image src='/images/new_per.png' class='new_per_img'></image>
+                新增人员
+              </view>
+            </view>
+            <!-- 管理人员列表 -->
+            <view class='information' style='height:{{WinHeightCon}}'>
+              <scroll-view scroll-y style='height:{{WinHeightCon}}'>
+                <view wx:for="{{managerList}}">
+                  <view class='information-item'>
+                    <text>{{item.managerName}}</text>
+                    <view>职位：{{item.managerType}}</view>
+                    <view>电话：{{item.telphoneNo}}</view>
+                  </view>
+                  <view class='item-line'></view>
+                </view>
+              </scroll-view>
+            </view>
+          </view>
+        </swiper-item>
+      </block>
+      <!-- 施工人员模块 -->
+      <block>
+        <swiper-item>
+          <view class='swiper-items'>
+            <view class='t_info'>
+              <view class='per_number'>200
+                <text>(人)</text>
+              </view>
+              <view class='new-per' bindtap='addWorkPersonnel'>
+                <image src='/images/new_per.png' class='new_per_img'></image>
+                新增人员
+              </view>
+            </view>
+            <!-- 施工人员列表 -->
+            <view class='information' style='height:{{WinHeightCon}}'>
+              <scroll-view scroll-y style='height:{{WinHeightCon}}'>
+                <view wx:for="{{constructionList}}">
+                  <view class='information-item'>
+                    <text>{{item.name}}</text>
+                    <view>班组：{{item.groupName}}</view>
+                    <view>电话：{{item.telNo}}</view>
+                    <view>工价：{{item.repay}}</view>
+                    <view>入场时间：{{item.admissionAt}}</view>
+                  </view>
+                  <view class='item-line'></view>
+                </view>
+              </scroll-view>
+            </view>
+          </view>
+        </swiper-item>
+      </block>
+      <!-- 班组模块 -->
+      <block>
+        <swiper-item>
+          <view class='swiper-items'>
+            <view class='t_info'>
+              <view class='per_number'>29
+                <text>(人)</text>
+              </view>
+              <view class='new-per' bindtap='addGroup'>
+                <image src='/images/new_per.png' class='new_per_img'></image>
+                新增班组
+              </view>
+            </view>
+            <!-- 班组列表 -->
+            <view class='information' style='height:{{WinHeightCon}}'>
+              <scroll-view scroll-y style='height:{{WinHeightCon}}'>
+                <view>
+                </view>
+              </scroll-view>
+            </view>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+</view>

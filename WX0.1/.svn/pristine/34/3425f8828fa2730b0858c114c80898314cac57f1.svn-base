@@ -1,0 +1,122 @@
+<!-- 项目Pages -->
+<view class='container'>
+  <scroll-view scroll-x style="width:100%" class='top-scroll' scroll-y="scrollY">
+    <view class="scroll-view-x">
+      <view class='item1' bindtap='addProject'>
+        <image src="/images/new.png"></image>
+        <text>新建项目</text>
+      </view>
+      <view class='item1' wx:for="{{projectList}}" wx:key="index" bindtap='selProject' data-index="{{index}}">
+        <image src="{{ index == swiperIndex ? activeList.imagesel: activeList.image}}"></image>
+        <text style="color:{{index == swiperIndex ? activeList.color: ''}};font-size:{{index == swiperIndex ? activeList.fontSize : '26rpx'}}">{{item.ProjectAbbreviation}}
+        </text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <swiper class='con-project' current='{{swiperIndex}}' bindchange="currentFun">
+    <block wx:for="{{projectList}}" wx:key="">
+      <swiper-item class='swiper-item'>
+        <view class='total-team'>
+          <view class='status'>状态：进行中</view>
+          <image src='/images/status_img.png' class='status_img'></image>
+          <view class='flex-grild flex-grild-personner' style='width:92%;border-radius:14rpx;overflow:hidden;'>
+            <view class='item' data-type="0" bindtap='personnerFile' hover-class='hover-row'>
+              <text class='type'>交底人数</text>
+              <text class='val'>12<text style='font-size: 28rpx;color: #999999;'>人</text></text>
+            </view>
+            <view class='item' data-type="1" bindtap='personnerFile' hover-class='hover-row'>
+              <text class='type'>教育人数</text>
+              <text class='val'>18<text style='font-size: 28rpx;color: #999999;'>人</text></text>
+            </view>
+            <view class='item' data-type="2" bindtap='personnerFile' hover-class='hover-row'>
+              <text class='type'>参保人数</text>
+              <text class='val'>5<text style='font-size: 28rpx;color: #999999;'>人</text></text>
+            </view>
+          </view>
+          <view class='flex-grild'>
+            <view class='item' data-type="0" bindtap='navPersonnel' hover-class='hover-row'>
+              <text class='type'>管理人员</text>
+              <text class='val'>{{item.managerPer}}<text style='font-size: 28rpx;color: #999999;'>人</text></text>
+            </view>
+            <view class='item' data-type="1" bindtap='navPersonnel' hover-class='hover-row'>
+              <text class='type'>施工人员</text>
+              <text class='val'>{{item.constructionPer}}<text style='font-size: 28rpx;color: #999999;'>人</text></text>
+            </view>
+            <view class='item' data-type="2" bindtap='navPersonnel' hover-class='hover-row'>
+              <text class='type'>管理班组</text>
+              <text class='val'>{{item.group}}<text style='font-size: 28rpx;color: #999999;'>组</text></text>
+            </view>
+          </view>
+        </view>
+
+        <view class='project-info'>
+          <view class='item'>
+            合同总额
+            <progress percent="{{item.totalAmount}}" stroke-width="14" backgroundColor="#FFA268" active show-info border-radius="{{progressRadius}}" activeColor="#F0880C" class='progress' />
+          </view>
+          <view class='item' bindtap='confirmValue'>
+            总产值
+            <progress percent="{{item.outputValueTage}}" stroke-width="14" backgroundColor="#FFA268" active show-info border-radius="{{progressRadius}}" activeColor="#F0880C" class='progress' />
+            <image src='/images/details.png'></image>
+          </view>
+          <view class='item' bindtap='receivable'>
+            总回款
+            <progress percent="{{item.receivableAmountTage}}" stroke-width="14" backgroundColor="#FFA268" active show-info border-radius="{{progressRadius}}" activeColor="#F0880C" class='progress' />
+            <image src='/images/details.png'></image>
+          </view>
+          <view class='item'>
+            可收款
+            <progress percent="{{item.recievedPayTage}}" stroke-width="14" backgroundColor="#FFA268" active show-info border-radius="{{progressRadius}}" activeColor="#F0880C" class='progress' />
+          </view>
+        </view>
+
+        <view class='message'>
+          <view class='status'>消息</view>
+          <view class='statusType'>
+            <view hover-class="hover-row">
+              <view class='not-deal mes-deal' bindtap='messageCenter'>总消息
+                <text>{{projectInfo.managerPer}}</text>
+                <image src='/images/details.png'></image>
+              </view>
+            </view>
+            <view hover-class="hover-row">
+              <view class='not-deal mes-deal'>未处理
+                <text>{{projectInfo.managerPer}}</text>
+                <image src='/images/details.png'></image>
+              </view>
+            </view>
+            <view hover-class="hover-row">
+              <view class='not-deal mes-deal'>已处理
+                <text>{{projectInfo.managerPer}}</text>
+                <image src='/images/details.png'></image>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class='setting'>
+          <view class='status'>设置</view>
+          <view class='statusType'>
+            <view hover-class="hover-row">
+              <view class='not-deal mes-deal' bindtap='projectSet'>基本信息设置
+                <image src='/images/details.png'></image>
+              </view>
+            </view>
+            <view hover-class="hover-row">
+              <view class='not-deal mes-deal' hover-class="hover-row" bindtap='projectNode'>工程节点设置
+                <image src='/images/details.png'></image>
+              </view>
+            </view>
+            <view hover-class="hover-row">
+              <view class='not-deal mes-deal' bindtap='declareTime'>申报时间设置
+                <image src='/images/details.png'></image>
+              </view>
+            </view>
+          </view>
+        </view>
+
+      </swiper-item>
+    </block>
+  </swiper>
+</view>

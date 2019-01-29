@@ -1,0 +1,9 @@
+{
+  "backgroundTextStyle": "light",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "navigationBarTitleText": "日历",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "calendar": "plugin://calendar/calendar"
+  }
+}

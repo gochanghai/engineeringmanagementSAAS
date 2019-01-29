@@ -1,0 +1,52 @@
+// pages/messagesolve/messagesolve.js
+Page({
+
+  data: {
+    message: {}
+  },
+
+  onLoad: function(options) {
+    // let message = options.message;
+    this.setData({
+      message: options.message,
+      messageType: options.messageType,
+      createAt: options.createAt,
+      formId: options.formId
+    })
+  },
+
+  //消息忽略
+  mesDeal() {
+    wx.showModal({
+      title: '提示',
+      content: '确定忽略此消息吗？',
+      confirmColor: '#F0880C',
+      success(res) {
+        if (res.confirm) {
+          console.log('Commit');
+          wx.showToast({
+            title: '已忽略',
+            icon: 'success',
+            duration: 2000,
+            success() {
+              setTimeout(() => {
+                wx.navigateBack({
+                  delta: '1'
+                })
+              }, 1000)
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消');
+        }
+      }
+    })
+  },
+
+  //消息处理(跳转到产值登记、回款登记或人员列表)
+  mesSolve() {
+    wx.navigateTo({
+      url: '/pages/outputvalregister/outputvalregister',
+    })
+  }
+})

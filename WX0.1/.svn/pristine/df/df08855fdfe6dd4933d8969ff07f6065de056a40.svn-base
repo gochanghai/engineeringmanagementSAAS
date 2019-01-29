@@ -1,0 +1,21 @@
+<!--新增施工班组-->
+<view class='container'>
+  <view class='group-con'>
+    <view class='group_name'>班组名称</view>
+    <view class='group_sel'>
+      <text class='{{activeIndex == "0" ? activeSel : ""}}' style='{{activeIndex == "0" ? activeSty : ""}}' data-index='0' bindtap='selTeam' data-type="消防水">消防水</text>
+      <text class='{{activeIndex == "1" ? activeSel : ""}}' style='{{activeIndex == "1" ? activeSty : ""}}' data-index='1' bindtap='selTeam' data-type="消防电">消防电</text>
+      <text class='{{activeIndex == "2" ? activeSel : ""}}' style='{{activeIndex == "2" ? activeSty : ""}}' data-index='2' bindtap='selTeam' data-type="防排烟">防排烟</text>
+      <text class='{{activeIndex == "3" ? activeSel : ""}}' style='{{activeIndex == "3" ? activeSty : ""}}' data-index='3' bindtap='selTeam' data-type="其他">其他</text>
+    </view>
+
+    <view class='otherInput'>
+      <input type="text" confirm-typ="done" disabled='{{otherVis}}' placeholder='请输入'></input>
+    </view>
+  </view>
+
+  <view class='btom-btns'>
+    <view class='ignore' bindtap='cancel'>取消</view>
+    <view class='solve' bindtap='commitGroup'>确定</view>
+  </view>
+</view>

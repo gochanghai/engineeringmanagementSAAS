@@ -1,0 +1,153 @@
+/* pages/declaretime/declaretime.wxss */
+
+.task_item {
+  padding-top: 30rpx;
+  margin: 0 auto;
+  width: 92%;
+  line-height: 80rpx;
+  display: flex;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.task_item text {
+  display: inline-block;
+  font-size: 32rpx;
+}
+
+.task_item input {
+  padding-left: 25rpx;
+  width: 300rpx;
+  height: 78rpx;
+  font-size: 32rpx;
+  color: #999;
+}
+
+.task_item > view {
+  font-size: 32rpx;
+  text-align: right;
+  width: 170rpx;
+  color: #999;
+}
+
+.task_item > view image, .task_item image {
+  margin-top: 32rpx;
+  margin-left: 10rpx;
+  float: right;
+  width: 20rpx;
+  height: 14rpx;
+}
+
+.picker {
+  text-align: right;
+  width: 462rpx;
+}
+
+.choose {
+  position: fixed;
+  width: 100%;
+  height: 300rpx;
+  bottom: 0;
+  background-color: #fff;
+  z-index: 99;
+}
+
+.botm-solve {
+  margin: 0 auto;
+  margin-top: 80rpx;
+  width: 90%;
+  line-height: 84rpx;
+  font-size: 34rpx;
+  text-align: center;
+  background-color: #e95207;
+  border: 1px solid #e95207;
+  color: #fff;
+  border-radius: 10rpx;
+}
+
+.choose-info {
+  width: 88%;
+}
+
+.maskLayer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.declareList {
+  margin: 20rpx auto;
+  margin-top: 60rpx;
+  width: 92%;
+}
+
+.declareList view.title {
+  display: flex;
+  justify-content: space-between;
+  font-size: 32rpx;
+  color: #333;
+}
+
+.container-item {
+  margin-top: 20rpx;
+  padding: 20rpx;
+  background-color: #f0f0f0;
+  border-radius: 14rpx;
+}
+
+.container-item view.line {
+  margin: 0 auto;
+  width: 96%;
+  border-top: 1px solid #fff;
+}
+
+.container-item view.date-info {
+  padding: 18rpx 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 32rpx;
+  color: #666;
+}
+
+.container-item view image {
+  width: 24rpx;
+  height: 34rpx;
+}
+
+.container-item view.content {
+  padding-top: 12rpx;
+  font-size: 32rpx;
+  line-height: 62rpx;
+  color: #666;
+}
+
+.btom-btns {
+  margin: 0 auto;
+  width: 80%;
+  padding-bottom: 50rpx;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 40rpx;
+}
+
+.btom-btns view {
+  width: 190rpx;
+  height: 70rpx;
+  text-align: center;
+  line-height: 70rpx;
+  border-radius: 60rpx;
+  font-size: 31rpx;
+}
+
+.btom-btns view.ignore {
+  border: 1px solid #b5b5b5;
+  color: #666;
+}
+
+.btom-btns view.solve {
+  background-color: #e95207;
+  border: 1px solid #e95207;
+  color: #fff;
+}

@@ -1,0 +1,54 @@
+// pages/mycente/mycenterr.js
+Page({
+  data: {
+    userInfo: {},
+    IsInitial:false
+  },
+
+  onLoad() {
+    // 查看是否授权
+    var _this = this;
+    wx.getSetting({
+        success(res) {
+          if (res.authSetting['scope.userInfo']) {
+            // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+            wx.getUserInfo({
+              success(res) {
+                _this.setData({
+                  userInfo: res.userInfo,
+                  IsInitial: true                  
+                })
+                console.log(_this.data.userInfo);
+              }
+            })
+          }
+        }
+      }),
+
+      wx.login({
+        success: function(res) {
+          console.log(res);
+        }
+      })
+  },
+
+  bindGetUserInfo(e) {
+    console.log(e.detail.userInfo)
+  },
+
+  UpavatarUrl() {
+    wx.chooseImage({
+      count: 1, //张数， 默认9
+      sourceType: ['album', 'camera'], // 来源是相册、相机
+      success: function(res) {
+        console.log(res);
+      },
+    })
+  },
+
+  modifyPwd() {
+    wx.navigateTo({
+      url: '/pages/modifypwd/modifypwd',
+    })
+  }
+})

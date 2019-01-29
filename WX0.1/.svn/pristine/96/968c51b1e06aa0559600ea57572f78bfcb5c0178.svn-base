@@ -1,0 +1,48 @@
+<calendar calendar-style="calendar" header-style="calendar-header" board-style="calendar-board" days-color="{{dayStyle}}" weeks-type="cn" binddayClick="dayClick" />
+
+<view class='line'></view>
+<view class='information'>
+  <view class='chooseDay'>
+    <text wx:if="IsToDay">{{days}}</text> {{chooseDay}}
+  </view>
+  <view class='.information_cons'>
+
+    <view class='type-information'>
+      <text class='title'>确认产值(10)条</text>
+      <view class='content' bindtap='mesInfo'>
+        <view>确认 李四-未进行安全交底</view>
+        <view>张三-请确认产值</view>
+        <view>18号之前请请确认上传</view>
+        <view>未进行产值登记..</view>
+      </view>
+    </view>
+
+    <view class='type-information'>
+      <text class='title'>回款(7)条</text>
+      <view class='content' bindtap='mesInfo'>
+        <view>张三-请确认产值</view>
+        <view>18号之前请请确认上传</view>
+        <view>未进行产值登记..</view>
+      </view>
+    </view>
+
+    <view class='type-information'>
+      <text class='title'>安全交底(10)条</text>
+      <view class='content' bindtap='mesInfo'>
+        <view>张三-请确认产值</view>
+        <view>18号之前请请确认上传</view>
+        <view>未进行产值登记..</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 通知 -->
+
+  <view class='notice' wx:if="{{IsNotice}}">
+    <image src='/images/notice_icon.png' class='notice_icon'></image>
+    <view class='scroll-y'>
+      <text class='content'>李四-未上传产值..</text>
+    </view>
+    <image src='/images/notice_close.png' class='notice_close' bindtap='noticeClose'></image>
+  </view>
+</view>

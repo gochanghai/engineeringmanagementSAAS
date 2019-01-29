@@ -1,0 +1,306 @@
+const httpJS = require('../utils/http.js');
+const storageJS = require('../utils/storage.js');
+
+//任务消息获取
+function getTaskMessage(callback) {
+  var taskMessageList = [];
+  let projectList = storageJS.getProjectList();
+  let ids = "";
+  for (let item of projectList) {
+    ids += item.projectID + ",";
+  }
+  //去掉最后一个逗号(如果不需要去掉，就不用写)
+  if (ids.length > 0) {
+    ids = ids.substr(0, ids.length - 1);
+  }
+  let datalist = {
+    user: storageJS.getUser().account,
+    form: "messagedrive",
+    action: "leftJoin",
+    fields: {
+      messagedrive: [
+        "formId",
+        "messageType",
+        "messageModule",
+        "projectID",
+        "pointToID",
+        "message",
+        "createAt"
+      ],
+      contract: ["projectAbbreviation"]
+    },
+    join: [{
+      messagedrive: "projectID",
+      contract: "projectID"
+    }],
+    page: null,
+    condition: {
+      messagedrive: [{
+        field: "projectID",
+        value: ids,
+        symbol: "="
+      },
+      {
+        field: "status",
+        value: "未处理",
+        symbol: "="
+      },
+      {
+        field: "messageType",
+        value: "task",
+        symbol: "="
+      }
+      ]
+    }
+  };
+  httpJS.request('/mform', datalist, function (res) {
+    if (JSON.parse(res.data).code > 0) {
+      try {
+        taskMessageList = JSON.parse(res.data).datalist.messagedrive;
+      } catch (error) { }
+    }
+    return typeof callback == 'function' && callback(taskMessageList)
+  })
+};
+
+//风险消息获取
+function getRiskMessage(callback) {
+  var riskMessageList = [];
+  let projectList = storageJS.getProjectList();
+  let ids = "";
+  for (let item of projectList) {
+    ids += item.projectID + ",";
+  }
+  //去掉最后一个逗号(如果不需要去掉，就不用写)
+  if (ids.length > 0) {
+    ids = ids.substr(0, ids.length - 1);
+  }
+  let datalist = {
+    user: storageJS.getUser().account,
+    form: "messagedrive",
+    action: "leftJoin",
+    fields: {
+      messagedrive: [
+        "formId",
+        "messageType",
+        "messageModule",
+        "projectID",
+        "pointToID",
+        "message"
+      ],
+      contract: ["projectAbbreviation"],
+      default: [
+        "date_format( messagedrive.createAt,'%Y-%m-%d') as createAt"
+      ]
+    },
+    join: [{
+      messagedrive: "projectID",
+      contract: "projectID"
+    }],
+    page: null,
+    condition: {
+      messagedrive: [{
+        field: "projectID",
+        value: ids,
+        symbol: "="
+      },
+      {
+        field: "status",
+        value: "未处理",
+        symbol: "="
+      },
+      {
+        field: "messageType",
+        value: "risk",
+        symbol: "="
+      }
+      ]
+    }
+  };
+  httpJS.request('/mform', datalist, function (res) {
+    if (JSON.parse(res.data).code > 0) {
+      try {
+        riskMessageList = JSON.parse(res.data).datalist.messagedrive;
+      } catch (error) { }
+    }
+    return typeof callback == 'function' && callback(riskMessageList)
+  });
+};
+
+function sumProjectMoney(callback) {
+  var sumGroup = {
+    totalAmount: 0,
+    totalOutputvalue: 0,
+    actualReceivAmount: 0,
+    totalReceivableAmount_ActualReceivAmount: 0
+  };
+  let projectList = storageJS.getProjectList();
+  let ids = "",
+    projectIDList = [];
+  for (let item of projectList) {
+    projectIDList.push(item.projectID);
+    ids += item.projectID + ",";
+  }
+  //去掉最后一个逗号(如果不需要去掉，就不用写)
+  if (ids.length > 0) {
+    ids = ids.substr(0, ids.length - 1);
+  }
+  let datalist = {
+    user: storageJS.getUser().account,
+    batchFun: "jsonDefine",
+    title: projectIDList,
+    batchList: [{
+      form: "contract",
+      action: "get",
+      fields: ["contractAmount"],
+      condition: [{
+        field: "projectID",
+        symbol: "=",
+        value: "@title"
+      }],
+      page: null
+    },
+    {
+      form: "confirmvalue",
+      action: "get",
+      fields: [
+        "SUM(outputValue) as sumOutputValue",
+        "SUM(receivableAmount) as sumReceivableAmount"
+      ],
+      condition: [{
+        field: "projectID",
+        symbol: "=",
+        value: "@title"
+      }],
+      page: null
+    },
+    {
+      form: "recievedpay",
+      action: "get",
+      fields: ["SUM(actualReceivAmount) as sumActualReceivAmount"],
+      condition: [{
+        field: "projectID",
+        symbol: "=",
+        value: "@title"
+      }],
+      page: null
+    }
+    ]
+  };
+  httpJS.request('/sbatch', datalist, function (res) {
+    for (var i = 0; i < projectIDList.length; i++) {
+      let resPage = JSON.parse(res.data).datalist[projectIDList[i]];;
+      // console.log(resPage.contract[0].contractAmount);
+      // console.log(resPage.confirmvalue[0].sumOutputValue);
+      // console.log(resPage.recievedpay[0].sumActualReceivAmount);
+      // console.log(resPage.confirmvalue[0].sumReceivableAmount - resPage.recievedpay[0].sumActualReceivAmount);
+      try {
+        sumGroup.totalAmount +=
+          resPage.contract[0].contractAmount || 0;
+        sumGroup.totalOutputvalue +=
+          resPage.confirmvalue[0].sumOutputValue || 0;
+        sumGroup.actualReceivAmount +=
+          resPage.recievedpay[0].sumActualReceivAmount || 0;
+        sumGroup.totalReceivableAmount_ActualReceivAmount +=
+          resPage.confirmvalue[0].sumReceivableAmount -
+          resPage.recievedpay[0].sumActualReceivAmount || 0;
+      } catch (error) { }
+    }
+    return typeof callback == 'function' && callback(sumGroup)
+  });
+};
+
+function getGraphOutputValue(callback) {
+  var graphOutputValueData = [];
+  let projectList = storageJS.getProjectList();
+  let ids = "";
+  for (let item of projectList) {
+    ids += item.projectID + ",";
+  }
+  //去掉最后一个逗号(如果不需要去掉，就不用写)
+  if (ids.length > 0) {
+    ids = ids.substr(0, ids.length - 1);
+  }
+  let datalist = {
+    user: storageJS.getUser().account,
+    form: "confirmvalue",
+    action: "dStatis",
+    fields: ["SUM(outputValue) as sumOutputValue"],
+    dField: "confirmAt",
+    statisType: "Month", //Year,Month,Season
+    page: null,
+    condition: [{
+      field: "projectID",
+      symbol: "=",
+      value: ids
+    }, {
+      "field": "confirmAt",
+      "symbol": "!=",
+      "value": "null"
+    }]
+  };
+  httpJS.request('/form', datalist, function (res) {
+    try {
+      for (let item of JSON.parse(res.data).datalist.confirmvalue) {
+        let pushData = {
+          date: item.Date,
+          sumOutputValue: item.sumOutputValue
+        }
+        graphOutputValueData.push(pushData);
+      }
+      return typeof callback == 'function' && callback(graphOutputValueData)
+    } catch (error) { }
+  });
+};
+
+function getGraphSecurity(callback) {
+  var graphSecurityData = {
+    totalWorker: 0, //总人数
+    totalUnDisclose: 0, //安全交底
+    totalUnEducation: 0, //安全教育
+    totalUnInsurance: 0 //保险 
+  };
+  let projectList = storageJS.getProjectList();
+  let ids = "";
+  for (let item of projectList) {
+    ids += item.projectID + ",";
+  }
+  //去掉最后一个逗号(如果不需要去掉，就不用写)
+  if (ids.length > 0) {
+    ids = ids.substr(0, ids.length - 1);
+  }
+  let datalist = {
+    user: storageJS.getUser().account,
+    form: "worker",
+    action: "get",
+    fields: [
+      "count(1) as totalWorker",
+      "SUM(if(discloseFileSign = 'false',1,0)) as totalUnDisclose",
+      "SUM(if(educationFileSign = 'false',1,0)) as totalUnEducation",
+      "SUM(if(insuranceFileSign = 'false',1,0)) as totalUnInsurance"
+    ],
+    page: null,
+    condition: [{
+      field: "projectID",
+      symbol: "=",
+      value: ids
+    }]
+  };
+  httpJS.request('/form', datalist, function (res) {
+    try {
+      let resWorkerData = JSON.parse(res.data).datalist.worker[0];
+      graphSecurityData.totalWorker = resWorkerData.totalWorker; //总人数
+      graphSecurityData.totalUnDisclose = resWorkerData.totalUnDisclose; //安全交底
+      graphSecurityData.totalUnEducation = resWorkerData.totalUnEducation; //安全教育
+      graphSecurityData.totalUnInsurance = resWorkerData.totalUnInsurance; //保险 
+    } catch (error) { }
+    return typeof callback == 'function' && callback(graphSecurityData)
+  });
+};
+module.exports = {
+  getTaskMessage: getTaskMessage,
+  getRiskMessage: getRiskMessage,
+  sumProjectMoney: sumProjectMoney,
+  getGraphOutputValue: getGraphOutputValue,
+  getGraphSecurity: getGraphSecurity,
+}

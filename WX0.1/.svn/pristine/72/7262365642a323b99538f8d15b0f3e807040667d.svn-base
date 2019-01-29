@@ -1,0 +1,186 @@
+/* pages/project/project.wxss */
+
+.container {
+  padding-top: 220rpx;
+}
+
+.item1 {
+  position: relative;
+  float: left;
+  width: 260rpx;
+  height: 200rpx;
+  margin-right: -40rpx;
+}
+
+.item1 image {
+  width: 100%;
+  height: 100%;
+}
+
+.item1 image.status_img {
+  position: absolute;
+  left: 46rpx;
+  top: 30rpx;
+  width: 24rpx;
+  height: 26rpx;
+}
+
+.item1 text {
+  display: block;
+  position: absolute;
+  top: 96rpx;
+  width: 100%;
+  text-align: center;
+  font-size: 26rpx;
+  color: #333;
+}
+
+.top-scroll {
+  height: 180rpx;
+  z-index: 99;
+  position: fixed;
+  top: 0;
+  background-color: #fff;
+  overflow-y: hidden;
+}
+
+.scroll-view-x {
+  width: 1000rpx;
+  height: 180rpx;
+  display: flex;
+  overflow: hidden;
+}
+
+.total-team {
+  position: relative;
+  padding-top: 10rpx;
+  margin: 0 auto;
+  margin-bottom: 40rpx;
+  width: 100%;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.flex-grild-personner {
+  width: 92%;
+  margin: 0 auto;
+  background-color: #f0f0f0;
+}
+
+.total-team view.status, .message view.status, .setting view.status, .project-info view.status {
+  margin-left: 30rpx;
+  padding: 10rpx 24rpx;
+  display: inline;
+  font-size: 28rpx;
+  color: #fff;
+  background-color: #ffa268;
+  border-radius: 0 30rpx 30rpx 0;
+}
+
+.total-team view.flex-grild {
+  margin: 0 auto;
+  margin-top: 22rpx;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.flex-grild view.item {
+  padding: 20rpx 20rpx;
+  width: 33%;
+  text-align: center;
+}
+
+.flex-grild view.item text.type {
+  display: block;
+  font-size: 30rpx;
+  line-height: 50rpx;
+  color: #999;
+}
+
+.flex-grild view.item text.val {
+  display: block;
+  font-size: 40rpx;
+  color: #333;
+}
+
+.project-info {
+  padding-bottom: 20rpx;
+  margin: 20rpx auto;
+  margin-top: 50rpx;
+  width: 100%;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.project-info view.item {
+  margin: 0 auto;
+  width: 92%;
+  margin-bottom: 4rpx;
+  line-height: 60rpx;
+  font-size: 30rpx;
+  color: #666;
+}
+
+.project-info view.item image {
+  float: right;
+  margin-top: -40rpx;
+  width: 10rpx;
+  height: 23rpx;
+}
+
+.progress {
+  margin-left: 30rpx;
+  width: 80%;
+}
+
+.message {
+  padding-top: 10rpx;
+  margin: 0rpx auto;
+  width: 100%;
+}
+
+.message view.statusType, .setting view.statusType {
+  margin-top: 20rpx;
+}
+
+.mes-deal {
+  margin: 0 auto;
+  width: 92%;
+  font-size: 30rpx;
+  color: #666;
+  line-height: 110rpx;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.mes-deal text {
+  display: inline-block;
+  width: 70rpx;
+  line-height: 40rpx;
+  margin-left: 20rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #fefefe;
+  background-color: #e95207;
+  border-radius: 30rpx;
+}
+
+.mes-deal image {
+  float: right;
+  margin-top: 46rpx;
+  width: 10rpx;
+  height: 23rpx;
+}
+
+.setting {
+  margin: 0rpx auto;
+  margin-top: 50rpx;
+  padding-bottom: 40rpx;
+  width: 100%;
+}
+
+.hover-row {
+  background-color: #e4e4e4;
+}
+
+.con-project {
+  height: 2105rpx;
+}

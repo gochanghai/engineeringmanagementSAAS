@@ -1,0 +1,73 @@
+const messageCenterJS = require('../../action/messageCenter.js');
+Page({
+  data: {
+    toggleStyle: {
+      heightSel: 'auto',
+      imgSel: '/images/up.png',
+      height: '100rpx',
+      img: '/images/down.png'
+    },
+    toggleId: 0,
+    containerSty: 'container',
+    IsnoneMes: false
+  },
+
+  //下拉刷新
+  onPullDownRefresh: function() {
+    messageCenterJS.mountedRiskMessage();
+    messageCenterJS.mountedTaskMessage();
+  },
+
+  onLoad: function(options) {
+    let _this = this;
+    // 获取风险消息
+    messageCenterJS.mountedRiskMessage(function(res) {
+      var riskmessage = res;
+      console.log("riskmessage");
+      console.log(riskmessage.length);
+      if (riskmessage.length == 0) {
+        _this.setData({
+          IsnoneMes: true
+        })
+      } else {
+        _this.setData({
+          riskmessage: riskmessage,
+        });
+      }
+    });
+    // 获取任务消息
+    messageCenterJS.mountedTaskMessage(function(res) {
+      var taskmessage = res;
+      console.log("taskmessage");
+      console.log(taskmessage);
+      _this.setData({
+        taskmessage: taskmessage,
+      });
+    });
+  },
+
+  downSwitch(event) {
+    console.log(event.currentTarget.id);
+    this.setData({
+      toggleId: event.currentTarget.id
+    })
+  },
+
+  addTask() {
+    console.log("新建")
+  },
+
+  navMesSlove(event) {
+    let message = event.currentTarget.dataset.index;
+    console.log("新建" + message);
+    wx.navigateTo({
+      url: '/pages/messagesolve/messagesolve?formId=' + message.formId + "&messageType=" + message.messageType + "&createAt=" + message.createAt + "&message=" + message.message,
+    })
+  },
+
+  addTask() {
+    wx.navigateTo({
+      url: '/pages/addtask/addtask',
+    })
+  }
+})

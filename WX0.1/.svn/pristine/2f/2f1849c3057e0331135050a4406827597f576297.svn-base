@@ -1,0 +1,80 @@
+/* pages/addgroup/addgroup.wxss */
+
+.group-con {
+  margin: 0 auto;
+  margin-top: 40rpx;
+  width: 92%;
+  /* border: 1px solid; */
+}
+
+.group_name {
+  font-size: 32rpx;
+  color: #333;
+}
+
+.active-sel {
+  display: inline-block;
+  width: 170rpx;
+  line-height: 66rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #fff;
+  border-radius: 6rpx;
+  background-color: #ffa268;
+}
+
+.group_sel text {
+  margin-right: 40rpx;
+  margin-top: 30rpx;
+  display: inline-block;
+  width: 170rpx;
+  line-height: 66rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #666;
+  border-radius: 8rpx;
+  border: 1px solid #e5e5e5;
+}
+
+.otherInput {
+  margin: 0 auto;
+  width: 90%;
+  margin-top: 50rpx;
+  padding-bottom: 10rpx;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.otherInput input {
+  padding-left: 17rpx;
+  font-size: 30rpx;
+  color: #999;
+}
+
+.btom-btns {
+  margin: 0 auto;
+  width: 80%;
+  padding-bottom: 50rpx;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 270rpx;
+}
+
+.btom-btns view {
+  width: 190rpx;
+  height: 70rpx;
+  text-align: center;
+  line-height: 70rpx;
+  border-radius: 60rpx;
+  font-size: 31rpx;
+}
+
+.btom-btns view.ignore {
+  border: 1px solid #b5b5b5;
+  color: #666;
+}
+
+.btom-btns view.solve {
+  background-color: #e95207;
+  border: 1px solid #e95207;
+  color: #fff;
+}

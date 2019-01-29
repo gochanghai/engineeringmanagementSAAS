@@ -1,0 +1,44 @@
+<!--产值表-->
+<view class='container'>
+  <view class='top-info'>
+    <image src='/images/value_bg.png'></image>
+    <view class='number-info'>
+      <view class='top-total'>
+        <text class='txt'>合同金额 (元)</text>
+        <text class='val'>{{totalAmount}}.00</text>
+      </view>
+
+      <view class='perform-info'>
+        <view bindtap='receivableRegistration'>
+          <image src='/images/chanzhi.png'></image>回款登记
+        </view>
+        <view bindtap='uploadFile'>
+          <image src='/images/sc_white.png' style='width:30rpx;height:28rpx;'></image>上传附件
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class='data_content'>
+    <view class='list-data' wx:for="{{list}}">
+      <view>回款时间：{{item.actualReceivAt}}</view>
+      <view>回款总额 (元)：{{item.actualReceivAmount}}.00</view>
+      <view>计划回款时间：{{item.planReceivAt}}</view>
+      <view class='line'></view>
+    </view>
+
+    <!-- <view class='list-data'>
+      <view>回款时间：2019-01-12</view>
+      <view>回款总额 (元)：100,000,000.00</view>
+      <view>计划回款时间：2019-11-09</view>
+      <view class='line'></view>
+    </view> -->
+
+    <!-- <view class='list-data'>
+      <view>回款时间：2019-01-12</view>
+      <view>回款总额 (元)：100,000,000.00</view>
+      <view>计划回款时间：2019-11-09</view>
+    </view> -->
+
+  </view>
+</view>

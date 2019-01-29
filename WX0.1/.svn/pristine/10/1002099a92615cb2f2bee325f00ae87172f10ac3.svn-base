@@ -1,0 +1,85 @@
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    dayStyle: [{
+        month: 'current',
+        day: new Date().getDate(),
+        color: 'white',
+        background: '#AAD4F5',
+
+      },
+      {
+        month: 'current',
+        day: new Date().getDate(),
+        color: 'white',
+        background: '#AAD4F5'
+      }
+    ],
+    chooseDay: null,
+    IsToDay: false,
+    days: '',
+    IsNotice: true
+  },
+  //给点击的日期设置一个背景颜色
+  dayClick: function(event) {
+    let [year, month, day] = [event.detail.year, event.detail.month, event.detail.day];
+    this.setData({
+      chooseDay: year + "-" + month + "-" + day
+    })
+    if (this.data.dayStyle[0].day.toString() == day) {
+      this.setData({
+        IsToDay: true,
+        days: '今天'
+      })
+    } else if (this.data.dayStyle[0].day.toString() == day - 1) {
+      this.setData({
+        IsToDay: true,
+        days: '明天'
+      })
+    } else if (this.data.dayStyle[0].day.toString() - 1 == day) {
+      this.setData({
+        IsToDay: true,
+        days: '昨天'
+      })
+    } else {
+      this.setData({
+        IsToDay: false,
+        days: ''
+      })
+    }
+
+    console.log(this.data.chooseDay);
+    let clickDay = event.detail.day;
+    let changeDay = `dayStyle[1].day`;
+    let changeBg = `dayStyle[1].background`;
+    this.setData({
+      [changeDay]: clickDay,
+      [changeBg]: "#FFA268"
+    })
+    console.log(this.data.dayStyle);
+  },
+  onLoad: function() {
+    this.setData({
+      chooseDay: new Date().getFullYear() + "-" + new Date().getMonth() + 1 + "-" + new Date().getDate(),
+      IsToDay: true,
+      days: '今天'
+    })
+  },
+
+  //消息查看
+  mesInfo() {
+    wx.switchTab({
+      url: '/pages/message/message',
+    })
+  },
+
+  //关闭通知
+  noticeClose() {
+    this.setData({
+      IsNotice: false
+    })
+  }
+})

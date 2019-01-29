@@ -1,0 +1,54 @@
+<calendar calendar-style="calendar" header-style="calendar-header" board-style="calendar-board" days-color="{{dayStyle}}" weeks-type="cn" binddayClick="dayClick" />
+
+<view class='line'></view>
+<view class='information'>
+  <view class='chooseDay'>
+    <text wx:if="IsToDay">{{days}}</text> {{chooseDay}}
+  </view>
+  <view class='.information_cons'>
+
+    <view class='type-information'>
+      <text class='title'>产值({{confirmvalueNum}})</text>
+      <view class='content' bindtap='mesInfo'>
+        <view wx:for="{{confirmvalueMessages}}">【{{item.projectAbbreviation}}】{{item.message}}</view>
+      </view>
+    </view>
+
+    <view class='type-information'>
+      <text class='title'>回款({{recievedpayNum}})</text>
+      <view class='content' bindtap='mesInfo'>
+        <view wx:for="{{recievedpayMessages}}">【{{item.projectAbbreviation}}】{{item.message}}</view>
+      </view>
+    </view>
+    <view class='type-information'>
+      <text class='title'>保险({{insuranceNum}})</text>
+      <view class='content' bindtap='mesInfo'>
+        <view wx:for="{{insuranceMessages}}">【{{item.projectAbbreviation}}】{{item.message}}</view>
+      </view>
+    </view>
+
+    <view class='type-information'>
+      <text class='title'>安全交底({{discloseNum}})</text>
+      <view class='content' bindtap='mesInfo'>
+        <view wx:for="{{discloseMessages}}">【{{item.projectAbbreviation}}】{{item.message}}</view>
+      </view>
+    </view>   
+
+    <view class='type-information'>
+      <text class='title'>安全教育({{educationNum}})</text>
+      <view class='content' bindtap='mesInfo'>
+        <view wx:for="{{educationMessages}}">【{{item.projectAbbreviation}}】{{item.message}}</view>
+      </view>
+    </view>
+
+  </view>
+
+  <!-- 通知 -->
+  <view class='notice' wx:if="{{IsNotice}}">
+    <image src='/images/notice_icon.png' class='notice_icon'></image>
+    <view class='scroll-y'>
+      <text class='content' wx:for="{{confirmvalueMessages}}">{{item.message}}</text>
+    </view>
+    <image src='/images/notice_close.png' class='notice_close' bindtap='noticeClose'></image>
+  </view>
+</view>

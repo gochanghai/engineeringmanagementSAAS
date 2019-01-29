@@ -1,0 +1,246 @@
+const httpJS = require('../utils/http.js');
+const storageJS = require('../utils/storage.js');
+const dateUtil = require('../utils/date.js');
+
+var taskMessageList = [], riskMessageList = [];
+
+//风险消息获取
+function getRiskMessage(callback) {
+    let projectList = storageJS.getProjectList();
+    let ids = "";
+    for (let item of projectList) {
+        ids += item.projectID + ",";
+    }
+    //去掉最后一个逗号(如果不需要去掉，就不用写)
+    if (ids.length > 0) {
+        ids = ids.substr(0, ids.length - 1);
+    }
+    let datalist = {
+        user: storageJS.getUser().account,
+        form: "messagedrive",
+        action: "leftJoin",
+        fields: {
+            messagedrive: [
+                "formId",
+                "messageType",
+                "messageModule",
+                "projectID",
+                "pointToID",
+                "message",
+                "createAt",
+                "status"
+            ],
+            contract: ["projectAbbreviation"]
+        },
+        join: [{
+            messagedrive: "projectID",
+            contract: "projectID"
+        }],
+        page: {
+            pageSize: 10,
+            pageIndex: 0
+        },
+        condition: {
+            messagedrive: [{
+                field: "projectID",
+                value: ids,
+                symbol: "="
+            },
+            {
+                field: "status",
+                value: "未处理",
+                symbol: "="
+            },
+            {
+                field: "messageType",
+                value: "risk",
+                symbol: "="
+            }
+            ]
+        }
+
+    };
+    httpJS.request('/mform', datalist, function (res) {
+        try {
+            let resMesData = JSON.parse(res.data).datalist.messagedrive;
+            for (let item of riskMessageList) {
+                item.messageData = resMesData.filter(function (
+                    resMessDataPage,
+                    index,
+                    array
+                ) {
+                    return resMessDataPage.projectID == this;
+                },
+                    item.projectID);
+                item.messageTotal = item.messageData.length;
+            }
+            return typeof callback == 'function' && callback(riskMessageList)
+        } catch (error) { }
+    });
+};
+
+
+//任务消息获取
+function getTaskMessage(callback) {
+    let projectList = storageJS.getProjectList();
+    let ids = "";
+    for (let item of projectList) {
+        ids += item.projectID + ",";
+    }
+    //去掉最后一个逗号(如果不需要去掉，就不用写)
+    if (ids.length > 0) {
+        ids = ids.substr(0, ids.length - 1);
+    }
+    let datalist = {
+        user: storageJS.getUser().account,
+        form: "messagedrive",
+        action: "leftJoin",
+        fields: {
+            messagedrive: [
+                "formId",
+                "messageType",
+                "messageModule",
+                "projectID",
+                "pointToID",
+                "message",
+                "createAt",
+                "status"
+            ],
+            contract: ["projectAbbreviation"]
+        },
+        join: [{
+            messagedrive: "projectID",
+            contract: "projectID"
+        }],
+        page: {
+            pageSize: 10,
+            pageIndex: 0
+        },
+        condition: {
+            messagedrive: [{
+                field: "projectID",
+                value: ids,
+                symbol: "="
+            },
+            {
+                field: "status",
+                value: "未处理",
+                symbol: "="
+            },
+            {
+                field: "messageType",
+                value: "task",
+                symbol: "="
+            }
+            ]
+        }
+    };
+    httpJS.request('/mform', datalist, function (res) {
+        try {
+            let resMesData = JSON.parse(res.data).datalist.messagedrive;
+            for (let item of taskMessageList) {
+                item.messageData = resMesData.filter(function (
+                    resMessDataPage,
+                    index,
+                    array
+                ) {
+                    return resMessDataPage.projectID == this;
+                },
+                    item.projectID);
+                item.messageTotal = item.messageData.length;
+            }
+            return typeof callback == 'function' && callback(taskMessageList)
+        } catch (error) { }
+    });
+};
+
+//调用函数获取风险消息
+function mountedRiskMessage(callback) {
+    let projectList = storageJS.getProjectList();
+    for (let item of projectList) {
+        let pushBaseProject = {
+            projectID: item.projectID,
+            projectAbbreviation: item.projectAbbreviation,
+            messageTotal: 0,
+            messageData: []
+        };
+        riskMessageList.push(pushBaseProject);
+    }
+    getRiskMessage(function (res) {
+        return typeof callback == 'function' && callback(res)
+    });
+};
+
+//调用函数获取任务消息
+function mountedTaskMessage(callback) {
+    let projectList = storageJS.getProjectList();
+    for (let item of projectList) {
+        let pushBaseProject = {
+            projectID: item.projectID,
+            projectAbbreviation: item.projectAbbreviation,
+            messageTotal: 0,
+            messageData: []
+        };
+        taskMessageList.push(pushBaseProject);
+    }
+    getTaskMessage(function (res) {
+        return typeof callback == 'function' && callback(res)
+    });
+};
+
+//消息忽略
+function mesIgnore(message = { projectID: null, formId: null }, callback) {
+    let datalist = {
+        user: storageJS.getUser().account,
+        form: "messagedrive",
+        action: {
+            messagedrive: "updateList",
+            messagedeal: "add"
+        },
+        join: [
+            {
+                messagedrive: "projectID",
+                messagedeal: "projectID"
+            },
+            {
+                messagedrive: "formId",
+                messagedeal: "driveId"
+            }
+        ],
+        records: {
+            messagedrive: {
+                projectID: message.projectID,
+                status: "已忽略",
+                dealAt: dateUtil.formatTime()
+            },
+            messagedeal: [
+                {
+                    projectID: message.projectID,
+                    driveStatus: "已忽略",
+                    dealAt: dateUtil.formatTime()
+                }
+            ]
+        },
+        page: null,
+        condition: {
+            messagedrive: [
+                {
+                    field: "formId",
+                    value: message.formId,
+                    symbol: "="
+                }
+            ]
+        },
+        order: null,
+        group: null
+    };
+    httpJS.request('/lform', datalist, function (res) {
+        return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code })
+    });
+};
+
+module.exports = {
+    mountedRiskMessage: mountedRiskMessage,
+    mountedTaskMessage: mountedTaskMessage,
+    mesIgnore: mesIgnore,
+}

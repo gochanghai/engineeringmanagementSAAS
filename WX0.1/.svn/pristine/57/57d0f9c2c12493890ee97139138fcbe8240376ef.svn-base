@@ -1,0 +1,33 @@
+// pages/projectsetting/projectsetting.js
+Page({
+  data: {
+    updateLis: {
+      startDate: "请选择日期",
+      endDate: '请选择日期'
+    }
+  },
+
+  onLoad: function(options) {
+
+  },
+
+  InputBeginDate(e) {
+    console.log(e.detail.value);
+    this.setData({
+      'updateLis.startDate': e.detail.value
+    })
+  },
+
+  InputEndDate(e) {
+    console.log(e.detail.value);
+    this.setData({
+      'updateLis.endDate': e.detail.value
+    })
+  },
+
+  cancel() {
+    wx.navigateBack({
+      delta: 1
+    })
+  }
+})

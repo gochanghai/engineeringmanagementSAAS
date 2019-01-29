@@ -1,0 +1,17 @@
+// pages/receivableregistration/receivableregistration.js
+Page({
+
+  data: {
+    planReceivableAt: '请选择日期'
+  },
+
+  onLoad: function(options) {
+
+  },
+
+  cancel() {
+    wx.navigateBack({
+      delta: 1
+    })
+  }
+})

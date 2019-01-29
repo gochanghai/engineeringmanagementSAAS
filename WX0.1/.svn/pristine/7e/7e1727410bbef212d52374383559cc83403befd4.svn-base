@@ -1,0 +1,86 @@
+// pages/managepersonnel/managepersonnel.js
+const personnelJS = require('../../action/personnel.js');
+Page({
+  data: {
+    swiperIndex: '0',
+    WinHeight: '',
+    WinHeightCon: '',
+    activeTabs: 'line',
+    managerList: [],
+    groupList: [],
+    constructionList: []
+  },
+
+  onLoad: function(options) {
+    console.log(options.typeID);
+    var _this = this;
+    this.setData({
+      WinHeight: wx.getSystemInfoSync().windowHeight - 150 + 'px',
+      WinHeightCon: wx.getSystemInfoSync().windowHeight - 217 + 'px',
+      swiperIndex: options.typeID
+    });
+    // 项目ID
+    let projectID = 'SHXF-201810102';
+    // 获取管理人员数据
+    let managerList;
+    personnelJS.getManagerList(projectID,function(res){
+      managerList = res;
+      console.log(managerList); 
+      _this.setData({
+        managerList: managerList,
+      })
+    });
+    // 获取施工班组数据
+    let groupList;
+    personnelJS.getGroupList(projectID, function (res) {
+      groupList = res;
+      console.log(groupList);
+      _this.setData({
+        groupList: groupList,
+      })
+    });
+    // 获取施工人员数据
+    let constructionList;
+    personnelJS.getConstructionList(projectID, function (res) {
+      constructionList = res;
+      console.log(constructionList);
+      _this.setData({
+        constructionList: constructionList,
+      })
+    });
+  },
+
+  currentFun(event) {
+    this.setData({
+      swiperIndex: event.detail.current
+    })
+  },
+
+  changTabs(event) {
+    let index = event.currentTarget.dataset.index;
+    this.setData({
+      swiperIndex: index
+    })
+  },
+
+  //新增施工人员
+  addWorkPersonnel() {
+    wx.navigateTo({
+      url: '/pages/addworkpersonnel/addworkpersonnel',
+    })
+  },
+
+  //新增班组
+  addGroup() {
+    wx.navigateTo({
+      url: '/pages/addgroup/addgroup',
+    })
+  },
+
+  //新增管理人员
+  addManager() {
+    wx.navigateTo({
+      url: '/pages/addmanager/addmanager',
+    })
+  }
+})

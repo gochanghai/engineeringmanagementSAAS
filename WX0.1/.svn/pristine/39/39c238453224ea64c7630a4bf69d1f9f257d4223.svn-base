@@ -1,0 +1,79 @@
+// pages/login/login.js
+const storage = require('../../utils/storage.js');
+const userJS = require('../../action/user.js');
+Page({
+  data: {
+    userName: 'shangwjl',
+    password: '123456',
+  },
+
+  //获取用户输入的用户名和密码
+  userNameInput: function(e) {
+    this.setData({
+      userName: e.detail.value
+    })
+  },
+
+  passWdInput: function(e) {
+    this.setData({
+      password: e.detail.value
+    })
+  },
+
+  //用户登录操作
+  signIn: function() {
+    let _this = this;
+    //判断用户名密码是否为空
+    if (this.data.userName != '' && this.data.password != '') {
+      // 用户登录
+      userJS.signIn(this.data.userName, this.data.password, function(res) {
+        console.log(res)
+        if (res.code === 1) {
+          storage.setUser(_this.data.userName, _this.data.userName);
+          wx.showToast({
+            title: '登录成功',
+            success: function() {
+              wx.switchTab({
+                url: '/pages/home/home',
+              })
+
+              // if (typeof(userType) != 'undefined' && userType == '商务经理') {
+              //   wx.switchTab({
+              //     url: '/pages/home2/home2',
+              //   })
+              // } else if (typeof(userType) != 'undefined' && userType == '项目经理') {
+              //   wx.redirectTo({
+              //     url: '/pages/select/select',
+              //   })
+              // }
+            }
+          })
+        } else {
+          wx.showModal({
+            title: '提示',
+            showCancel: false,
+            content: '用户名或密码错误',
+          })
+        }
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        showCancel: false,
+        content: '请输入用户名和密码',
+      })
+    }
+  },
+
+  //忘记密码
+  resetPwdFun: function() {
+    wx.navigateTo({
+      url: '/pages/forgetpawd/forgetpawd',
+    })
+  },
+
+  // 生命周期函数--监听页面加载
+  onLoad: function(options) {
+    wx.clearStorageSync()
+  }
+})

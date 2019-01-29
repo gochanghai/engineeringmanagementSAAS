@@ -1,0 +1,167 @@
+<!-- 项目Pages -->
+<view class='container'>
+  <scroll-view scroll-x style="width:100%" class='top-scroll' scroll-y="false">
+    <view class="scroll-view-x">
+      <view class='item1'>
+        <image src="/images/new.png"></image>
+        <text>新建项目</text>
+      </view>
+      <view class='item1' wx:for="{{projectList}}" wx:key="index" bindtap='selProject' data-index="{{item.id}}">
+        <image src="{{ item.id == swiperIndex ? activeList.imagesel: activeList.image}}"></image>
+        <text style="color:{{item.id == swiperIndex ? activeList.color: ''}}">{{item.projectName}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <swiper class='con-project' current='{{swiperIndex}}' bindchange="currentFun">
+    <block>
+      <swiper-item class='swiper-item'>
+        <view class='total-team'>
+          <view class='status'>状态：进行中</view>
+          <view class='flex-grild'>
+            <view class='item' data-type="0" bindtap='navPersonnel'>
+              <text class='type'>管理人员</text>
+              <text class='val'>10<text style='font-size: 30rpx;color: #999999;'>人</text></text>
+            </view>
+            <view class='item' data-type="1" bindtap='navPersonnel'>
+              <text class='type'>施工人员</text>
+              <text class='val'>20<text style='font-size: 30rpx;color: #999999;'>人</text></text>
+            </view>
+            <view class='item' data-type="2" bindtap='navPersonnel'>
+              <text class='type'>管理班组</text>
+              <text class='val'>9<text style='font-size: 30rpx;color: #999999;'>组</text></text>
+            </view>
+          </view>
+        </view>
+
+        <view class='project-info'>
+          <view class='item'>
+            合同总额
+            <progress percent="60" stroke-width="16" backgroundColor="#FFA268" active show-info border-radius="{{progressRadius}}" activeColor="#F0880C" class='progress' />
+          </view>
+          <view class='item'>
+            总产值
+            <progress percent="69" stroke-width="16" backgroundColor="#FFA268" active show-info border-radius="{{progressRadius}}" activeColor="#F0880C" class='progress' />
+            <image src='/images/details.png'></image>
+          </view>
+          <view class='item'>
+            总回款
+            <progress percent="98" stroke-width="16" backgroundColor="#FFA268" active show-info border-radius="{{progressRadius}}" activeColor="#F0880C" class='progress' />
+            <image src='/images/details.png'></image>
+          </view>
+          <view class='item'>
+            可收款
+            <progress percent="77" stroke-width="16" backgroundColor="#FFA268" active show-info border-radius="{{progressRadius}}" activeColor="#F0880C" class='progress' />
+          </view>
+        </view>
+
+        <view class='message'>
+          <view class='status'>消息</view>
+          <view class='statusType'>
+            <view class='not-deal mes-deal' hover-class="hover-row">总消息
+              <text>6</text>
+              <image src='/images/details.png'></image>
+            </view>
+            <view class='not-deal mes-deal' hover-class="hover-row">未处理
+              <text>6</text>
+              <image src='/images/details.png'></image>
+            </view>
+            <view class='not-deal mes-deal' hover-class="hover-row">已处理
+              <text>10</text>
+              <image src='/images/details.png' hover-class="hover-row"></image>
+            </view>
+          </view>
+        </view>
+
+        <view class='setting'>
+          <view class='status'>设置</view>
+          <view class='statusType'>
+            <view class='not-deal mes-deal' hover-class="hover-row">基本信息设置
+              <image src='/images/details.png'></image>
+            </view>
+            <view class='not-deal mes-deal' hover-class="hover-row">工程节点设置
+              <image src='/images/details.png'></image>
+            </view>
+            <view class='not-deal mes-deal' hover-class="hover-row">申报时间设置
+              <image src='/images/details.png'></image>
+            </view>
+          </view>
+        </view>
+
+      </swiper-item>
+      <swiper-item class='swiper-item'>
+        <view class='total-team'>
+          <view class='status'>状态：进行中</view>
+          <view class='flex-grild'>
+            <view class='item'>
+              <text class='type'>管理人员</text>
+              <text class='val'>14<text style='font-size: 30rpx;color: #999999;'>人</text></text>
+            </view>
+            <view class='item'>
+              <text class='type'>施工人员</text>
+              <text class='val'>30<text style='font-size: 30rpx;color: #999999;'>人</text></text>
+            </view>
+            <view class='item'>
+              <text class='type'>管理班组</text>
+              <text class='val'>10<text style='font-size: 30rpx;color: #999999;'>组</text></text>
+            </view>
+          </view>
+        </view>
+
+        <view class='project-info'>
+          <view class='item'>
+            合同总额
+            <progress percent="70" stroke-width="16" backgroundColor="#FFA268" active show-info border-radius="{{progressRadius}}" activeColor="#F0880C" class='progress' />
+          </view>
+          <view class='item'>
+            总产值
+            <progress percent="57" stroke-width="16" backgroundColor="#FFA268" active show-info border-radius="{{progressRadius}}" activeColor="#F0880C" class='progress' />
+            <image src='/images/details.png'></image>
+          </view>
+          <view class='item'>
+            总回款
+            <progress percent="92" stroke-width="16" backgroundColor="#FFA268" active show-info border-radius="{{progressRadius}}" activeColor="#F0880C" class='progress' />
+            <image src='/images/details.png'></image>
+          </view>
+          <view class='item'>
+            可收款
+            <progress percent="48" stroke-width="16" backgroundColor="#FFA268" active show-info border-radius="{{progressRadius}}" activeColor="#F0880C" class='progress' />
+          </view>
+        </view>
+
+        <view class='message'>
+          <view class='status'>消息</view>
+          <view class='statusType'>
+            <view class='not-deal mes-deal' hover-class="hover-row">总消息
+              <text>6</text>
+              <image src='/images/details.png'></image>
+            </view>
+            <view class='not-deal mes-deal' hover-class="hover-row">未处理
+              <text>6</text>
+              <image src='/images/details.png'></image>
+            </view>
+            <view class='not-deal mes-deal' hover-class="hover-row">已处理
+              <text>10</text>
+              <image src='/images/details.png' hover-class="hover-row"></image>
+            </view>
+          </view>
+        </view>
+
+        <view class='setting'>
+          <view class='status'>设置</view>
+          <view class='statusType'>
+            <view class='not-deal mes-deal' hover-class="hover-row">基本信息设置
+              <image src='/images/details.png'></image>
+            </view>
+            <view class='not-deal mes-deal' hover-class="hover-row">工程节点设置
+              <image src='/images/details.png'></image>
+            </view>
+            <view class='not-deal mes-deal' hover-class="hover-row">申报时间设置
+              <image src='/images/details.png'></image>
+            </view>
+          </view>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>

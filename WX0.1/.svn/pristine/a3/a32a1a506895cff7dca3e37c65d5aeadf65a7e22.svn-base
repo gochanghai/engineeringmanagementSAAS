@@ -1,0 +1,97 @@
+/* pages/login/login.wxss */
+
+.container {
+  position: relative;
+}
+
+.bg-con {
+  position: absolute;
+  width: 100%;
+}
+
+.bg-img {
+  width: 100%;
+  height: 1070rpx;
+}
+
+.bg-txt {
+  position: absolute;
+  top: 222rpx;
+  left: 50rpx;
+  display: block;
+  font-size: 40rpx;
+  color: #fff;
+}
+
+.content {
+  position: absolute;
+  top: 320rpx;
+  left: 50%;
+  margin-left: -325rpx;
+  width: 650rpx;
+  height: 750rpx;
+  border-radius: 26rpx;
+  background-color: #fff;
+  box-shadow: 0rpx 15rpx 40rpx #dadada;
+}
+
+.input-con {
+  position: absolute;
+  top: 182rpx;
+  left: 50%;
+  margin-left: -295rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 240rpx;
+  width: 590rpx;
+}
+
+.input-item {
+  height: 90rpx;
+  border-radius: 60rpx;
+  background-color: #f7f7f7;
+}
+
+.input-item input {
+  margin-left: 90rpx;
+  height: 100%;
+  color: #666;
+}
+
+.input-placlass {
+  font-size: 29rpx;
+  color: #b3b3b3;
+}
+
+.input-item image {
+  position: absolute;
+  margin-top: 28rpx;
+  margin-left: 34rpx;
+  width: 26rpx;
+  height: 33rpx;
+}
+
+.login {
+  position: absolute;
+  bottom: 110rpx;
+  left: 50%;
+  margin-left: -275rpx;
+  width: 550rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  text-align: center;
+  font-size: 30rpx;
+  color: #fff;
+  border-radius: 60rpx;
+  background: linear-gradient(to right, #e95207, #f0880c);
+  box-shadow: 0rpx 10rpx 10rpx #dadada;
+}
+
+.forgetpwd {
+  position: absolute;
+  bottom: 50rpx;
+  right: 50rpx;
+  font-size: 26rpx;
+  color: #b3b3b3;
+}

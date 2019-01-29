@@ -1,0 +1,68 @@
+// pages/projectsetting/projectsetting.js
+
+Page({
+  data: {
+    updateLis: {
+      startDate: "请选择日期",
+      endDate: '请选择日期'
+    }
+  },
+
+  onLoad: function(options) {
+    // 获取项目ID
+    let projectID = options.projectID;
+    this.setData({
+      projectID: projectID,
+    })
+  },
+
+  
+
+  InputBeginDate(e) {
+    console.log(e.detail.value);
+    this.setData({
+      'updateLis.startDate': e.detail.value
+    })
+  },
+
+  InputEndDate(e) {
+    console.log(e.detail.value);
+    this.setData({
+      'updateLis.endDate': e.detail.value
+    })
+  },
+
+  cancel() {
+    wx.navigateBack({
+      delta: 1
+    })
+  },
+
+  //设置成功
+  commitProSetting() {
+    wx.showModal({
+      title: '提示',
+      content: '确定提交吗？',
+      confirmColor: '#F0880C',
+      success(res) {
+        if (res.confirm) {
+          console.log('Commit');
+          wx.showToast({
+            title: '设置成功',
+            icon: 'success',
+            duration: 2000,
+            success() {
+              setTimeout(() => {
+                wx.navigateBack({
+                  delta: '1'
+                })
+              }, 1000)
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  }
+})

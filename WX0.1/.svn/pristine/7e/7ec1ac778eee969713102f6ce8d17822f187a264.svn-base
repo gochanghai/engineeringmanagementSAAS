@@ -1,0 +1,21 @@
+// pages/uploadfile/uploadfile.js
+Page({
+
+  data: {
+
+  },
+
+  onLoad: function(options) {
+
+  },
+
+  uploadFile() {
+    wx.chooseImage({
+      count: 1, //张数， 默认9
+      sourceType: ['album', 'camera'], // 来源是相册、相机
+      success: function(res) {
+        console.log(res);
+      },
+    })
+  }
+})

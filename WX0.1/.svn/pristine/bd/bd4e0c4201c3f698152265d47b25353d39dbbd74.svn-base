@@ -1,0 +1,308 @@
+const httpJS = require('../utils/http.js');
+const storageJS = require('../utils/storage.js');
+const dateJS = require('../utils/date.js');
+
+let confirmvaluelist = [], receivedpaylist = [], confirmvalueRow = null, receivableRow = null;
+
+// 产值列表
+function getConfirmValueList(projectID, callback) {
+    let datalist = {
+        user: storageJS.getUser().account,
+        form: "confirmvalue",
+        action: "leftJoin",
+        fields: {
+            confirmvalue: [
+                "formId",
+                "projectID",
+                "valueUploadAt",
+                "outputValue",
+                "status",
+                "receivableAmount"
+            ],
+            contract: ["projectAbbreviation"],
+            default: [
+                "date_format(confirmvalue.confirmAt,'%Y-%m-%d') as confirmAt"
+            ]
+        },
+        join: [
+            {
+                confirmvalue: "projectID",
+                contract: "projectID"
+            }
+        ],
+        page: {
+            pageSize: 20,
+            pageIndex: 0
+        },
+        condition: {
+            confirmvalue: [
+                {
+                    field: "projectID",
+                    value: projectID,
+                    symbol: "="
+                }
+            ]
+        }
+    };
+    httpJS.request('/mform', datalist, function (res) {
+        if (JSON.parse(res.data).code > 0) {
+            confirmvaluelist = JSON.parse(res.data).datalist.confirmvalue;
+        }
+        return typeof callback == 'function' && callback(confirmvaluelist)
+    });
+};
+
+// 单条产值记录
+function getConfirmValuePage(formId, callback) {
+    let datalist = {
+        user: storageJS.getUser().account,
+        form: "confirmvalue",
+        action: "leftJoin",
+        fields: {
+            confirmvalue: [
+                "formId",
+                "projectID",
+                "progressNodeID",
+                "valueUploadAt",
+                "outputValue",
+                "receivableAmount",
+                "confirmAt",
+                "status"
+            ],
+            contract: ["ownerPayTime", "ownerPayPercent"]
+        },
+        join: [
+            {
+                confirmvalue: "projectID",
+                contract: "projectID"
+            }
+        ],
+        page: {
+            pageSize: 1,
+            pageIndex: 0
+        },
+        condition: {
+            confirmvalue: [
+                {
+                    field: "formId",
+                    value: formId,
+                    symbol: "="
+                }
+            ]
+        }
+    };
+    httpJS.request('/mform', datalist, function (res) {
+        console.log(JSON.parse(res.data).datalist);
+        try {
+            confirmvalueRow = JSON.parse(res.data).datalist.confirmvalue[0] || null;
+        } catch (error) { }
+        return typeof callback == 'function' && callback(confirmvalueRow)
+    });
+};
+
+
+//回款列表
+function getRecievedPayList(projectID, callback) {
+    let datalist = {
+        user: storageJS.getUser().account,
+        form: "recievedpay",
+        action: "leftJoin",
+        fields: {
+            recievedpay: [
+                "formId",
+                "projectID",
+                "planReceivAt",
+                "theoryReceivAmount",
+                "actualReceivAmount"
+            ],
+            contract: ["projectAbbreviation"],
+            default: [
+                "date_format(recievedpay.actualReceivAt,'%Y-%m-%d') as actualReceivAt"
+            ]
+        },
+        join: [
+            {
+                recievedpay: "projectID",
+                contract: "projectID"
+            }
+        ],
+        page: {
+            pageSize: 20,
+            pageIndex: 0
+        },
+        condition: {
+            recievedpay: [
+                {
+                    field: "projectID",
+                    value: projectID,
+                    symbol: "="
+                }
+            ]
+        }
+    };
+    httpJS.request('/mform', datalist, function (res) {
+        receivedpaylist = JSON.parse(res.data).datalist.recievedpay;
+        return typeof callback == 'function' && callback(receivedpaylist)
+    });
+}
+
+// 单条回款信息
+function getRecievedPayPage(formId, callback) {
+    let datalist = {
+        user: storageJS.getUser().account,
+        action: "get",
+        form: "recievedpay",
+        fields: [
+            "formId",
+            "projectID",
+            "planReceivAt",
+            "theoryReceivAmount",
+            "actualReceivAmount",
+            "actualReceivAt"
+        ],
+        page: {
+            pageSize: 1,
+            pageIndex: 0
+        },
+        condition: [
+            {
+                field: "formId",
+                symbol: "=",
+                value: formId
+            }
+        ]
+    };
+    httpJS.request('/mform', datalist, function (res) {
+        try {
+            receivableRow = JSON.parse(res.data).datalist.recievedpay[0] || null;
+        } catch (error) { }
+        return typeof callback == 'function' && callback(receivableRow)
+    });
+};
+
+
+// 确认提交产值登记数据
+function updateConfirmValue(confirmvalueRow = { formId: '', projectID: '', progressNodeID: '', outputValue: '', receivableAmount: '', ownerPayTime: '', valueUploadAt: '', confirmAt: '' }, callback) {
+    let postList = [
+        {
+            name: "confirmvalue",
+            form: "confirmvalue",
+            action: "update",
+            fields: {
+                confirmAt: confirmvalueRow.confirmAt,
+                outputValue: confirmvalueRow.outputValue,
+                receivableAmount: confirmvalueRow.receivableAmount,
+                valueUploadAt: confirmvalueRow.valueUploadAt
+            },
+            condition: [
+                { field: "formId", symbol: "=", value: confirmvalueRow.formId },
+                { field: "projectID", symbol: "=", value: confirmvalueRow.projectID }
+            ],
+            page: null
+        },
+        {
+            name: "recievedpay",
+            form: "recievedpay",
+            action: "add",
+            fields: {
+                projectID: confirmvalueRow.projectID,
+                progressNodeID: confirmvalueRow.progressNodeID,
+                confirmValueID: confirmvalueRow.formId,
+                planReceivAt: dateJS.addDate(confirmvalueRow.confirmAt, confirmvalueRow.ownerPayTime),
+                theoryReceivAmount: confirmvalueRow.receivableAmount
+            },
+            condition: null,
+            page: null
+        },
+        {
+            name: "messagedrive",
+            form: "messagedrive",
+            action: "update",
+            fields: {
+                status: "已处理"
+            },
+            condition: [
+                { field: "pointToID", symbol: "=", value: confirmvalueRow.formId },
+                { field: "messageType", symbol: "=", value: "risk" },
+                {
+                    field: "messageModule",
+                    symbol: "=",
+                    value: "confirmvalue"
+                },
+                { field: "projectID", symbol: "=", value: confirmvalueRow.projectID }
+            ],
+            page: null
+        }
+    ];
+    let datalist = {
+        user: storageJS.getUser().account,
+        clientip: null,
+        platform: "WX",
+        batchFun: "jsonTrans",
+        source: null,
+        batchList: postList
+    };
+    console.log(datalist);
+    httpJS.request('/sbatch', datalist, function (res) {
+        return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code })
+    });
+};
+
+
+// 确认提交回款登记数据
+function updateRecievedPay(recievedPay = { actualReceivAmount: '', actualReceivAt: '', formId: '', projectID: '' }, callback) {
+    let postList = [
+        {
+            name: "recievedpay",
+            form: "recievedpay",
+            action: "update",
+            fields: {
+                actualReceivAmount: recievedPay.actualReceivAmount,
+                actualReceivAt: formatTime(recievedPay.actualReceivAt)
+            },
+            condition: [
+                { field: "formId", symbol: "=", value: recievedPay.formId },
+                { field: "projectID", symbol: "=", value: recievedPay.projectID }
+            ],
+            page: null
+        },
+        {
+            name: "messagedrive",
+            form: "messagedrive",
+            action: "update",
+            fields: {
+                status: "已处理"
+            },
+            condition: [
+                { field: "pointToID", symbol: "=", value: recievedPay.formId },
+                { field: "messageType", symbol: "=", value: "risk" },
+                {
+                    field: "messageModule",
+                    symbol: "=",
+                    value: "recievedpay"
+                },
+                { field: "projectID", symbol: "=", value: recievedPay.projectID }
+            ],
+            page: null
+        }
+    ];
+    let datalist = {
+        user: storageJS.getUser().account,
+        clientip: null,
+        platform: "PCW",
+        batchFun: "jsonTrans",
+        source: null,
+        batchList: postList
+    };
+    this.$post("/sbatch", datalist).then(res => {
+        return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code })
+    });
+};
+module.exports = {
+    getRecievedPayList: getRecievedPayList,
+    getConfirmValueList: getConfirmValueList,
+    getConfirmValuePage: getConfirmValuePage,
+    getRecievedPayPage: getRecievedPayPage,
+    updateConfirmValue: updateConfirmValue,
+    updateRecievedPay: updateRecievedPay,
+}

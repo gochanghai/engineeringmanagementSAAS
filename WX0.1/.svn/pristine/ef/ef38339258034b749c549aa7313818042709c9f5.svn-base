@@ -1,0 +1,13 @@
+// pages/projectlist/projectlist.js
+Page({
+
+  data: {
+    WinHeight: null
+  },
+
+  onLoad: function(options) {
+    this.setData({
+      WinHeight: wx.getSystemInfoSync().windowHeight + 'px',
+    });
+  }
+})

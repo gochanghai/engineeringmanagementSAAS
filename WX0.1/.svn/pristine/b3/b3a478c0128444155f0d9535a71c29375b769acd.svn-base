@@ -1,0 +1,34 @@
+Page({
+  data: {
+    toggleStyle: {
+      heightSel: 'auto',
+      imgSel: '/images/up.png',
+      height: '100rpx',
+      img: '/images/down.png'
+    },
+    toggleId: '0'
+  },
+
+  downSwitch(event) {
+    console.log(event.currentTarget.id);
+    this.setData({
+      toggleId: event.currentTarget.id
+    })
+  },
+
+  addTask() {
+    console.log("新建")
+  },
+
+  navMesSlove() {
+    wx.navigateTo({
+      url: '/pages/messagesolve/messagesolve',
+    })
+  },
+
+  addTask() {
+    wx.navigateTo({
+      url: '/pages/addtask/addtask',
+    })
+  }
+})

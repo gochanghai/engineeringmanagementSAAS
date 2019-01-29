@@ -1,0 +1,134 @@
+<!--上传附件-->
+<view class='container'>
+  <view class='information'>
+    <scroll-view scroll-y style='height:{{WinHeight}}'>
+      <view class='information-item'>
+        <view class='informatiob_flex'>
+          <view class="file_check">
+            <checkbox style="transform:scale(.7);margin-top:0rpx;" />
+          </view>
+          <view class='file_info'>
+            <view>班组：消防水</view>
+            <view>人员：张三</view>
+          </view>
+        </view>
+      </view>
+
+      <view class='information-item'>
+        <view class='informatiob_flex'>
+          <view class="file_check">
+            <checkbox style="transform:scale(.7);margin-top:0rpx;" />
+          </view>
+          <view class='file_info'>
+            <view>班组：消防水</view>
+            <view>人员：张三</view>
+          </view>
+        </view>
+      </view>
+
+      <view class='information-item'>
+        <view class='informatiob_flex'>
+          <view class="file_check">
+            <checkbox style="transform:scale(.7);margin-top:0rpx;" />
+          </view>
+          <view class='file_info'>
+            <view>班组：消防水</view>
+            <view>人员：张三</view>
+          </view>
+        </view>
+      </view>
+
+      <view class='information-item'>
+        <view class='informatiob_flex'>
+          <view class="file_check">
+            <checkbox style="transform:scale(.7);margin-top:0rpx;" />
+          </view>
+          <view class='file_info'>
+            <view>班组：消防水</view>
+            <view>人员：张三</view>
+          </view>
+        </view>
+      </view>
+
+      <view class='information-item'>
+        <view class='informatiob_flex'>
+          <view class="file_check">
+            <checkbox style="transform:scale(.7);margin-top:0rpx;" />
+          </view>
+          <view class='file_info'>
+            <view>班组：消防水</view>
+            <view>人员：张三</view>
+          </view>
+        </view>
+      </view>
+
+      <view class='information-item'>
+        <view class='informatiob_flex'>
+          <view class="file_check">
+            <checkbox style="transform:scale(.7);margin-top:0rpx;" />
+          </view>
+          <view class='file_info'>
+            <view>班组：消防水</view>
+            <view>人员：张三</view>
+          </view>
+        </view>
+      </view>
+
+      <view class='information-item'>
+        <view class='informatiob_flex'>
+          <view class="file_check">
+            <checkbox style="transform:scale(.7);margin-top:0rpx;" />
+          </view>
+          <view class='file_info'>
+            <view>班组：消防水</view>
+            <view>人员：张三</view>
+          </view>
+        </view>
+      </view>
+
+      <view class='information-item'>
+        <view class='informatiob_flex'>
+          <view class="file_check">
+            <checkbox style="transform:scale(.7);margin-top:0rpx;" />
+          </view>
+          <view class='file_info'>
+            <view>班组：消防水</view>
+            <view>人员：张三</view>
+          </view>
+        </view>
+      </view>
+
+      <view class='information-item'>
+        <view class='informatiob_flex'>
+          <view class="file_check">
+            <checkbox style="transform:scale(.7);margin-top:0rpx;" />
+          </view>
+          <view class='file_info'>
+            <view>班组：消防水</view>
+            <view>人员：张三</view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class='btn_upload'>
+    <button class='btn' bindtap='uploadFile'>
+      上 传
+    </button>
+  </view>
+  <view class='modal' wx:if="{{IsperList}}" bindtap='hideModal'></view>
+  <view class='per_list' wx:if="{{IsperList}}" animation='{{animationData}}'>
+    <view class='file_image'>
+      <image src='{{urlFileImg}}' bindtap='imgView' data-src="{{urlFileImg}}"></image>
+      <text class="file_txt" wx:if="{{urlFileImg == ''}}" bindtap='uploadFileUrl'>+选择文件</text>
+      <text class='file_again' wx:if="{{urlFileImg}}" bindtap='uploadFileUrl'>重新选择</text>
+      <view class='close' bindtap='hideModal'>关闭</view>
+    </view>
+    <view class="bottom_btn">
+      <button class='btn btn_file'>
+        提 交
+      </button>
+    </view>
+  </view>
+</view>

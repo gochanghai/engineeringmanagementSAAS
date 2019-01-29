@@ -1,0 +1,53 @@
+// pages/projectlist/projectlist.js
+const projectlistJS = require('../../action/projectlist.js');
+Page({
+
+  data: {
+    WinHeight: null
+  },
+
+  onLoad: function(options) {
+    this.setData({
+      WinHeight: wx.getSystemInfoSync().windowHeight + 'px',
+    });
+    
+    // 获取项目列表数据
+    this.getProjectList();
+
+  },
+
+  // 获取项目列表数据
+  getProjectList() {
+    var _this = this;
+    projectlistJS.getProjectList(function (res) {
+      var projectList = res;
+      console.log(projectList);
+      console.log("projectPageList" + projectList);
+      // 格式化数据
+      let list = [];
+      for (let index in projectList){
+        let item = projectList[index];
+        item.totalAmount = _this.getMoneyFormat(item.totalAmount);
+        item.outputValue = _this.getMoneyFormat(item.outputValue);
+        item.receivableAmount = _this.getMoneyFormat(item.receivableAmount);
+        item.actualReceivAmount = _this.getMoneyFormat(item.actualReceivAmount);
+        list.push(item);
+      }
+      // 
+      _this.setData({
+        projectList: list,
+      });
+  },
+
+  //财务金额格式化
+  getMoneyFormat(val) {    
+    if(val === null){
+      return "0.00"
+    }
+    var str = parseInt(val).toFixed(2) + '';
+    var intSum = str.substring(0, str.indexOf(".")).replace(/\B(?=(?:\d{3})+$)/g, ',');
+    var dot = str.substring(str.length, str.indexOf("."));
+    var ret = intSum + dot;
+    return ret;
+  },
+})

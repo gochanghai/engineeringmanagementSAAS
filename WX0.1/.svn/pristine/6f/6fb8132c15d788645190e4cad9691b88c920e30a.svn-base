@@ -1,0 +1,43 @@
+// pages/confirmvalue/confirmvalue.js
+const progressJS = require('../../action/progress.js');
+Page({
+  data: {
+    
+  },
+
+  onLoad: function(options) {
+
+    // 获取项目ID
+    this.setData({
+      projectID: options.projectID,
+      totalAmount: options.totalAmount
+    });
+    // 获取产值数据
+    this.getOutValueDatas();
+  },
+
+  // 获取产值函数
+  getOutValueDatas() {
+    let _this = this
+    let projectID = this.data.projectID;
+    progressJS.getConfirmValueList(projectID, function(res) {
+      console.log(res);
+      _this.setData({
+        list: res,
+      });
+    })
+  },
+
+  confirmRegistration() {
+    let projectID = this.data.projectID;
+    wx.navigateTo({
+      url: '/pages/outputvalregister/outputvalregister?projectID=' + projectID,
+    })
+  },
+
+  uploadFile() {
+    wx.navigateTo({
+      url: '/pages/uploadfile/uploadfile',
+    })
+  }
+})

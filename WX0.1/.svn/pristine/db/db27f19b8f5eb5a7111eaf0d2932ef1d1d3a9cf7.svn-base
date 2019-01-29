@@ -1,0 +1,45 @@
+// pages/outputvalregister/outputvalregister.js
+Page({
+  data: {
+    updateAt: '请选择日期',
+    confirmdateAt: '请选择日期'
+  },
+
+  onLoad: function(options) {
+
+  },
+
+  cancel() {
+    wx.navigateBack({
+      delta: 1
+    })
+  },
+
+  // 提交数据
+  commitOutputVal() {
+    wx.showModal({
+      title: '提示',
+      content: '确定提交吗？',
+      confirmColor: '#F0880C',
+      success(res) {
+        if (res.confirm) {
+          console.log('Commit');
+          wx.showToast({
+            title: '提交成功',
+            icon: 'success',
+            duration: 2000,
+            success() {
+              setTimeout(() => {
+                wx.navigateBack({
+                  delta: '1'
+                })
+              }, 1000)
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  }
+})

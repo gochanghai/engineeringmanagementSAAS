@@ -1,0 +1,70 @@
+/* pages/uploadfile/uploadfile.wxss */
+
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #f0f0f0;
+}
+
+.information {
+  margin: 0 auto;
+  margin-top: 28rpx;
+  padding-bottom: 14rpx;
+  width: 92%;
+  background-color: #fff;
+  border-radius: 16rpx;
+}
+
+.information-item {
+  margin: 0 auto;
+  width: 92%;
+  padding-top: 36rpx;
+  height: 120rpx;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.information-item:last-child {
+  border: none;
+}
+
+.informatiob_flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.file_info {
+  flex: 1;
+}
+
+.file_info view {
+  font-size: 28rpx;
+  line-height: 50rpx;
+}
+
+.file_download {
+  font-size: 25rpx;
+  color: #e95207;
+  display: flex;
+  align-items: center;
+}
+
+.btn_upload {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 160rpx;
+  background-color: #fff;
+  box-shadow: 0 -14rpx 30rpx 0 #e5e5e5;
+}
+
+.btn {
+  width: 92%;
+  color: white;
+  background-color: #e95207;
+}

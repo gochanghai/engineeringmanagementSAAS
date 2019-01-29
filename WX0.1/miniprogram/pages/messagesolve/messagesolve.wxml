@@ -1,0 +1,22 @@
+<!--消息处理-->
+<view class='container'>
+  <view class='message_solve'>
+    <view class='mes-title'>消息内容：</view>
+    <view class='mes-container'>{{message}}</view>
+
+    <view class='mes-title createdAt'>产生时间：</view>
+    <view class='mes-container'>{{createAt}}</view>
+
+    <view class='mes-title mes_type'>消息类型：</view>
+    <view class='mes-container' wx:if="{{messageType == 'risk'}}">风险</view>
+    
+    <view class='btom-btns'>
+      <view class='ignore' bindtap='mesDeal'>忽略</view>
+      <view class='solve' bindtap='mesSolve'>处理</view>
+    </view>
+    <view class='arc'>
+      <text></text>
+      <text></text>
+    </view>
+  </view>
+</view>

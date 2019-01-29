@@ -1,0 +1,124 @@
+/* pages/addworkpersonnel/addworkpersonnel.wxss */
+
+.top-sel-team {
+  margin: 0 auto;
+  margin-top: 40rpx;
+  width: 92%;
+  display: flex;
+  /* border: 1px solid; */
+}
+
+.top-sel-team view.team {
+  width: 120rpx;
+  font-size: 33rpx;
+  line-height: 66rpx;
+  text-align: left;
+}
+
+.top-sel-team view.team-list {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.active-sel {
+  display: inline-block;
+  width: 170rpx;
+  line-height: 66rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #fff;
+  border-radius: 6rpx;
+  background-color: #ffa268;
+}
+
+.team-list text {
+  display: inline-block;
+  width: 170rpx;
+  line-height: 66rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #666;
+  border-radius: 8rpx;
+  border: 1px solid #e5e5e5;
+}
+
+.information_item {
+  padding-top: 30rpx;
+  margin: 0 auto;
+  width: 92%;
+  line-height: 80rpx;
+  display: flex;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.information_item text {
+  display: inline-block;
+  font-size: 32rpx;
+  color: #333;
+}
+
+.information_item input {
+  padding-left: 17rpx;
+  width: 60%;
+  height: 78rpx;
+  font-size: 32rpx;
+  text-align: right;
+  color: #999;
+}
+
+.information_item view {
+  flex: 1;
+  font-size: 30rpx;
+  color: #999;
+}
+
+.information_item view image {
+  margin-top: 32rpx;
+  float: right;
+  width: 20rpx;
+  height: 14rpx;
+}
+
+.down_img {
+  margin-top: 34rpx;
+  margin-left: 10rpx;
+  float: right;
+  width: 20rpx;
+  height: 14rpx;
+}
+
+.picker {
+  font-size: 32rpx;
+  text-align: right;
+  width: 530rpx;
+}
+
+.btom-btns {
+  margin: 0 auto;
+  width: 80%;
+  padding-bottom: 50rpx;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 70rpx;
+}
+
+.btom-btns view {
+  width: 190rpx;
+  height: 70rpx;
+  text-align: center;
+  line-height: 70rpx;
+  border-radius: 60rpx;
+  font-size: 31rpx;
+}
+
+.btom-btns view.ignore {
+  border: 1px solid #b5b5b5;
+  color: #666;
+}
+
+.btom-btns view.solve {
+  background-color: #e95207;
+  border: 1px solid #e95207;
+  color: #fff;
+}

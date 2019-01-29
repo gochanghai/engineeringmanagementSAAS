@@ -1,0 +1,47 @@
+//请求域名
+const host = 'https://mysaas.gdsh119.com';
+
+//POST 请求
+function request(api, jsondata, callback) {
+  wx.request({
+    url: host + api,
+    data: {
+      data: JSON.stringify(jsondata)
+    },
+    header: {
+      "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+    },
+    method: "POST",
+    success: function(res) {
+        return typeof callback == "function" && callback(res);
+    },
+    fail: function(res) {
+      return typeof callback == "function" && callback(res)
+    }
+  });
+}
+
+//使用form-data的方式发送request请求
+function formRequest(api, jsondata, callback) {
+  console.log(jsondata);
+  wx.request({
+    url: host + api,
+    data: jsondata,
+    header: {
+      "Content-Type": "multipart/form-data"
+    },
+    method: "POST",
+    success: function(res) {
+      return typeof callback == "function" && callback(res)
+    },
+    fail: function(res) {
+      return typeof callback == "function" && callback(res)
+    }
+  });
+}
+
+module.exports = {
+  serverAddress: host,
+  request: request,
+  formRequest: formRequest,
+}

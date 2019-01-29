@@ -1,0 +1,26 @@
+// pages/receivable/receivable.js
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+
+  },
+
+  onLoad: function(options) {
+
+  },
+
+  receivableRegistration() {
+    wx.navigateTo({
+      url: '/pages/receivableregistration/receivableregistration',
+    })
+  },
+
+  uploadFile() {
+    wx.navigateTo({
+      url: '/pages/uploadfile/uploadfile',
+    })
+  }
+})

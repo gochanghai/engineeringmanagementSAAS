@@ -1,0 +1,56 @@
+<!--新增施工人员-->
+<view class='container'>
+  <view class='top-sel-team'>
+    <view class='team'>班组</view>
+    <view class='team-list'>
+      <text class='{{activeIndex == "0" ? activeSel : ""}}' style='{{activeIndex == "0" ? activeSty : ""}}' data-index='0' bindtap='selTeam' data-type="消防水">消防水</text>
+      <text class='{{activeIndex == "1" ? activeSel : ""}}' style='{{activeIndex == "1" ? activeSty : ""}}' data-index='1' bindtap='selTeam' data-type="消防电">消防电</text>
+      <text class='{{activeIndex == "2" ? activeSel : ""}}' style='{{activeIndex == "2" ? activeSty : ""}}' data-index='2' bindtap='selTeam' data-type="防排烟">防排烟</text>
+    </view>
+  </view>
+
+  <view class='information'>
+    <view class='information_item'>
+      <text>姓名</text>
+      <input type='text' bindinput='InputName' confirm-type="next" value="" />
+    </view>
+    <view class='information_item'>
+      <text>年龄</text>
+      <input type='number' bindinput='InputAge' confirm-type="next" value="" />
+    </view>
+    <view class='information_item'>
+      <text>身份证</text>
+      <input type='idcard' bindinput='InputIdCard' confirm-type="next" value="" />
+    </view>
+    <view class='information_item'>
+      <text>联系电话</text>
+      <input type='number' bindinput='InputTelNo' confirm-type="next" value="" />
+    </view>
+    <view class='information_item'>
+      <text>紧急联系人</text>
+      <input type='text' bindinput='InputEmergencyContact' confirm-type="next" value="" />
+    </view>
+    <view class='information_item'>
+      <text>入场时间</text>
+      <picker mode="date" start="2010-01-01" end="2029-01-01" bindchange="InputAdmissionAt">
+        <view class="picker" style='font-size:32rpx; color:#999;'>
+          {{admissionAt}} 
+        </view>
+      </picker>
+      <image src='/images/xia.png' class='down_img'></image>
+    </view>
+    <view class='information_item'>
+      <text>离场时间</text>
+      <picker mode="date" start="2010-01-01" end="2029-01-01" bindchange="InputLeavingAt">
+        <view class="picker" style='font-size:32rpx; color:#999;'>
+          {{leavingAt}}
+        </view>
+      </picker>
+      <image src='/images/xia.png' class='down_img'></image>
+    </view>
+  </view>
+  <view class='btom-btns'>
+    <view class='ignore' bindtap='cancel'>取消</view>
+    <view class='solve' bindtap='commitWorker'>确定</view>
+  </view>
+</view>

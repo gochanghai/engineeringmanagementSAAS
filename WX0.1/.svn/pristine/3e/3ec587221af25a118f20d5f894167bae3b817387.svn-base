@@ -1,0 +1,18 @@
+<!--消息处理-->
+<view class='container'>
+  <view class='message_solve'>
+    <view class='mes-title'>消息内容：</view>
+    <view class='mes-container'>成长手册，临时收主材啊擦上厕所按时吃饭吃三次</view>
+
+    <view class='mes-title createdAt'>产生时间：</view>
+    <view class='mes-container'>2019-01-19 09:00:00</view>
+
+    <view class='mes-title mes_type'>消息类型：</view>
+    <view class='mes-container'>风险</view>
+
+    <view class='btom-btns'>
+      <view class='ignore'>忽略</view>
+      <view class='solve'>处理</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,50 @@
+// pages/managepersonnel/managepersonnel.js
+const personnelJS = require('../../action/personnel.js');
+Page({
+  data: {
+    swiperIndex: '0',
+    WinHeight: '',
+    WinHeightCon: '',
+    activeTabs: 'line',
+    managerList: [],
+    groupList: [],
+    constructionList: []
+  },
+
+  onLoad: function(options) {
+    console.log(options.typeID);
+    this.setData({
+      WinHeight: wx.getSystemInfoSync().windowHeight - 150 + 'px',
+      WinHeightCon: wx.getSystemInfoSync().windowHeight - 217 + 'px',
+      swiperIndex: options.typeID
+    });
+    // 项目ID
+    let projectID = 'SHXF-201810102';
+    // 获取管理人员数据
+    let managerList = personnelJS.getManagerList(projectID);
+    // 获取施工班组数据
+    let groupList = personnelJS.getGroupList(projectID);
+    // 获取施工人员数据
+    let constructionList = personnelJS.getConstructionList(projectID)
+
+    console.log(managerList + groupList + constructionList);
+    this.setData({
+      managerList: managerList,
+      groupList: groupList,
+      constructionList: constructionList
+    });
+  },
+
+  currentFun(event) {
+    this.setData({
+      swiperIndex: event.detail.current
+    })
+  },
+
+  changTabs(event) {
+    let index = event.currentTarget.dataset.index;
+    this.setData({
+      swiperIndex: index
+    })
+  }
+})

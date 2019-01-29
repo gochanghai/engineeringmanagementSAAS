@@ -1,0 +1,21 @@
+<!--登录-->
+<view class='container'>
+  <view class='bg-con'>
+    <image class='bg-img' src='/images/loginbgimg.png'></image>
+    <text class='bg-txt'>用户登录</text>
+  </view>
+  <view class='content'>
+    <view class='input-con'>
+      <view class='input-item'>
+        <image class='input-img' src='/images/iconuser.png'></image>
+        <input type='text' placeholder='请输入用户名' placeholder-class='input-placlass' confirm-type="next" bindinput='userNameInput'></input>
+      </view>
+      <view class='input-item'>
+        <image class='input-img' src='/images/iconpwd.png'></image>
+        <input type='password' placeholder='请输入密码' placeholder-class='input-placlass' confirm-type="done" bindinput='passWdInput'></input>
+      </view>
+    </view>
+    <!-- 按钮 -->
+    <view class='login' bindtap='signIn'>登 录</view>
+  </view>
+</view>

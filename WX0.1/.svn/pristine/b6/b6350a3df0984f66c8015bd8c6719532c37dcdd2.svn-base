@@ -1,0 +1,52 @@
+<!--项目设置页-->
+<view class='container'>
+  <view class='information'>
+    <view class='information_item'>
+      <text>项目名称</text>
+      <input type='text' confirm-type="next" placeholder='请输入项目名称' placeholder-class='input_class' />
+    </view>
+    <view class='information_item'>
+      <text>合同编号</text>
+      <input type='text' confirm-type="next" placeholder='请输入合同编号' placeholder-class='input_class' />
+    </view>
+    <view class='information_item'>
+      <text>合同起始时间</text>
+      <picker mode="date" start="2010-01-01" end="2029-01-01" bindchange="InputBeginDate">
+        <view class="picker" style='font-size:32rpx; color:#999;'>
+          {{updateLis.startDate}}
+        </view>
+      </picker>
+      <image src='/images/xia.png' class='down_img'></image>
+    </view>
+    <view class='information_item'>
+      <text>合同终止时间</text>
+      <picker mode="date" start="2010-01-01" end="2029-01-01" bindchange="InputEndDate">
+        <view class="picker" style='font-size:32rpx; color:#999;'>
+          {{updateLis.endDate}}
+        </view>
+      </picker>
+      <image src='/images/xia.png' class='down_img'></image>
+    </view>
+    <view class='information_item'>
+      <text>合同金额(元)</text>
+      <input type='text' confirm-type="next" placeholder-class='input_class' />
+    </view>
+    <view class='information_item'>
+      <text>业务审批付款周期(天)</text>
+      <input type='text' confirm-type="next" placeholder-class='input_class' />
+    </view>
+    <view class='information_item'>
+      <text>付款比例(%)</text>
+      <input type='text' confirm-type="next" placeholder-class='input_class' />
+    </view>
+    <view class='information_item'>
+      <text>业务审批进度周期(天)</text>
+      <input type='text' confirm-type="next" placeholder-class='input_class' />
+    </view>
+  </view>
+
+  <view class='btom-btns'>
+    <view class='ignore' bindtap='cancel'>取消</view>
+    <view class='solve' bindtap='commitProSetting'>确定</view>
+  </view>
+</view>

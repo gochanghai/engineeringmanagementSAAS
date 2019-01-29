@@ -1,0 +1,78 @@
+{
+  "pages": [
+    "pages/calendar/calendar",
+    "pages/projectview/projectview",
+    "pages/login/login",
+    "pages/uploadfile/uploadfile",
+    "pages/message/message",
+    "pages/outputvalregister/outputvalregister",
+    "pages/receivableregistration/receivableregistration",
+    "pages/receivable/receivable",
+    "pages/projectlist/projectlist",
+    "pages/confirmvalue/confirmvalue",
+    "pages/home/home",
+    "pages/mespersonner/mespersonner",
+    "pages/addmanager/addmanager",
+    "pages/managepersonnel/managepersonnel",
+    "pages/addproject/addproject",
+    "pages/messagesolve/messagesolve",
+    "pages/addtask/addtask",
+    "pages/addworkpersonnel/addworkpersonnel",
+    "pages/addgroup/addgroup",
+    "pages/projectsetting/projectsetting",
+    "pages/projectnode/projectnode",
+    "pages/declaretime/declaretime",
+    "pages/mycenter/mycenter",
+    "testpages/test/test",
+    "pages/modifypwd/modifypwd"
+  ],
+  "window": {
+    "backgroundColor": "#dedede",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "工程管理系统",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": true
+  },
+  "plugins": {
+    "calendar": {
+      "version": "1.1.3",
+      "provider": "wx92c68dae5a8bb046"
+    }
+  },
+  "tabBar": {
+    "selectedColor": "#F0880C",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "images/nor_homepage.png",
+        "selectedIconPath": "images/sel_homepage.png"
+      },
+      {
+        "pagePath": "pages/projectview/projectview",
+        "text": "项目",
+        "iconPath": "images/nor_project.png",
+        "selectedIconPath": "images/sel_project.png"
+      },
+      {
+        "pagePath": "pages/calendar/calendar",
+        "text": "日历",
+        "iconPath": "images/nor_calendar.png",
+        "selectedIconPath": "images/sel_calendar.png"
+      },
+      {
+        "pagePath": "pages/message/message",
+        "text": "消息",
+        "iconPath": "images/nor_news.png",
+        "selectedIconPath": "images/sel_news.png"
+      },
+      {
+        "pagePath": "pages/mycenter/mycenter",
+        "text": "我的",
+        "iconPath": "images/nor_personalcenter.png",
+        "selectedIconPath": "images/sel_personalcenter.png"
+      }
+    ]
+  }
+}

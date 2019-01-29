@@ -1,0 +1,20 @@
+<!--新增管理人员-->
+<view class='container'>
+  <view class='group-con'>
+    <view class='group_name'>新增管理人员</view>
+    <view class='group_sel'>
+      <text wx:for="{{managerType}}" wx:key="" data-index='{{item.id}}' data-type="{{item.label}}" bindtap='selTeam' class='{{activeIndex == item.id ? activeSel : ""}}' style='{{activeIndex == item.id ? activeSty : ""}}'>
+      {{item.label}}
+      </text>
+    </view>
+    <view class='otherInput'>
+      <input type="text" confirm-typ="next" placeholder='姓名'></input> 
+      <input type="number" confirm-typ="done" placeholder='电话'></input>
+    </view>
+  </view>
+
+  <view class='btom-btns'>
+    <view class='ignore' bindtap='cancel'>取消</view>
+    <view class='solve' bindtap='commitManager'>确定</view>
+  </view>
+</view>

@@ -1,0 +1,7 @@
+{
+"backgroundTextStyle": "light",
+"navigationBarBackgroundColor": "#fff",
+"navigationBarTitleText": "消息处理-人员",
+"navigationBarTextStyle": "black",
+"enablePullDownRefresh": true
+}

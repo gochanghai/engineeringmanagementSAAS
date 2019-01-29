@@ -1,0 +1,139 @@
+/* pages/home/home.wxss */
+
+.container {
+  position: relative;
+}
+
+.top-info {
+  height: 400rpx;
+}
+
+.top-info image {
+  width: 100%;
+  height: 310rpx;
+}
+
+.top-total {
+  position: absolute;
+  top: 100rpx;
+  right: 88rpx;
+  display: flex;
+  flex-direction: column;
+  line-height: 56rpx;
+  text-align: center;
+}
+
+.top-total text.txt {
+  font-size: 32rpx;
+  color: #fff;
+  font-weight: bold;
+}
+
+.top-total text.val {
+  font-size: 44rpx;
+  color: #fff;
+}
+
+.top-nav {
+  position: absolute;
+  top: 260rpx;
+  left: 4%;
+  width: 92%;
+  margin: 0 auto;
+  height: 140rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0px 10rpx 30rpx 10rpx #f0f0f0;
+  border-radius: 16rpx;
+  background-color: #fff;
+  color: #E5E5E5;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  width: 33.3%;
+  text-align: center;
+  align-items: center;
+}
+
+.nav-item text.label {
+  display: block;
+  font-size: 26rpx;
+  line-height: 40rpx;
+  color: #999;
+  width: 100%;
+}
+
+.nav-item text.value {
+  display: block;
+  font-size: 25rpx;
+  line-height: 40rpx;
+  color: #f0880c;
+  width: 100%;
+  font-weight: bold;
+}
+
+.canvas1 {
+  padding-top: 30rpx;
+  width: 100%;
+}
+
+.data-charts {
+  margin-top: 10rpx;
+  padding-bottom: 10rpx;
+}
+
+.data-charts view text.title {
+  margin-left: 14rpx;
+  font-size: 27rpx;
+  color: #333;
+}
+
+.data-charts view.visua {
+  padding-top: 20rpx;
+  margin: 20rpx auto;
+  width: 92%;
+  box-shadow: 0px 0rpx 30rpx 10rpx #f0f0f0;
+  background-color: #fff;
+  border-radius: 16rpx;
+}
+
+.con {
+  display: flex;
+}
+
+.canvas2 {
+  margin-top: -40rpx;
+  width: 56%;
+  height: 320rpx;
+}
+
+.con view.content-info {
+  margin-left: 35rpx;
+  padding-top: 24rpx;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+.info-item {
+  display: flex;
+  line-height: 55rpx;
+  align-items: center;
+}
+
+.info-item text {
+  display: inline-block;
+  width: 28rpx;
+  height: 28rpx;
+  border-radius: 50%;
+}
+
+.info-item view {
+  margin-left: 16rpx;
+  font-size: 25rpx;
+  color: #666;
+}

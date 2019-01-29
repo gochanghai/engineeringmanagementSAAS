@@ -1,0 +1,75 @@
+<!--项目List-->
+<view class='container'>
+  <scroll-view scroll-y style='height:{{WinHeight}}'>
+    <view class='project-list'>
+
+      <view class='project-item' wx:for="{{projectList}}">
+        <!-- <text class='status' wx:if="{{item.status == null}}">进行中</text> -->
+        <text class='status'>进行中</text>
+        <view class='project-item-info'>
+          <text>{{item.ProjectAbbreviation}}</text>
+          <view class="list1">
+            <view class='info'>
+              <view>总产值</view>
+              <text>￥{{item.outputValue}}</text>
+            </view>
+            <view class='info'>
+              <view>总回款</view>
+              <text>￥{{item.receivableAmount}}</text>
+            </view>
+            <view class='info'>
+              <view>可收款</view>
+              <text>￥{{item.actualReceivAmount}}</text>
+            </view>
+            <view class='info'>
+              <view>管理人员</view>
+              <text>{{item.managerPer}}人</text>
+            </view>
+            <view class='info'>
+              <view>施工人员</view>
+              <text>{{item.constructionPer}}人</text>
+            </view>
+            <view class='info'>
+              <view>施工班组</view>
+              <text>{{item.group}}组</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- <view class='project-item'>
+        <text class='status'>进行中</text>
+        <view class='project-item-info'>
+          <text>腾讯大厦</text>
+          <view class="list1">
+            <view class='info'>
+              <view>总产值</view>
+              <text>￥990,000,000.00</text>
+            </view>
+            <view class='info'>
+              <view>总回款</view>
+              <text>￥740,000,000.00</text>
+            </view>
+            <view class='info'>
+              <view>可收款</view>
+              <text>￥720,000,000.00</text>
+            </view>
+            <view class='info'>
+              <view>管理人员</view>
+              <text>10人</text>
+            </view>
+            <view class='info'>
+              <view>施工人员</view>
+              <text>30人</text>
+            </view>
+            <view class='info'>
+              <view>施工班组</view>
+              <text>14组</text>
+            </view>
+          </view>
+        </view>
+      </view> -->
+
+    </view>
+  </scroll-view>
+</view>

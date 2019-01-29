@@ -1,0 +1,140 @@
+<!--新建项目-->
+<view class='container'>
+  <view class='top-progress'>
+    <view class='one'>
+      <image src='{{selIcon}}' class='icon'></image>
+      <text>第一步</text>
+    </view>
+    <view class='line'>
+      <image src='{{toggelLine}}'></image>
+    </view>
+    <view class='two'>
+      <image src='{{toggelIcon}}' class='icon'></image>
+      <text>第二步</text>
+    </view>
+  </view>
+
+  <view class='content'>
+    <swiper class='swiper-content' current='{{swiperIndex}}' bindchange="currentFun" style='height:{{WinHeight}}'>
+      <block>
+        <swiper-item>
+          <view class='swiper-items'>
+            <view>
+              <input type='text' confirm-type="next" placeholder='请输入项目名称' placeholder-class='input_class' />
+            </view>
+            <view>
+              <input type='text' confirm-type="done" placeholder='请输入项目简称' placeholder-class='input_class' />
+            </view>
+            <view class='next' style='border:none'>
+              <view class='ignore' bindtap='cancel'>取消</view>
+              <view class='solve' bindtap='next'>下一步</view>
+            </view>
+          </view>
+        </swiper-item>
+      </block>
+
+      <block>
+        <swiper-item>
+          <scroll-view scroll-y style='height:{{WinHeight}};'>
+            <view class='swiper-items information-item'>
+              <view class='account'>商务经理</view>
+              <view class='info-input'>
+                <input placeholder='姓名' type='tetx' confirm-type='next'></input>
+                <input placeholder='电话' type='number' confirm-type='done'></input>
+              </view>
+            </view>
+
+            <view class='swiper-items information-item'>
+              <view class='account'>安全员</view>
+              <view class='info-input'>
+                <input placeholder='姓名' type='tetx' confirm-type='next'></input>
+                <input placeholder='电话' type='number' confirm-type='done'></input>
+              </view>
+            </view>
+
+            <view class='swiper-items information-item'>
+              <view class='account'>施工员</view>
+              <view class='info-input'>
+                <input placeholder='姓名' type='tetx' confirm-type='next'></input>
+                <input placeholder='电话' type='number' confirm-type='done'></input>
+              </view>
+            </view>
+
+            <view class='swiper-items information-item'>
+              <view class='account'>材料员</view>
+              <view class='info-input'>
+                <input placeholder='姓名' type='tetx' confirm-type='next'></input>
+                <input placeholder='电话' type='number' confirm-type='done'></input>
+              </view>
+            </view>
+
+            <view class='swiper-items information-item'>
+              <view class='account'>质量员</view>
+              <view class='info-input'>
+                <input placeholder='姓名' type='tetx' confirm-type='next'></input>
+                <input placeholder='电话' type='number' confirm-type='done'></input>
+              </view>
+            </view>
+
+            <view class='swiper-items information-item'>
+              <view class='account'>测试员</view>
+              <view class='info-input'>
+                <input placeholder='姓名' type='tetx' confirm-type='next'></input>
+                <input placeholder='电话' type='number' confirm-type='done'></input>
+              </view>
+            </view>
+
+            <view class='btom-btns'>
+              <view class='ignore' bindtap='previousStep'>上一步</view>
+              <view class='solve' bindtap='commitModal'>确 定</view>
+            </view>
+          </scroll-view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
+
+  <view class='background-layer' wx:if="{{IsModal}}"></view>
+  <view class='onfirm-bounced' wx:if="{{IsModal}}">
+    <image src='/images/commit_bg.png'></image>
+    <view class='layer-information'>
+      <view class='layer-information-item'>
+        <text>项目名称</text>
+        <view>消防所发生深V敷设大V是收到十大歌手GV是</view>
+      </view>
+      <view class='layer-information-item'>
+        <text>项目简称</text>
+        <view>深华消防</view>
+      </view>
+      <view class='layer-information-item'>
+        <text>商务经理</text>
+        <view>shangwjl</view>
+      </view>
+      <view class='layer-information-item'>
+        <text>安全员</text>
+        <view></view>
+      </view>
+      <view class='layer-information-item'>
+        <text>施工员</text>
+        <view></view>
+      </view>
+      <view class='layer-information-item'>
+        <text>材料员</text>
+        <view></view>
+      </view>
+      <view class='layer-information-item'>
+        <text>质量员</text>
+        <view></view>
+      </view>
+      <view class='layer-information-item'>
+        <text>测试员</text>
+        <view></view>
+      </view>
+    </view>
+    <view class='layer-btom-btns'>
+      <view class='ignore' bindtap='cancelModal'>取消</view>
+      <view class='solve' bindtap='dataCommit'>确定</view>
+    </view>
+  </view>
+</view>

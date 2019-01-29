@@ -1,0 +1,108 @@
+// pages/outputvalregister/outputvalregister.js
+const confirmvalueJS = require('../../action/confirmvalue.js');
+Page({
+  data: {
+    valueUploadAt: '请选择日期',
+    confirmAt: '请选择日期',
+    outputValue: '',
+    receivableAmount: '',
+  },
+
+  onLoad: function(options) {
+    // 获取数据
+    this.setData({
+      formId: options.formId,
+      projectID: options.projectID,
+      receivableAmount: options.receivableAmount,
+      outputValue: options.outputValue,
+      valueUploadAt: options.valueUploadAt,
+      confirmAt: options.confirmAt,
+      formId: options.formId,
+    })
+  },
+
+  // 产值表上传时间输入
+  InputValueUploadAt(e) {
+    console.log(e.detail.value);
+    this.setData({
+      valueUploadAt: e.detail.value
+    })
+  },
+  // 产值输入
+  InputOutputValue(e) {
+    console.log(e.detail.value);
+    this.setData({
+      outputValue: e.detail.value
+    })
+  },
+  // 可收款输入
+  InputReceivableAmount(e) {
+    console.log(e.detail.value);
+    this.setData({
+      receivableAmount: e.detail.value
+    })
+  },
+  // 甲方确认时间输入
+  InputConfirmAt(e) {
+    console.log(e.detail.value);
+    this.setData({
+      confirmAt: e.detail.value
+    })
+  },
+
+
+  cancel() {
+    wx.navigateBack({
+      delta: 1
+    })
+  },
+
+  // 提交数据
+  commitOutputVal() {
+    
+    // 获取数据
+    let confirmvalue = {
+      confirmAt: this.data.confirmAt,
+      outputValue: this.data.outputValue,
+      receivableAmount: this.data.receivableAmount,
+      valueUploadAt: this.data.valueUploadAt,
+      formId: this.data.formId,
+      projectID: this.data.projectID,
+    }
+    wx.showModal({
+      title: '提示',
+      content: '确定提交吗？',
+      confirmColor: '#F0880C',
+      success(res) {
+        if (res.confirm) {
+          console.log('Commit');
+          // 更新产值登记          
+          confirmvalueJS.updateConfirmvalue(confirmvalue,function(res){
+            console.log(res)
+          });
+          wx.showToast({
+            title: '提交成功',
+            icon: 'success',
+            duration: 2000,
+            success() {
+              setTimeout(() => {
+                wx.navigateBack({
+                  delta: '1'
+                })
+              }, 1000)
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+
+  // 上传附件
+  uploadFile(){
+    wx.navigateTo({
+      url: '/pages/uploadfile/uploadfile',
+    })
+  }
+})

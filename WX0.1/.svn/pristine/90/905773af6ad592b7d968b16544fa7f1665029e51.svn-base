@@ -1,0 +1,37 @@
+// pages/projectlist/projectlist.js
+const projectlistJS = require('../../action/projectlist.js');
+Page({
+
+  data: {
+    WinHeight: null
+  },
+
+  onLoad: function(options) {
+    this.setData({
+      WinHeight: wx.getSystemInfoSync().windowHeight + 'px',
+    });
+    
+    // 获取项目列表数据
+    this.getProjectList();
+
+  },
+
+  // 获取项目列表数据
+  getProjectList() {
+    var _this = this;
+    projectlistJS.getProjectList(function (res) {
+      var projectList = res;
+      console.log(projectList);
+      console.log("projectPageList" + projectList);
+      _this.setData({
+        projectList: projectList,
+      });
+
+      // 获取选中的项目信息
+      let projectInfo = _this.data.projectList[1];
+      _this.setData({
+        projectInfo: projectInfo,
+      });
+    })
+  },
+})

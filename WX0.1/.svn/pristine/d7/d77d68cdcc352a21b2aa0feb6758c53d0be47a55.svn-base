@@ -1,0 +1,61 @@
+{
+  "pages": [
+    "testpages/test/test",
+    "pages/projectview/projectview",
+    "pages/messagesolve/messagesolve",
+    "pages/managepersonnel/managepersonnel",
+    "pages/message/message",
+    "pages/calendar/calendar",
+    "pages/mycenter/mycenter",
+    "pages/modifypwd/modifypwd",
+    "pages/home/home"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "工程管理系统",
+    "navigationBarTextStyle": "black"
+  },
+  "plugins": {
+    "calendar": {
+      "version": "1.1.3",
+      "provider": "wx92c68dae5a8bb046"
+    }
+  },
+  "tabBar": {
+    "selectedColor": "#F0880C",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "images/nor_homepage.png",
+        "selectedIconPath": "images/sel_homepage.png"
+      },
+      {
+        "pagePath": "pages/projectview/projectview",
+        "text": "项目",
+        "iconPath": "images/nor_project.png",
+        "selectedIconPath": "images/sel_project.png"
+      },
+      {
+        "pagePath": "pages/calendar/calendar",
+        "text": "日历",
+        "iconPath": "images/nor_calendar.png",
+        "selectedIconPath": "images/sel_calendar.png"
+      },
+      {
+        "pagePath": "pages/message/message",
+        "text": "消息",
+        "iconPath": "images/nor_news.png",
+        "selectedIconPath": "images/sel_news.png"
+      },
+      {
+        "pagePath": "pages/mycenter/mycenter",
+        "text": "我的",
+        "iconPath": "images/nor_personalcenter.png",
+        "selectedIconPath": "images/sel_personalcenter.png"
+      }
+    ]
+  }
+}

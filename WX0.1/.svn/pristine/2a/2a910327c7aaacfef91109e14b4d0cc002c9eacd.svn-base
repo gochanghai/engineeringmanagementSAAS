@@ -1,0 +1,78 @@
+//异步：
+// wx.getStorage({
+//   key: 'ProjectList',
+//   success: function (res) {
+//     console.log("get callback data...");
+//     _this.setData({
+//       getProjectList: res.data
+//     });
+//     console.log(_this.data.getProjectList);
+//   }
+// })
+//统一使用同步的方式
+
+
+function getUser() {
+  let user = {
+    account: "shangwjl"
+  }
+  // var user = wx.getStorageSync('user');
+  return user;
+}
+
+//登录时传入，程序在login.js，但只有account传入了，而name为空，待决定用户的姓名由何处获取
+function setUser(userAccount) {
+  console.log("removing.....user");
+  wx.removeStorageSync('user')
+  console.log("Storaging.....user");
+  console.log(user);
+  let user = {
+    account: userAccount
+  }
+  wx.setStorageSync("user", user)
+}
+
+function getProjectList() {
+  // var projectList = wx.getStorageSync('projectList');
+  var projectList = [{
+    managerAccount: "shangwjl",
+    managerName: "商务经理",
+    managerType: "商务经理",
+    projectAbbreviation: "腾讯大厦",
+    projectID: "SHXF-201810102",
+    projectName: "腾讯大厦消防工程",
+  },{
+    managerAccount: "shangwjl",
+    managerName: "商务经理",
+    managerType: "商务经理",
+    projectAbbreviation: "汉京大厦",
+    projectID: "SHXF-201810105",
+    projectName: "汉京大厦消防工程",
+  },{
+    managerAccount: "shangwjl",
+    managerName: "商务经理",
+    managerType: "商务经理",
+    projectAbbreviation: "达实二扩",
+    projectID: "SHXF-201811309",
+    projectName: "达实大厦改扩建项目二阶段及旧楼消防工程咨询服务",
+  }]
+  return projectList;
+};
+
+function setProjectList(projectList) {
+  console.log("removing.....projectList");
+  wx.removeStorageSync('projectList')
+  console.log("Storaging.....projectList");
+  console.log(projectList);
+  wx.setStorageSync("projectList", projectList);
+}
+
+module.exports = {
+
+  getUser: getUser,
+  setUser: setUser,
+
+  getProjectList: getProjectList,
+  setProjectList: setProjectList,
+
+}

@@ -1,0 +1,60 @@
+// pages/addgroup/addgroup.js
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    managerType: [{
+      label: '商经经理',
+      id: '0'
+    }, {
+      label: '安全员',
+      id: '1'
+    }, {
+      label: '施工员',
+      id: '2'
+    }, {
+      label: '材料员',
+      id: '3'
+    }, {
+      label: '资料员',
+      id: '4'
+    }, {
+      label: '质检员',
+      id: '5'
+    }],
+    activeSty: 'color:#fff;border: 1px solid #FFA268;',
+    activeSel: 'active-sel',
+    activeIndex: '0',
+    otherVis: true
+  },
+
+  onLoad: function(options) {
+
+  },
+
+  selTeam(e) {
+    console.log(e.currentTarget.dataset.type);
+    let index = e.currentTarget.dataset.index;
+    this.setData({
+      activeIndex: index
+    })
+
+    if (index == '3') {
+      this.setData({
+        otherVis: false
+      })
+    } else {
+      this.setData({
+        otherVis: true
+      })
+    }
+  },
+
+  cancel() {
+    wx.navigateBack({
+      delta: 1
+    })
+  }
+})

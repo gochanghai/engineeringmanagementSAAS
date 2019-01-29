@@ -1,0 +1,36 @@
+/* pages/modifypwd/modifypwd.wxss */
+
+.content {
+  padding-left: 76rpx;
+  padding-right: 76rpx;
+}
+
+.userPwd-item {
+  display: flex;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.userPwd-item text {
+  padding-top: 50rpx;
+  padding-bottom: 20rpx;
+  font-size: 32rpx;
+  color: #999;
+}
+
+.userPwd-item input {
+  padding-left: 10rpx;
+  margin-top: 46rpx;
+  height: 60rpx;
+}
+
+.ok-btn {
+  margin: 80rpx auto;
+  width: 500rpx;
+  height: 85rpx;
+  font-size: 30rpx;
+  text-align: center;
+  line-height: 85rpx;
+  color: #fff;
+  background-color: #e95207;
+  border-radius: 40rpx;
+}

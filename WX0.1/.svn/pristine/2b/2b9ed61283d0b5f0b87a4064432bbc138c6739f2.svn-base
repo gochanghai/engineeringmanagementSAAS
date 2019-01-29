@@ -1,0 +1,152 @@
+/* 日历 */
+
+.calendar {
+  background-color: white;
+  padding-top: 10px;
+}
+
+.calendar-header {
+  font-size: large;
+  color: #59518d;
+}
+
+.calendar-board {
+  color: #c7cbe2;
+  font-weight: bold;
+}
+
+.calendar-days {
+  display: flex;
+  flex-direction: row;
+}
+
+.calendar-cell {
+  float: left;
+}
+
+.line {
+  margin: 30rpx auto;
+  width: 92%;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.information {
+  padding-bottom: 40rpx;
+  margin: 0 auto;
+  width: 92%;
+}
+
+.chooseDay text {
+  font-size: 30rpx;
+}
+
+.chooseDay {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: Medium;
+}
+
+.information_cons {
+  margin-top: 10rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.type-information {
+  margin-top: 28rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.type-information text.title {
+  display: inline-block;
+  width: 150rpx;
+  font-size: 29rpx;
+  color: #333;
+  font-weight: Medium;
+}
+
+.type-information view.content {
+  flex: 1;
+  padding: 20rpx;
+  background-color: rgba(255, 162, 104, 0.3);
+  color: #666;
+  border-radius: 11rpx;
+  font-size: 28rpx;
+  font-weight: Regular;
+}
+
+.type-information view.content view {
+  width: 98%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 60rpx;
+}
+
+.notice {
+  padding: 0 24rpx;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 65rpx;
+  line-height: 70rpx;
+  background-color: #ffa268;
+}
+
+.notice image.notice_icon {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.scroll-y {
+  margin: 0 24rpx;
+  width: 590rpx;
+  overflow: hidden;
+}
+
+.notice text.content {
+  display: block;
+  margin-left: 20rpx;
+  width: auto;
+  height: 65rpx;
+  line-height: 65rpx;
+  font-size: 28rpx;
+  color: #e95207;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: 12s wordsLoop linear infinite normal;
+}
+
+.notice image.notice_close {
+  float: right;
+  width: 20rpx;
+  height: 20rpx;
+}
+
+@keyframes wordsLoop {
+  0% {
+    transform: translateX(200px);
+    -webkit-transform: translateX(200px);
+  }
+
+  100% {
+    transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+  }
+}
+
+@-webkit-keyframes wordsLoop {
+  0% {
+    transform: translateX(200px);
+    -webkit-transform: translateX(200px);
+  }
+
+  100% {
+    transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+  }
+}

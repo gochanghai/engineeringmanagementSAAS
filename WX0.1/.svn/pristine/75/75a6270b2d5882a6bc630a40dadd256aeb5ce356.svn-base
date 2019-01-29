@@ -1,0 +1,54 @@
+<!--新增任务-->
+<view class='container'>
+  <view class='add-task'>
+    <view class='task_item'>
+      <text>项目名称</text>
+      <input type='text' disabled='disabled' confirm-type="next" value="{{selName}}" />
+    </view>
+    <view class='task_item'>
+      <text>任务板块</text>
+      <input type='text' disabled='disabled' confirm-type="next" value='{{messageModule}}' placeholder='请选择' bindtap='actionTypeTap' />
+      <image src='/images/xia.png'></image>
+      <action-sheet hidden="{{actionTypeHidden}}">
+        <block wx:for="{{TypeNameList}}" wx:key="">
+          <action-sheet-item bindtap="selType" data-name="{{item}}">{{item}}</action-sheet-item>
+        </block>
+        <action-sheet-cancel bindtap="hiddenTypeFun">取消</action-sheet-cancel>
+      </action-sheet>
+    </view>
+
+    <view class='task_item' style='padding-bottom:30rpx;'>
+      <text>任务内容</text>
+      <textarea show-confirm-bar bindinput='inputTaskContent' class='textarea_content' placeholder='请输入' />
+    </view>
+
+    <view class='task_item'>
+      <text>任务要求</text>
+      <input disabled='disabled' type='text' confirm-type="next" bindtap='actionAskTap' value='{{messageDemand}}' placeholder='请选择' />
+      <image src='/images/xia.png'></image>
+      <action-sheet hidden="{{actionAskHidden}}">
+        <block wx:for="{{AskList}}" wx:key="">
+          <action-sheet-item bindtap="selAsk" data-name="{{item}}">{{item}}</action-sheet-item>
+        </block>
+        <action-sheet-cancel bindtap="hiddenAskFun">取消</action-sheet-cancel>
+      </action-sheet>
+    </view>
+
+    <view class='task_item'>
+      <text>指派用户</text>
+      <input disabled='disabled' type='text' bindtap='actionUserkTap' confirm-type="next" value='{{selUser}}' placeholder='请选择' />
+      <image src='/images/xia.png'></image>
+      <action-sheet hidden="{{actionUserHidden}}">
+        <block wx:for="{{assignUserList}}" wx:key="">
+          <action-sheet-item bindtap="selUser" data-user="{{item.managerName}}" data-Account="{{item.managerAccount}}">{{item.managerName}}</action-sheet-item>
+        </block>
+        <action-sheet-cancel bindtap="hiddenUserFun">取消</action-sheet-cancel>
+      </action-sheet>
+    </view>
+  </view>
+
+  <view class='btom-btns'>
+    <view class='ignore' bindtap='cancel'>取消</view>
+    <view class='solve' bindtap='newTask'>确定</view>
+  </view>
+</view>

@@ -1,0 +1,127 @@
+const httpJS = require('../utils/http.js');
+const storageJS = require('../utils/storage.js');
+
+
+// 获取项目合同信息
+function getContractInfo(projectID, callback) {
+    let contractInfo = {};
+    let datalist = {
+        user: storageJS.getUser().account,
+        form: "contract",
+        action: "get",
+        distinct: false,
+        fields: [
+            "projectName",
+            "projectAbbreviation",
+            "contractNo",
+            "contractAmount",
+            "ownerApprovalTime",
+            "startFrom",
+            "endAt",
+            "ownerPayPercent",
+            "ownerPayTime",
+            "status",
+        ],
+        page: null,
+        condition: [{
+            field: "projectID",
+            value: projectID,
+            symbol: "="
+        }],
+        group: "projectID"
+    };
+    httpJS.request('/form', datalist, function (res) {
+        if (JSON.parse(res.data).code > 0) {
+            contractInfo = JSON.parse(res.data).datalist.contract[0];
+        }
+        return typeof callback == 'function' && callback(contractInfo);
+    });
+};
+
+// 更新项目合同信息
+function updateContract(contractInfo = { projectName: null, projectAbbreviation: null, contractNo: null, contractAmount: null, ownerApprovalTime: null, startFrom: null, endAt: null, status: null, ownerPayPercent: null, ownerPayTime: null }, callback) {
+    let datalist = {
+        user: storageJS.getUser().account,
+        form: "contract",
+        action: "updateList",
+        fields: {
+            projectName: contractInfo.projectName,
+            projectAbbreviation: contractInfo.projectAbbreviation,
+            contractNo: contractInfo.contractNo,
+            contractAmount: contractInfo.contractAmount,
+            ownerApprovalTime: contractInfo.ownerApprovalTime,
+            startFrom: contractInfo.startFrom,
+            endAt: contractInfo.endAt,
+            ownerPayPercent: contractInfo.ownerPayPercent,
+            ownerPayTime: contractInfo.ownerPayTime,
+            status: contractInfo.status,
+        },
+        page: null,
+        condition: [{
+            field: "objectId",
+            value: contractInfo.objectId,
+            symbol: "="
+        }]
+    };
+    httpJS.request('/form', datalist, function (res) {
+        return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code });
+    });
+}
+
+// 添加项目-项目管理人员+合同
+function addContract(recivedManagerList = [{ managerName: null, telphoneNo: null, managerType: null }], contractInfo = { projectName: null, projectAbbreviation: null }, callback) {
+    let managerList = [];
+    for (let item of recivedManagerList) {
+        if ("" != item.telphoneNo && "" != item.managerName && "" != item.managerType) {
+            let postManagerItem = {
+                projectID: "",
+                managerName: item.managerName,
+                managerAccount: item.managerAccount,
+                telphoneNo: item.telphoneNo,
+                managerType: item.managerType
+            };
+            managerList.push(postManagerItem);
+        }
+    }
+    let datalist = {
+        user: storageJS.getUser().account,
+        form: "contract",
+        action: {
+            contract: "add",
+            manager: "add"
+        },
+        join: [{
+            contract: "projectID",
+            manager: "projectID"
+        }],
+        records: {
+            contract: [{
+                projectName: contractInfo.projectName,
+                projectAbbreviation: contractInfo.projectAbbreviation
+            }],
+            manager: managerList
+        },
+        page: null,
+        condition: null,
+        order: null,
+        group: null
+    };
+    httpJS.request('/lform', datalist, function (res) {
+        if (res.data.code > 0) {
+            let addProjectID = res.data.datalist.contract.contract[0].projectID;
+            let addProjectDatalist = {
+                user: storageJS.getUser().account,
+                projectID: addProjectID
+            };
+            httpJS.request('/user/prbac', addProjectDatalist, function (res) {
+                return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code });
+            });
+        } else return typeof callback == 'function' && callback({ code: -1 });
+    });
+}
+
+module.exports = {
+    getContractInfo: getContractInfo,
+    updateContract: updateContract,
+    addContract: addContract,
+}

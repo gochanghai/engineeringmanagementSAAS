@@ -1,0 +1,49 @@
+const httpJS = require('../utils/http.js');
+const storageJS = require('../utils/storage.js');
+
+// 上传文件
+function fileUpload(projectID, belongIdList, file, fileName, fileBelong, formName, callback) {
+    let formData = {
+        user: storageJS.getUser().account,
+        platform: "WX",
+        projectID: projectID,
+        belongIdList: belongIdList,
+        fileBelong: fileBelong,
+        file: file, //file对象
+    };
+    wx.uploadFile({
+        url: httpJS.serverAddress + "/file/upload/" + formName + "/0", // 仅为示例，非真实的接口地址
+        filePath: file, //要上传文件资源的路径
+        name: fileName, //文件对应的 key，开发者在服务端可以通过这个 key 获取文件的二进制内容
+        formData: formData, //HTTP 请求中其他额外的 form data
+        success(res) { },
+        fail(res) { },
+        complete(res) {
+            return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code })
+        }
+    })
+}
+
+// 下载
+// 缓存文件
+function fileGetPath(formName, formobjId, fileId, fileName,callback ) {
+    let datalist = {
+        user: storageJS.getUser().account,
+        platform: "WX",
+        form: formName, //表单模版名
+        objectID: formobjId, //文件所属表单ID
+        fileId: fileId,
+        fileName: fileName
+    };
+    httpJS.request('/file/download/' + formName + "/" + formobjId, datalist, function (res) {
+        if (res.data.code > 0) {
+            return typeof callback == 'function' && callback({ fileURL: res.data.file.url })
+        }
+    })
+}
+
+
+module.exports = {
+    fileUpload: fileUpload,
+    fileGetPath: fileGetPath,
+}

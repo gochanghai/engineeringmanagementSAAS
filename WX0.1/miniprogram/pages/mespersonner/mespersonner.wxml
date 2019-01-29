@@ -1,0 +1,37 @@
+<!--消息处理(人员)Pages-->
+<view class='container'>
+  <view class='group-type'>未教育人员</view>
+  <view class='all_select'><checkbox style="transform:scale(.7);margin-top:0rpx;" />全选</view>
+  <view class='group-list'>
+    <view class='group-item'>
+      <checkbox style="transform:scale(.7);margin-top:0rpx;" />
+      <view class='content'>
+        <view style='width: 42%;'>班组：消防水</view>
+        <view style='width: 58%;'>姓名：test1</view>
+      </view>
+    </view>
+    <view class='group-item'>
+      <checkbox style="transform:scale(.7);margin-top:0rpx;" />
+      <view class='content'>
+        <view style='width: 42%;'>班组：消防水</view>
+        <view style='width: 58%;'>姓名：test1</view>
+      </view>
+    </view>
+    <view class='group-item'>
+      <checkbox style="transform:scale(.7);margin-top:0rpx;" />
+      <view class='content'>
+        <view style='width: 42%;'>班组：消防水</view>
+        <view style='width: 58%;'>姓名：test1</view>
+      </view>
+    </view>
+  </view>
+
+   <view class='upload_file'>
+    <image src='/images/sc.png'></image>
+    <text>上传附件</text>
+  </view>
+  <view class='btom-btns'>
+    <view class='ignore' bindtap='cancel'>取消</view>
+    <view class='solve' bindtap='commitOutputVal'>确定</view>
+  </view>
+</view>

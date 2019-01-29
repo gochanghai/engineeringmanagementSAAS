@@ -1,0 +1,17 @@
+// pages/outputvalregister/outputvalregister.js
+Page({
+  data: {
+    updateAt: '请选择日期',
+    confirmdateAt: '请选择日期'
+  },
+
+  onLoad: function (options) {
+
+  },
+
+  cancel() {
+    wx.navigateBack({
+      delta: 1
+    })
+  }
+})

@@ -1,0 +1,125 @@
+// pages/projectview/projectview.js
+const projectlistJS = require('../../action/projectlist.js');
+const messageCenterJS = require('../../action/messageCenter.js');
+Page({
+  data: {
+    scrollY: false,
+    progressRadius: '40',
+    swiperIndex: 0,
+    projectList: [{
+      id: 0,
+      projectName: '腾讯大厦',
+    }, {
+      id: 1,
+      projectName: '汉京大厦',
+    }, {
+      id: 2,
+      projectName: '达实二扩',
+    }],
+
+    activeList: {
+      imagesel: '/images/building_sel.png',
+      image: '/images/building_nor.png',
+      color: '#fff',
+      fontSize: '27rpx'
+    },
+    banMove: 'ban-move'
+  },
+
+  onLoad: function(options) {
+    var _this = this;
+
+    // 获取项目列表数据
+    projectlistJS.getProjectList(function(res) {
+      var projectList = res;
+      console.log(projectList);
+      console.log("projectPageList" + projectList);
+      _this.setData({
+        projectList: projectList,
+      });
+
+      // 获取选中的项目信息
+      let projectInfo = _this.data.projectList[_this.data.swiperIndex];
+      _this.setData({
+        projectInfo: projectInfo,
+      });
+    })
+  },
+
+  selProject(event) {
+    let index = event.currentTarget.dataset.index;
+    let projectInfo = this.data.projectList[index];
+    this.setData({
+      swiperIndex: index,
+      projectInfo: projectInfo
+    })
+  },
+
+  currentFun(event) {
+    this.setData({
+      swiperIndex: event.detail.current
+    })
+  },
+
+  navPersonnel(event) {
+    let mtype = event.currentTarget.dataset.type;
+    // 获取选择的项目ID
+    let projectID = this.data.projectList[this.data.swiperIndex].projectID;
+    console.log("projectID" + projectID);
+    wx.navigateTo({
+      url: '/pages/managepersonnel/managepersonnel?typeID=' + mtype + "&projectID=" + projectID
+    })
+  },
+
+  catchTouchMove(res) {
+    return false
+  },
+
+  addProject() {
+    wx.navigateTo({
+      url: '/pages/addproject/addproject',
+    })
+  },
+
+  projectSet() {
+    wx.navigateTo({
+      url: '/pages/projectsetting/projectsetting',
+    })
+  },
+
+  projectNode() {
+    wx.navigateTo({
+      url: '/pages/projectnode/projectnode',
+    })
+  },
+
+  declareTime() {
+    wx.navigateTo({
+      url: '/pages/declaretime/declaretime',
+    })
+  },
+
+  confirmValue() {
+    wx.navigateTo({
+      url: '/pages/confirmvalue/confirmvalue',
+    })
+  },
+
+  receivable() {
+    wx.navigateTo({
+      url: '/pages/receivable/receivable',
+    })
+  },
+
+  messageCenter() {
+    wx.switchTab({
+      url: '/pages/message/message',
+    })
+  },
+
+  personnerFile() {
+    wx.navigateTo({
+      url: '/pages/uploadfile/uploadfile',
+    })
+  }
+})

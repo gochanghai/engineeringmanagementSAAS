@@ -1,0 +1,206 @@
+// miniprogram/testpages/test/test.js
+const httpJS = require('../../utils/http.js');
+const messageCenterJS = require('../../action/messageCenter.js');
+const projectlistJS = require('../../action/projectlist.js');
+const statisticalJS = require('../../action/statistical.js');
+const personnelJS = require('../../action/personnel.js');
+const calendarJS = require('../../action/calendar.js');
+const fileJS = require('../../action/file.js');
+const progressJS = require('../../action/progress.js');
+const managerJS = require('../../action/manager.js');
+const workerJS = require('../../action/worker.js');
+const fireGroupJS = require('../../action/fireGroup.js');
+
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    // ------------------------------messageCenter消息中心-------------------------------
+    // 所有项目风险消息
+    // messageCenterJS.mountedRiskMessage(function (res){
+    //   var riskmessage = res;
+    //   console.log("riskmessage");
+    //   console.log(riskmessage);
+    // });
+    // 所有项目任务消息
+    // messageCenterJS.mountedTaskMessage(function (res){
+    //   var taskmessage = res;
+    //   console.log("taskmessage");
+    //   console.log(taskmessage);
+    // });
+    // ------------------------------messageCenter消息中心-------------------------------
+
+
+    // --------------------------------projectlist项目列表页-------------------------------
+    // 获取项目列表及详细数据
+    // projectlistJS.getProjectList(function(res){
+    //   var projectPageList = res;
+    //   console.log("projectPageList");
+    //   console.log(projectPageList);
+    // })
+    // --------------------------------projectlist项目列表页-------------------------------
+
+    // -----------------------------------statistical首页--------------------------------
+    // 获取风险消息
+    // statisticalJS.getRiskMessage(function (res) {
+    //   var riskMessageList = res;
+    //   console.log("riskMessageList");
+    //   console.log(riskMessageList);
+    // });
+    // 获取任务消息
+    // statisticalJS.getTaskMessage(function (res) {
+    //   var taskMessageList = res;
+    //   console.log("taskMessageList");
+    //   console.log(taskMessageList);
+    // });
+    // 合计信息
+    // statisticalJS.sumProjectMoney(function(res){
+    //   var sumgroup = res;
+    //   console.log("sumgroup");
+    //   console.log(sumgroup);
+    // })
+    // 产值饼图
+    // statisticalJS.getGraphOutputValue(function(res){
+    //   var graphOutputValue = res;
+    //     console.log("graphOutputValue");
+    //     console.log(graphOutputValue);
+    // })
+    // 人员饼图
+    // statisticalJS.getGraphSecurity(function (res) {
+    //   var graphSecurity = res;
+    //   console.log("graphSecurity");
+    //   console.log(graphSecurity);
+    // })
+    // -----------------------------------statistical首页--------------------------------
+
+    // -----------------------------------personnel项目人员---------------------------------
+    // 获取施工人员列表
+    // personnelJS.getConstructionList('SHXF-201810102',function(res){
+    //   var construction = res;
+    //   console.log(construction);
+    //   console.log("construction");
+    // })
+    // 获取班组人员列表
+    // personnelJS.getGroupList('SHXF-201810102',function(res){
+    //   var groupList = res;
+    //   console.log(groupList);
+    //   console.log("groupList");
+    // })
+    // 获取管理人员列表数据
+    // personnelJS.getManagerList('SHXF-201810102',function(res){
+    //   var managerlist = res;
+    //   console.log(managerlist);
+    //   console.log("managerlist");
+    // })
+    // -----------------------------------personnel项目人员---------------------------------
+
+    // ---------------------------------fileJS文件操作-------------------------------------
+    // 文件上传
+    // wx.chooseImage({
+    //   count: 1, //只允许上传一张图片
+    //   success(res) {
+    //       console.log(res);
+    //       let tempFilePaths = res.tempFilePaths;
+    //       fileJS.fileUpload("SHXF-201810102",'1',tempFilePaths[0],'文件.jpg','确认产值',"confirmvalue",function(res){
+    //         console.log(res);
+    //       })
+    //   }
+    // })
+    // 文件下载
+    //   fileJS.fileGetPath('confirmvalue', '37',"81", "wxe1b5f774eaa1913c.o6zAJs2BSxyXus59ulSeA-rlHAe4.yL1IApkDAO74e5df9ad27a8438e876b094061791b68e.jpg", function (res) {
+    //     console.log(res);
+    //     const downloadTask = wx.downloadFile({
+    //       url: res.fileURL,
+    //       success(res) {
+    //         // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+    //         console.log(res);
+    //         if (res.statusCode === 200) {
+    //           console.log("下载成功");
+    //         }
+    //       },
+    //       fail(res) { }
+    //     })
+    //     downloadTask.onProgressUpdate((res) => {
+    //       console.log('下载进度', res.progress)
+    //       console.log('已经下载的数据长度', res.totalBytesWritten)
+    //       console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
+    //     })
+    //   })
+    // ---------------------------------fileJS文件操作-------------------------------------
+
+    // ---------------------------------calendar万年历-------------------------------------
+    // 按日统计消息数据
+    // calendarJS.countCelendarMessage(function(res){
+    //   console.log(res);
+    // })
+    // ---------------------------------calendar万年历-------------------------------------
+
+    // ----------------------------------progress进度页------------------------------------
+    // 产值列表
+    // progressJS.getConfirmValueList('SHXF-201810102', function (res) {
+    //   console.log(res);
+    // })
+    // 产值单条
+    // progressJS.getConfirmValuePage('1',function(res){
+    //   console.log(res);
+    // })
+    // 回款列表
+    // progressJS.getRecievedPayList('SHXF-201810102', function (res) {
+    //   console.log(res);
+    // })
+    // 回款单条
+    // progressJS.getRecievedPayPage('1',function(res){
+    //   console.log(res);
+    // })
+    // 更新单条产值
+    // let confirmvalueRow = {}
+    // progressJS.updateConfirmValue(confirmvalueRow, function (res) {
+    //   console.log(res)
+    // })
+    // 更新单条回款
+    // let recievedPay = { }
+    // progressJS.updateRecievedPay(recievedPay,function(res){
+    //   console.log(res);
+    // })
+    // ----------------------------------progress进度页------------------------------------
+
+    // ----------------------------------managerJS管理人员---------------------------------
+    // 新增管理人员
+    // let manager = {};
+    // managerJS.addManage(manager,function(res){
+    //   console.log(res);
+    // })
+    // ----------------------------------managerJS管理人员---------------------------------
+
+    // ----------------------------------worker劳务施工人员--------------------------------
+    // 新增劳务施工人员
+    // let worker = {};
+    // workerJS.addWorker(worker,function(res){
+    //   console.log(res);
+    // })
+    // ----------------------------------worker劳务施工人员--------------------------------
+
+    // -----------------------------------fireGroup消防班组--------------------------------
+    // 消防班组列表
+    // fireGroupJS.getGroupList('SHXF-201810102',function(res){
+    //   console.log(res)
+    // })
+    // 新增班组
+    // let fireGroup = {};
+    // fireGroupJS.addFireGroup(fireGroup,function(res){
+    //   console.log(res);
+    // })
+    // -----------------------------------fireGroup消防班组--------------------------------
+
+  },
+
+})

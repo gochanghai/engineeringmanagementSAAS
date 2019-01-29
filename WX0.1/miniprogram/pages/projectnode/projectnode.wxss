@@ -1,0 +1,92 @@
+/* pages/projectnode/projectnode.wxss */
+
+.information_item {
+  padding: 30rpx 0;
+  margin: 0rpx auto;
+  width: 92%;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.information_item view.name {
+  font-size: 32rpx;
+  color: #333;
+}
+
+.information_item view text {
+  display: block;
+  line-height: 50rpx;
+}
+
+.information_item view.date {
+  padding: 0 20rpx;
+  height: 150rpx;
+  flex: 1;
+  padding-right: 10rpx;
+}
+
+.picker {
+  float: right;
+  margin-bottom: 20rpx;
+  padding-left: 90rpx;
+  font-size: 32rpx;
+  width: 280rpx;
+  color: #999;
+  border: 1px solid #f0f0f0;
+  background-color: #f0f0f0;
+  line-height: 60rpx;
+  display: flex;
+  align-items: center;
+  border-radius: 10rpx;
+}
+
+.down_img {
+  margin-left: 20rpx;
+  float: right;
+  width: 20rpx;
+  height: 14rpx;
+}
+
+.btom-btns {
+  margin: 0 auto;
+  width: 80%;
+  padding-bottom: 50rpx;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 40rpx;
+}
+
+.btom-btns view {
+  width: 190rpx;
+  height: 70rpx;
+  text-align: center;
+  line-height: 70rpx;
+  border-radius: 60rpx;
+  font-size: 31rpx;
+}
+
+.btom-btns view.ignore {
+  border: 1px solid #b5b5b5;
+  color: #666;
+}
+
+.btom-btns view.solve {
+  background-color: #e95207;
+  border: 1px solid #e95207;
+  color: #fff;
+}
+
+.select {
+  padding: 30rpx 0;
+  margin: 0 auto;
+  width: 92%;
+  font-size: 32rpx;
+  color: #666;
+}
+
+.select text {
+  padding-left: 24rpx;
+  font-size: 32rpx;
+  color: #39f;
+}

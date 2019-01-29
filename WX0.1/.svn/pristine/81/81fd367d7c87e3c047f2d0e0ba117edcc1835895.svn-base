@@ -1,0 +1,63 @@
+const httpJS = require('../utils/http.js');
+const storageJS = require('../utils/storage.js');
+
+
+let calendarData = [];
+
+function countCelendarMessage(callback) {
+    let projectList = storageJS.getProjectList();
+    let ids = "";
+    for (let item of projectList) {
+        ids += item.projectID + ",";
+    }
+    //去掉最后一个逗号(如果不需要去掉，就不用写)
+    if (ids.length > 0) {
+        ids = ids.substr(0, ids.length - 1);
+    }
+    let datalist = {
+        user: storageJS.getUser().account,
+        action: "dStatis",
+        form: "messagedrive",
+        fields: [
+            "sum(if(messageModule = 'confirmValue',1,0)) as confirmMessageCount",
+            "sum(if(messageModule = 'recievedPay',1,0)) as recievedMessageCount",
+            "sum(if(messageModule = 'incloseFile',1,0)) as incloseMessageCount",
+            "sum(if(messageModule = 'insuranceFile',1,0)) as insuranceMessageCount",
+            "sum(if(messageModule = 'educationFile',1,0)) as educationMessageCount"
+        ],
+        page: null,
+        dField: "createAt",
+        statisType: "Day",
+        condition: [
+            {
+                field: "projectID",
+                symbol: "=",
+                value: ids
+            }
+        ]
+    };
+    httpJS.request('/form', datalist, function (res) {
+        console.log("res----------------");
+        console.log(JSON.parse(res.data).datalist);
+        try {
+            for (let item of JSON.parse(res.data).datalist.messagedrive) {
+                let events = {
+                    date: item.Date,
+                    countData: {
+                        confirmValue: item.confirmMessageCount,
+                        recievedPay: item.recievedMessageCount,
+                        incloseFile: item.incloseMessageCount,
+                        insuranceFile: item.insuranceMessageCount,
+                        educationFile: item.educationMessageCount,
+                    }
+                };
+                calendarData.push(events);
+            }
+        } catch (error) { }
+        return typeof callback == 'function' && callback(calendarData)
+    });
+}
+
+module.exports = {
+    countCelendarMessage: countCelendarMessage,
+}

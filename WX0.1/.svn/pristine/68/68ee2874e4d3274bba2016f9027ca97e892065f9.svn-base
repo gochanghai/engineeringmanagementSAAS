@@ -1,0 +1,82 @@
+// pages/outputvalregister/outputvalregister.js
+Page({
+  data: {
+    valueUploadAt: '请选择日期',
+    confirmAt: '请选择日期',
+    outputValue: '',
+    receivableAmount: '',
+  },
+
+  onLoad: function(options) {
+    // 获取项目ID
+    let projectID = options.projectID;
+    this.setData({
+      formId: options.formId,
+      projectID: options.projectID,
+    })
+  },
+
+  // 产值表上传时间输入
+  InputValueUploadAt(e) {
+    console.log(e.detail.value);
+    this.setData({
+      valueUploadAt: e.detail.value
+    })
+  },
+  // 产值输入
+  InputOutputValue(e) {
+    console.log(e.detail.value);
+    this.setData({
+      outputValue: e.detail.value
+    })
+  },
+  // 可收款输入
+  InputReceivableAmount(e) {
+    console.log(e.detail.value);
+    this.setData({
+      receivableAmount: e.detail.value
+    })
+  },
+  // 甲方确认时间输入
+  InputConfirmAt(e) {
+    console.log(e.detail.value);
+    this.setData({
+      confirmAt: e.detail.value
+    })
+  },
+
+
+  cancel() {
+    wx.navigateBack({
+      delta: 1
+    })
+  },
+
+  // 提交数据
+  commitOutputVal() {
+    wx.showModal({
+      title: '提示',
+      content: '确定提交吗？',
+      confirmColor: '#F0880C',
+      success(res) {
+        if (res.confirm) {
+          console.log('Commit');
+          wx.showToast({
+            title: '提交成功',
+            icon: 'success',
+            duration: 2000,
+            success() {
+              setTimeout(() => {
+                wx.navigateBack({
+                  delta: '1'
+                })
+              }, 1000)
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  }
+})

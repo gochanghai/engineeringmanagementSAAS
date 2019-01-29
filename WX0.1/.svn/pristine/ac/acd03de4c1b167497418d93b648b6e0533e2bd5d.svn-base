@@ -1,0 +1,57 @@
+<!--回款登记-->
+<view class='container'>
+  <view class='information'>
+    <view class='information_item'>
+      <text>计划回款时间</text>
+      <picker mode="date" start="2010-01-01" end="2029-01-01" bindchange="InputPlanReceivAt">
+        <view class="picker" style='font-size:32rpx; color:#999;'>
+          {{planReceivAt}}
+        </view>
+      </picker>
+      <image src='/images/xia.png' class='down_img'></image>
+    </view>
+    <view class='information_item'>
+      <text>本期可收款金额 (元)</text>
+      <input type='text' confirm-type="next" bindinput='InputTheoryReceivAmount' placeholder-class='input_class' />
+    </view>
+    <view class='information_item'>
+      <text>回款金额 (天)</text>
+      <input type='text' confirm-type="next" bindinput='InputActualReceivAmount' placeholder-class='input_class' />
+    </view>
+  </view>
+
+
+  <!-- 附件列表 -->
+  <view class='file_list'>
+    <text class='file_title'>附件列表</text>
+    <view class='file_item'>
+      <view class='file_name'>
+        难不成会计师.png
+      </view>
+      <view class='file_download'>
+        <text>下载</text>
+      </view>
+    </view>
+    <view class='file_item'>
+      <view class='file_name'>
+        难不成会计师.png
+      </view>
+      <view class='file_download'>
+        <text>下载</text>
+      </view>
+    </view>
+    <view class='file_item'>
+      <view class='file_name'>
+        难不成会计师.png
+      </view>
+      <view class='file_download'>
+        <text>下载</text>
+      </view>
+    </view>
+  </view>
+  <view class='btom-btns'>
+    <view class='ignore' bindtap='cancel'>取 消</view>
+    <view class='solve' bindtap="uploadFile">上传附件</view>
+    <view class='solve' bindtap='commitOutputVal'>确 定</view>
+  </view>
+</view>

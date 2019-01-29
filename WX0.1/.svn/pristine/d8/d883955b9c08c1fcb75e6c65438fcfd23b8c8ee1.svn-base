@@ -1,0 +1,187 @@
+// pages/outputvalregister/outputvalregister.js
+const confirmvalueJS = require('../../action/confirmvalue.js');
+const fileJS = require('../../action/file.js');
+const fileUtil = require('../../utils/fileUtil.js');
+Page({
+  data: {
+    valueUploadAt: '请选择日期',
+    confirmAt: '请选择日期',
+    outputValue: '',
+    receivableAmount: '',
+    fileName: "未选择文件",
+    fileList: [],
+  },
+
+  onLoad: function (options) {
+    // 获取数据
+    this.setData({
+      objectId: options.objectId,
+      formId: options.formId,
+      projectID: options.projectID,
+      receivableAmount: options.receivableAmount,
+      outputValue: options.outputValue,
+      valueUploadAt: options.valueUploadAt,
+      confirmAt: options.confirmAt,
+      formId: options.formId,
+    });
+    this.getFileList();
+    this.reviewFile();
+  },
+
+  // 产值表上传时间输入
+  InputValueUploadAt(e) {
+    console.log(e.detail.value);
+    this.setData({
+      valueUploadAt: e.detail.value
+    })
+  },
+  // 产值输入
+  InputOutputValue(e) {
+    console.log(e.detail.value);
+    this.setData({
+      outputValue: e.detail.value
+    })
+  },
+  // 可收款输入
+  InputReceivableAmount(e) {
+    console.log(e.detail.value);
+    this.setData({
+      receivableAmount: e.detail.value
+    })
+  },
+  // 甲方确认时间输入
+  InputConfirmAt(e) {
+    console.log(e.detail.value);
+    this.setData({
+      confirmAt: e.detail.value
+    })
+  },
+
+
+  cancel() {
+    wx.navigateBack({
+      delta: 1
+    })
+  },
+
+  // 提交数据
+  commitOutputVal() {
+
+    // 获取数据
+    let confirmvalue = {
+      confirmAt: this.data.confirmAt,
+      outputValue: this.data.outputValue,
+      receivableAmount: this.data.receivableAmount,
+      valueUploadAt: this.data.valueUploadAt,
+      formId: this.data.formId,
+      projectID: this.data.projectID,
+    }
+    wx.showModal({
+      title: '提示',
+      content: '确定提交吗？',
+      confirmColor: '#F0880C',
+      success(res) {
+        if (res.confirm) {
+          console.log('Commit');
+          // 更新产值登记          
+          confirmvalueJS.updateConfirmvalue(confirmvalue, function (res) {
+            console.log(res)
+          });
+          wx.showToast({
+            title: '提交成功',
+            icon: 'success',
+            duration: 2000,
+            success() {
+              setTimeout(() => {
+                wx.navigateBack({
+                  delta: '1'
+                })
+              }, 1000)
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+
+  // 上传附件
+  uploadFile() {
+    var _this = this;
+    wx.chooseImage({
+      count: 1, //张数， 默认9
+      sourceType: ['album', 'camera'], // 来源是相册、相机
+      success: function (res) {
+        console.log(res);
+      },
+    })
+  },
+  // 获取文件列表
+  getFileList() {
+    console.log("getFileList");
+    let _this = this;
+    let fileInfo = {
+      projectID: this.data.projectID,
+      formName: 'confirmvalue',
+      belongIdList: this.data.formId,
+      fileBelong: '确认产值',
+    }
+    // let fileInfo = {
+    //   projectID: "SHXF-201810102",
+    //   formName: 'confirmvalue',
+    //   belongIdList: "7bbff459-a030-442f-abbc-07b7a8595cd5",
+    //   fileBelong: '确认产值',
+    // }
+    fileJS.getFileList(fileInfo, function (res) {
+      _this.data.fileList = res;
+      console.log(_this.data.fileList)
+    })
+  },
+
+  // 获取文件数据并预览
+  reviewFile(formobjId,fileId,fileName) {
+    let fileInfo = {
+      formName: "confirmvalue",
+      formobjId: formobjId,// 产值表objectId
+      fileId: fileId,// 文件的fileId
+      fileName: fileName, // 文件全名
+    }
+    // 测试数据
+    // fileName = "锻炼.gif";
+    // let fileInfo = {
+    //   formName: "confirmvalue",
+    //   formobjId: "7bbff459-a030-442f-abbc-07b7a8595cd5",
+    //   fileId: "128",
+    //   fileName: fileName
+    // }
+    fileJS.fileGetPath(fileInfo, function (res) {
+      console.log(res.fileURL);
+      const downloadTask = wx.downloadFile({
+        url: res.fileURL, 
+        success(res) {
+          // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+          console.log(res);
+          if (res.statusCode === 200) {
+            // .....................................preview文件预览.................................     
+            // 预览-2019/1/22
+            let previewFileInfo = {
+              fileName: fileName,
+              filePath: res.tempFilePath,
+              fileType: fileUtil.getSux(fileName),
+            }
+            fileJS.previewFile(previewFileInfo)
+            // .....................................preview文件预览.................................     
+          }
+        },
+        fail(res) { }
+      })
+      downloadTask.onProgressUpdate((res) => {
+        console.log('下载进度', res.progress)
+        console.log('已经下载的数据长度', res.totalBytesWritten)
+        console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
+      })
+    })
+  }
+
+})

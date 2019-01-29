@@ -1,0 +1,90 @@
+<!--首页pages-->
+<view class='container'>
+  <view class='top-info'>
+    <image src='/images/home_bg.png'></image>
+    <view class='top-total'>
+      <text class='txt'>可收款总额</text>
+      <text class='val'>300,090,000.00</text>
+    </view>
+  </view>
+
+  <view class='top-nav'>
+    <view class='nav-item' bindtap='navTask'>
+      <image src='/images/home_renwu.png'></image>
+      <text>任务</text>
+    </view>
+    <view class='nav-item' bindtap='navMes'>
+      <image src='/images/home_news.png'></image>
+      <text>消息</text>
+    </view>
+    <view class='nav-item' bindtap='navComfirmValue'>
+      <image src='/images/home_chanzhi.png'></image>
+      <text>总产值</text>
+    </view>
+    <view class='nav-item' bindtap='navContract'>
+      <image src='/images/home_hetong.png'></image>
+      <text>合同额</text>
+    </view>
+    <view class='nav-item' bindtap='navReceivable'>
+      <image src='/images/home_huikuan.png'></image>
+      <text>回款额</text>
+    </view>
+  </view>
+
+  <view class='data-charts'>
+    <view class='visua' style=' position: relative;'>
+      <text class='title'><text style='color:#FF9858;font-weight:bold'>丨</text>产值</text>
+      <canvas canvas-id="Canvas1" class="canvas1" bindtap='refreshData' data-canvas='产值'></canvas>
+      <view class='zzc'></view>
+    </view>
+    <view class='visua'>
+      <text class='title'><text style='color:#FF9858;font-weight:bold'>丨</text>安全</text>
+      <view class='con'>
+        <canvas canvas-id="Canvas2" class="canvas2" bindtap='refreshData' data-canvas='安全'></canvas>
+        <view class='content-info'>
+          <view class='info-item'>
+            <text style='background-color:#B122E6'></text>
+            <view>安全人数</view>
+          </view>
+          <view class='info-item'>
+            <text style='background-color:#F5317F'></text>
+            <view>未交底人数</view>
+          </view>
+          <view class='info-item'>
+            <text style='background-color:#FF8359'></text>
+            <view>未教育人数</view>
+          </view>
+          <view class='info-item'>
+            <text style='background-color:#3399FF'></text>
+            <view>未参保人数</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class='visua'>
+      <text class='title'><text style='color:#FF9858;font-weight:bold'>丨</text>进度</text>
+      <view class='con'>
+        <canvas canvas-id="Canvas3" class="canvas2 canvas3" bindtap='refreshData' data-canvas='进度'></canvas>
+        <view class='content-info'>
+          <view class='info-item'>
+            <text style='background-color:#B122E6'></text>
+            <view>未完成产值</view>
+          </view>
+          <view class='info-item'>
+            <text style='background-color:#F5317F'></text>
+            <view>未确认产值</view>
+          </view>
+          <view class='info-item'>
+            <text style='background-color:#FF8359'></text>
+            <view>累计回款</view>
+          </view>
+          <view class='info-item'>
+            <text style='background-color:#3399FF'></text>
+            <view>可回款</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
