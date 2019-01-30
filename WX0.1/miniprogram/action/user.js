@@ -31,6 +31,23 @@ function signIn(account = null, pwd = null, callback) {
     })
 }
 
+function restoreProjectList(callback) {
+    if (null != storageJS.getUser().account && 'undefined' != typeof (storageJS.getUser().account)) {
+        let datalist = {
+            user: storageJS.getUser().account
+        }
+        httpJS.request('/user/plist', datalist, function (res) {
+            if (res.data.code > 0) {
+                storageJS.setProjectList(res.data.datalist.manager);
+                return typeof callback == 'function' && callback({ code: res.data.code, reason: "ProjectList Recaching Successfully", projectList: storageJS.getProjectList() })
+            }else return typeof callback == 'function' && callback({ code: res.data.code })
+        })
+    }
+    else return typeof callback == 'function' && callback({ code: -1, reason: "user's not logined!" })
+
+};
+
+
 // 修改密码
 function modifyPWD(oldPassword = null, newPassword = null, callback) {
     let datalist = {
@@ -56,4 +73,5 @@ function modifyPWD(oldPassword = null, newPassword = null, callback) {
 module.exports = {
     signIn: signIn,
     modifyPWD: modifyPWD,
+    restoreProjectList: restoreProjectList,
 }

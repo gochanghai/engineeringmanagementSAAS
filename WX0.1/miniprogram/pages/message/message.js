@@ -17,10 +17,14 @@ Page({
   //下拉刷新
   onPullDownRefresh: function() {
     this.getMessageList();
+    // 获取消息总数
+    this.getCountMessageNo();
   },
   // 加载数据
   onLoad: function(options) {
     this.getMessageList();
+    // 获取消息总数
+    this.getCountMessageNo();
   },
 
 
@@ -42,6 +46,18 @@ Page({
       });
     })
   },
+  // 获取消息总数
+  getCountMessageNo() {
+    let _this = this;
+    messageCenterJS.countMessageNo(function (countTotal) {
+      if(countTotal > 0){
+        wx.setTabBarBadge({
+          index: 3,
+          text: '' + countTotal
+        })
+      }      
+    })
+  },
 
   downSwitch(event) {
     console.log(event.currentTarget.id);
@@ -58,13 +74,16 @@ Page({
   // 跳转到消息详情页
   navMesSlove(event) {
     let message = event.currentTarget.dataset.index;
-    console.log("新建" + message);``
+    console.log("新建" + message);
     wx.navigateTo({
       url: '/pages/messagesolve/messagesolve?formId=' + message.formId + 
         "&messageType=" + message.messageType + 
         "&createAt=" + message.createAt + 
         "&messageModule=" + message.messageModule + 
         "&message=" + message.message + 
+        "&projectAbbreviation=" + message.projectAbbreviation + 
+        "&status=" + message.status + 
+        "&pointToID=" + message.pointToID + 
         "&projectID=" + message.projectID,
     })
   },

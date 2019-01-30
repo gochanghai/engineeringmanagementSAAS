@@ -34,7 +34,7 @@
             <!-- 管理人员列表 -->
             <view class='information' style='height:{{WinHeightCon}}'>
               <scroll-view scroll-y style='height:{{WinHeightCon}}'>
-                <view wx:for="{{managerList}}">
+                <view wx:for="{{managerList}}" class='cell-row'>
                   <view class='information-item'>
                     <text>{{item.managerName}}</text>
                     <view>职位：{{item.managerType}}</view>
@@ -63,7 +63,7 @@
             <!-- 施工人员列表 -->
             <view class='information' style='height:{{WinHeightCon}}'>
               <scroll-view scroll-y style='height:{{WinHeightCon}}'>
-                <view wx:for="{{constructionList}}">
+                <view wx:for="{{constructionList}}" class='cell-row'>
                   <view class='information-item'>
                     <text>{{item.name}}</text>
                     <view>班组：{{item.groupName}}</view>
@@ -95,7 +95,7 @@
             <!-- 班组列表 -->
             <view class='information' style='height:{{WinHeightCon}}'>
               <scroll-view scroll-y style='height:{{WinHeightCon}}'>
-                <view wx:for="{{groupList}}">
+                <view wx:for="{{groupList}}" class='cell-row'>
                   <view class='information-item'>
                     <text>消防水：{{item.groupName}}</text>
                     <view>施工人数：{{item.totalNumber}}</view>

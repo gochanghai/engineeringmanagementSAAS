@@ -7,7 +7,7 @@ Page({
    */
   data: {
     managerTypes: [{
-      label: '商经经理',
+      label: '项目经理',
       id: '0'
     }, {
       label: '安全员',

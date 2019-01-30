@@ -4,7 +4,7 @@
     <view class='task_item'>
       <text>合同起始时间</text>
       <picker mode="date" start="2010-01-01" disabled='1' end="2029-01-01" bindchange="InputBeginDate">
-        <view class="picker" style='font-size:32rpx; color:#999;'>
+        <view class="picker" style='font-size:30rpx; color:#999;'>
           {{contractInfo.startFrom}}
         </view>
       </picker>
@@ -13,7 +13,7 @@
     <view class='task_item'>
       <text>合同终止时间</text>
       <picker mode="date" start="2010-01-01" disabled='1' end="2029-01-01" bindchange="InputEndDate">
-        <view class="picker" style='font-size:32rpx; color:#999;'>
+        <view class="picker" style='font-size:30rpx; color:#999;'>
           {{contractInfo.endAt}}
         </view>
       </picker>
@@ -22,30 +22,30 @@
 
     <view class='task_item'>
       <text>申报时间类型</text>
-      <input type='text' confirm-type="next" value="" disabled="{{disabled}}" />
-      <view bindtap='declareTap'>
+      <input type='number' confirm-type="next" bindinput="dayBindInput"/>
+      <view style='font-size:30rpx; color:#999;width:50rpx;'>
         {{Day}}
-        <image src='/images/xia.png'></image>
       </view>
-      <action-sheet hidden="{{declareHidden}}">
+      <!-- <image src='/images/xia.png'></image> -->
+      <!-- <action-sheet hidden="{{declareHidden}}">
         <block wx:for="{{declareType}}" wx:key="">
           <action-sheet-item bindtap="selType" data-name="{{item.label}}" data-value="{{item.value}}">{{item.label}}</action-sheet-item>
         </block>
         <action-sheet-cancel bindtap="hiddenDeclareFun">取消</action-sheet-cancel>
-      </action-sheet>
+      </action-sheet> -->
     </view>
 
     <!-- 申报时间表 -->
     <view class='declareList'>
       <view class='title'>
         <text>申报时间表</text>
-        <text style='color:#3399FF' bindtap='addDeclareTime'>+增加</text>
+        <text style='color:#3399FF;font-size:30rpx;' bindtap='addDeclareTime'>+增加</text>
       </view>
       <scroll-view style='height:{{WinHeight}};margin-top:20rpx;' scroll-y>
         <view class='day_container'>
           <view class='container-item' wx:for="{{declaretimeList}}" wx:if="{{item.status != 'deleteDetail'}}">
             <view class='date-info'>{{item.dateNode}}
-              <image src='/images/delete.png' data-index="{{index}}"  bindtap='deleteDeclareTime'></image>
+              <image src='/images/delete.png' data-index="{{index}}" bindtap='deleteDeclareTime'></image>
             </view>
             <view class='line'></view>
             <view class='content'>备注，{{item.nodeDeclare}}</view>

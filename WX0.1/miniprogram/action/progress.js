@@ -17,6 +17,7 @@ function getConfirmValueList(projectID, callback) {
                 "valueUploadAt",
                 "outputValue",
                 "status",
+                "progressNodeID",
                 "receivableAmount"
             ],
             contract: ["projectAbbreviation","ownerPayTime", "ownerPayPercent"],
@@ -287,7 +288,7 @@ function updateRecievedPay(recievedPay = { actualReceivAmount: null, actualRecei
         source: null,
         batchList: postList
     };
-    this.$post("/sbatch", datalist).then(res => {
+    httpJS.request('/sbatch', datalist, function (res) {
         return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code })
     });
 };
@@ -296,6 +297,6 @@ module.exports = {
     getConfirmValueList: getConfirmValueList,
     getConfirmValuePage: getConfirmValuePage,
     getRecievedPayPage: getRecievedPayPage,
-    updateConfirmValue: updateConfirmValue,
-    updateRecievedPay: updateRecievedPay,
+    // updateConfirmValue: updateConfirmValue,
+    // updateRecievedPay: updateRecievedPay,
 }

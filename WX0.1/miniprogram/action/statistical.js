@@ -189,7 +189,7 @@ function sumProjectMoney(callback) {
   };
   httpJS.request('/sbatch', datalist, function (res) {
     for (var i = 0; i < projectIDList.length; i++) {
-      let resPage = JSON.parse(res.data).datalist[projectIDList[i]];;
+      let resPage = JSON.parse(res.data).datalist[projectIDList[i]];
       // console.log(resPage.contract[0].contractAmount);
       // console.log(resPage.confirmvalue[0].sumOutputValue);
       // console.log(resPage.recievedpay[0].sumActualReceivAmount);

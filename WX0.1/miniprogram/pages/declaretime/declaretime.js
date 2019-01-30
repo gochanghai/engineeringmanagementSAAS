@@ -16,7 +16,8 @@ Page({
     selType: '',
     chooseSize: false,
     animationData: {},
-    Day: '每月*号',
+    Day: '号',
+    today: '',
     disabled: true,
     WinHeight: null
   },
@@ -82,9 +83,16 @@ Page({
     this.declareTap();
   },
 
+  // 时间类型输入
+  dayBindInput(e){
+    this.setData({
+      today: e.detail.value,
+    });
+  },
+
   selType(e) {
     console.log(e.currentTarget.dataset);
-    let valType = e.currentTarget.dataset.value;
+    let valType = e.currentTarget.dataset.value;    
     if (valType == '1') {
       this.chooseSezi();
     }

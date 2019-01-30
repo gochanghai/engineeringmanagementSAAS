@@ -1,5 +1,6 @@
 var wxCharts = require('../../utils/wxcharts.js');
 const statisticalJS = require('../../action/statistical.js');
+const messageCenterJS = require('../../action/messageCenter.js');
 // pages/home/home.js
 Page({
   data: {
@@ -107,11 +108,14 @@ Page({
     this.getGraphOutputValue();
     // 获取安全数据
     this.getGraphSecurity();
-    console.log("s" + _this.data.graphOutputValue);
-    wx.setTabBarBadge({
-      index: 3,
-      text: '10'
-    })
+    // 获取消息总数
+    this.getCountMessageNo();
+
+    // console.log("s" + _this.data.graphOutputValue);
+    // wx.setTabBarBadge({
+    //   index: 3,
+    //   text: '100'
+    // })
   },
   // 获取项目金额数据
   getSumProjectMoney() {
@@ -208,6 +212,20 @@ Page({
       }];
       console.log(series);
       _this.ChartData2(series);
+    })
+  },
+
+  // 获取消息总数
+  getCountMessageNo() {
+    let _this = this;
+    messageCenterJS.countMessageNo(function (countTotal) {
+      // countTotal = 0;
+      if (countTotal > 0) {
+        wx.setTabBarBadge({
+          index: 3,
+          text: '' + countTotal
+        })
+      }
     })
   },
 

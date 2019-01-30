@@ -7,47 +7,39 @@ Page({
 
   //获取用户信息
   getUserINfo() {
-    // 查看是否授权
-    var _this = this;
     wx.getSetting({
-        success(res) {
-          if (res.authSetting['scope.userInfo']) {
-            wx.showNavigationBarLoading();
-            wx.showToast({
-              title: '加载中',
-              icon: 'loading'
-            });
-            // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-            wx.getUserInfo({
-              success(res) {
-                if (res.errMsg == "getUserInfo:ok") {
-                  wx.hideNavigationBarLoading();
-                  wx.stopPullDownRefresh();
-                  wx.hideToast({});
-                  _this.setData({
-                    userInfo: res.userInfo,
-                    IsInitial: true
-                  })
-                  console.log(_this.data.userInfo);
-                };
-              }
-            })
-          }
+      success(res) {
+        console.log(res);
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          wx.getUserInfo({
+            success(res) {
+              console.log(res.userInfo)
+            }
+          })
         }
-      }),
-      wx.login({
-        success: function(res) {
-          console.log(res);
-        }
-      })
+      }
+    })
   },
 
   onLoad() {
-    this.getUserINfo();
-  },
+    // this.getUserINfo();
 
-  bindGetUserInfo(e) {
-    console.log(e.detail.userInfo);
+    // let that = this;
+    /**
+     * 获取用户信息
+     */
+    // wx.getUserInfo({
+    //   success: function (res) {
+    //     console.log(res);
+    //     var avatarUrl = 'userInfo.avatarUrl';
+    //     var nickName = 'userInfo.nickName';
+    //     that.setData({
+    //       avatarUrl: res.userInfo.avatarUrl,
+    //       nickName: res.userInfo.nickName,
+    //     })
+    //   }
+    // })
   },
 
   UpavatarUrl() {
@@ -58,6 +50,10 @@ Page({
         console.log(res);
       },
     })
+  },
+
+  bindGetUserInfo(e) {
+    console.log(e.detail.userInfo)
   },
 
   modifyPwd() {

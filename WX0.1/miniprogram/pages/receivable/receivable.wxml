@@ -8,11 +8,11 @@
         <text class='val'>{{totalAmount}}</text>
       </view>
 
-      <view class='perform-info'>
+      <!-- <view class='perform-info'>
         <view>
           <image src='/images/chanzhi.png'></image>回款登记
         </view>
-      </view>
+      </view> -->
     </view>
   </view>
 

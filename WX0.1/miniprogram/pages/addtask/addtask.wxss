@@ -17,7 +17,7 @@
 .task_item text {
   display: inline-block;
   width: 130rpx;
-  font-size: 32rpx;
+  font-size: 30rpx;
   color: #333;
 }
 
@@ -26,7 +26,7 @@
   text-align: right;
   /* border: 1px solid; */
   height: 78rpx;
-  font-size: 32rpx;
+  font-size: 30rpx;
   color: #999;
 }
 

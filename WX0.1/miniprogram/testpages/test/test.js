@@ -50,10 +50,14 @@ Page({
     // messageCenterJS.mountedAllMessage(function(res){
     //   console.log(res);
     // })
-    // 消息忽略-2019/1/22-2019/1/25
+    // 消息忽略-2019/1/22-2019/1/25-2019/1/30
     // let message = { };
     // messageCenterJS.mesIgnore(message,function(res){
     //   console.log(res);
+    // })
+    // 获取消息总条数-2019/1/29
+    // messageCenterJS.countMessageNo(function(countTotal){
+    //   console.log(countTotal);
     // })
     // ==============================messageCenter消息中心===============================
 
@@ -232,12 +236,12 @@ Page({
     // progressJS.getRecievedPayPage('1',function(res){
     //   console.log(res);
     // })
-    // 更新单条产值-2019/1/21
+    // 更新单条产值-2019/1/21-已失效
     // let confirmvalueRow = {}
     // progressJS.updateConfirmValue(confirmvalueRow, function (res) {
     //   console.log(res)
     // })
-    // 更新单条回款-2019/1/21
+    // 更新单条回款-2019/1/21-已失效
     // let recievedPay = { }
     // progressJS.updateRecievedPay(recievedPay,function(res){
     //   console.log(res);
@@ -365,12 +369,16 @@ Page({
     // ================================recievedpay回款登记页===============================
 
     // =====================================user用户操作===================================
-    // 用户登录-2019/1/25
+    // 用户登录缓存项目列表与用户信息-2019/1/25
     // userJS.signIn('shangwjl','123456',function(res){
     //   console.log(res)
     // })
     // 修改密码-2019/1/25
     // userJS.modifyPWD('','',function(res){
+    //   console.log(res)
+    // })
+    // 根据登录用户重新缓存项目列表-2019/1/30
+    // userJS.restoreProjectList(function(res){
     //   console.log(res)
     // })
     // =====================================user用户操作===================================
@@ -405,7 +413,8 @@ Page({
     // ================================教育、交底、保险上传附件=============================
 
 
-    // 接口产生时间列表
+    // 接口产生或修改时间列表
+    // 已失效
     // 2019/1/21
     // 2019/1/22
     // 2019/1/23
@@ -413,6 +422,7 @@ Page({
     // 2019/1/25
     // 2019/1/28
     // 2019/1/29
+    // 2019/1/30
   },
 
 })

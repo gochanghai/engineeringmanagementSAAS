@@ -272,58 +272,85 @@ function mountedAllMessage(callback) {
     });
 };
 
-//消息忽略
-function mesIgnore(message = { projectID: null, formId: null }, callback) {
+// 多项目查询消息条数
+function countMessageNo(callback) {
+    let projectList = storageJS.getProjectList();
+    let ids = "";
+    for (let item of projectList) {
+        ids += item.projectID + ",";
+    }
+    //去掉最后一个逗号(如果不需要去掉，就不用写)
+    if (ids.length > 0) {
+        ids = ids.substr(0, ids.length - 1);
+    }
     let datalist = {
         user: storageJS.getUser().account,
         form: "messagedrive",
-        action: {
-            messagedrive: "updateList",
-            messagedeal: "add"
-        },
-        join: [
-            {
-                messagedrive: "projectID",
-                messagedeal: "projectID"
-            },
-            {
-                messagedrive: "formId",
-                messagedeal: "driveId"
-            }
-        ],
-        records: {
-            messagedrive: {
-                projectID: message.projectID,
+        action: "get",
+        distinct: false,
+        fields: ["COUNT(objectId) AS countTotal"],
+        page: null,
+        condition: [{
+            field: "projectID",
+            value: ids,
+            symbol: "="
+        }, {
+            field: "status",
+            value: "未处理",
+            symbol: "="
+        }],
+    }
+    httpJS.request('/form', datalist, function (res) {
+        let countNo = 0;
+        if (JSON.parse(res.data).code > 0) {
+            countNo = JSON.parse(res.data).datalist.messagedrive[0].countTotal
+        }
+        return typeof callback == 'function' && callback(countNo);
+    })
+};
+
+//消息忽略
+function mesIgnore(message = { projectID: null, formId: null, messageModule: null }, callback) {
+    let datalist = {
+        user: storageJS.getUser().account,
+        batchFun: "serverTrans",
+        source: null,
+        batchList: [{
+            name: "messagedrive",
+            form: "messagedrive",
+            action: "updateList",
+            fields: {
                 status: "已忽略",
                 dealAt: dateUtil.formatTime()
             },
-            messagedeal: [
-                {
-                    projectID: message.projectID,
-                    driveStatus: "已忽略",
-                    dealAt: dateUtil.formatTime()
-                }
-            ]
+            condition: [{
+                field: "formId",
+                value: message.formId,
+                symbol: "="
+            }, {
+                field: "status",
+                value: "未处理",
+                symbol: "="
+            }],
+            page: null
         },
-        page: null,
-        condition: {
-            messagedrive: [
-                {
-                    field: "formId",
-                    value: message.formId,
-                    symbol: "="
-                },
-                {
-                    field: "status",
-                    value: "未处理",
-                    symbol: "="
-                }
-            ]
-        },
-        order: null,
-        group: null
-    };
-    httpJS.request('/lform', datalist, function (res) {
+        {
+            name: "messagedeal",
+            form: "messagedeal",
+            action: "add",
+            fields: [{
+                projectID: message.projectID,
+                driveId: message.formId,
+                driveStatus: "已忽略",
+                dealAt: dateUtil.formatTime(),
+                driveType: message.messageModule,
+            }],
+            condition: null,
+            page: null
+        }
+        ]
+    }
+    httpJS.request('/sbatch', datalist, function (res) {
         return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code })
     });
 };
@@ -334,5 +361,6 @@ module.exports = {
     mountedRiskMessage: mountedRiskMessage,
     mountedTaskMessage: mountedTaskMessage,
     mountedAllMessage: mountedAllMessage,
+    countMessageNo: countMessageNo,
     mesIgnore: mesIgnore,
 }

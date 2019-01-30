@@ -49,12 +49,13 @@
   width: 92%;
   line-height: 80rpx;
   display: flex;
+  align-items: center;
   border-bottom: 1px solid #e5e5e5;
 }
 
 .information_item text {
   display: inline-block;
-  font-size: 32rpx;
+  font-size: 30rpx;
   color: #333;
   width: 170rpx;
 }
@@ -63,7 +64,7 @@
   padding-left: 17rpx;
   width: 60%;
   height: 78rpx;
-  font-size: 32rpx;
+  font-size: 30rpx;
   text-align: right;
   color: #999;
   flex: 1;
@@ -83,7 +84,6 @@
 }
 
 .down_img {
-  margin-top: 34rpx;
   margin-left: 10rpx;
   float: right;
   width: 20rpx;

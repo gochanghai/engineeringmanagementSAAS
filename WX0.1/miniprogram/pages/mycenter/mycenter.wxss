@@ -20,21 +20,22 @@
   width: 92%;
 }
 
-.account > image {
+.account-img {
   width: 140rpx;
   height: 140rpx;
   border-radius: 50%;
+  overflow: hidden;
 }
 
 .account view.account-info {
   padding-left: 20rpx;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   width: 400rpx;
 }
 
-.account-info button.sign {
+/* .account-info button.sign {
   padding: 4rpx 35rpx;
   margin-left: 0rpx;
   line-height: 50rpx;
@@ -44,10 +45,22 @@
   background-color: #ffa268;
   border-radius: 10rpx;
   overflow: hidden;
-}
+  border: 1px solid;
+} */
 
 .account-info view {
   color: #fff;
+}
+
+.account-info view.account-info-name open-data {
+  color: #fff;
+  font-size: 40rpx;
+  font-weight: bold;
+}
+
+.account-info view.account-info-countries {
+  color: #f0f0f0;
+  font-size: 27rpx;
 }
 
 .operation {

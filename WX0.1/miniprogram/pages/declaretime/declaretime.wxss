@@ -6,19 +6,23 @@
   width: 92%;
   line-height: 80rpx;
   display: flex;
+  align-items: center;
   border-bottom: 1px solid #e5e5e5;
 }
 
 .task_item text {
   display: inline-block;
-  font-size: 32rpx;
+  font-size: 30rpx;
+  width: 200rpx;
 }
 
 .task_item input {
   padding-left: 25rpx;
-  width: 300rpx;
+  /* width: 410rpx; */
+  flex: 1;
   height: 78rpx;
-  font-size: 32rpx;
+  text-align: right;
+  font-size: 30rpx;
   color: #999;
 }
 
@@ -29,8 +33,7 @@
   color: #999;
 }
 
-.task_item > view image, .task_item image {
-  margin-top: 32rpx;
+.task_item > view > image, .task_item image {
   margin-left: 10rpx;
   float: right;
   width: 20rpx;
@@ -39,7 +42,7 @@
 
 .picker {
   text-align: right;
-  width: 462rpx;
+  width: 463rpx;
 }
 
 .choose {
@@ -86,8 +89,10 @@
 .declareList view.title {
   display: flex;
   justify-content: space-between;
-  font-size: 32rpx;
-  color: #333;
+  line-height: 30rpx;
+  padding-left: 15rpx;
+  font-size: 34rpx;
+  border-left: 6rpx solid #e95207;
 }
 
 .container-item {
@@ -107,18 +112,20 @@
   padding: 18rpx 0;
   display: flex;
   justify-content: space-between;
-  font-size: 32rpx;
+  font-size: 30rpx;
   color: #666;
 }
 
 .container-item view image {
+  padding: 13rpx 18rpx;
   width: 24rpx;
   height: 34rpx;
+  border-radius: 50%;
 }
 
 .container-item view.content {
   padding-top: 12rpx;
-  font-size: 32rpx;
+  font-size: 30rpx;
   line-height: 62rpx;
   color: #666;
 }

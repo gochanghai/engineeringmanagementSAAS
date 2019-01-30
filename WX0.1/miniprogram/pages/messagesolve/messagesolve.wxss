@@ -18,7 +18,7 @@
   background-color: #fff;
 }
 
-.arc {
+/* .arc {
   position: absolute;
   left: -3%;
   bottom: 200rpx;
@@ -49,6 +49,25 @@
 
 .createdAt, .mes_type {
   margin-top: 50rpx;
+} */
+
+.mes-content {
+  margin-top: 20rpx;
+  /* border: 1px solid; */
+}
+
+.mes-content view.item {
+  /* border: 1px solid; */
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 27rpx;
+}
+
+.mes-content view.item text {
+  display: inline-block;
+  width: 110rpx;
+  text-align: justify;
+  text-align-last: justify;
 }
 
 .btom-btns {
@@ -78,4 +97,19 @@
   background-color: #e95207;
   border: 1px solid #e95207;
   color: #fff;
+}
+
+.text-flex {
+  display: flex;
+}
+
+.text-flex text {
+  display: flex;
+}
+
+.con {
+  padding-top: 14rpx;
+  display: inline-block;
+  width: 480rpx;
+  line-height: 50rpx;
 }

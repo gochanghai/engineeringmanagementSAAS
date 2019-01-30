@@ -1,5 +1,6 @@
 //请求域名
 const host = 'https://mysaas.gdsh119.com';
+// const host = 'http://192.168.1.43:3300';
 
 //POST 请求
 function request(api, jsondata, callback) {
@@ -20,7 +21,7 @@ function request(api, jsondata, callback) {
       return typeof callback == "function" && callback(res);
     },
     fail: function (res) {
-      return typeof callback == "function" && callback(res)
+      return typeof callback == "function" && callback(res);
     }
   });
 }

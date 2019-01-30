@@ -1,5 +1,6 @@
 const httpJS = require('../utils/http.js');
 const storageJS = require('../utils/storage.js');
+const userJS = require('./user.js')
 
 
 // 获取项目合同信息
@@ -114,7 +115,11 @@ function addContract(recivedManagerList = [{ managerName: null, telphoneNo: null
                 projectID: addProjectID
             };
             httpJS.request('/user/prbac', addProjectDatalist, function (res) {
-                return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code });
+                if (JSON.parse(res.data).code > 0) {
+                    userJS.restoreProjectList(function (res) {
+                        return typeof callback == 'function' && callback(res);
+                    })
+                }else return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code });
             });
         } else return typeof callback == 'function' && callback({ code: -1 });
     });

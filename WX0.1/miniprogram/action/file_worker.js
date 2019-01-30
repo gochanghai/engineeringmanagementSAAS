@@ -111,11 +111,8 @@ function updateWorkerSignList(updateData = { projectID: null, fileSign: null, wo
             },
             condition: [
                 { field: "messageType", symbol: "=", value: "risk" },
-                {
-                    field: "messageModule",
-                    symbol: "=",
-                    value: updateData.fileSign
-                },
+                { field: "messageModule", symbol: "=", value: updateData.fileSign },
+                { field: "status", symbol: "=", value: "未处理" },
                 { field: "projectID", symbol: "=", value: updateData.projectID }
             ],
             page: null

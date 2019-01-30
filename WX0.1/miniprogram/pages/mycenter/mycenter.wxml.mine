@@ -16,7 +16,7 @@
           <open-data type="userNickName" lang="zh_CN"></open-data>
         </view>
         <view class='account-info-countries'>
-          <open-data type="userCountry" lang="zh_CN"></open-data> -
+          <open-data type="userCountry" lang="zh_CN"></open-data>
           <open-data type="userCity" lang="zh_CN"></open-data>
           <!-- 中国 深圳 -->
         </view>

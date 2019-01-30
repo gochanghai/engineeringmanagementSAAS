@@ -88,9 +88,9 @@ function updateConfirmvalue(confirmvalue = { confirmAt: null, outputValue: null,
             },
             condition: [
                 { field: "pointToID", symbol: "=", value: confirmvalue.formId },
+                { field: "status", symbol: "=", value: "未处理" },
                 { field: "messageType", symbol: "=", value: "risk" },
                 { field: "messageModule", symbol: "=", value: 'confirmvalue' },
-                { field: "status", symbol: "=", value: "未处理" },
                 { field: "projectID", symbol: "=", value: confirmvalue.projectID }
             ],
             page: null

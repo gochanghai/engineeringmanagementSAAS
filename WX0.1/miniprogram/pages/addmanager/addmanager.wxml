@@ -1,7 +1,7 @@
 <!--新增管理人员-->
 <view class='container'>
   <view class='group-con'>
-    <view class='group_name'>新增管理人员</view>
+    <view class='group_name'>请选择</view>
     <view class='group_sel'>
       <text wx:for="{{managerTypes}}" wx:key="" data-index='{{item.id}}' data-type="{{item.label}}" bindtap='selTeam' class='{{activeIndex == item.id ? activeSel : ""}}' style='{{activeIndex == item.id ? activeSty : ""}}'>
       {{item.label}}

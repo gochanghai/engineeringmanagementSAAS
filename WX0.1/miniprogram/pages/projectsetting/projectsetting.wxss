@@ -11,7 +11,7 @@
 
 .information_item text {
   display: inline-block;
-  font-size: 32rpx;
+  font-size: 30rpx;
   color: #333;
 }
 
@@ -19,7 +19,7 @@
   flex: 1;
   padding-left: 20rpx;
   height: 78rpx;
-  font-size: 32rpx;
+  font-size: 30rpx;
   color: #999;
   text-align: right;
 }

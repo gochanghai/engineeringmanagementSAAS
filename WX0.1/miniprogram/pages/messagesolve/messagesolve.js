@@ -9,13 +9,18 @@ Page({
 
   onLoad: function(options) {
     // let message = options.message;
+    let _this = this;
     this.setData({
       message: options.message,
       messageType: options.messageType,
       createAt: options.createAt,
       formId: options.formId,
-      projectID: options.projectID,
-      messageModule: options.messageModule,
+      projectID: options.projectID,      
+      pointToID: options.pointToID,
+      projectAbbreviation: options.projectAbbreviation,
+      status: options.status,
+      typeName: _this.getmessageTypeName(options.messageModule),
+      funName: _this.getmessageFuncName(options.messageModule),
     })
   },
 
@@ -24,6 +29,7 @@ Page({
     let message = {
       projectID: this.data.projectID,
       formId: this.data.formId,
+      messageModule: this.data.messageModule,
     }
     console.log(message);
     wx.showModal({
@@ -41,10 +47,14 @@ Page({
             title: '已忽略',
             icon: 'success',
             duration: 2000,
-            success() {
+            success() {              
               setTimeout(() => {
                 wx.navigateBack({
                   delta: '1'
+                })
+                // 返回消息中心
+                wx.switchTab({
+                  url: '/pages/message/message',
                 })
               }, 1000)
             }
@@ -105,5 +115,52 @@ Page({
           '&byTypeTitle=' + byTypeTitle,
       });
     }
-  }
+  },
+
+
+  //  模块过滤
+  getmessageTypeName(type) {
+    switch (type) {
+      case "confirmvalue":
+      case "recievedpay":
+      case "progress":
+        return "进度";
+        break;
+      case "security":
+      case "insurance":
+      case "education":
+      case "disclose":
+        return "安全";
+        break;
+      default:
+        break;
+    }
+  },
+  // 功能过滤
+  getmessageFuncName(type) {
+    switch (type) {
+      case "progress":
+      case "security":
+        return "任务";
+        break;
+      case "confirmvalue":
+        return "确认产值";
+        break;
+      case "recievedpay":
+        return "确认回款";
+        break;
+      case "insurance":
+        return "工伤意外险";
+        break;
+      case "education":
+        return "三级安全教育";
+        break;
+      case "disclose":
+        return "安全技术交底";
+        break;
+      default:
+        return "未分类";
+        break;
+    }
+  },
 })

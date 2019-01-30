@@ -104,7 +104,7 @@ Page({
     }
   },
 
-  // 第二部 确定
+  // 第二步 确定
   commitModal() {
     this.setData({
       toggelIcon: '/images/progress_active.png',

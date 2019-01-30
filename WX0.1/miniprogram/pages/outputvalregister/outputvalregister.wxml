@@ -2,9 +2,9 @@
 <view class='container'>
   <view class='information'>
     <view class='information_item'>
-      <text style='width: 290rpx;'>产值表上传时间</text>
+      <text style='width: 260rpx;'>产值表上传时间</text>
       <picker mode="date" start="2010-01-01" end="2029-01-01" bindchange="InputValueUploadAt">
-        <view class="picker" style='font-size:32rpx; color:#999;'>
+        <view class="picker" style='font-size:30rpx; color:#999;'>
           {{valueUploadAt}}
         </view>
       </picker>
@@ -19,9 +19,9 @@
       <input type='text' confirm-type="next" value='{{receivableAmount}}' bindinput='InputReceivableAmount' placeholder='请输入' placeholder-class='input_class' />
     </view>
     <view class='information_item'>
-      <text>甲方确认时间</text>
+      <text style='width: 260rpx;'>甲方确认时间</text>
       <picker mode="date" start="2010-01-01" end="2029-01-01" bindchange="InputConfirmAt">
-        <view class="picker" style='font-size:32rpx; color:#999;'>
+        <view class="picker" style='font-size:30rpx; color:#999;'>
           {{confirmAt}}
         </view>
       </picker>

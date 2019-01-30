@@ -18,8 +18,8 @@ function comitFileANDConfirmValue(
         ownerPayTime: confirmvalueInfo.ownerPayTime,
     }
     confirmvalueJS.updateConfirmvalue(updataData, function (res) {
-        if (res.code === 1) {
-            if (null != fileInfo && null != fileInfo.file) {
+        if (res.code == 1) {
+            if (null != fileInfo && null != fileInfo.file && '' != fileInfo.file) {
                 let uploadfileInfo = {
                     projectID: confirmvalueInfo.projectID,
                     belongIdList: confirmvalueInfo.formId,
@@ -49,7 +49,7 @@ function comitFileANDRecievedpay(
     }
     recievedpayJS.updateRecievedpay(updataData, function (res) {
         if (res.code === 1) {
-            if (null != fileInfo && null != fileInfo.file) {
+            if (null != fileInfo && null != fileInfo.file && '' != fileInfo.file) {
                 let uploadfileInfo = {
                     projectID: recievedpayInfo.projectID,
                     belongIdList: recievedpayInfo.formId,

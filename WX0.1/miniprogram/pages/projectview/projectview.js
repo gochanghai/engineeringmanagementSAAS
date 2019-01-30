@@ -84,12 +84,12 @@ Page({
   },
 
   navPersonnel(event) {
-    let mtype = event.currentTarget.dataset.type;
+    let type = event.currentTarget.dataset.type;
     // 获取选择的项目ID
     let projectID = this.data.projectList[this.data.swiperIndex].projectID;
     console.log("projectID" + projectID);
     wx.navigateTo({
-      url: '/pages/managepersonnel/managepersonnel?typeID=' + mtype + "&projectID=" + projectID
+      url: '/pages/managepersonnel/managepersonnel?typeID=' + type + "&projectID=" + projectID
     })
   },
 

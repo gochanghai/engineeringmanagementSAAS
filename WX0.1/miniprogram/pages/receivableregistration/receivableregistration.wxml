@@ -4,7 +4,7 @@
     <view class='information_item'>
       <text>计划回款时间</text>
       <picker mode="date" start="2010-01-01" end="2029-01-01" disabled='1' bindchange="InputPlanReceivAt">
-        <view class="picker" style='font-size:32rpx; color:#999;'>
+        <view class="picker" style='font-size:30rpx; color:#999;'>
           {{planReceivDate}}
         </view>
       </picker>

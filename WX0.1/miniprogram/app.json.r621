@@ -1,13 +1,12 @@
 {
   "pages": [
-    "pages/login/login",
     "pages/projectview/projectview",
     "pages/message/message",
     "pages/projectlist/projectlist",
     "pages/mycenter/mycenter",
     "pages/messagesolve/messagesolve",
     
-    
+    "pages/login/login",
     "pages/receivableregistration/receivableregistration",
     "pages/outputvalregister/outputvalregister",
     "pages/addworkpersonnel/addworkpersonnel",

@@ -12,7 +12,7 @@
     <view class='information_item'>
       <text>合同起始时间</text>
       <picker mode="date" start="2010-01-01" end="2029-01-01" bindchange="InputStartFrom">
-        <view class="picker" style='font-size:32rpx; color:#999;'>
+        <view class="picker" style='font-size:30rpx; color:#999;'>
           {{startFrom}}
         </view>
       </picker>
@@ -21,7 +21,7 @@
     <view class='information_item'>
       <text>合同终止时间</text>
       <picker mode="date" start="2010-01-01" end="2029-01-01" bindchange="InputEndAt">
-        <view class="picker" style='font-size:32rpx; color:#999;'>
+        <view class="picker" style='font-size:30rpx; color:#999;'>
           {{endAt}}
         </view>
       </picker>

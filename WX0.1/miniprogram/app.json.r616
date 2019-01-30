@@ -1,15 +1,13 @@
 {
   "pages": [
-    "pages/login/login",
-    "pages/projectview/projectview",
-    "pages/message/message",
-    "pages/projectlist/projectlist",
     "pages/mycenter/mycenter",
     "pages/messagesolve/messagesolve",
-    
-    
+    "pages/message/message",
+    "pages/projectview/projectview",
+    "pages/login/login",
     "pages/receivableregistration/receivableregistration",
     "pages/outputvalregister/outputvalregister",
+    "pages/projectlist/projectlist",
     "pages/addworkpersonnel/addworkpersonnel",
     "pages/home/home",
     "pages/calendar/calendar",

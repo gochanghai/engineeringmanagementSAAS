@@ -135,7 +135,7 @@ Page({
           // 修改密码
           userJS.modifyPWD(oldPassword,newPassword,function(res){
             console.log(res)
-            if(res.code === 1){
+            if(res.code == 1){
               wx.showToast({
                 title: '修改成功',
                 icon: 'success',
@@ -146,6 +146,10 @@ Page({
                       delta: '1'
                     })
                   }, 1000)
+                  // 返回个人中心
+                  wx.navigateTo({
+                    url: '/pages/mycenter/mycenter'
+                  })
                 }
               })
             }

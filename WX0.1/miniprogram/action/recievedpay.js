@@ -58,12 +58,9 @@ function updateRecievedpay(recievedpay = { formId: null, projectID: null, actual
             },
             condition: [
                 { field: "pointToID", symbol: "=", value: recievedpay.formId },
+                { field: "status", symbol: "=", value: "未处理" },
                 { field: "messageType", symbol: "=", value: "risk" },
-                {
-                    field: "messageModule",
-                    symbol: "=",
-                    value: "recievedpay"
-                },
+                { field: "messageModule", symbol: "=", value: "recievedpay" },
                 { field: "projectID", symbol: "=", value: recievedpay.projectID }
             ],
             page: null
@@ -77,7 +74,7 @@ function updateRecievedpay(recievedpay = { formId: null, projectID: null, actual
         source: null,
         batchList: postList
     };
-    this.$post("/api/sbatch", datalist).then(res => {
+    httpJS.request('/sbatch', datalist, function (res) {
         return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code })
     });
 };

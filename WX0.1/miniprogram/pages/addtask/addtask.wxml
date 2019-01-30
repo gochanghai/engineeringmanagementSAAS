@@ -19,7 +19,7 @@
 
     <view class='task_item' style='padding-bottom:30rpx;'>
       <text>任务内容</text>
-      <textarea type='text' show-confirm-bar bindinput='inputTaskContent' class='textarea_content' placeholder='请输入' />
+      <textarea type='text' show-confirm-bar bindinput='inputTaskContent' class='textarea_content' placeholder='请输入' style='font-size:30rpx;'/>
     </view>
 
     <view class='task_item'>
