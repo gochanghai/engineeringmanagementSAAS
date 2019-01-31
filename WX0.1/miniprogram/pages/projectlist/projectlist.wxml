@@ -48,15 +48,15 @@
               <view class='people'>
                 <view class='info list2-info' data-index='{{item.projectID}}' data-type='0' bindtap='navSecurity'>
                   <view>未交底</view>
-                  <text>32人</text>
+                  <text>{{item.sumUnDisclose}}人</text>
                 </view>
                 <view class='info list2-info' data-index='{{item.projectID}}' data-type='1' bindtap='navSecurity'>
                   <view>未教育</view>
-                  <text>12人</text>
+                  <text>{{item.sumUnEducation}}人</text>
                 </view>
                 <view class='info list2-info' data-index='{{item.projectID}}' data-type='2' bindtap='navSecurity'>
                   <view>未参保</view>
-                  <text>2人</text>
+                  <text>{{item.sumUnInsurance}}人</text>
                 </view>
               </view>
             </view>
@@ -72,7 +72,7 @@
               </view>
               <view>
                 <button type="default" size="mini" bindtap='openMessage'>已处理</button>
-                <text wx:if='{{item.dealMessage >0}}'>{{item.dealMessage}}</text>
+                <text wx:if='{{item.dealMessage >0}}' style="background-color:#888888">{{item.dealMessage}}</text>
               </view>
             </view>
           </view>

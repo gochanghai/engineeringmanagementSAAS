@@ -30,7 +30,7 @@ Page({
   },
 
   selTeam(e) {
-    console.log(e.currentTarget.dataset.type);
+    // console.log(e.currentTarget.dataset.type);
     this.setData({
       activeIndex: e.currentTarget.dataset.index,
       groupId: e.currentTarget.dataset.index
@@ -39,14 +39,14 @@ Page({
 
   // 姓名输入
   InputName(e) {
-    console.log(e.detail.value);
+    // console.log(e.detail.value);
     this.setData({
       name: e.detail.value
     })
   },
   // 年龄输入
   InputAge(e) {
-    console.log(e.detail.value);
+    // console.log(e.detail.value);
     this.setData({
       age: e.detail.value
     })
@@ -54,14 +54,14 @@ Page({
 
   // 身份证输入
   InputIdCard(e) {
-    console.log(e.detail.value);
+    // console.log(e.detail.value);
     this.setData({
       id_card: e.detail.value
     })
   },
   // 联系电话输入
   InputTelNo(e) {
-    console.log(e.detail.value);
+    // console.log(e.detail.value);
     this.setData({
       telNo: e.detail.value
     })
@@ -69,7 +69,7 @@ Page({
 
   // 紧急联系人输入
   InputEmergencyContact(e) {
-    console.log(e.detail.value);
+    // console.log(e.detail.value);
     this.setData({
       emergencyContact: e.detail.value
     })
@@ -223,7 +223,7 @@ Page({
       emergencyContract: this.data.emergencyContact,
       leavingAt: this.data.leavingAt,
     }
-    console.log(worker);
+    // console.log(worker);
     
     wx.showModal({
       title: '提示',

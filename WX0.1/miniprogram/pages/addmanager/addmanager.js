@@ -43,7 +43,7 @@ Page({
   },
 
   selTeam(e) {
-    console.log(e.currentTarget.dataset.type);
+    // console.log(e.currentTarget.dataset.type);
     let index = e.currentTarget.dataset.index;
     let type = e.currentTarget.dataset.type;
     this.setData({
@@ -70,14 +70,14 @@ Page({
 
   // 姓名输入
   InputManagerName(e) {
-    console.log(e.detail.value);
+    // console.log(e.detail.value);
     this.setData({
       managerName: e.detail.value
     })
   },
   // 电话输入
   InputTelPhoneNo(e) {
-    console.log(e.detail.value);
+    // console.log(e.detail.value);
     this.setData({
       telphoneNo: e.detail.value
     })
@@ -109,7 +109,7 @@ Page({
     }
     // 电话正则校验
     var reg = /^1[34578]\d{9}$/;
-    console.log("电话判断:" + reg.test(this.data.telphoneNo));
+    // console.log("电话判断:" + reg.test(this.data.telphoneNo));
     if (!reg.test(this.data.telphoneNo)) {
       wx.showModal({
         title: '提示',

@@ -17,7 +17,7 @@ Page({
     managers: [{
         managerName: "",
         telphoneNo: "",
-        managerType: '商务经理'
+        managerType: '项目经理'
       },
       {
         managerName: "",
@@ -133,9 +133,9 @@ Page({
       }
       // 电话正则校验
       var reg = /^1[34578]\d{9}$/;
-      console.log("电话判断:" + reg.test(managers[index].telphoneNo));
+      // console.log("电话判断:" + reg.test(managers[index].telphoneNo));
       if (!reg.test(managers[index].telphoneNo)) {
-        console.log("电话判断:" + reg.test(managers[index].telphoneNo));
+        // console.log("电话判断:" + reg.test(managers[index].telphoneNo));
         wx.showModal({
           title: '提示',
           content: managers[index].managerType + '电话输入不正确',
@@ -177,7 +177,7 @@ Page({
   },
   //项目简称输入
   InputProAbbreviation(e) {
-    console.log(e.detail.value);
+    // console.log(e.detail.value);
     this.setData({
       projectAbbreviation: e.detail.value
     })
@@ -221,9 +221,37 @@ Page({
           // 提交数据
           contractJS.addContract(managerList, contractInfo, function(res) {
             console.log(res);
+            // if(res.code == 1){
+            //   wx.showToast({
+            //     title: '项目新建成功',
+            //     icon: 'success',
+            //     duration: 2000,
+            //     success() {
+            //       setTimeout(() => {
+            //         wx.switchTab({
+            //           url: '/pages/projectview/projectview'
+            //         })
+            //       }, 1000)
+            //     }
+            //   })
+            // }else{
+            //   wx.showToast({
+            //     title: '提交失败',
+            //     icon: 'success',
+            //     duration: 2000,
+            //     success() {
+            //       setTimeout(() => {
+            //         wx.switchTab({
+            //           url: '/pages/projectview/projectview'
+            //         })
+            //       }, 1000)
+            //     }
+            //   })
+            // }            
           });
+          // 页面跳转回到 项目展示页 
           wx.showToast({
-            title: '提交成功',
+            title: '项目新建成功',
             icon: 'success',
             duration: 2000,
             success() {
@@ -234,6 +262,8 @@ Page({
               }, 1000)
             }
           })
+          
+          
         } else if (res.cancel) {
           console.log('用户点击取消')
         }

@@ -35,6 +35,7 @@ Page({
       formId: options.formId,
       projectID: options.projectID,
       receivableAmount: receivableAmount,
+      ownerPayPercent: options.ownerPayPercent != null ? options.ownerPayPercent : 1,
       outputValue: options.outputValue,
       valueUploadAt: options.valueUploadAt,
       confirmAt: options.confirmAt,
@@ -42,43 +43,45 @@ Page({
       ownerPayTime: options.ownerPayTime,
     });
     this.getconfirmvalue();
-    this.getFileList();    
+    this.getFileList();
   },
 
   // 产值表上传时间输入
   InputValueUploadAt(e) {
-    console.log(e.detail.value);
+    // console.log(e.detail.value);
     this.setData({
       valueUploadAt: e.detail.value
     })
   },
   // 产值输入
   InputOutputValue(e) {
+    var _this = this;
     console.log(e.detail.value);
     this.setData({
-      outputValue: e.detail.value
+      outputValue: e.detail.value,
+      receivableAmount: e.detail.value * _this.data.ownerPayPercent
     })
   },
   // 可收款输入
   InputReceivableAmount(e) {
-    console.log(e.detail.value);
+    // console.log(e.detail.value);
     this.setData({
       receivableAmount: e.detail.value
     })
   },
   // 甲方确认时间输入
   InputConfirmAt(e) {
-    console.log(e.detail.value);
+    // console.log(e.detail.value);
     this.setData({
       confirmAt: e.detail.value
     })
   },
 
   // 获取产值信息
-  getconfirmvalue(){
+  getconfirmvalue() {
     let _this = this;
-    confirmvalueJS.getConfirmvalue(this.data.formId, function (res) {
-      console.log(res);
+    confirmvalueJS.getConfirmvalue(this.data.formId, function(res) {
+      // console.log(res);
       let outputValue = 0.00;
       if (res.outputValue != null) {
         receivableAmount = res.outputValue
@@ -172,7 +175,7 @@ Page({
       confirmColor: '#F0880C',
       success(res) {
         if (res.confirm) {
-          console.log('Commit');
+          // console.log('Commit');
           // 更新产值登记
           let fileInfo = {
             file: _this.data.uploadFilePath,
@@ -233,7 +236,7 @@ Page({
   },
   // 获取文件列表
   getFileList() {
-    console.log("getFileList");
+    // console.log("getFileList");
     let _this = this;
     let fileInfo = {
       projectID: this.data.projectID,
@@ -247,7 +250,7 @@ Page({
     //   belongIdList: "7bbff459-a030-442f-abbc-07b7a8595cd5",
     //   fileBelong: '确认产值',
     // }
-    fileJS.getFileList(fileInfo, function (res) {
+    fileJS.getFileList(fileInfo, function(res) {
       _this.setData({
         fileList: res,
       })

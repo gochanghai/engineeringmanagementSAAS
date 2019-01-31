@@ -12,11 +12,11 @@
     </view>
     <view class='information_item'>
       <text>产值 (元)</text>
-      <input type='text' confirm-type="next" value='{{outputValue}}' bindinput='InputOutputValue' placeholder='请输入' placeholder-class='input_class' />
+      <input type='number' confirm-type="next" value='{{outputValue}}' bindinput='InputOutputValue' placeholder='请输入' placeholder-class='input_class' />
     </view>
     <view class='information_item'>
       <text>可收款 (元)</text>
-      <input type='text' confirm-type="next" value='{{receivableAmount}}' bindinput='InputReceivableAmount' placeholder='请输入' placeholder-class='input_class' />
+      <input type='number' confirm-type="next" value='{{receivableAmount}}' bindinput='InputReceivableAmount' placeholder='请输入' placeholder-class='input_class' />
     </view>
     <view class='information_item'>
       <text style='width: 260rpx;'>甲方确认时间</text>

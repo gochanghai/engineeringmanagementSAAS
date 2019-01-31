@@ -114,13 +114,10 @@ function addContract(recivedManagerList = [{ managerName: null, telphoneNo: null
                 user: storageJS.getUser().account,
                 projectID: addProjectID
             };
-            httpJS.request('/user/prbac', addProjectDatalist, function (res) {
-                if (JSON.parse(res.data).code > 0) {
-                    userJS.restoreProjectList(function (res) {
-                        return typeof callback == 'function' && callback(res);
-                    })
-                }else return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code });
-            });
+            httpJS.request('/user/prbac', addProjectDatalist, function (res) {});
+            userJS.restoreProjectList(function (res) {
+                return typeof callback == 'function' && callback(res);
+            })
         } else return typeof callback == 'function' && callback({ code: -1 });
     });
 }

@@ -131,7 +131,7 @@ Page({
       confirmColor: '#F0880C',
       success(res) {
         if (res.confirm) {
-          console.log('Commit');
+          // console.log('Commit');
           // 修改密码
           userJS.modifyPWD(oldPassword,newPassword,function(res){
             console.log(res)

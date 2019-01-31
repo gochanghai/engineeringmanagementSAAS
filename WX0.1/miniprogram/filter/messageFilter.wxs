@@ -1,0 +1,53 @@
+// 支持es4语法
+var filter = {
+  //  模块过滤
+  getMessageTypeName: function (type) {
+    switch (type) {
+      case "confirmvalue":
+      case "recievedpay":
+      case "progress":
+        return "进度";
+        break;
+      case "security":
+      case "insurance":
+      case "education":
+      case "disclose":
+        return "安全";
+        break;
+      default:
+        break;
+    }
+  },
+  // 功能过滤
+  getMessageFuncName: function (type) {
+    switch (type) {
+      case "progress":
+      case "security":
+        return "任务";
+        break;
+      case "confirmvalue":
+        return "确认产值";
+        break;
+      case "recievedpay":
+        return "确认回款";
+        break;
+      case "insurance":
+        return "工伤意外险";
+        break;
+      case "education":
+        return "三级安全教育";
+        break;
+      case "disclose":
+        return "安全技术交底";
+        break;
+      default:
+        return "未分类";
+        break;
+    }
+  },
+}
+// 导出对外暴露的属性
+module.exports = {
+  getMessageTypeName: filter.getMessageTypeName,
+  getMessageFuncName: filter.getMessageFuncName
+}

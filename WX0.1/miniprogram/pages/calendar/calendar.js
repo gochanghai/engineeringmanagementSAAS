@@ -53,7 +53,7 @@ Page({
       })
     }
 
-    console.log(this.data.chooseDay);
+    // console.log(this.data.chooseDay);
     let clickDay = event.detail.day;
     let changeDay = `dayStyle[1].day`;
     let changeBg = `dayStyle[1].background`;
@@ -61,7 +61,7 @@ Page({
       [changeDay]: clickDay,
       [changeBg]: "#FFA268"
     })
-    console.log(this.data.dayStyle);
+    // console.log(this.data.dayStyle);
     // 清空数据
     this.setData({
       confirmvalueMessages: [],
@@ -107,9 +107,9 @@ Page({
   getThisDateMsaaage(chooseDay) {
     let _this = this;
     calendarJS.getMessageByDate(chooseDay, function(res) {
-      console.log('calendarJS');
-      console.log(res.confirmvalue.length);
-      console.log(res);
+      // console.log('calendarJS');
+      // console.log(res.confirmvalue.length);
+      // console.log(res);
       // _this.getchooseDayMessage(_this.data.chooseDay,res);
       _this.setData({
         message: res,
@@ -204,12 +204,12 @@ Page({
       return "未知";
     }
     let date = val.substring(0, 10);
-    console.log(date);
+    // console.log(date);
     return date;
   },
   // 通知内容整合
   getNoticeContent(val) {
-    console.log('val.confirmvalue');
+    // console.log('val.confirmvalue');
     let noticeContent = '';
     let confirmvalue = val.confirmvalue;
     for (let item in confirmvalue) {

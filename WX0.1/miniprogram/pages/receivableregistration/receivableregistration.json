@@ -2,6 +2,5 @@
   "backgroundTextStyle": "light",
   "navigationBarBackgroundColor": "#fff",
   "navigationBarTitleText": "回款登记",
-  "navigationBarTextStyle": "black",
-  "disableScroll": true
+  "navigationBarTextStyle": "black"
 }

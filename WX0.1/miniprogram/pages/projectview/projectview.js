@@ -32,6 +32,8 @@ Page({
   onPullDownRefresh: function() {
     // 获取项目列表数据
     // this.getProjectList();
+    this.onShow();
+    return;
   },
 
   onLoad: function(options) {
@@ -41,14 +43,20 @@ Page({
     this.getProjectList();
   },
 
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    this.onLoad();
+  },
+
   // 获取项目列表数据
   getProjectList() {
     var _this = this;
     projectlistJS.getProjectList(function(res) {
       var projectList = res;
-      console.log(projectList);
-      console.log(projectList.length);
-      console.log("projectPageList" + projectList);
+      // console.log(projectList.length);
+      // console.log("projectPageList" + projectList);
       _this.setData({
         projectList: projectList,
         itemWidth: (260 * projectList.length + 'rpx').toString()
@@ -87,7 +95,7 @@ Page({
     let type = event.currentTarget.dataset.type;
     // 获取选择的项目ID
     let projectID = this.data.projectList[this.data.swiperIndex].projectID;
-    console.log("projectID" + projectID);
+    console.log("projectID" + type);
     wx.navigateTo({
       url: '/pages/managepersonnel/managepersonnel?typeID=' + type + "&projectID=" + projectID
     })
@@ -134,7 +142,7 @@ Page({
   confirmValue(event) {
     let projectID = event.currentTarget.dataset.index;
     let totalAmount = event.currentTarget.dataset.type;
-    console.log(projectID);
+    // console.log(projectID);
     wx.navigateTo({
       url: '/pages/confirmvalue/confirmvalue?projectID=' + projectID + "&totalAmount=" + totalAmount,
     })
@@ -156,7 +164,7 @@ Page({
 
   // 跳转到附件上传页面
   personnerFile(e) {
-    console.log(e.currentTarget.dataset.type);
+    // console.log(e.currentTarget.dataset.type);
     let projectID = e.currentTarget.dataset.index;
     let byTypeTitle = "";
     let fileSign = '';

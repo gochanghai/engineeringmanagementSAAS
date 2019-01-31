@@ -36,7 +36,7 @@ Page({
     let _this = this;
     let projectID = this.data.projectID
     projectNodeJS.getProjectNodeList(projectID, function(res) {
-      console.log(res);
+      // console.log(res);
       // 格式化数据
       for (let index in res) {
         res[index].startFrom = _this.dateFormat2(res[index].startFrom);
@@ -51,11 +51,11 @@ Page({
   // 全选
   changeAllChecked(e) {
     let value = !e.currentTarget.dataset.index;
-    console.log(value);
+    // console.log(value);
     let nodeList = this.data.nodeList;
     this.data.all_checked = value;
     for(let index in nodeList){
-      console.log(index);
+      // console.log(index);
       nodeList[index].checked = value;
     }
     this.setData({
@@ -163,7 +163,7 @@ Page({
           console.log('Commit');
           // 提交项目进度节点          
           projectNodeJS.postProjectNode(projectID, nodeList, function(res) {
-            console.log(res)
+            // console.log(res)
           })
           wx.showToast({
             title: '设置成功',

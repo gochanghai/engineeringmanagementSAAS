@@ -18,7 +18,7 @@
   background-color: #fff;
 }
 
-/* .arc {
+.arc {
   position: absolute;
   left: -3%;
   bottom: 200rpx;
@@ -49,7 +49,7 @@
 
 .createdAt, .mes_type {
   margin-top: 50rpx;
-} */
+}
 
 .mes-content {
   margin-top: 20rpx;

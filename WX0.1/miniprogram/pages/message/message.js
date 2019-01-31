@@ -16,9 +16,8 @@ Page({
 
   //下拉刷新
   onPullDownRefresh: function() {
-    this.getMessageList();
-    // 获取消息总数
-    this.getCountMessageNo();
+    this.onShow();
+    return;
   },
   // 加载数据
   onLoad: function(options) {
@@ -27,12 +26,19 @@ Page({
     this.getCountMessageNo();
   },
 
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+      this.onLoad();
+  },
+
 
   // 获取消息内容
   getMessageList() {
     let _this = this;
     // 获取所有消息
-    messageCenterJS.mountedAllMessage(function (res) {
+    messageCenterJS.mountedAllMessage(function(res) {
       let messages = res;
       // 格式化时间
       for (let index in messages) {
@@ -49,18 +55,18 @@ Page({
   // 获取消息总数
   getCountMessageNo() {
     let _this = this;
-    messageCenterJS.countMessageNo(function (countTotal) {
-      if(countTotal > 0){
+    messageCenterJS.countMessageNo(function(countTotal) {
+      if (countTotal > 0) {
         wx.setTabBarBadge({
           index: 3,
           text: '' + countTotal
         })
-      }      
+      }
     })
   },
 
   downSwitch(event) {
-    console.log(event.currentTarget.id);
+    // console.log(event.currentTarget.id);
     let index = event.currentTarget.id;
     let showID = this.data.toggleId;
     if (showID === index) {
@@ -71,20 +77,28 @@ Page({
     })
   },
 
-  // 跳转到消息详情页
+  // 跳转到消息/任务详情页
   navMesSlove(event) {
     let message = event.currentTarget.dataset.index;
-    console.log("新建" + message);
+    // console.log("新建" + message);
+    let byTypeTitle = "消息详情"; //消息标题/任务标题
+    let messageDemand = '';
+    if (message.messageType === 'task'){
+      messageDemand = message.messageDemand;
+      byTypeTitle = '任务详情'
+    }
     wx.navigateTo({
-      url: '/pages/messagesolve/messagesolve?formId=' + message.formId + 
-        "&messageType=" + message.messageType + 
-        "&createAt=" + message.createAt + 
-        "&messageModule=" + message.messageModule + 
-        "&message=" + message.message + 
-        "&projectAbbreviation=" + message.projectAbbreviation + 
-        "&status=" + message.status + 
-        "&pointToID=" + message.pointToID + 
-        "&projectID=" + message.projectID,
+      url: '/pages/messagesolve/messagesolve?formId=' + message.formId +
+        "&messageType=" + message.messageType +
+        "&createAt=" + message.createAt +
+        "&messageModule=" + message.messageModule +
+        "&message=" + message.message +
+        "&projectAbbreviation=" + message.projectAbbreviation +
+        "&status=" + message.status +
+        "&pointToID=" + message.pointToID +
+        "&messageDemand=" + messageDemand +
+        "&projectID=" + message.projectID +
+        "&byTypeTitle=" + byTypeTitle,
     })
   },
 

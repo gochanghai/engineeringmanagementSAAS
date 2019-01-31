@@ -24,9 +24,9 @@ Page({
   getContractInfo() {
     let _this = this;
     let projectID = this.data.projectID;
-    console.log(projectID);
+    // console.log(projectID);
     contractJS.getContractInfo(projectID, function(res) {
-      console.log(res);
+      // console.log(res);
       _this.setData({
         contractAmount: res.contractAmount,
         projectName: res.projectName,

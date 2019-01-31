@@ -20,6 +20,7 @@ function getAllMessage(messageList, callback) {
         fields: {
             messagedrive: [
                 "formId",
+                "messageDemand",
                 "messageType",
                 "messageModule",
                 "projectID",
@@ -89,6 +90,7 @@ function getRiskMessage(riskMessageList, callback) {
         fields: {
             messagedrive: [
                 "formId",
+                "messageDemand",
                 "messageType",
                 "messageModule",
                 "projectID",
@@ -163,6 +165,7 @@ function getTaskMessage(taskMessageList, callback) {
         fields: {
             messagedrive: [
                 "formId",
+                "messageDemand",
                 "messageType",
                 "messageModule",
                 "projectID",

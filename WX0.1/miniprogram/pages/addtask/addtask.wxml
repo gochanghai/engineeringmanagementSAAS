@@ -7,11 +7,11 @@
     </view>
     <view class='task_item'>
       <text>任务板块</text>
-      <input type='text' disabled='disabled' confirm-type="next" value='{{messageModule}}' placeholder='请选择' bindtap='actionTypeTap' />
+      <input type='text' disabled='disabled' confirm-type="next" value='{{messageModuleName}}' placeholder='请选择' bindtap='actionTypeTap' />
       <image src='/images/xia.png'></image>
       <action-sheet hidden="{{actionTypeHidden}}">
-        <block wx:for="{{TypeNameList}}" wx:key="">
-          <action-sheet-item bindtap="selType" data-name="{{item}}">{{item}}</action-sheet-item>
+        <block wx:for="{{messageTypeList}}" wx:key="index">
+          <action-sheet-item bindtap="selType" data-type="{{item.type}}" data-name="{{item.name}}">{{item.name}}</action-sheet-item>
         </block>
         <action-sheet-cancel bindtap="hiddenTypeFun">取消</action-sheet-cancel>
       </action-sheet>

@@ -11,7 +11,15 @@ Page({
     actionAskHidden: true,
     actionUserHidden: true,
     AskList: ["请立即处理", "三天内处理", "一周内处理"],
-    TypeNameList: ["进度", "安全"],
+    messageTypeList: [
+      { type: 'confirmvalue', name: '产值'},
+      { type: 'progress', name: '进度' },
+      { type: 'recievedpay', name: '回款' },
+      { type: 'security', name: '安全' },
+      { type: 'insurance', name: '保险' },
+      { type: 'education', name: '安全教育' },
+      { type: 'disclose', name: '安全交底'},
+    ],
     assignUserList: [{
       userName: "test1",
       userAccount: 'test1'
@@ -38,7 +46,7 @@ Page({
     });
     // 获取项目管理人员
     addtaskJS.getAssignUser(projectID, function(res) {
-      console.log(res);
+      // console.log(res);
       _this.setData({
         assignUserList: res,
       });
@@ -65,9 +73,10 @@ Page({
   },
 
   selType: function(e) {
-    console.log(e)
+    // console.log(e)
     this.setData({
-      messageModule: e.currentTarget.dataset.name,
+      messageModuleName: e.currentTarget.dataset.name,
+      messageModule: e.currentTarget.dataset.type,
       actionTypeHidden: !this.data.actionTypeHidden
     })
   },
@@ -120,7 +129,7 @@ Page({
   },
 
   selUser: function(e) {
-    console.log(e.currentTarget);
+    // console.log(e.currentTarget);
     this.setData({
       selUser: e.currentTarget.dataset.user,
       pointToAccount: e.currentTarget.dataset.account,

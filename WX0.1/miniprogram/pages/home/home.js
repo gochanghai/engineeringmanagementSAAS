@@ -12,12 +12,14 @@ Page({
   
   //下拉刷新
   onPullDownRefresh: function() {
-    // 获取项目金额数据
-    this.getSumProjectMoney();
-    // 获取产值数据    
-    this.getGraphOutputValue();
-    // 获取安全数据
-    this.getGraphSecurity();
+    // // 获取项目金额数据
+    // this.getSumProjectMoney();
+    // // 获取产值数据    
+    // this.getGraphOutputValue();
+    // // 获取安全数据
+    // this.getGraphSecurity();
+    this.onShow();
+    return ;
   },
 
   // 产值图表
@@ -117,13 +119,21 @@ Page({
     //   text: '100'
     // })
   },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    this.onLoad();
+  },
+
   // 获取项目金额数据
   getSumProjectMoney() {
     let _this = this;
     statisticalJS.sumProjectMoney(function(res) {
       var sumProjectMoney = res;
-      console.log("sumProjectMoney");
-      console.log(sumProjectMoney);
+      // console.log("sumProjectMoney");
+      // console.log(sumProjectMoney);
       let amount = _this.getMoneyFormat(sumProjectMoney.totalReceivableAmount_ActualReceivAmount)
       _this.setData({
         sumProjectMoney: sumProjectMoney,
@@ -153,7 +163,7 @@ Page({
         data: sumProjectMoney.totalReceivableAmount_ActualReceivAmount / 10,
         stroke: false
       }];
-      console.log("可回款" + series);
+      // console.log("可回款" + series);
       _this.ChartData3(series);
       _this.setData({
         series: series,
@@ -165,8 +175,8 @@ Page({
     let _this = this;
     statisticalJS.getGraphOutputValue(function(res) {
       var graphOutputValue = res;
-      console.log("graphOutputValue");
-      console.log(graphOutputValue);
+      // console.log("graphOutputValue");
+      // console.log(graphOutputValue);
       _this.setData({
         graphOutputValue: graphOutputValue,
       });
@@ -186,8 +196,8 @@ Page({
     let _this = this;
     statisticalJS.getGraphSecurity(function(res) {
       var graphSecurity = res;
-      console.log("graphSecurity");
-      console.log(graphSecurity);
+      // console.log("graphSecurity");
+      // console.log(graphSecurity);
       _this.setData({
         graphSecurity: graphSecurity,
       });
@@ -210,7 +220,7 @@ Page({
         data: graphSecurity.totalUnDisclose,
         stroke: false
       }];
-      console.log(series);
+      // console.log(series);
       _this.ChartData2(series);
     })
   },

@@ -19,7 +19,7 @@ Page({
     var _this = this;
     projectlistJS.getProjectList(function(res) {
       var projectList = res;
-      console.log(projectList);
+      // console.log(projectList);
       // 格式化财务数据
       for (let index in projectList) {
         projectList[index].outputValue1 = _this.getMoneyFormat(projectList[index].outputValue);
@@ -57,13 +57,15 @@ Page({
 
   //进入安全人员列表
   navSecurity(e) {
-    console.log(e.currentTarget.dataset.type);
+    // console.log(e.currentTarget.dataset.type);
     let projectID = e.currentTarget.dataset.index;
     let byTypeTitle = "";
     let fileSign = '';
     let txt = e.currentTarget.dataset.type;
+    // 区分人员类型
     switch (txt) {
       case "0":
+        // 设置附件上传的页面标题
         byTypeTitle = "上传附件-安全技术交底";
         fileSign = 'disclose';
         break;

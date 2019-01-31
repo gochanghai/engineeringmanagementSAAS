@@ -11,21 +11,40 @@ Page({
     constructionList: []
   },
 
+  //下拉刷新
+  onPullDownRefresh: function () {
+    this.onShow();
+  },
+
   onLoad: function(options) {
-    console.log(options.typeID);
-    console.log("typeID: " + options.typeID);
-    console.log("projectID" + options.projectID);
+    // console.log(options.typeID);
+    // console.log("typeID: " + options.typeID);
+    // console.log("projectID" + options.projectID);
+    let typeID = options.typeID;
     var _this = this;
     this.setData({
       WinHeight: wx.getSystemInfoSync().windowHeight - 90 + 'px',
       WinHeightCon: wx.getSystemInfoSync().windowHeight - 136 + 'px',
-      swiperIndex: options.typeID
+      swiperIndex: options.typeID,
+      projectID: options.projectID,
     });
+    
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    // this.onLoad();
+    this.getDataList();
+  },
+  getDataList(){
+    var _this = this;
     // 获取项目ID
-    let projectID = options.projectID;
+    let projectID = this.data.projectID;
     // 获取管理人员数据
     let managerList;
-    personnelJS.getManagerList(projectID, function(res) {
+    personnelJS.getManagerList(projectID, function (res) {
       managerList = res;
       // 格式化数据
       for (let index in managerList) {
@@ -38,18 +57,18 @@ Page({
     });
     // 获取施工班组数据
     let groupList;
-    personnelJS.getGroupList(projectID, function(res) {
+    personnelJS.getGroupList(projectID, function (res) {
       groupList = res;
-      console.log(groupList);
+      // console.log(groupList);
       _this.setData({
         groupList: groupList,
       })
     });
     // 获取施工人员数据
     let constructionList;
-    personnelJS.getConstructionList(projectID, function(res) {
+    personnelJS.getConstructionList(projectID, function (res) {
       constructionList = res;
-      console.log(constructionList);
+      // console.log(constructionList);
       // 格式化数据
       for (let index in constructionList) {
         constructionList[index].admissionDate = _this.dateFormat2(constructionList[index].admissionAt);
@@ -61,6 +80,7 @@ Page({
       })
     });
   },
+
 
   currentFun(event) {
     this.setData({

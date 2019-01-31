@@ -27,7 +27,7 @@ Page({
 
   // 班组名输入
   InputGroupName(e) {
-    console.log(e.detail.value);
+    // console.log(e.detail.value);
     let groupName = e.detail.value;
     this.setData({
       groupName: groupName
@@ -35,7 +35,7 @@ Page({
   },
 
   selTeam(e) {
-    console.log(e.currentTarget.dataset.type);
+    // console.log(e.currentTarget.dataset.type);
     let index = e.currentTarget.dataset.index;
     let type = e.currentTarget.dataset.type;
     this.setData({
@@ -89,7 +89,6 @@ Page({
       success(res) {
         if (res.confirm) {
           console.log('Commit');
-
           //  新增
           fireGroupJS.addFireGroup(fireGroup,function(res){
             console.log(res);

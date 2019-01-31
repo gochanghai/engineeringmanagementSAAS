@@ -34,19 +34,19 @@ Page({
    */
   onLoad: function (options) {
     // ==============================messageCenter消息中心===============================
-    // 所有项目风险消息-2019/1/21
+    // 所有项目风险消息-2019/1/21-2019/1/31
     // messageCenterJS.mountedRiskMessage(function (res){
     //   var riskmessage = res;
     //   console.log("riskmessage");
     //   console.log(riskmessage);
     // });
-    // 所有项目任务消息-2019/1/21
+    // 所有项目任务消息-2019/1/21-2019/1/31
     // messageCenterJS.mountedTaskMessage(function (res){
     //   var taskmessage = res;
     //   console.log("taskmessage");
     //   console.log(taskmessage);
     // });
-    // 所有项目的所有消息-2019/1/29
+    // 所有项目的所有消息-2019/1/29-2019/1/31
     // messageCenterJS.mountedAllMessage(function(res){
     //   console.log(res);
     // })
@@ -423,6 +423,7 @@ Page({
     // 2019/1/28
     // 2019/1/29
     // 2019/1/30
+    // 2019/1/31
   },
 
 })

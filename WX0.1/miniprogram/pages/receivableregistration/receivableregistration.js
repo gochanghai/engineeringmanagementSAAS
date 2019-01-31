@@ -59,7 +59,7 @@ Page({
   getRecievedpay(){
     let _this = this;
     recievedPayJS.getRecievedpay(this.data.formId, function (res) {
-      console.log(res);
+      // console.log(res);
       // 判断数据是否为空
       let theoryReceivAmount = 0.00;
       if (res.theoryReceivAmount != null) {
@@ -84,21 +84,21 @@ Page({
 
   // 计划回款时间输入
   InputPlanReceivAt(e) {
-    console.log(e.detail.value);
+    // console.log(e.detail.value);
     this.setData({
       planReceivDate: e.detail.value
     })
   },
   // 本期可收款金额输入
   InputTheoryReceivAmount(e) {
-    console.log(e.detail.value);
+    // console.log(e.detail.value);
     this.setData({
       theoryReceivAmount: e.detail.value
     })
   },
   // 回款金额输入
   InputActualReceivAmount(e) {
-    console.log(e.detail.value);
+    // console.log(e.detail.value);
     this.setData({
       actualReceivAmount: e.detail.value
     })

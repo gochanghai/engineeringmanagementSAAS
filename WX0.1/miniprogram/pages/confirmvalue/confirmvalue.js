@@ -22,7 +22,7 @@ Page({
     let _this = this
     let projectID = this.data.projectID;
     progressJS.getConfirmValueList(projectID, function(res) {
-      console.log(res);
+      // console.log(res);
       // 格式化数据      
       for (let index in res) {        
         res[index].confirmAt = _this.dateFormat2(res[index].confirmAt);
@@ -44,12 +44,14 @@ Page({
     let valueUploadAt = this.dateFormat2(item.valueUploadAt);
     let confirmAt = item.confirmAt;
     let formId = item.formId;
+    let ownerPayPercent = item.ownerPayPercent;
     let progressNodeID = item.progressNodeID;
     let ownerPayTime = item.ownerPayTime;
     let objectId = item.objectId;
     wx.navigateTo({
       url: '/pages/outputvalregister/outputvalregister?projectID=' + projectID +
         "&receivableAmount=" + receivableAmount +
+        "&ownerPayPercent=" + ownerPayPercent +
         "&outputValue=" + outputValue +
         "&valueUploadAt=" + valueUploadAt +
         "&formId=" + formId +

@@ -40,7 +40,7 @@ Page({
     let _this = this;
     let projectID = this.data.projectID;
     declaretimeJS.getDeclaretimeList(projectID, function(res) {
-      console.log(res);
+      // console.log(res);
       // 格式化数据
       for (let index in res) {
         res[index].dateNode = _this.dateFormat2(res[index].dateNode);
@@ -91,7 +91,7 @@ Page({
   },
 
   selType(e) {
-    console.log(e.currentTarget.dataset);
+    // console.log(e.currentTarget.dataset);
     let valType = e.currentTarget.dataset.value;    
     if (valType == '1') {
       this.chooseSezi();
@@ -128,7 +128,7 @@ Page({
   },
 
   InputDay(e) {
-    console.log(e.detail.value);
+    // console.log(e.detail.value);
     this.setData({
       selType: e.detail.value
     })
