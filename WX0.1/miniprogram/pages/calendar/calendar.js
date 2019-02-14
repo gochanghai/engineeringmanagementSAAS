@@ -22,7 +22,7 @@ Page({
     chooseDay: null,
     IsToDay: false,
     days: '',
-    IsNotice: true,
+    isNotice: false,
     noticeContent: ''
   },
   //给点击的日期设置一个背景颜色
@@ -81,10 +81,12 @@ Page({
   },
   onLoad: function() {
     this.setData({
-      chooseDay: new Date().getFullYear() + "-" + new Date().getMonth() + 1 + "-" + new Date().getDate(),
+      chooseDay: new Date().getFullYear() + "-" + (1 + new Date().getMonth()) + "-" + new Date().getDate(),
       IsToDay: true,
       days: '今天'
     });
+
+    console.log(this.data.chooseDay);
     // 按日统计消息数据
     this.getThisDateMsaaage(this.data.chooseDay);
   },
@@ -99,7 +101,7 @@ Page({
   //关闭通知
   noticeClose() {
     this.setData({
-      IsNotice: false
+      isNotice: false
     })
   },
 
@@ -115,6 +117,10 @@ Page({
         message: res,
       })
 
+      if (_this.data.days === '今天') {
+        // 广播内容
+        _this.getNoticeContent(res);
+      }
       _this.setData({
         confirmvalueMessages: res.confirmvalue,
         recievedpayMessages: res.recievedpay,
@@ -127,10 +133,7 @@ Page({
         discloseNum: res.disclose.length,
         educationNum: res.education.length,
       });
-      if (_this.data.days === '今天') {
-        // 广播内容
-        _this.getNoticeContent(res);
-      }
+      
     })
   },
   // 消息数据过滤函数
@@ -232,8 +235,14 @@ Page({
         insurance[item].message + '        '
     }
 
+    // 根据广播内容来判断是否打开广播
+    let isNotice = true;
+    if (noticeContent === ''){
+        isNotice = false
+    }
     this.setData({
-      noticeContent: noticeContent
+      noticeContent: noticeContent,
+      isNotice: isNotice
     })
   }
 
