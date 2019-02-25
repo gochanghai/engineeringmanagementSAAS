@@ -1,46 +1,7 @@
 /* pages/addworkpersonnel/addworkpersonnel.wxss */
 
-.top-sel-team {
-  margin: 0 auto;
-  margin-top: 40rpx;
-  width: 92%;
-  display: flex;
+.information {
   /* border: 1px solid; */
-}
-
-.top-sel-team view.team {
-  width: 120rpx;
-  font-size: 33rpx;
-  line-height: 66rpx;
-  text-align: left;
-}
-
-.top-sel-team view.team-list {
-  display: flex;
-  flex: 1;
-  justify-content: space-between;
-}
-
-.active-sel {
-  display: inline-block;
-  width: 170rpx;
-  line-height: 66rpx;
-  text-align: center;
-  font-size: 28rpx;
-  color: #fff;
-  border-radius: 6rpx;
-  background-color: #ffa268;
-}
-
-.team-list text {
-  display: inline-block;
-  width: 170rpx;
-  line-height: 66rpx;
-  text-align: center;
-  font-size: 28rpx;
-  color: #666;
-  border-radius: 8rpx;
-  border: 1px solid #e5e5e5;
 }
 
 .information_item {

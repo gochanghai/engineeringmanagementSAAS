@@ -1,47 +1,96 @@
 <!--消息Pages-->
+
+<view class='container'>
+
+  <view class='tab'>
+    <view data-active='0' bindtap='bindChange' class='tab-item one {{activeIndex=="0" ? "tab-item-active" : ""}}'>通知公告
+    </view>
+    <view data-active='1' bindtap='bindChange' class='tab-item two {{activeIndex=="1" ? "tab-item-active" : ""}}'>项目消息
+      <text class='mes-count' wx:if='{{ projectMsgTotal > 0 }}'>{{projectMsgTotal}}</text>
+    </view>
+  </view>
+
+  <view class='content'>
+    <swiper style='height:{{WinHeight}}' current='{{swiperIndex}}' bindchange="currentFun">
+      <block>
+        <swiper-item>
+          <scroll-view style='height:{{WinHeight}}' scroll-y>
+            <view class='context-item' bindtap='noticeDetail' wx:for="{{noticeList}}" data-item='{{item}}' wx:key="index">
+              <view class='text'>
+                <view class='context'>{{item.context}}</view>
+              </view>
+              <view class='info'>
+                <text>发送部门：{{item.sendDept}}</text>
+                <text>发送日期：{{item.sendDate}}</text>
+              </view>
+            </view>
+          </scroll-view>
+        </swiper-item>
+      </block>
+
+      <block>
+        <swiper-item>
+          <view class='mes-center'>
+            <scroll-view style='height:{{WinHeight}}' scroll-y>
+              <view class='mes-list' wx:for="{{projectMessageList}}" wx:key="index" wx:if="{{!IsnoneMes}}">
+                <view class='mes-list-item' style='height:{{ toggleId == index ? toggleStyle.heightSel: toggleStyle.height}}'>
+                  <view class="mes-title" bindtap='downSwitch' id="{{index}}">
+                    <view class="name">{{item.peojectName}} （{{item.total}}条）
+                      <image src="{{toggleId == index ? toggleStyle.imgSel: toggleStyle.img}}"></image>
+                    </view>
+                    <text catchtap='addTask' data-index="{{item}}">+任务</text>
+                  </view>
+                  <view class='mes-container' wx:if="{{item.total > 0}}">
+                    <view class='progress' wx:if="{{item.list != null}}">
+                      <view class='mes-con'>
+                        <view class='mes-item-for' wx:for="{{item.list}}" hover-class='hover-row' bindtap='navMesSlove' data-index="{{item}}" wx:key="index">
+                          <text class='status' wx:if="{{item.type == 'confirmvalue' || item.type == 'recievedpay'}}" style='background-color:{{BgColorStatus}}'></text>
+                          <text class='status' wx:else style='background-color:{{BgIColorStatus}}'></text>
+                          <view class='mes-item'>
+                            <text class='content'>{{item.context}}</text>
+                            <text class='date'>{{item.date}}</text>
+                            <image src='/images/details.png' class='details'></image>
+                          </view>
+                        </view>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </scroll-view>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
+  <!-- 通知公告弹窗 -->
+  <view class='background-layer' wx:if="{{modalDialog}}" bindtap='closeFun'></view>
+  <view class='modal' wx:if="{{modalDialog}}">
+    <scroll-view style='width: 670rpx;height: 574rpx;' scroll-y>
+      <view class='top-detail'>
+        <view class='name'>{{noticeDetail.noticeTitle}}</view>
+        <image src='/images/modal_close.png' class='close' bindtap='closeFun'></image>
+      </view>
+      <view class='info'>
+        <text>发送部门：{{noticeDetail.sendDept}}</text>
+        <text>发送日期：{{noticeDetail.sendDate}}</text>
+      </view>
+      <view class='info'>
+        <text>授权阅读：{{noticeDetail.authRead}}</text>
+      </view>
+
+      <view class='context'>{{noticeDetail.context}}</view>
+
+      <view class='imglist'>
+        <image src='{{item}}' wx:for="{{noticeDetail.imageList}}" wx:key="index" />
+      </view>
+    </scroll-view>
+  </view>
+</view>
 <view class="{{ IsnoneMes == true ? containerSty : ''}}">
   <view class='none_bg' wx:if="{{IsnoneMes}}">
     <image src='/images/none_img.png'></image>
     <text>暂无消息</text>
   </view>
-  <view class='mes-center'>
-    <view class='mes-list' wx:for="{{messageList}}" wx:key="index" wx:if="{{!IsnoneMes}}">
-      <view class='mes-list-item' style='height:{{ toggleId == index ? toggleStyle.heightSel: toggleStyle.height}}'>
-        <view class="mes-title" bindtap='downSwitch' id="{{index}}">
-          <view class="name">{{item.projectAbbreviation}} （{{item.messageTotal}}条）
-            <image src="{{toggleId == index ? toggleStyle.imgSel: toggleStyle.img}}"></image>
-          </view>
-          <text catchtap='addTask' data-index="{{item}}">+任务</text>
-        </view>
-        <view class='mes-container' wx:if="{{item.messageTotal > 0}}">
-          <view class='progress' wx:if="{{item.messageData != null}}">
-            <view class='mes-con'>
-              <view class='mes-item-for' wx:for="{{item.messageData}}" hover-class='hover-row' bindtap='navMesSlove' data-index="{{item}}" wx:key="index">
-                <text class='status' wx:if="{{item.messageModule == 'confirmvalue' || item.messageModule == 'recievedpay'}}" style='background-color:{{BgColorStatus}}'></text>
-                <text class='status' wx:else style='background-color:{{BgIColorStatus}}'></text>
-                <view class='mes-item'>
-                  <text class='content'>{{item.message}}</text>
-                  <text class='date'>{{item.createDate}}</text>
-                  <image src='/images/details.png' class='details'></image>
-                </view>
-              </view>
-            </view>
-          </view>
-
-          <!-- <view class='security' wx:if="{{item.messageTotal > 0}}">
-            <view class='mes-con'>
-              <view class='mes-item' wx:for="{{item.messageData}}" data-index="{{item}}" bindtap='navMesSlove' wx:key="index">
-                <text class='status' style='background-color:{{BgIColorStatus}}'></text>
-                <text class='content'>{{item.message}}</text>
-                <text class='date'>{{item.createDate}}</text>
-                <image src='/images/details.png' class='details'></image>
-              </view>
-            </view>
-          </view> -->
-
-        </view>
-      </view>
-    </view>
-  </view>
-
 </view>

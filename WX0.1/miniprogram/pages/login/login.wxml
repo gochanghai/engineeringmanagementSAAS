@@ -2,7 +2,7 @@
 <view class='container'>
   <view class='bg-con'>
     <image class='bg-img' src='/images/loginbgimg.png'></image>
-    <!-- <text class='bg-txt'>用户登录</text> -->
+    <text class='bg-txt'>深华消防工程项目管理<text> v0.4.6</text></text>
   </view>
   <view class='content'>
     <view class='input-con'>

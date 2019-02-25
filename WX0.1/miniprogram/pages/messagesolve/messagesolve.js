@@ -1,43 +1,49 @@
 // pages/messagesolve/messagesolve.js
-const messageCenterJS = require('../../action/messageCenter.js');
-const confirmvalueJS = require('../../action/confirmvalue.js');
-const recievedPayJS = require('../../action/recievedpay.js');
+const messageCenterAction = require('../../backend/manageAction/messageCenterAction.js');
 Page({
-
   data: {
     // 消息体
     message: {}
   },
 
-  onLoad: function (options) {
+  onLoad: function(options) {
 
     //根据任务 or 消息来设置当前页面的标题
     wx.setNavigationBarTitle({
       title: options.byTypeTitle
     })
-    // let message = options.message;
-    let _this = this;
     this.setData({
-      message: options.message,
-      messageType: options.messageType,
-      createAt: options.createAt,
-      formId: options.formId,
+      formID: options.formID,
       projectID: options.projectID,
-      pointToID: options.pointToID,
-      projectAbbreviation: options.projectAbbreviation,
-      status: options.status,
-      messageModule: options.messageModule,
-      messageDemand: options.messageDemand,
+    })
+
+    this.getMessage(options.formID, options.projectID);
+  },
+
+  // 获取消息信息
+  getMessage(formID, projectID) {
+    messageCenterAction.getMessagePage(formID, projectID, function(bmessageInfo) {
+      console.log('bmessageInfo');
+      console.log(bmessageInfo);
+    })
+
+    this.setData({
+      message: 'options.message',
+      messageType: 'risk',
+      createAt: 'options.createAt',
+      pointToID: 'options.pointToID',
+      projectAbbreviation: 'options.projectAbbreviation',
+      status: ' options.status',
+      messageModule: 'confirmvalue',
+      messageDemand: 'options.messageDemand',
     })
   },
 
   //消息忽略
   mesDeal() {
-    let message = {
-      projectID: this.data.projectID,
-      formId: this.data.formId,
-      messageModule: this.data.messageModule,
-    }
+    let projectID = this.data.projectID;
+    let formID = this.data.formID;
+    let messageModule = this.data.messageModule;
     // console.log(message);
     wx.showModal({
       title: '提示',
@@ -47,7 +53,7 @@ Page({
         if (res.confirm) {
           // console.log('Commit');
           // 消息忽略          
-          messageCenterJS.mesIgnore(message, function (res) {
+          messageCenterAction.mesIgnore(projectID, formID, messageModule, function(res) {
             console.log(res);
           })
           wx.showToast({
@@ -76,42 +82,19 @@ Page({
   //消息处理(跳转到产值登记、回款登记或人员列表)
   mesSolve() {
     let _this = this;
-
     // 判断是否是产值消息
     if (_this.data.messageModule == "confirmvalue") {
-      confirmvalueJS.getConfirmvalue(_this.data.pointToID, function (confirmvalueInfo) {
-        if ('' != confirmvalueInfo && null != confirmvalueInfo);
         wx.navigateTo({
-          url: '/pages/outputvalregister/outputvalregister?projectID=' + confirmvalueInfo.projectID +
-            "&receivableAmount=" + confirmvalueInfo.receivableAmount +
-            "&ownerPayPercent=" + confirmvalueInfo.ownerPayPercent +
-            "&outputValue=" + confirmvalueInfo.outputValue +
-            "&valueUploadAt=" + confirmvalueInfo.valueUploadAt +
-            "&formId=" + confirmvalueInfo.formId +
-            "&confirmAt=" + confirmvalueInfo.confirmAt +
-            "&progressNodeID=" + confirmvalueInfo.progressNodeID +
-            "&ownerPayTime=" + confirmvalueInfo.ownerPayTime +
-            "&objectId=" + confirmvalueInfo.objectId,
+          url: '/pages/outputvalregister/outputvalregister?projectID=' + _this.data.projectID +
+            "&formID=" + _this.data.formID
         })
-      });
     }
     // 判断是否是回款消息
     if (_this.data.messageModule == "recievedpay") {
-      recievedPayJS.getRecievedpay(_this.data.pointToID, function (recievedpayInfo) {
-        console.log('recievedpayInfo');
-        console.log(recievedpayInfo);
-        if ('' != recievedpayInfo && null != recievedpayInfo) {
           wx.navigateTo({
-            url: '/pages/receivableregistration/receivableregistration?projectID=' + recievedpayInfo.projectID +
-              "&formId=" + recievedpayInfo.formId +
-              "&actualReceivAmount=" + recievedpayInfo.actualReceivAmount +
-              "&theoryReceivAmount=" + recievedpayInfo.theoryReceivAmount +
-              "&planReceivDate=" + recievedpayInfo.planReceivDate +
-              "&actualReceivAt=" + recievedpayInfo.actualReceivAt +
-              "&objectId=" + recievedpayInfo.objectId,
+            url: '/pages/receivableregistration/receivableregistration?projectID=' + _this.data.projectID +
+              "&formID=" + _this.data.formID
           })
-        }
-      })
     }
 
     // 判断是否是安全消息
@@ -132,8 +115,7 @@ Page({
         fileSign = 'disclose';
       }
       wx.navigateTo({
-        url: '/pages/uploadfile/uploadfile?byTypeTitle=' + byTypeTitle +
-          '&projectID=' + _this.data.projectID +
+        url: '/pages/uploadfile/uploadfile?projectID=' + _this.data.projectID +
           '&fileSign=' + fileSign,
       })
     }

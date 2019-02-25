@@ -1,11 +1,13 @@
 // pages/declaretime/declaretime.js
-const declaretimeJS = require('../../action/declaretime.js');
+const declaretimeAction = require('../../backend/manageAction/declaretimeAction.js');
 Page({
 
   data: {
     declareHidden: true,
-    startDate: '请选择日期',
-    EndDate: '请选择日期',
+    maxlength: -1,
+    startDate: '',
+    endDate: '',
+    seldate: '2019-09-01',
     declareType: [{
       label: '自定义节点',
       value: '0'
@@ -19,57 +21,104 @@ Page({
     Day: '号',
     today: '',
     disabled: true,
-    WinHeight: null
+    WinHeight: null,
+    declaretimeList: [],
   },
+
+  bindDateChange(e) {
+    let today = this.data.today;
+    if (parseInt(today) < 10) {
+      today = '0' + today;
+    }
+    let toDay2 = today.split("");
+    let changeDate = e.detail.value.split("");
+    let changeDate2 = changeDate.splice(8, 2, toDay2[0], today[1]);
+    this.setData({
+      seldate: changeDate.join("")
+    })
+  },
+
 
   onLoad: function(options) {
-    // 获取项目ID
-    let projectID = options.projectID;
     this.setData({
       WinHeight: wx.getSystemInfoSync().windowHeight - 320 + 'px',
-      projectID: projectID,
+      projectID: options.projectID,
     })
     // 获取项目合同时间
-    this.getContractInfo();
+    this.getContractInfo(this.data.projectID);
     // 获取项目申报时间列表
-    this.getDeclaretimeList();
+    this.getDeclaretimeList(this.data.projectID);
   },
 
-  // 获取项目申报时间列表
-  getDeclaretimeList() {
-    let _this = this;
-    let projectID = this.data.projectID;
-    declaretimeJS.getDeclaretimeList(projectID, function(res) {
-      // console.log(res);
-      // 格式化数据
-      for (let index in res) {
-        res[index].dateNode = _this.dateFormat2(res[index].dateNode);
+  // 获取项目的合同启止与申报类型
+  getContractInfo(projectID) {
+    let _than = this;
+    declaretimeAction.getDeclaretimeBaseInfo(projectID, function(res) {
+      console.log(res);
+      let contractInfo = {
+        startDate: res.startdate,
+        endDate: res.enddate,
       }
-      _this.setData({
-        declaretimeList: res,
-      });
+      _than.setData({
+        contractInfo: contractInfo,
+      })
     });
+
   },
-  // 获取项目合同时间
-  getContractInfo(){
-    let _this = this;
-    declaretimeJS.getContractInfo(_this.data.projectID, function (res) {
-      _this.setData({
-        contractInfo: res,
-      });
+  // 获取项目申报时间列表
+  getDeclaretimeList(projectID) {
+    let _than = this;
+    declaretimeAction.getDeclaretimeList(projectID, function(res) {
+      console.log(res);
+      let list = [];
+      for (let index in res) {
+        let item = {
+          cformid: res[index].cformid,
+          fdatenode: _than.dateFormat(res[index].fdatenode),
+          fnodedeclare: res[index].fnodedeclare,
+          status: 'updateDetail',
+          cprojectid: projectID,
+          remark: '',
+        }
+        list.push(item);
+      }
+      _than.setData({
+        declaretimeList: list,
+      })
     });
+
   },
+  // 确定
+  saveDeclaretiemList() {
+    let declaretimeList = this.data.declaretimeList;
 
-
-  InputBeginDate(e) {
-    this.setData({
-      startDate: e.detail.value
-    })
-  },
-
-  InputEndDate(e) {
-    this.setData({
-      EndDate: e.detail.value
+    wx.showModal({
+      title: '提示',
+      content: '确定提交吗？',
+      confirmColor: '#F0880C',
+      success(res) {
+        if (res.confirm) {
+          console.log('Commit');
+          //提交合同信息
+          declaretimeAction.postDeclaretiemList(declaretimeList, function(res) {
+            console.log(res);
+          })
+          wx.showToast({
+            title: '提交成功',
+            icon: 'success',
+            duration: 2000,
+            success() {
+              setTimeout(() => {
+                wx.navigateBack({
+                  delta: '1'
+                })
+              }, 1200)
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
     })
   },
 
@@ -84,7 +133,7 @@ Page({
   },
 
   // 时间类型输入
-  dayBindInput(e){
+  dayBindInput(e) {
     this.setData({
       today: e.detail.value,
     });
@@ -92,7 +141,7 @@ Page({
 
   selType(e) {
     // console.log(e.currentTarget.dataset);
-    let valType = e.currentTarget.dataset.value;    
+    let valType = e.currentTarget.dataset.value;
     if (valType == '1') {
       this.chooseSezi();
     }
@@ -134,13 +183,27 @@ Page({
     })
   },
 
+  // 备注输入
+  intoutNoderemark(e) {
+    let value = e.detail.value
+    let index = e.currentTarget.dataset.index;
+    let list = this.data.declaretimeList;
+    list[index].remark = value;
+    this.setData({
+      declaretimeList: list,
+    })
+  },
+
   // 添加一个申报时间
   addDeclareTime(e) {
     let declaretimeList = this.data.declaretimeList;
     // 创建一个新的 declaretime
     let declaretime = {
-      dateNode: '',
-      nodeDeclare: '',      
+      fdatenode: '2019-02-22',
+      fnodedeclare: '2019-02-22 - 222222',
+      status: 'addDetail',
+      cprojectid: this.data.projectID,
+      remark: '',
     };
     // 放进数组
     declaretimeList.push(declaretime);
@@ -166,7 +229,7 @@ Page({
           })
         }
       }
-    })    
+    })
   },
 
   saveDay() {
@@ -176,6 +239,7 @@ Page({
     })
   },
 
+  // 取消按钮
   cancel() {
     wx.navigateBack({
       delta: 1
@@ -185,9 +249,7 @@ Page({
   // 设置成功
   commitDeclareTime() {
     let projectID = this.data.projectID;
-    let dateList = {
-
-    };
+    let dateList = this.data.declaretimeList
     wx.showModal({
       title: '提示',
       content: '确定提交吗？',
@@ -195,7 +257,7 @@ Page({
       success(res) {
         if (res.confirm) {
           console.log('Commit');
-          declaretimeJS.postDeclaretiemList(projectID, dateList, function(res) {
+          declaretimeAction.postDeclaretiemList(projectID, dateList, function(res) {
             console.log(res);
           })
           wx.showToast({
@@ -217,11 +279,13 @@ Page({
     })
   },
 
-  // 时间格式化 2019-01-24
-  dateFormat2(val) {
-    if (val === null) { return "未知"; }
+  // 时间格式化
+  dateFormat(val) {
+    if (val === null) {
+      return "未知";
+    }
     let date = val.substring(0, 10);
     // console.log(date);
     return date;
-  }, 
+  },
 })

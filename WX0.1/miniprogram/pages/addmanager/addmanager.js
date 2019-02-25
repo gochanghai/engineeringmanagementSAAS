@@ -1,8 +1,7 @@
 // pages/addgroup/addgroup.js
-const managerJS = require('../../action/manager.js');
+const managerAction = require('../../backend/manageAction/managerAction.js');
 Page({
-
-  /**
+  /** 
    * 页面的初始数据
    */
   data: {
@@ -34,11 +33,15 @@ Page({
     telphoneNo: ''
   },
 
+  onPullDownRefresh() {
+    wx.stopPullDownRefresh()
+  },
+
   onLoad: function(options) {
     // 获取项目ID
-    let projectID = options.projectID;
+    console.log(options.projectID);
     this.setData({
-      projectID: projectID,
+      projectID: options.projectID,
     })
   },
 
@@ -125,7 +128,7 @@ Page({
       managerType: this.data.managerType,
       managerName: this.data.managerName,
       telphoneNo: this.data.telphoneNo,
-      projectID: this.data.projectID
+      projectid: this.data.projectID
     };
     wx.showModal({
       title: '提示',
@@ -134,25 +137,35 @@ Page({
       success(res) {
         if (res.confirm) {
           console.log('Commit');
+          console.log(manager)
           // 新增         
-          managerJS.addManage(manager,function(res){
-            console.log(res);
-          })
-          wx.showToast({
-            title: '提交成功',
-            icon: 'success',
-            duration: 2000,
-            success() {
-              setTimeout(() => {
-                wx.navigateBack({
-                  delta: '1'
-                })
-              }, 1000)
+          // managerJS.addManage(manager,function(res){
+          //   console.log(res);
+          // })
+          managerAction.addManager(manager, function(code) {
+            console.log(code);
+            if (code > 0) {
+              wx.showToast({
+                title: '提交成功',
+                icon: 'success',
+                duration: 2000,
+                success() {
+                  setTimeout(() => {
+                    wx.navigateBack({
+                      delta: '1'
+                    })
+                  }, 1200)
+                }
+              })
+            } else {
+              wx.showModal({
+                content: '新增失败',
+                showCancel: false,
+                confirmColor: '#F0880C'
+              })
             }
           })
-        } else if (res.cancel) {
-          console.log('用户点击取消')
-        }
+        } else if (res.cancel) {}
       }
     })
   }

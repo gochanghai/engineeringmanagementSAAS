@@ -38,13 +38,18 @@
   height: 14rpx;
 }
 
+.task_item picker {
+  text-align: right;
+  flex: 1;
+}
+
 .textarea_content {
   margin-left: 20rpx;
   padding: 20rpx;
   width: 72%;
   line-height: 50rpx;
   background-color: #f0f0f0;
-  border-radius: 10rpx;
+  border-radius: 6rpx;
   color: #999;
   font-size: 32rpx;
 }

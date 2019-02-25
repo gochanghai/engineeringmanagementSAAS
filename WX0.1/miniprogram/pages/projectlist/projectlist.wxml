@@ -7,54 +7,54 @@
         <!-- <text class='status'>进行中</text> -->
         <view class='project-item-info'>
           <view class="top-inform">
-            <text>{{item.ProjectAbbreviation}}</text>
+            <text>{{item.projectName}}</text>
             <image src='/images/red.png' class='status_img' wx:if='{{item.lightSign == 1}}'></image>
             <image src='/images/yellow.png' class='status_img' wx:if='{{item.lightSign == 2}}'></image>
             <image src='/images/green.png' class='status_img' wx:if='{{item.lightSign == 0}}'></image>
           </view>
           <view class="list1">
-            <view class='info'>
+            <view class='info' hover-class='hover-row'>
               <view>合同金额</view>
-              <text>{{item.totalAmount1}}</text>
+              <text>￥{{item.totalAmount}}</text>
             </view>
-            <view class='info' data-index='{{item.projectID}}'data-type='{{item.totalAmount}}' bindtap='navConfirmVal'>
+            <view class='info' hover-class='hover-row' data-index='{{item.projectID}}' data-type='{{item.totalAmount}}' bindtap='navConfirmVal'>
               <view>总产值</view>
-              <text>￥{{item.outputValue1}}</text>
+              <text>￥{{item.outputValue}}</text>
             </view>
-            <view class='info' data-index='{{item.projectID}}'data-type='{{item.totalAmount}}' bindtap='navReceivble'>
+            <view class='info' hover-class='hover-row' data-index='{{item.projectID}}' data-type='{{item.totalAmount}}' bindtap='navReceivble'>
               <view>总回款</view>
-              <text>￥{{item.receivableAmount1}}</text>
+              <text>￥{{item.receivableAmount}}</text>
             </view>
-            <view class='info' data-index='{{item.projectID}}'data-type='{{item.totalAmount}}' bindtap='navReceivble'>
+            <view class='info' hover-class='hover-row' data-index='{{item.projectID}}' data-type='{{item.totalAmount}}' bindtap='navReceivble'>
               <view>可收款</view>
-              <text>￥{{item.actualReceivAmount1}}</text>
+              <text>￥{{item.actualReceivAmount}}</text>
             </view>
             <view class='worker_value'>
               <view class='manager'>
-                <view class='info list1-info' data-index='{{item.projectID}}' data-type='0' bindtap='navManager'>
+                <view class='info list1-info' hover-class='hover-row' data-index='{{item.projectID}}' data-type='0' bindtap='navManager'>
                   <view>管理</view>
                   <text>{{item.managerPer}}人</text>
                 </view>
-                <view class='info list1-info' data-index='{{item.projectID}}' data-type='1' bindtap='navManager'>
+                <view class='info list1-info' hover-class='hover-row' data-index='{{item.projectID}}' data-type='1' bindtap='navManager'>
                   <view>施工</view>
                   <text>{{item.constructionPer}}人</text>
                 </view>
-                <view class='info list1-info' data-index='{{item.projectID}}' data-type='2' bindtap='navManager'>
+                <view class='info list1-info' hover-class='hover-row' data-index='{{item.projectID}}' data-type='2' bindtap='navManager'>
                   <view>班组</view>
                   <text>{{item.group}}组</text>
                 </view>
               </view>
               <view class='line-list2'></view>
               <view class='people'>
-                <view class='info list2-info' data-index='{{item.projectID}}' data-type='0' bindtap='navSecurity'>
+                <view class='info list2-info' hover-class='hover-row' data-index='{{item.projectID}}' data-type='0' bindtap='navSecurity'>
                   <view>未交底</view>
                   <text>{{item.sumUnDisclose}}人</text>
                 </view>
-                <view class='info list2-info' data-index='{{item.projectID}}' data-type='1' bindtap='navSecurity'>
+                <view class='info list2-info' hover-class='hover-row' data-index='{{item.projectID}}' data-type='1' bindtap='navSecurity'>
                   <view>未教育</view>
                   <text>{{item.sumUnEducation}}人</text>
                 </view>
-                <view class='info list2-info' data-index='{{item.projectID}}' data-type='2' bindtap='navSecurity'>
+                <view class='info list2-info' hover-class='hover-row' data-index='{{item.projectID}}' data-type='2' bindtap='navSecurity'>
                   <view>未参保</view>
                   <text>{{item.sumUnInsurance}}人</text>
                 </view>

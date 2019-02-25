@@ -3,6 +3,7 @@
   "navigationBarBackgroundColor": "#FFFFFF",
   "navigationBarTitleText": "日历",
   "navigationBarTextStyle": "black",
+  "backgroundColor": "#F2F2F2",
   "usingComponents": {
     "calendar": "plugin://calendar/calendar"
   }

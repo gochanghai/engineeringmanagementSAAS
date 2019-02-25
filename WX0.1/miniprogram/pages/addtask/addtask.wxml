@@ -7,43 +7,58 @@
     </view>
     <view class='task_item'>
       <text>任务板块</text>
-      <input type='text' disabled='disabled' confirm-type="next" value='{{messageModuleName}}' placeholder='请选择' bindtap='actionTypeTap' />
+      <!-- <input type='text' disabled='disabled' confirm-type="next" value='{{messageModuleName}}' placeholder='请选择' bindtap='selType' /> -->
+      <picker bindchange="selType" value="{{activeIndex1}}" range="{{messageTypeList}}" range-key="name">
+        <view class="picker" style='font-size:30rpx; color:#999; '>
+          {{messageTypeList[activeIndex1].name}}
+        </view>
+      </picker>
       <image src='/images/xia.png'></image>
-      <action-sheet hidden="{{actionTypeHidden}}">
+      <!-- <action-sheet hidden="{{actionTypeHidden}}">
         <block wx:for="{{messageTypeList}}" wx:key="index">
           <action-sheet-item bindtap="selType" data-type="{{item.type}}" data-name="{{item.name}}">{{item.name}}</action-sheet-item>
         </block>
         <action-sheet-cancel bindtap="hiddenTypeFun">取消</action-sheet-cancel>
-      </action-sheet>
+      </action-sheet> -->
     </view>
 
     <view class='task_item' style='padding-bottom:30rpx;'>
       <text>任务内容</text>
-      <textarea type='text' show-confirm-bar bindinput='inputTaskContent' class='textarea_content' placeholder='请输入' style='font-size:30rpx;'/>
+      <textarea type='text' show-confirm-bar bindinput='inputTaskContent' class='textarea_content' placeholder='请输入' style='font-size:30rpx;' />
     </view>
-
     <view class='task_item'>
       <text>任务要求</text>
-      <input disabled='disabled' type='text' confirm-type="next" bindtap='actionAskTap' value='{{messageDemand}}' placeholder='请选择' />
+      <!-- <input disabled='disabled' type='text' confirm-type="next" bindtap='actionAskTap' value='{{messageDemand}}' placeholder='请选择' /> -->
+      <picker bindchange="selAsk" value="{{activeIndex2}}" range="{{AskList}}">
+        <view class="picker" style='font-size:30rpx; color:#999; '>
+          {{AskList[activeIndex2]}}
+        </view>
+      </picker>
       <image src='/images/xia.png'></image>
-      <action-sheet hidden="{{actionAskHidden}}">
+      <!-- <action-sheet hidden="{{actionAskHidden}}">
         <block wx:for="{{AskList}}" wx:key="">
           <action-sheet-item bindtap="selAsk" data-name="{{item}}">{{item}}</action-sheet-item>
         </block>
         <action-sheet-cancel bindtap="hiddenAskFun">取消</action-sheet-cancel>
-      </action-sheet>
+      </action-sheet> -->
     </view>
 
     <view class='task_item'>
       <text>指派用户</text>
-      <input disabled='disabled' type='text' bindtap='actionUserkTap' confirm-type="next" value='{{selUser}}' placeholder='请选择' />
+      <!-- <input disabled='disabled' type='text' bindtap='actionUserkTap' confirm-type="next" value='{{selUser}}' placeholder='请选择' /> -->
+
+      <picker bindchange="selUser" value="{{activeIndex3}}" range="{{assignUserList}}" range-key='managername'>
+        <view class="picker" style='font-size:30rpx; color:#999; '>
+          {{assignUserList[activeIndex3].managername}}
+        </view>
+      </picker>
       <image src='/images/xia.png'></image>
-      <action-sheet hidden="{{actionUserHidden}}">
+      <!-- <action-sheet hidden="{{actionUserHidden}}">
         <block wx:for="{{assignUserList}}" wx:key="">
-          <action-sheet-item bindtap="selUser" data-user="{{item.managerName}}" data-Account="{{item.managerAccount}}">{{item.managerName}}</action-sheet-item>
+          <action-sheet-item bindtap="selUser" data-user="{{item.managername}}" data-Account="{{item.manageraccount}}">{{item.managername}}</action-sheet-item>
         </block>
         <action-sheet-cancel bindtap="hiddenUserFun">取消</action-sheet-cancel>
-      </action-sheet>
+      </action-sheet> -->
     </view>
   </view>
 

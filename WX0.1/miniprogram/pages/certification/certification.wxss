@@ -1,0 +1,25 @@
+/* pages/certification/certification.wxss */
+
+.information {
+  width: 88%;
+  margin: 0 auto;
+}
+
+.info-item {
+  display: flex;
+  line-height: 70rpx;
+}
+
+.info-item text.lable {
+  width: 240rpx;
+  display: inline-block;
+  color: #666;
+  font-size: 28rpx;
+}
+
+.info-item text.value {
+  color: #333;
+  font-size: 28rpx;
+  flex: 1;
+  display: inline-block;
+}

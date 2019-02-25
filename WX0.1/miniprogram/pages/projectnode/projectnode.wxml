@@ -6,22 +6,22 @@
   </view>
   <scroll-view style='height:{{WinHeight}}' scroll-y>
     <view class='information'>
-      <view class='information_item' wx:for="{{nodeList}}" wx:key="" wx:if="1">
+      <view class='information_item' wx:for="{{nodeList}}" wx:key="" wx:if="nodeList.length">
         <checkbox checked="{{item.checked}}" data-type="{{item.checked}}" data-index="{{index}}" bindtap="changeChecked" style="transform:scale(.7);margin-top:-18rpx;" />
         <view class='name'>
-          <text>{{item.nodeName}}</text>
-          <text>{{item.finishStatus}}</text>
+          <text>{{item.nodename}}</text>
+          <text>{{item.finishstatus}}</text>
         </view>
         <view class='date'>
-          <picker value='{{item.startFrom}}' mode="date" start="2010-01-01" end="2029-01-01" data-index='{{index}}' bindchange="InputStartDate">
+          <picker value='{{item.startfrom}}' mode="date" start="2010-01-01" end="2029-01-01" data-index='{{index}}' bindchange="inputStartDate">
             <view class="picker" style='font-size:30rpx; color:#999;'>
-              {{item.startFrom}}
+              {{item.startfrom}}
               <image src='/images/xia.png' class='down_img'></image>
             </view>
           </picker>
-          <picker value="{{item.endAt}}" mode="date" start="2010-01-01" end="2029-01-01" data-index='{{index}}' bindchange="InputEndDate">
+          <picker value="{{item.endat}}" mode="date" start="2010-01-01" end="2029-01-01" data-index='{{index}}' bindchange="inputEndDate">
             <view class="picker" style='font-size:30rpx; color:#999;'>
-              {{item.endAt}}
+              {{item.endat}}
               <image src='/images/xia.png' class='down_img'></image>
             </view>
           </picker>

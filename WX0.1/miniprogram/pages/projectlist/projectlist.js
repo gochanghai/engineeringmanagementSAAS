@@ -1,5 +1,5 @@
 // pages/projectlist/projectlist.js
-const projectlistJS = require('../../action/projectlist.js');
+const projectlistSaaSAction = require('../../backend/saasAction/projectlistAction.js');
 Page({
 
   data: {
@@ -17,34 +17,42 @@ Page({
   // 获取项目列表数据
   getProjectList() {
     var _this = this;
-    projectlistJS.getProjectList(function(res) {
-      var projectList = res;
+    projectlistSaaSAction.getProjectList(function(res) {
+      var list = res;
       // console.log(projectList);
       // 格式化财务数据
-      for (let index in projectList) {
-        projectList[index].outputValue1 = _this.getMoneyFormat(projectList[index].outputValue);
-        projectList[index].receivableAmount1 = _this.getMoneyFormat(projectList[index].receivableAmount);
-        projectList[index].actualReceivAmount1 = _this.getMoneyFormat(projectList[index].actualReceivAmount);
-        projectList[index].totalAmount1 = _this.getMoneyFormat(projectList[index].totalAmount);
-        projectList[index].dealMessage = projectList[index].allmessage - projectList[index].notdealmessage;
+      let projectList = [];
+      for (let index in res.t0) {
+        let item = {
+          projectID: res.t0[index].code,
+          projectName: res.t0[index].projectname,
+          totalAmount: '200.00',
+          outputValue: '200.00',
+          receivableAmount: '200.00',
+          actualReceivAmount: '200.00',
+          managerPer: 0,
+          constructionPer: 0,
+          group: 0,
+          sumUnDisclose: 0,
+          sumUnEducation: 0,
+          sumUnInsurance: 0,
+          allmessage: 0,
+          notdealmessage: 0,
+          dealMessage: 0,
+          lightSign: 0,
+        }
+        projectList.push(item);
       }
       _this.setData({
-        projectList: projectList,
+        projectList: projectList, 
       });
     })
-  },
 
-  // 财务金额格式化
-  getMoneyFormat(val) {
-    if (val === null) {
-      return "0.00";
-    }
-    var str = parseInt(val).toFixed(2) + '';
-    var intSum = str.substring(0, str.indexOf(".")).replace(/\B(?=(?:\d{3})+$)/g, ',');
-    var dot = str.substring(str.length, str.indexOf("."));
-    var ret = intSum + dot;
-    return ret;
-  },
+    projectlistSaaSAction.getProjectList(function (res) {
+      console.log('ProjectRes:');
+      console.log(res)
+    })
+  },  
 
   //进入人员列表
   navManager(event) {
@@ -109,5 +117,16 @@ Page({
     wx.switchTab({
       url: "/pages/message/message"
     })
-  }
+  },
+  // 财务金额格式化
+  getMoneyFormat(val) {
+    if (val === null) {
+      return "0.00";
+    }
+    var str = parseInt(val).toFixed(2) + '';
+    var intSum = str.substring(0, str.indexOf(".")).replace(/\B(?=(?:\d{3})+$)/g, ',');
+    var dot = str.substring(str.length, str.indexOf("."));
+    var ret = intSum + dot;
+    return ret;
+  },
 })

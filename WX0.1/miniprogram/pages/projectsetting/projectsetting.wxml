@@ -3,45 +3,35 @@
   <view class='information'>
     <view class='information_item'>
       <text>项目名称</text>
-      <input type='text' confirm-type="next" value='{{projectName}}' placeholder='请输入项目名称' placeholder-class='input_class' bindinput='InputProjectName'/>
+      <text class='value'>{{projectabbreviation}}</text>
     </view>
     <view class='information_item'>
       <text>合同编号</text>
-      <input type='text' confirm-type="next" value='{{contractNo}}' placeholder='请输入合同编号' placeholder-class='input_class' bindinput='InputContractNo'/>
+      <text class='value'>{{contractInfo.contractNo}}</text>
     </view>
     <view class='information_item'>
       <text>合同起始时间</text>
-      <picker mode="date" start="2010-01-01" end="2029-01-01" bindchange="InputStartFrom">
-        <view class="picker" style='font-size:30rpx; color:#999;'>
-          {{startFrom}}
-        </view>
-      </picker>
-      <image src='/images/xia.png' class='down_img'></image>
+      <text class='value'>{{contractInfo.startDate}}</text>
     </view>
     <view class='information_item'>
       <text>合同终止时间</text>
-      <picker mode="date" start="2010-01-01" end="2029-01-01" bindchange="InputEndAt">
-        <view class="picker" style='font-size:30rpx; color:#999;'>
-          {{endAt}}
-        </view>
-      </picker>
-      <image src='/images/xia.png' class='down_img'></image>
+      <text class='value'>{{contractInfo.endDate}}</text>
     </view>
     <view class='information_item'>
       <text>合同金额(元)</text>
-      <input type='number' value='{{contractAmount}}' confirm-type="next" placeholder-class='input_class' bindinput='InputContractAmount'/>
+      <text class='value'>{{contractInfo.contractAmount}}</text>
     </view>
     <view class='information_item'>
       <text>业务审批付款周期(天)</text>
-      <input type='number' confirm-type="next" value='{{ownerPayTime}}' placeholder-class='input_class'bindinput='InputOwnerPayTime' />
+      <input type='number' confirm-type="next" value='{{ownerPayTime}}' placeholder-class='input_class' bindinput='inputOwnerPayTime' />
     </view>
     <view class='information_item'>
       <text>付款比例(%)</text>
-      <input type='number' confirm-type="next" value='{{ownerPayPercent * 100}}' placeholder-class='input_class' bindinput='InputOwnerPayPercent'/>
+      <input type='number' confirm-type="next" value='{{ownerPayPercent * 100}}' placeholder-class='input_class' bindinput='inputOwnerPayPercent' />
     </view>
     <view class='information_item'>
       <text>业务审批进度周期(天)</text>
-      <input type='number' confirm-type="next" value='{{ownerApprovalTime}}' placeholder-class='input_class' bindinput='InputOwnerApprovalTime' />
+      <input type='number' confirm-type="next" value='{{ownerApprovalTime}}' placeholder-class='input_class' bindinput='inputOwnerApprovalTime' />
     </view>
   </view>
 

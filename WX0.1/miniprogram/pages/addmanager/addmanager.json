@@ -3,5 +3,5 @@
   "navigationBarBackgroundColor": "#fff",
   "navigationBarTitleText": "新增管理人员",
   "navigationBarTextStyle": "black",
-  "disableScroll": true
+  "enablePullDownRefresh": false
 }

@@ -1,6 +1,11 @@
-const messageCenterJS = require('../../action/messageCenter.js');
+const messageCenterAction = require('../../backend/manageAction/messageCenterAction.js');
 Page({
   data: {
+    activeIndex: '0',
+    swiperIndex: '0',
+    modalDialog: false,
+    WinHeight: null,
+    toggleId: 0,
     BgColorStatus: '#fcd147',
     BgIColorStatus: '#f25022',
     toggleStyle: {
@@ -11,7 +16,8 @@ Page({
     },
     toggleId: 0,
     containerSty: 'container',
-    IsnoneMes: false
+    IsnoneMes: false,
+    projectMsgTotal: 0
   },
 
   //下拉刷新
@@ -21,46 +27,105 @@ Page({
   },
   // 加载数据
   onLoad: function(options) {
-    this.getMessageList();
     // 获取消息总数
     this.getCountMessageNo();
+
+    this.setData({
+      WinHeight: wx.getSystemInfoSync().windowHeight - 63 + 'px',
+    });
+
+    this.getMessageList();
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-      this.onLoad();
+  onShow: function() {
+    this.onLoad();
   },
-
 
   // 获取消息内容
   getMessageList() {
     let _this = this;
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading'
+    })
     // 获取所有消息
-    messageCenterJS.mountedAllMessage(function(res) {
+    messageCenterAction.mountedAllMessage(function(res) {
       let messages = res;
-      // 格式化时间
-      for (let index in messages) {
-        for (let index2 in messages[index].messageData) {
-          messages[index].messageData[index2].createDate = _this.dateFormat2(messages[index].messageData[index2].createAt);
-          messages[index].messageData[index2].createAt = _this.dateFormat(messages[index].messageData[index2].createAt);
+      console.log('messageCenterAction');
+      console.log(res);
+      // 通知公告
+      let noticeList = [];
+      for (let i = 0; i < 15; i++) {
+        let notice = {
+          id: i,
+          noticeTitle: '你才是了才能分明是你才是' + i,
+          context: '你才是了才能分明是你才是了才能分明是你才是了才能分明是你才是了才能分明是你才是了才能分明是 ' + i,
+          sendDept: '运营办' + i,
+          sendDate: '2019/02/11',
+          authRead: '商务经理' + i,
+          status: 0,
+          imageList: [
+            '/images/mesimage1.png',
+            '/images/mesimage2.png',
+            '/images/mesimage3.png',
+            '/images/mesimage1.png',
+            '/images/mesimage2.png',
+            '/images/mesimage3.png',
+          ]
         }
+        noticeList.push(notice);
       }
       _this.setData({
-        messageList: messages,
+        messageList22: messages,
+        noticeList: noticeList,
       });
-    })
+
+      // 项目消息
+      let projectMessageList = [];
+      for (let index in messages) {
+        let list = [];
+        for (let j = 0; j < 15; j++) {
+          let item2 = {
+            type: '运营办' + j,
+            context: '你才是了才能分明是你才是了才能分明是你才是了才能分明是你才是了才能分明是你才是了才能分明是 ' + j,
+            date: '2019-02-19',
+            formID: j,
+            projectID: messages[index].projectid,
+          }
+          list.push(item2);
+        }
+        let item1 = {
+          id: messages[index].projectid,
+          peojectName: '湖贝塔' + (1 + index) + "期工程",
+          total: messages[index].messageTotal,
+          list: list,
+        }
+        projectMessageList.push(item1);
+      }
+      _this.setData({
+        projectMessageList: projectMessageList,
+      });
+      // 关闭加载狂
+      wx.hideToast({});
+    });
   },
   // 获取消息总数
   getCountMessageNo() {
     let _this = this;
-    messageCenterJS.countMessageNo(function(countTotal) {
-      if (countTotal > 0) {
+    messageCenterAction.countMessageNo(function(bcountNo) {
+      console.log(bcountNo);
+      console.log('bcountNo');
+      if (bcountNo > 0) {
         wx.setTabBarBadge({
           index: 3,
-          text: '' + countTotal
+          text: '' + bcountNo
         })
+        _this.setData({
+          projectMsgTotal: bcountNo,
+        });
       }
     })
   },
@@ -80,23 +145,16 @@ Page({
   // 跳转到消息/任务详情页
   navMesSlove(event) {
     let message = event.currentTarget.dataset.index;
+    console.log(message);
     // console.log("新建" + message);
     let byTypeTitle = "消息详情"; //消息标题/任务标题
     let messageDemand = '';
-    if (message.messageType === 'task'){
+    if (message.messageType === 'task') {
       messageDemand = message.messageDemand;
       byTypeTitle = '任务详情'
     }
     wx.navigateTo({
-      url: '/pages/messagesolve/messagesolve?formId=' + message.formId +
-        "&messageType=" + message.messageType +
-        "&createAt=" + message.createAt +
-        "&messageModule=" + message.messageModule +
-        "&message=" + message.message +
-        "&projectAbbreviation=" + message.projectAbbreviation +
-        "&status=" + message.status +
-        "&pointToID=" + message.pointToID +
-        "&messageDemand=" + messageDemand +
+      url: '/pages/messagesolve/messagesolve?formID=' + message.formID +
         "&projectID=" + message.projectID +
         "&byTypeTitle=" + byTypeTitle,
     })
@@ -104,8 +162,8 @@ Page({
 
   // 新建任务
   addTask(event) {
-    let projectID = event.currentTarget.dataset.index.projectID;
-    let projectAbbreviation = event.currentTarget.dataset.index.projectAbbreviation;
+    let projectID = '5';
+    let projectAbbreviation = '湖贝塔 1 期工程';
     wx.navigateTo({
       url: '/pages/addtask/addtask?projectID=' + projectID + "&projectAbbreviation=" + projectAbbreviation,
     })
@@ -127,4 +185,44 @@ Page({
     // console.log(date);
     return date;
   },
+
+  bindChange(e) {
+    this.setData({
+      activeIndex: e.currentTarget.dataset.active,
+      swiperIndex: e.currentTarget.dataset.active
+    })
+  },
+
+  downSwitch(event) {
+    let index = event.currentTarget.id;
+    let showID = this.data.toggleId;
+    if (showID === index) {
+      index = -1;
+    }
+    this.setData({
+      toggleId: index,
+    })
+  },
+
+  currentFun(e) {
+    this.setData({
+      activeIndex: e.detail.current,
+      swiperIndex: e.detail.current
+    })
+  },
+
+  closeFun() {
+    this.setData({
+      modalDialog: false
+    })
+  },
+
+  // 查看通知公告明细
+  noticeDetail(event) {
+    let noticeDetail = event.currentTarget.dataset.item;
+    this.setData({
+      modalDialog: true,
+      noticeDetail: noticeDetail,
+    })
+  }
 })

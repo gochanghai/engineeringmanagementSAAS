@@ -1,8 +1,8 @@
 // pages/login/login.js
-const userJS = require('../../action/user.js');
+const userAction = require('../../backend/commonsAction/userAction.js');
 Page({
   data: {
-    userName: 'shangwjl',
+    userName: 'test001',
     password: '123456',
   },
 
@@ -20,22 +20,28 @@ Page({
   },
 
   //用户登录操作
-  signIn: function() {
+  signIn: function (){
     let _this = this;
     //判断用户名密码是否为空
     if (this.data.userName != '' && this.data.password != '') {
       // 用户登录
-      userJS.signIn(this.data.userName, this.data.password, function(res) {
+      wx.showToast({
+        title: '加载中',
+        icon: 'loading'
+      });
+      userAction.signIn('test001','123456', function (res) {
+        // 关闭加载框
+        wx.hideToast({});
         if (res.code === 1) {
           wx.showToast({
             title: '登录成功',
-            success: function() {
+            success: function () {
               wx.switchTab({
                 url: '/pages/home/home',
               })
             }
           })
-        } else {
+        } else { 
           wx.showModal({
             title: '提示',
             showCancel: false,
@@ -44,12 +50,15 @@ Page({
         }
       })
     } else {
+      // 关闭加载框
+      wx.hideToast({});
       wx.showModal({
         title: '提示',
         showCancel: false,
         content: '请输入用户名和密码',
       })
     }
+
   },
 
   //忘记密码

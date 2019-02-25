@@ -1,82 +1,45 @@
-/* pages/messagesolve/messagesolve.wxss */
-
 .container {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-color: #f0880c;
 }
 
 .message_solve {
-  position: relative;
-  padding: 25rpx;
-  margin: 30rpx auto;
-  width: 85%;
-  border-radius: 20rpx;
+  padding-top: 26rpx;
+  width: 710rpx;
+  height: 746rpx;
+  margin: 20rpx auto;
   background-color: #fff;
-}
-
-.arc {
-  position: absolute;
-  left: -3%;
-  bottom: 200rpx;
-  width: 106%;
-  display: flex;
-  justify-content: space-between;
-}
-
-.arc text {
-  width: 34rpx;
-  height: 34rpx;
-  border-radius: 50%;
-  background-color: #f0880c;
-}
-
-.mes-title {
-  font-size: 30rpx;
-  color: #666;
-  font-weight: Medium;
-}
-
-.mes-container {
-  margin-top: 12rpx;
-  font-size: 29rpx;
-  line-height: 50rpx;
-  color: #666;
-}
-
-.createdAt, .mes_type {
-  margin-top: 50rpx;
-}
-
-.mes-content {
-  margin-top: 20rpx;
-  /* border: 1px solid; */
+  border-radius: 6rpx;
 }
 
 .mes-content view.item {
-  /* border: 1px solid; */
-  height: 80rpx;
-  line-height: 80rpx;
-  font-size: 27rpx;
+  font-size: 28rpx;
+  color: #666;
+  padding-left: 26rpx;
+  line-height: 70rpx;
 }
 
 .mes-content view.item text {
-  display: inline-block;
-  width: 110rpx;
-  text-align: justify;
-  text-align-last: justify;
+  font-size: 30rpx;
+}
+
+.text-flex {
+  display: flex;
 }
 
 .btom-btns {
-  width: 90%;
   margin: 0 auto;
+  margin-top: 200rpx;
+  width: 90%;
   padding-bottom: 50rpx;
   display: flex;
   justify-content: space-around;
-  margin-top: 150rpx;
 }
 
 .btom-btns view {
@@ -99,17 +62,18 @@
   color: #fff;
 }
 
-.text-flex {
+.arc {
+  width: 100%;
   display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 538rpx;
 }
 
-.text-flex text {
-  display: flex;
-}
-
-.con {
-  padding-top: 14rpx;
+.arc text {
   display: inline-block;
-  width: 480rpx;
-  line-height: 50rpx;
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  background-color: #f0880c;
 }

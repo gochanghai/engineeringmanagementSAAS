@@ -3,5 +3,5 @@
   "navigationBarBackgroundColor": "#fff",
   "navigationBarTitleText": "新增施工班组",
   "navigationBarTextStyle": "black",
-  "disableScroll": true
+  "enablePullDownRefresh": false
 }

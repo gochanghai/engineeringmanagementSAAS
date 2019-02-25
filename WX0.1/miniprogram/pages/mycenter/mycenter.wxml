@@ -1,30 +1,36 @@
+<!--个人中心-->
 <view class="container">
   <view class='top-info'>
     <image src='/images/mycenter.png'></image>
-    <!-- <view class='account' wx:if="{{!IsInitial}}">
-      <image src='/images/user-unlogin.png'></image>
-      <view class='account-info'>
-        <button class='sign' open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">点击登录</button>
-      </view>
-    </view> -->
-    <view class='account'>
-      <view class='account-img'>
-        <open-data type="userAvatarUrl"></open-data>
-      </view>
-      <view class='account-info'>
-        <view class='account-info-name'>
-          <open-data type="userNickName" lang="zh_CN"></open-data>
+    <view class='user-info'>
+      <image src='/images/logo@2x.png' class='logo'></image>
+      <view class='details' bindtap='shenhauDetail'>
+        <view class='name'>{{userName}}
+          <text>{{userPostion}}</text>
         </view>
-        <view class='account-info-countries'>
-          <open-data type="userCountry" lang="zh_CN"></open-data> -
-          <open-data type="userCity" lang="zh_CN"></open-data>
-          <!-- 中国 深圳 -->
-        </view>
+        <view class='company'>深华建设(股份)有限公司</view>
+        <view class='branch'>{{userArea}}</view>
       </view>
     </view>
   </view>
 
   <view class='operation'>
+    <view hover-class='hover-row'>
+      <view class='deal' bindtap='accountCertification'>
+        <image class="icon iconpwd" src='/images/renzheng.png'></image>
+        认证信息
+        <image class='details' src='/images/details.png'></image>
+      </view>
+    </view>
+
+    <view hover-class='hover-row'>
+      <view class='deal' bindtap='UpavatarUrl'>
+        <image class="icon iconcamera" src='/images/camera.png'></image>
+        修改头像
+        <image class='details' src='/images/details.png'></image>
+      </view>
+    </view>
+
     <view hover-class='hover-row'>
       <view class='deal' bindtap='modifyPwd'>
         <image class="icon iconpwd" src='/images/pwd.png'></image>
@@ -34,9 +40,9 @@
     </view>
 
     <view hover-class='hover-row'>
-      <view class='deal' bindtap='UpavatarUrl'>
-        <image class="icon iconcamera" src='/images/camera.png'></image>
-        修改头像
+      <view class='deal' bindtap='loginOut'>
+        <image class="icon iconcamera" src='/images/login_out.png'></image>
+        退出登录
         <image class='details' src='/images/details.png'></image>
       </view>
     </view>

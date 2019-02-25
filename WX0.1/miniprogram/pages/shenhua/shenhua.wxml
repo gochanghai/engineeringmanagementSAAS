@@ -1,0 +1,43 @@
+<!--集团介绍页-->
+<view class='container'>
+  <view class='context'>
+    <view class='tab'>
+      <view class='tab-item' bindtap='bindSwitch' data-index='0'>
+        企业介绍
+        <text class='{{switchIndex==0?"tab-item-active" : ""}}'></text>
+      </view>
+      <view class='tab-item' bindtap='bindSwitch' data-index='1'>
+        荣誉资质
+        <text class='{{switchIndex==1? "tab-item-active":""}}'></text>
+      </view>
+    </view>
+    <view class='content1' wx:if="{{switchIndex==0}}">
+      <image src='/images/map.png'></image>
+      <view class='shenhuaDetail'>
+        深华建设成立于1988年，注册资金6000 万元，是一家以消防工程、机电工程、维保检测和消防装备为主体 ，集消防设计、建筑装修装饰和电子与智能化为一体的智能消防机电工程服务商。公司拥有：“消防设施工程专业承包壹级”、”建筑机电安装工程专业承包壹级”、” 建筑装修装饰工程专业承包壹级”、”消防设施工程设计专项甲级”、“消防设施维护保养测机构临时一级“ 电子与智能化工程专业承包贰级“、“建筑装饰装修工程设计专项乙级”和“承装（修、试）电力设施许可证 ”等资质，并获得了消防领域专利及工程管理系统、维保项目管理系统等多项软件著作权。历经三十余载的辛勤耕耘，深华建设已完成了集团化、全国化、生态化的整体战略布局,
+        并于2015 年登陆新三板（证券代码：8335 47），2017年产值突破11.4亿元, 成为行业内为数不多具有规模运营的挂牌企业。
+      </view>
+    </view>
+    <view class='content2' wx:if="{{switchIndex==1}}">
+      <view class='honor1 shenhua-honor'>
+        <image src='/images/certificate1.png'></image>
+        <text>承包壹级（消防设施、建筑装修、建筑机电)</text>
+      </view>
+
+      <view class='honor2 shenhua-honor'>
+        <image src='/images/certificate2.png'></image>
+        <text>电子与智能化工程专业承包贰级</text>
+      </view>
+
+      <view class='honor3 shenhua-honor'>
+        <image src='/images/certificate3.png'></image>
+        <text>设计、施工、维修资格证</text>
+      </view>
+
+      <view class='honor4 shenhua-honor'>
+        <image src='/images/certificate4.png'></image>
+        <text>消防设施工程设计专项甲级</text>
+      </view>
+    </view>
+  </view>
+</view>

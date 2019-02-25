@@ -1,38 +1,38 @@
 <!--新增施工人员-->
 <view class='container'>
-  <view class='top-sel-team'>
-    <view class='team'>班组</view>
-    <view class='team-list'>
-      <text class='{{activeIndex == "1" ? activeSel : ""}}' style='{{activeIndex == "1" ? activeSty : ""}}' data-index='1' bindtap='selTeam' data-type="消防水">消防水</text>
-      <text class='{{activeIndex == "2" ? activeSel : ""}}' style='{{activeIndex == "2" ? activeSty : ""}}' data-index='2' bindtap='selTeam' data-type="消防电">消防电</text>
-      <text class='{{activeIndex == "3" ? activeSel : ""}}' style='{{activeIndex == "3" ? activeSty : ""}}' data-index='3' bindtap='selTeam' data-type="防排烟">防排烟</text>
-    </view>
-  </view>
-
   <view class='information'>
     <view class='information_item'>
       <text>姓名</text>
-      <input type='text' bindinput='InputName' confirm-type="next" value="" placeholder='请输入'/>
+      <input type='text' bindinput='InputName' confirm-type="next" value="" placeholder='请输入' />
     </view>
     <view class='information_item'>
       <text>年龄</text>
-      <input type='number' bindinput='InputAge' confirm-type="next" value="" placeholder='请输入'/>
+      <input type='number' bindinput='InputAge' confirm-type="next" value="" placeholder='请输入' />
     </view>
     <view class='information_item'>
       <text>身份证</text>
-      <input type='idcard' bindinput='InputIdCard' confirm-type="next" value="" placeholder='请输入'/>
+      <input type='idcard' bindinput='InputIdCard' confirm-type="next" value="" placeholder='请输入' />
     </view>
     <view class='information_item'>
       <text>联系电话</text>
-      <input type='number' bindinput='InputTelNo' confirm-type="next" value="" placeholder='请输入'/>
+      <input type='number' bindinput='InputTelNo' confirm-type="next" value="" placeholder='请输入' />
     </view>
     <view class='information_item'>
       <text>紧急联系人</text>
-      <input type='text' bindinput='InputEmergencyContact' confirm-type="next" value="" placeholder='请输入'/>
+      <input type='text' bindinput='InputEmergencyContact' confirm-type="next" value="" placeholder='请输入' />
     </view>
     <view class='information_item'>
       <text>工价</text>
-      <input type='number' bindinput='InputRepay' confirm-type="next" value="" placeholder='请输入'/>
+      <input type='number' bindinput='InputRepay' confirm-type="next" value="" placeholder='请输入' />
+    </view>
+    <view class='information_item'>
+      <text>班组</text>
+      <picker bindchange="selTeam" value="{{activeIndex}}" range="{{selGroup}}" range-key="groupname" id='{{selGroup[activeIndex].formid}}'>
+        <view class="picker" style='font-size:30rpx; color:#999; '>
+          {{selGroup[activeIndex].groupname}}
+        </view>
+      </picker>
+      <image src='/images/xia.png ' class='down_img '></image>
     </view>
     <view class='information_item '>
       <text>入场时间</text>
@@ -53,6 +53,7 @@
       <image src='/images/xia.png ' class='down_img '></image>
     </view>
   </view>
+
   <view class='btom-btns '>
     <view class='ignore ' bindtap='cancel'>取消</view>
     <view class='solve ' bindtap='commitWorker'>确定</view>

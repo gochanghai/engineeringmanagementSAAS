@@ -1,35 +1,51 @@
 // pages/addtask/addtask.js
-const addtaskJS = require('../../action/addtask.js')
+const addtaskAction = require('../../backend/manageAction/addtaskAction.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    actionNameHidden: true,
-    actionTypeHidden: true,
-    actionAskHidden: true,
-    actionUserHidden: true,
+    activeIndex1: 0,
+    activeIndex2: 0,
+    activeIndex3: 0,
     AskList: ["请立即处理", "三天内处理", "一周内处理"],
-    messageTypeList: [
-      { type: 'confirmvalue', name: '产值'},
-      { type: 'progress', name: '进度' },
-      { type: 'recievedpay', name: '回款' },
-      { type: 'security', name: '安全' },
-      { type: 'insurance', name: '保险' },
-      { type: 'education', name: '安全教育' },
-      { type: 'disclose', name: '安全交底'},
+    messageTypeList: [{
+        type: 'confirmvalue',
+        name: '产值'
+      },
+      {
+        type: 'progress',
+        name: '进度'
+      },
+      {
+        type: 'recievedpay',
+        name: '回款'
+      },
+      {
+        type: 'security',
+        name: '安全'
+      },
+      {
+        type: 'insurance',
+        name: '保险'
+      },
+      {
+        type: 'education',
+        name: '安全教育'
+      },
+      {
+        type: 'disclose',
+        name: '安全交底'
+      },
     ],
-    assignUserList: [{
-      userName: "test1",
-      userAccount: 'test1'
-    }],
+    assignUserList: [],
     selName: '腾讯大厦',
     messageModule: '进度',
     messageDemand: '请立即处理',
     taskContent: '',
     selUser: "",
-    pointToAccount: '',
+    pointToAccount: '13625846963',
     projectNameList: [{
       projectName: "腾讯大厦",
       ProjectID: 'sh-001'
@@ -37,60 +53,37 @@ Page({
   },
 
   onLoad: function(options) {
-    let _this = this;
+    let _than = this;
     // 获取项目ID
     let projectID = options.projectID;
     this.setData({
-      projectID: projectID,
+      projectID: options.projectID,
       selName: options.projectAbbreviation,
     });
     // 获取项目管理人员
-    addtaskJS.getAssignUser(projectID, function(res) {
-      // console.log(res);
-      _this.setData({
-        assignUserList: res,
-      });
+    addtaskAction.getAssignUser(projectID, function(bassignUser) {
+      console.log('bassignUser');
+      console.log(bassignUser);
+      _than.setData({
+        assignUserList: bassignUser,
+      })
     })
   },
 
-  //任务板块
-  actionTypeTap: function(e) {
-    this.setData({
-      actionTypeHidden: !this.data.actionTypeHidden
-    })
-  },
-
-  hiddenTypeFun: function() {
-    this.setData({
-      actionTypeHidden: !this.data.actionTypeHidden
-    })
-  },
-
+  //取消/返回
   cancel() {
     wx.navigateBack({
       delta: 1
     })
   },
 
+  //任务板块
   selType: function(e) {
-    // console.log(e)
+    var index = e.detail.value;
     this.setData({
-      messageModuleName: e.currentTarget.dataset.name,
-      messageModule: e.currentTarget.dataset.type,
-      actionTypeHidden: !this.data.actionTypeHidden
-    })
-  },
-
-  //处理
-  actionAskTap: function() {
-    this.setData({
-      actionAskHidden: !this.data.actionAskHidden
-    })
-  },
-
-  hiddenAskFun: function() {
-    this.setData({
-      actionAskHidden: !this.data.actionAskHidden
+      messageModuleName: this.data.messageTypeList[index].name,
+      messageModule: this.data.messageTypeList[index].type,
+      activeIndex1: index
     })
   },
 
@@ -100,40 +93,23 @@ Page({
       taskContent: e.detail.value,
     })
   },
-  // 
+
+  // 任务要求
   selAsk: function(e) {
+    var index = e.detail.value;
     this.setData({
-      messageDemand: e.currentTarget.dataset.name,
-      actionAskHidden: !this.data.actionAskHidden
+      messageDemand: this.data.AskList[index],
+      activeIndex2: index
     })
   },
+
   //指派用户
-  actionUserkTap: function() {
-    if (this.data.assignUserList.length != 0) {
-      this.setData({
-        actionUserHidden: !this.data.actionUserHidden
-      })
-    } else {
-      wx.showModal({
-        title: '提示',
-        showCancel: false,
-        content: '请先选择项目名称',
-      })
-    }
-  },
-
-  hiddenUserFun: function() {
-    this.setData({
-      actionUserHidden: !this.data.actionUserHidden
-    })
-  },
-
   selUser: function(e) {
-    // console.log(e.currentTarget);
+    var index = e.detail.value;
     this.setData({
-      selUser: e.currentTarget.dataset.user,
-      pointToAccount: e.currentTarget.dataset.account,
-      actionUserHidden: !this.data.actionUserHidden
+      selUser: this.data.assignUserList[index].managername,
+      pointToAccount: this.data.assignUserList[index].manageraccount,
+      activeIndex3: index
     })
   },
 
@@ -150,7 +126,7 @@ Page({
       return;
     }
     // 判断指派用户是否为空
-    if (this.data.pointToAccount == ''){
+    if (this.data.pointToAccount == '') {
       wx.showModal({
         title: '提示',
         content: '指派用户不能为空',
@@ -159,12 +135,12 @@ Page({
       })
       return;
     }
-    let taskInfo = {
-      projectID: this.data.projectID,
-      messageModule: this.data.messageModule,
-      pointToAccount: this.data.pointToAccount,
+    let ftaskInfo = {
+      projectid: this.data.projectID,
+      messagemodule: this.data.messageModule,
+      pointtoaccount: this.data.pointToAccount,
       message: this.data.taskContent,
-      messageDemand: this.data.messageDemand,
+      messagedemand: this.data.messageDemand,
     };
     wx.showModal({
       title: '提示',
@@ -173,22 +149,32 @@ Page({
       success(res) {
         if (res.confirm) {
           console.log('Commit');
-          // 提交任务          
-          addtaskJS.postTask(taskInfo, function(res) {
+          // 提交任务
+          addtaskAction.postTask(ftaskInfo, function(res) {
             console.log(res);
-          })
-          wx.showToast({
-            title: '新建成功',
-            icon: 'success',
-            duration: 2000,
-            success() {
-              setTimeout(() => {
-                wx.navigateBack({
-                  delta: '1'
-                })
-              }, 1000)
+            console.log(ftaskInfo);
+            if(res.code == 1){
+              wx.showToast({
+                title: '提交成功',
+                icon: 'success',
+                duration: 2000,
+                success() {
+                  setTimeout(() => {
+                    wx.navigateBack({
+                      delta: '1'
+                    })
+                  }, 1000)
+                }
+              })
+            }else{
+              wx.showToast({
+                title: '提交失败',
+                icon: 'fail',
+                duration: 2000,
+              })
             }
           })
+          
         } else if (res.cancel) {
           console.log('用户点击取消')
         }

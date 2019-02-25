@@ -1,5 +1,5 @@
 // pages/uploadfile/uploadfile.js
-const fileWorkerJS = require('../../action/file_worker.js');
+const fileWorkerAction = require('../../backend/manageAction/file_workerAction.js');
 Page({
 
   data: {
@@ -7,19 +7,19 @@ Page({
     animationData: {},
     urlFileImg: '',
     WinHeight: null,
-    IsnoneMes: false
+    isnoneMes: false
   },
 
   onLoad: function(options) {
     wx.setNavigationBarTitle({
-      title: options.byTypeTitle,
+      title: this.fileSignToTitle(options.fileSign),
     })
     this.setData({
       WinHeight: wx.getSystemInfoSync().windowHeight - 100 + 'px',
       projectID: options.projectID,
       fileSign: options.fileSign,
     });
-    this.getUnSignWorkerList(options.projectID, options.fileSign);
+    this.getUnSignWorkerList(this.data.projectID, this.data.fileSign);
   },
 
   // 单个选择框事件
@@ -27,18 +27,18 @@ Page({
     let index = e.currentTarget.dataset.index;
     let checked = !e.currentTarget.dataset.type;
     let list = this.data.list;
-    let formId = list[index].formId;
-    let groupName = list[index].groupName;
+    let formId = list[index].formid;
+    let groupName = list[index].groupname;
     let name = list[index].name;
     let workerFormIdlist = '';
     list[index].checked = checked;
     // 全部取消选中 只能单选
     for (let item in list) {
       if (list[item].checked == true) {
-        workerFormIdlist = workerFormIdlist + list[item].formId + ","
+        workerFormIdlist = workerFormIdlist + list[item].formid + ","
       }
     }
-    // 删除最后一个' , '
+    // 删除最后一个','
     workerFormIdlist = workerFormIdlist.substr(0, workerFormIdlist.length - 1);
     this.setData({
       list: list,
@@ -50,16 +50,17 @@ Page({
   getUnSignWorkerList(projectID, fileSign) {
     let _this = this;
     // let fileSign =  "disclose"||"education"||"insurance"
-    fileWorkerJS.getUnSignWorkerList(projectID, fileSign, function(res) {
+    fileWorkerAction.getUnSignWorkerList(projectID, fileSign, function(res) {
+      console.log('bWorkerList');
       console.log(res);
       if (res == null) {
         _this.setData({
-          IsnoneMes: true
+          isnoneMes: true
         })
       } else {
         _this.setData({
           list: res,
-          IsnoneMes: false
+          isnoneMes: false
         })
       }
     });
@@ -131,14 +132,46 @@ Page({
   // 提交人员名单与附件
   commitFileANDWorkerUnSignList() {
     let packageData = {
-      workerFormIdlist: this.data.workerFormIdlist, // =======================？？？？？
-      projectID: this.data.projectID,
+      workerFormIdlist: this.data.workerFormIdlist, // ======================
+      projectid: this.data.projectID,
       file: this.data.urlFileImg,
       fileName: this.data.urlFileImg.replace("http://tmp/", ""),
       fileSign: this.data.fileSign,
     }
-    fileWorkerJS.packageComitFileANDWorkerSignList(packageData, function(res) {
-
+    fileWorkerAction.packageComitFileANDWorkerSignList(packageData, function(res) {
+      wx.showToast({
+        title: '提交成功',
+        icon: 'success',
+        duration: 2000,
+        success() {
+          setTimeout(() => {
+            wx.navigateBack({
+              delta: '1'
+            })
+          }, 1200)
+        }
+      })
     })
-  }
+  },
+
+  /**
+   * 获取标题
+   */
+  fileSignToTitle(val) {
+    // let fileSign =  "disclose"||"education"||"insurance"
+    switch (val) {
+      case 'disclose':
+        return '上传附件-安全技术交底';
+        break;
+      case 'education':
+        return '上传附件-三级安全教育';
+        break;
+      case 'insurance':
+        return '上传附件-工伤意外保险';
+        break;
+      default:
+        return '上传附件-工伤意外保险';
+        break;
+    }
+  },
 })

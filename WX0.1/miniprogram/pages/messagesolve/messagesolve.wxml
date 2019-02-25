@@ -3,7 +3,6 @@
 <!--消息处理-->
 <view class='container'>
   <view class='message_solve'>
-
     <!-- 1.消息详情 -->
     <view class='mes-content' wx:if='{{messageType === "risk"}}'>
       <view class='item'>
@@ -58,9 +57,9 @@
       <view class='ignore' bindtap='mesDeal'>忽略</view>
       <view class='solve' bindtap='mesSolve'>处理</view>
     </view>
-    <view class='arc'>
-      <text></text>
-      <text></text>
-    </view>
+  </view>
+  <view class='arc'>
+    <text></text>
+    <text></text>
   </view>
 </view>

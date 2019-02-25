@@ -1,5 +1,5 @@
 // pages/confirmvalue/confirmvalue.js
-const progressJS = require('../../action/progress.js');
+const confirmvalueAction = require('../../backend/manageAction/confirmvalueAction.js');
 Page({
   data: {
 
@@ -10,55 +10,42 @@ Page({
     // 获取项目ID
     this.setData({
       projectID: options.projectID,
-      totalAmount: this.getMoneyFormat(options.totalAmount),
+      totalAmount: options.contractamount,      
     });
-
     // 获取产值数据
-    this.getOutValueDatas();
+    this.getOutputValueList(this.data.projectID);
+  },
+  onShow: function () {
+    this.getOutputValueList(this.data.projectID);
   },
 
-  // 获取产值函数
-  getOutValueDatas() {
-    let _this = this
-    let projectID = this.data.projectID;
-    progressJS.getConfirmValueList(projectID, function(res) {
-      // console.log(res);
-      // 格式化数据      
-      for (let index in res) {        
-        res[index].confirmAt = _this.dateFormat2(res[index].confirmAt);
-        res[index].outputValue2 = _this.getMoneyFormat(res[index].outputValue);
-        res[index].receivableAmount2 = _this.getMoneyFormat(res[index].receivableAmount);
+  // 获取产值列表数据
+  getOutputValueList(projectID){
+    let _than = this;
+    confirmvalueAction.getConfirmvalueList(projectID, function (res) {
+      console.log(res);
+      let list = [];
+      for (let index in res) {
+        let item = {
+          id: res[index].formid,
+          uploadDate: _than.dateFormat2(res[index].valueuploadat),
+          outputValue: _than.getMoneyFormat(res[index].outputvalue),
+          receivableAmount: _than.getMoneyFormat(res[index].receivableamount),
+        };
+        list.push(item);
       }
-      _this.setData({
-        list: res,
+      _than.setData({
+        list: list,        
       });
-    })
+    });    
   },
 
   // 跳转到登记产值
-  confirmRegistration(e) {
+  confirmRegistration(event) {
     let projectID = this.data.projectID;
-    let item = e.currentTarget.dataset.index
-    let receivableAmount = item.receivableAmount;
-    let outputValue = item.outputValue;
-    let valueUploadAt = this.dateFormat2(item.valueUploadAt);
-    let confirmAt = item.confirmAt;
-    let formId = item.formId;
-    let ownerPayPercent = item.ownerPayPercent;
-    let progressNodeID = item.progressNodeID;
-    let ownerPayTime = item.ownerPayTime;
-    let objectId = item.objectId;
+    let formID = event.currentTarget.dataset.id;
     wx.navigateTo({
-      url: '/pages/outputvalregister/outputvalregister?projectID=' + projectID +
-        "&receivableAmount=" + receivableAmount +
-        "&ownerPayPercent=" + ownerPayPercent +
-        "&outputValue=" + outputValue +
-        "&valueUploadAt=" + valueUploadAt +
-        "&formId=" + formId +
-        "&confirmAt=" + confirmAt +
-        "&progressNodeID=" + progressNodeID +
-        "&ownerPayTime=" + ownerPayTime +
-        "&objectId=" + objectId,
+      url: '/pages/outputvalregister/outputvalregister?projectID=' + projectID + "&formID=" + formID
     })
   },
 

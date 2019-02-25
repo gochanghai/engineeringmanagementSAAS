@@ -45,9 +45,33 @@ var filter = {
         break;
     }
   },
+
+  //值为空转‘未知’
+  nullReturnNunknownText: function(val) {
+    if (val === null || val === '') {
+      return '未知';
+    }
+    return val;
+  },
+
+  phoneFormat: function(val){
+    if (val === null) {
+      return "未知";
+    }
+    if (val.length === 11){
+      let a1 = val.substring(0, 3);
+      let a2 = val.substring(4, 7);
+      let a3 = val.substring(8, 11);
+      // console.log(date);
+      return a1 + '-' + a2 + '-' + a3;
+    }
+    return val;
+  },
 }
 // 导出对外暴露的属性
 module.exports = {
   getMessageTypeName: filter.getMessageTypeName,
-  getMessageFuncName: filter.getMessageFuncName
+  getMessageFuncName: filter.getMessageFuncName,
+  nullReturnNunknownText: filter.nullReturnNunknownText,
+  phoneFormat: filter.phoneFormat,
 }

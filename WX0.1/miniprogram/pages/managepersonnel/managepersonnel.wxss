@@ -95,7 +95,7 @@
   /* border: 1px solid; */
 }
 
-.cell-row:last-child view.item-line{
+.cell-row:last-child view.item-line {
   border: none;
 }
 

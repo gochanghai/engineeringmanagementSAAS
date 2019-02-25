@@ -1,24 +1,27 @@
 // miniprogram/testpages/test/test.js
-const httpJS = require('../../utils/http.js');
-const messageCenterJS = require('../../action/messageCenter.js');
-const projectlistJS = require('../../action/projectlist.js');
-const statisticalJS = require('../../action/statistical.js');
-const personnelJS = require('../../action/personnel.js');
-const calendarJS = require('../../action/calendar.js');
-const fileJS = require('../../action/file.js');
-const progressJS = require('../../action/progress.js');
-const managerJS = require('../../action/manager.js');
-const workerJS = require('../../action/worker.js');
-const fireGroupJS = require('../../action/fireGroup.js');
-const contractJS = require('../../action/contract.js');
-const projectNodeJS = require('../../action/projectNode.js');
-const declaretimeJS = require('../../action/declaretime.js');
-const confirmvalueJS = require('../../action/confirmvalue.js');
-const recievedPayJS = require('../../action/recievedpay.js');
-const userJS = require('../../action/user.js');
-const addtaskJS = require('../../action/addtask.js');
-const fileWorkerJS = require('../../action/file_worker.js');
-const fileProgressJS = require('../../action/file_progress.js');
+const httpJS = require('../../backend/net/http.js');
+const messageCenterAction = require('../../backend/manageAction/messageCenterAction.js');
+const personnelAction = require('../../backend/manageAction/personnelAction.js');
+const calendarAction = require('../../backend/manageAction/calendarAction.js');
+const fileAction = require('../../backend/manageAction/fileAction.js');
+const managerAction = require('../../backend/manageAction/managerAction.js');
+const workerAction = require('../../backend/manageAction/workerAction.js');
+const fireGroupAction = require('../../backend/manageAction/fireGroupAction.js');
+const projectManageAction = require('../../backend/manageAction/projectManageAction.js');
+const projectNodeAction = require('../../backend/manageAction/projectNodeAction.js');
+const declaretimeAction = require('../../backend/manageAction/declaretimeAction.js');
+const confirmvalueAction = require('../../backend/manageAction/confirmvalueAction.js');
+const userAction = require('../../backend/commonsAction/userAction.js');
+const addtaskAction = require('../../backend/manageAction/addtaskAction.js');
+const fileWorkerAction = require('../../backend/manageAction/file_workerAction.js');
+const fileConfirmvalueAction = require('../../backend/manageAction/file_confirmvalueAction.js');
+const statisticalAction = require('../../backend/manageAction/statisticalAction.js');
+const workerSaaSAction = require('../../backend/saasAction/workerAction.js');
+const receivepaylinesSaaSAction = require('../../backend/saasAction/receivepaylinesAction.js');
+const projectlistSaaSAction = require('../../backend/saasAction/projectlistAction.js');
+const statisticalSaaSAction = require('../../backend/saasAction/statisticalAction.js');
+const projectSaaSAction = require('../../backend/saasAction/projectAction.js');
+const certificationSaaSAction = require('../../backend/saasAction/certificationAction.js');
 
 Page({
 
@@ -34,139 +37,81 @@ Page({
    */
   onLoad: function (options) {
     // ==============================messageCenter消息中心===============================
-    // 所有项目风险消息-2019/1/21-2019/1/31
-    // messageCenterJS.mountedRiskMessage(function (res){
-    //   var riskmessage = res;
-    //   console.log("riskmessage");
-    //   console.log(riskmessage);
-    // });
-    // 所有项目任务消息-2019/1/21-2019/1/31
-    // messageCenterJS.mountedTaskMessage(function (res){
-    //   var taskmessage = res;
-    //   console.log("taskmessage");
-    //   console.log(taskmessage);
-    // });
-    // 所有项目的所有消息-2019/1/29-2019/1/31
-    // messageCenterJS.mountedAllMessage(function(res){
-    //   console.log(res);
+    // 所有项目的所有消息-2019/2/14
+    // messageCenterAction.mountedAllMessage(function(bmessageList){
+    //   console.log(bmessageList);
     // })
-    // 消息忽略-2019/1/22-2019/1/25-2019/1/30
-    // let message = { };
-    // messageCenterJS.mesIgnore(message,function(res){
-    //   console.log(res);
+    // 获取单条消息详情-2019/2/19
+    // messageCenterAction.getMessagePage('5','',function(bmessageInfo){
+    //   console.log(bmessageInfo);
     // })
-    // 获取消息总条数-2019/1/29
-    // messageCenterJS.countMessageNo(function(countTotal){
-    //   console.log(countTotal);
+    // 消息忽略-2019/2/14
+    // messageCenterAction.mesIgnore('','','',function(res){
+    //   console.log(res.code);
+    // })
+    // 获取消息总条数-2019/2/14
+    // messageCenterAction.countMessageNo(function(bcountNo){
+    //   console.log(bcountNo);
     // })
     // ==============================messageCenter消息中心===============================
 
-
-    // ================================projectlist项目列表页===============================
-    // 获取项目列表及详细数据-2019/1/21-2019/1/23-2019/1/25
-    // projectlistJS.getProjectList(function(res){
-    //   var projectPageList = res;
-    //   console.log("projectPageList");
-    //   console.log(projectPageList);
-    // })
-    // ================================projectlist项目列表页===============================
-
-    // ===================================statistical首页================================
-    // 获取风险消息-2019/1/21
-    // statisticalJS.getRiskMessage(function (res) {
-    //   var riskMessageList = res;
-    //   console.log("riskMessageList");
-    //   console.log(riskMessageList);
-    // });
-    // 获取任务消息-2019/1/21
-    // statisticalJS.getTaskMessage(function (res) {
-    //   var taskMessageList = res;
-    //   console.log("taskMessageList");
-    //   console.log(taskMessageList);
-    // });
-    // 合计信息-2019/1/21
-    // statisticalJS.sumProjectMoney(function(res){
-    //   var sumgroup = res;
-    //   console.log("sumgroup");
-    //   console.log(sumgroup);
-    // })
-    // 产值饼图-2019/1/21
-    // statisticalJS.getGraphOutputValue(function(res){
-    //   var graphOutputValue = res;
-    //     console.log("graphOutputValue");
-    //     console.log(graphOutputValue);
-    // })
-    // 人员饼图-2019/1/21
-    // statisticalJS.getGraphSecurity(function (res) {
-    //   var graphSecurity = res;
-    //   console.log("graphSecurity");
-    //   console.log(graphSecurity);
-    // })
-    // ===================================statistical首页=================================
-
     // ==================================personnel项目人员页===============================
-    // 获取施工人员列表-2019/1/21
-    // personnelJS.getConstructionList('SHXF-201810102',function(res){
-    //   var construction = res;
-    //   console.log(construction);
-    //   console.log("construction");
+    // 获取施工人员列表-2019/2/14
+    // personnelAction.getConstructionList('5',function(bconstructionList){
+    //   console.log(bconstructionList);
     // })
-    // 获取班组人员列表-2019/1/21
-    // personnelJS.getGroupList('SHXF-201810102',function(res){
-    //   var groupList = res;
-    //   console.log(groupList);
-    //   console.log("groupList");
+    // 获取班组人员列表-2019/2/14
+    // personnelAction.getGroupList('5', function (bgroupList) {
+    //   console.log(bgroupList);
     // })
-    // 获取管理人员列表数据-2019/1/21
-    // personnelJS.getManagerList('SHXF-201810102',function(res){
-    //   var managerlist = res;
-    //   console.log(managerlist);
-    //   console.log("managerlist");
+    // 获取管理人员列表数据-2019/2/14
+    // personnelAction.getManagerList('5',function(bmanagerList){
+    //   console.log(bmanagerList);
     // })
     // =================================personnel项目人员页================================
 
-    // =================================fileJS文件操作=====================================
-    // 文件上传-2019/1/21
+    // =================================fileAction文件操作=====================================
+    // 文件上传-2019/2/14
     // wx.chooseImage({
     //   count: 1, //只允许上传一张图片
     //   success(res) {
-    //     console.log(res);
+    //     console.log(res.code);
     //     let tempFilePaths = res.tempFilePaths;
     //     let fileInfo = {
-    //       projectID = 'SHXF-201810102',
+    //       projectID = '5',
     //       belongIdList = '1',
     //       file = tempFilePaths[0],
     //       fileName = '文件.jpg',
     //       fileBelong = '确认产值',
     //       formName = 'confirmvalue'
     //     }
-    //     fileJS.fileUpload(fileInfo, function (res) {
-    //       console.log(res);
+    //     fileAction.fileUpload(fileInfo, function (res) {
+    //       console.log(res.code);
     //     })
     //   }
     // })
-    // 获取文件数据并缓存-2019/1/21
+    // 获取文件数据并缓存-2019/2/14
     // let fileInfo = {
     //   formName: 'confirmvalue',
     //   formobjId: '37',
     //   fileId: '81',
     //   fileName: 'wxe1b5f774eaa1913c.o6zAJs2BSxyXus59ulSeA-rlHAe4.yL1IApkDAO74e5df9ad27a8438e876b094061791b68e.jpg'
     // }
-    // fileJS.fileGetPath(fileInfo, function (res) {
+    // fileAction.fileGetPath(fileInfo, function (res) {
     //   const downloadTask = wx.downloadFile({
     //     url: res.fileURL,
     //     success(res) {
     //       // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
-    //       console.log(res);
+    //       console.log(res.code);
     //       if (res.statusCode === 200) {
     //         // .....................................preview文件预览.................................     
-    //         // 预览-2019/1/22
+    //         // 预览-2019/2/14
     //         let previewFileInfo = {
     //           fileName: 'wxe1b5f774eaa1913c.o6zAJs2BSxyXus59ulSeA-rlHAe4.yL1IApkDAO74e5df9ad27a8438e876b094061791b68e.jpg',
     //           filePath: res.tempFilePath,
     //           fileType: "jpg",
     //         }
-    //         fileJS.previewFile(previewFileInfo)
+    //         fileAction.previewFile(previewFileInfo)
     //         // .....................................preview文件预览.................................     
     //       }
     //     },
@@ -178,252 +123,310 @@ Page({
     //     console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
     //   })
     // })
-    // 分类获取文件列表-2019/1/21-2019/1/28
+    // 分类获取文件列表-2019/2/14
     // let fileInfo = {
     //   projectID: '',
     //   formName: '',
     //   belongIdList: '',
     //   fileBelong: '',
     // }
-    // fileJS.getFileList(fileInfo, function (res) {
-    //   console.log(res);
+    // fileAction.getFileList(fileInfo, function (bfileList) {
+    //   console.log(bfileList);
     // })
     // ..................................file文件页........................................
-    // 统计多项目6大文件类型条数-2019/1/22
-    // fileJS.countFileListSortType(function(res){
-    //   console.log(res);
+    // 统计多项目6大文件类型条数
+    // fileAction.countFileListSortType(function(res){
+    //   console.log(res.code);
     // })
-    // 统计多项目时间类型的文件条数-2019/1/22
-    // fileJS.countFileListSortTime(function(res){
+    // 统计多项目时间类型的文件条数
+    // fileAction.countFileListSortTime(function(res){
     //   console.log(res)
     // })
-    // 根据文件类型返回多项目的文件列表-2019/1/22
-    // fileJS.getFileListByType('安全交底',function(res){
-    //   console.log(res);
+    // 根据文件类型返回多项目的文件列表
+    // fileAction.getFileListByType('安全交底',function(res){
+    //   console.log(res.code);
     // });
-    // 根据年=月返回多项目的文件列表-2019/1/22    
-    // fileJS.getFileListByTime('2019-01',function(res){
-    //   console.log(res);
+    // 根据年=月返回多项目的文件列表    
+    // fileAction.getFileListByTime('2019-01',function(res){
+    //   console.log(res.code);
     // })
     // ..................................file文件页........................................
-    // =================================fileJS文件操作=====================================
+    // =================================fileAction文件操作=====================================
 
     // =================================calendar万年历=====================================
-    // 统计按日多项目的消息数据-2019/1/21
-    // calendarJS.countCelendarMessage(function(res){
-    //   console.log(res);
+    // 统计按日多项目的消息数据-2019/2/14
+    // calendarAction.countCelendarMessage(function(bcalendarData){
+    //   console.log(bcalendarData);
     // })
-    // 按日返回消息列表-2019/1/23
-    // calendarJS.getMessageByDate('2019-01-19',function(res){
-    //   console.log(res);
+    // 按日返回消息列表-2019/2/14
+    // calendarAction.getMessageByDate('2019-01-19',function(bmessageSortList){
+    //   console.log(bmessageSortList);
     // })
     // =================================calendar万年历=====================================
-
-    // ==================================progress进度页====================================
-    // 产值列表-2019/1/21-2019/1/29
-    // progressJS.getConfirmValueList('SHXF-201810102', function (res) {
-    //   console.log(res);
-    // })
-    // 产值单条-2019/1/21
-    // progressJS.getConfirmValuePage('1',function(res){
-    //   console.log(res);
-    // })
-    // 回款列表-2019/1/21-2019/1/29
-    // progressJS.getRecievedPayList('SHXF-201810102', function (res) {
-    //   console.log(res);
-    // })
-    // 回款单条-2019/1/21
-    // progressJS.getRecievedPayPage('1',function(res){
-    //   console.log(res);
-    // })
-    // 更新单条产值-2019/1/21-已失效
-    // let confirmvalueRow = {}
-    // progressJS.updateConfirmValue(confirmvalueRow, function (res) {
-    //   console.log(res)
-    // })
-    // 更新单条回款-2019/1/21-已失效
-    // let recievedPay = { }
-    // progressJS.updateRecievedPay(recievedPay,function(res){
-    //   console.log(res);
-    // })
-    // ==================================progress进度页====================================
 
     // ==================================managerJS管理人员=================================
-    // 新增管理人员-2019/1/21
-    // let manager = {};
-    // managerJS.addManage(manager,function(res){
-    //   console.log(res);
+    // 新增管理人员-2019/2/18
+    // let fmanager = {};
+    // managerAction.addManager(fmanager,function(res){
+    //   console.log(res.code);
     // })
     // ==================================managerJS管理人员=================================
 
     // ==================================worker劳务施工人员================================
-    // 新增劳务施工人员-2019/1/21
-    // let worker = {};
-    // workerJS.addWorker(worker,function(res){
-    //   console.log(res);
+    // 新增劳务施工人员-2019/2/14
+    // let fworker = {};
+    // workerAction.addWorker(fworker,function(res){
+    //   console.log(res.code);
     // })
-    // 更新劳务施工人员-2019/1/23
-    // let workerInfo = {};
-    // workerJS.updateWorker(workerInfo,function(res){
-    //   console.log(res);
+    // 更新劳务施工人员-2019/2/14
+    // let workerInfo = {}, cformid = '';
+    // workerAction.updateWorker(workerInfo, cformid, function (res) {
+    //   console.log(res.code);
     // })
-    // 获取班组下拉列表-2019/1/23
-    // workerJS.getTeamNameList('SHXF-201810102',function(res){
-    //   console.log(res);
+    // 获取班组下拉列表-2019/2/14
+    // workerAction.getTeamNameList('5',function(bfireGroup){
+    //   console.log(bfireGroup);
+    // })
+    // 获取单条劳务人员信息-2019/2/21
+    // workerAction.getWorkerPage('5','92050814-035e-46d1-b3d2-3d043663ca2b',function(bworkerInfo){
+    //   console.log(bworkerInfo);
+    // })
+    // 获取多条劳务人员信息-2019/2/21
+    // workerAction.getWorkerList('5','92050814-035e-46d1-b3d2-3d043663ca2b,25758845-6347-4731-a2da-fc5fc148979a',function(bworkerList){
+    //   console.log(bworkerList);
+    // })
+    // 获取三类文件已提交标志劳务人员-2019/2/22
+    // workerAction.getSignedWorkerList('5', 'disclose', function (bWorkerList) {
+    //   console.log(bWorkerList);
     // })
     // ==================================worker劳务施工人员================================
 
     // ===================================fireGroup消防班组================================
-    // 消防班组列表-2019/1/21
-    // fireGroupJS.getGroupList('SHXF-201810102',function(res){
-    //   console.log(res)
+    // 获取消防班组列表-2019/2/18
+    // fireGroupAction.getGroupList('5',function(bgroupList){
+    //   console.log(bgroupList)
     // })
-    // 新增班组-2019/1/21
-    // let fireGroup = {};
-    // fireGroupJS.addFireGroup(fireGroup,function(res){
-    //   console.log(res);
+    // 新增班组时获取基础班组列表-2019/2/18
+    // fireGroupAction.getBaseGroupList(function(bbasegroupList){
+    //   console.log(bbasegroupList)
+    // })
+    // 新增班组-2019/2/18-2019/2/20
+    // let ffireGroup = {};
+    // fireGroupAction.addFireGroup(ffireGroup,function(res){
+    //   console.log(res.code);
     // })
     // ===================================fireGroup消防班组================================
 
     // =================================project单个项目操作=================================
-    // ..............................projectSetting项目信息修改页...........................
-    // 获取项目合同信息-2019/1/22
-    // contractJS.getContractInfo('SHXF-201810102',function(res){
-    //   console.log(res);
+    // ..............................projectSetting项目设置页...........................
+    // 获取项目管理设置信息-2019/2/14
+    // projectManageAction.getManageInfo('1',function(bmangageInfo){
+    //   console.log(bmangageInfo);
     // })
-    // 更新项目合同信息-2019/1/22
-    // let contractInfo = {}
-    // contractJS.updateContract(contractInfo,function(res){
+    // 更新项目管理设置信息-2019/2/14
+    // let contractInfo = {
+    //   projectabbreviation: "q201811",
+    //   ownerapprovaltime: 8,
+    //   ownerpaypercent: 0.8,
+    //   ownerpaytime: 10,
+    // }, cprojectid = '1';
+    // projectManageAction.updateManageInfo(contractInfo, cprojectid, function (res) {
     //   console.log(res)
     // })
     // ..............................projectSetting项目信息修改页...........................
-    // .................................addproject新建项目页................................
-    // 新建项目-2019/1/23
-    // let managerList = [{},{}],contractInfo = {};
-    // contractJS.addContract(managerList,contractInfo,function(res){
-    //   console.log(res);
-    // });
-    // .................................addproject新建项目页................................
     // =================================project单个项目操作=================================
 
     // =============================projectnode项目进度节点页===============================
-    // 获取项目进度节点-2019/1/23
-    // projectNodeJS.getProjectNodeList('SHXF-201810102',function(res){
-    //   console.log(res);
+    // 获取项目进度节点-2019/2/19
+    // projectNodeAction.getProjectNodeList('5',function(bNodeList){
+    //   console.log(bNodeList);
     // })
-    // 提交项目进度节点-2019/1/23
-    // let nodeList = [{},{}]
-    // projectNodeJS.postProjectNode('SHXF-201810102',nodeList,function(res){
+    // 提交项目进度节点-2019/2/19
+    // let fnodeList = [{}, {}]
+    // projectNodeAction.postProjectNode('5', fnodeList, function (res) {
     //   console.log(res)
     // })
     // =============================projectnode项目进度节点页===============================
 
     // ===========================declaretime项目申报时间节点页=============================
-    // // 获取合同信息-2019/1/23
-    // declaretimeJS.getContractInfo('SHXF-201810102', function (res) {
-    //   console.log(res);
+    // // 获取项目的合同启止与申报类型-2019/2/14
+    // declaretimeAction.getDeclaretimeBaseInfo('5', function (bdeclaretimeBaseInfo) {
+    //   console.log(bdeclaretimeBaseInfo);
     // });
-    // // 获取项目申报时间列表-2019/1/23
-    // declaretimeJS.getDeclaretimeList('SHXF-201810102', function (res) {
-    //   console.log(res);
+    // // 获取项目申报时间列表-2019/2/14
+    // declaretimeAction.getDeclaretimeList('5', function (bdeclaretimeList) {
+    //   console.log(bdeclaretimeList);
     // });
-    //提交申报时间列表变化-2019/1/23
+    //提交申报时间列表变化-2019/2/14
     // let dateList = [{},{}];
-    // declaretimeJS.postDeclaretiemList('SHXF-201810102',dateList,function(res){
-    //   console.log(res);
+    // declaretimeAction.postDeclaretiemList(dateList,function(res){
+    //   console.log(res.code);
     // })
     // ===========================declaretime项目申报时间节点页=============================
 
-    // ===============================confirmvalue产值登记页===============================
-    // 获取产值信息-2019/1/23
-    // confirmvalueJS.getConfirmvalue('1', function (res) {
-    //   console.log(res);
+    // ===============================confirmvalue产值登记===============================
+    // 获取单项目多条产值信息-2019/2/14
+    // confirmvalueAction.getConfirmvalueList('test', function (bconfirmvalueList) {
+    //   console.log(bconfirmvalueList);
     // });
-    // 更新产值登记-2019/1/23
-    // let confirmvalue = {}
-    // confirmvalueJS.updateConfirmvalue(confirmvalue,function(res){
+    // 删除单条产值信息-2019/2/14
+    // confirmvalueAction.deleteConfirmvalue('4d9c1134-2f44-4104-9642-229949975c6e','test', function (res) {
+    //   console.log(res.code);
+    // });
+    // 获取单条产值信息-2019/2/14
+    // confirmvalueAction.getConfirmvalue('4d9c1134-2f44-4104-9642-229949975c6e','test', function (bconfirmvalue) {
+    //   console.log(bconfirmvalue);
+    // });
+    // 新增产值登记-2019/2/14
+    // let fconfirmvalue = {
+    //   confirmat: new Date(),
+    //   outputvalue: '143232',
+    //   receivableamount: '231231',
+    //   valueuploadat: new Date(),
+    //   projectid: 'test'
+    // }
+    // confirmvalueAction.addConfirmvalue(fconfirmvalue, function (res) {
     //   console.log(res)
     // });
-    // 打包提交附件与产值信息-2019/1/29
-    // let confirmvalueInfo = {}, fileInfo = {};
-    // fileProgressJS.comitFileANDConfirmValue(confirmvalueInfo, fileInfo, function (res) {
-    //   console.log(res);
+    // 更新产值登记-2019/2/14
+    // let fconfirmvalue = {
+    //   confirmat: new Date(),
+    //   outputvalue: '00000',
+    //   receivableamount: '00000',
+    //   valueuploadat: new Date(),
+    // }, cformid = '4d9c1134-2f44-4104-9642-229949975c6e', cprojectID = 'test';
+    // confirmvalueAction.updateConfirmvalue(fconfirmvalue, cformid, cprojectID, function (res) {
+    //   console.log(res)
+    // });
+    // 打包提交附件与产值信息-2019/2/19
+    // let fconfirmvalueInfo = {}, ffileInfo = {} , cconfirmvalueformid = '', cprojectid = '';
+    // fileConfirmvalueAction.comitFileANDConfirmValue(fconfirmvalueInfo, ffileInfo, cconfirmvalueformid, cprojectid, function (res) {
+    //   console.log(res.code);
     // })
     // ===============================confirmvalue产值登记页===============================
-
-    // ================================recievedpay回款登记页===============================
-    // 获取回款信息-2019/1/24
-    // recievedPayJS.getRecievedpay('1',function(res){
-    //   console.log(res);
-    // })
-    // 更新回款登记-2019/1/24
-    // let recievedpay = {};
-    // recievedPayJS.updateRecievedpay(recievedpay,function(res){
-    //   console.log(res);
-    // })
-    // 打包提交附件与回款信息-2019/1/29
-    // let recievedpayInfo = {}, fileInfo = {};
-    // fileProgressJS.comitFileANDRecievedpay(recievedpayInfo, fileInfo, function (res) {
-    //   console.log(res);
-    // })
-    // ================================recievedpay回款登记页===============================
-
-    // =====================================user用户操作===================================
-    // 用户登录缓存项目列表与用户信息-2019/1/25
-    // userJS.signIn('shangwjl','123456',function(res){
-    //   console.log(res)
-    // })
-    // 修改密码-2019/1/25
-    // userJS.modifyPWD('','',function(res){
-    //   console.log(res)
-    // })
-    // 根据登录用户重新缓存项目列表-2019/1/30
-    // userJS.restoreProjectList(function(res){
-    //   console.log(res)
-    // })
-    // =====================================user用户操作===================================
 
     // ===================================addtask新建任务页================================
-    // 获取项目下拉列表-2019/1/25
-    // addtaskJS.getProjectNameList(function(res){
-    //   console.log(res)
+    // 从缓存中获取项目下拉列表-2019/2/14
+    // addtaskAction.getProjectNameList(function(bprojectNameList){
+    //   console.log(bprojectNameList)
     // })
-    // 提交任务-2019/1/25
-    // let taskInfo = {};
-    // addtaskJS.postTask(taskInfo,function(res){
-    //   console.log(res);
+    // 提交任务-2019/2/14
+    // let ftaskInfo = {};
+    // addtaskAction.postTask(ftaskInfo,function(res){
+    //   console.log(res.code);
     // })
-    // 获取项目管理人员-2019/1/25
-    // addtaskJS.getAssignUser('SHXF-201810102',function(res){
-    //   console.log(res);
+    // 获取项目管理人员-2019/2/14-2019/2/20
+    // addtaskAction.getAssignUser('5',function(bassignUser){
+    //   console.log(bassignUser);
     // })
     // ===================================addtask新建任务页================================
 
     // ================================教育、交底、保险上传附件=============================
-    // 获取未上传附件劳务人员列表-2019/1/28
-    // let fileSign = "insurance";// "disclose"||"education"||"insurance"
-    // fileWorkerJS.getUnSignWorkerList('SHXF-201810102',fileSign,function(res){
-    //   console.log(res);
+    // 获取未上传附件劳务人员列表-2019/2/19-2019/2/20
+    // let fileSign = "insurance"; // "disclose"||"education"||"insurance"
+    // fileWorkerAction.getUnSignWorkerList('5', "insurance", function (bWorkerList) {
+    //   console.log(bWorkerList);
     // });
-    // 提交附件并更新劳务人员文件标志-2019/1/28
+    // 提交附件并更新劳务人员文件标志-2019/2/19
     // let packageData = [];
-    // fileWorkerJS.packageComitFileANDWorkerSignList(packageData, function (res) {
-    //   console.log(res);
+    // fileWorkerAction.packageComitFileANDWorkerSignList(packageData, function (res) {
+    //   console.log(res.code);
     // })
     // ================================教育、交底、保险上传附件=============================
 
+    // ===================================statistical首页================================
+    // 产值曲线图-2019/2/18
+    // statisticalAction.getGraphOutputValue(function(bgraphOutputValueData){
+    //     console.log(bgraphOutputValueData);
+    // })
+    // 人员饼图-2019/2/18
+    // statisticalAction.getGraphSecurity(function (bgraphSecurityData) {
+    //   console.log(bgraphSecurityData);
+    // })
+    // ===================================statistical首页=================================
+
+
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~SaaS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    // 获取单个项目的施工班组统计数据-2019/2/14-确认后使用
+    // workerSaaSAction.getWorkerstatis('5', function (bstatisdata) {
+    //   console.log(bstatisdata);
+    // })
+
+    // ================================projectlist项目列表页===============================
+    // 获取项目列表及详细数据-2019/2/15
+    // projectlistSaaSAction.getProjectList(function(bprojectList){
+    //   console.log(bprojectList);
+    // })
+    // ================================projectlist项目列表页===============================
+
+    // ================================projectInfo项目详情页===============================
+    // 获取项目详情-2019/2/18
+    // projectSaaSAction.getProjectInfo('8',function(bprojectInfo){
+    //   let projectInfo = bprojectInfo;
+    // })
+    // 获取项目详情的其他模块数据-2019/2/20
+    // projectSaaSAction.getModuleInfo('5', function (bmoduleinfo) {
+    //   console.log(bmoduleinfo);
+    // })
+    // ================================projectInfo项目详情页===============================
+
+    // ===============================recievedpaylines回款流水页===========================
+    // 获取单项目的回款流水线列表-2019/2/15
+    // receivepaylinesSaaSAction.getLinesList('5', function (blinesList) {
+    //   console.log(blinesList);
+    // })
+    // 获取单项目的单条回款流水线记录-2019/2/15
+    // receivepaylinesSaaSAction.getLinesLPage('5','',function(res){
+    //   console.log(res.code);
+    // })
+    // ===============================recievedpaylines回款流水页===========================
+    // ===================================statistical首页================================
+    // 获取所有项目的统计数据——合同金额、产值、回款：-2019/2/18
+    // statisticalSaaSAction.getPStatis(function (bstatis) {
+    //   console.log(bstatis);
+    // })
+    // 获取所有项目的绘图进度数据——未完成产值、累计回款、可回款：-2019/2/18
+    // statisticalSaaSAction.getGraphProgressData(function (bprogressData) {
+    //   console.log(bprogressData);
+    // })
+    // ===================================statistical首页=================================
+    // ===============================certification认证信息页==============================
+    // 获取认证信息-2019/2/18
+    // certificationSaaSAction.getSertification(function(bsertification){
+    //   console.log(bsertification)
+    // })
+    // ===============================certification认证信息页==============================
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~SaaS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~commons~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+    // =====================================user用户操作===================================
+    // 用户登录并缓存项目列表与用户信息-2019/2/15
+    // userAction.signIn('test001','123456',function(res){
+    //   console.log(res)
+    // })
+    // 修改密码-2019/2/22
+    // userAction.modifyPWD('','',function(res){
+    //   console.log(res)
+    // })
+    // 根据登录用户重新缓存项目列表
+    // userAction.restoreProjectList(function(res){
+    //   console.log(res)
+    // })
+    // =====================================user用户操作===================================
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~commons~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     // 接口产生或修改时间列表
-    // 已失效
-    // 2019/1/21
-    // 2019/1/22
-    // 2019/1/23
-    // 2019/1/24
-    // 2019/1/25
-    // 2019/1/28
-    // 2019/1/29
-    // 2019/1/30
-    // 2019/1/31
+    // 确认后使用
+    // 2019/2/14
+    // 2019/2/15
+    // 2019/2/18
+    // 2019/2/19
+    // 2019/2/20
+    // 2019/2/21
+    // 2019/2/22
   },
 
 })

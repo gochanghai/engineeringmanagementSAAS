@@ -1,9 +1,5 @@
 // pages/receivableregistration/receivableregistration.js
-const recievedPayJS = require('../../action/recievedpay.js');
-const fileJS = require('../../action/file.js');
-const fileProgressJS = require('../../action/file_progress.js')
 Page({
-
   data: {
     planReceivAt: '请选择日期',
     theoryReceivAmount: '',
@@ -17,23 +13,9 @@ Page({
   onLoad: function(options) {
     let _this = this;
     // 获取项目ID
-    let projectID = options.projectID;
-    // 判断数据是否为空
-    let theoryReceivAmount = 0.00;
-    if (options.theoryReceivAmount != null) {
-      theoryReceivAmount = options.theoryReceivAmount
-    }
-    let actualReceivAmount = 0.00;
-    if (options.actualReceivAmount != null) {
-      actualReceivAmount = options.actualReceivAmount
-    }
     this.setData({
-      objectId: options.objectId,
-      projectID: projectID,
+        projectID: options.projectID,
       formId: options.formId,
-      actualReceivAmount: actualReceivAmount,
-      theoryReceivAmount: theoryReceivAmount,
-      planReceivDate: options.planReceivDate,
     })
 
     // 从消息处理进入 获取回款信息
@@ -45,40 +27,12 @@ Page({
       formName: 'recievedpay',
       belongIdList: this.data.formId,
       fileBelong: '回款'
-    }
-    fileJS.getFileList(fileInfo, function(res) {
-      _this.setData({
-        fileList: res,
-      })
-    });
-
-    
+    }    
   },
 
   // 获取回款信息
   getRecievedpay(){
     let _this = this;
-    recievedPayJS.getRecievedpay(this.data.formId, function (res) {
-      // console.log(res);
-      // 判断数据是否为空
-      let theoryReceivAmount = 0.00;
-      if (res.theoryReceivAmount != null) {
-        theoryReceivAmount = res.theoryReceivAmount
-      }
-      let actualReceivAmount = 0.00;
-      if (res.actualReceivAmount != null) {
-        actualReceivAmount = res.actualReceivAmount
-      }
-      _this.setData({
-        objectId1111: res,
-        objectId: res.objectId,
-        projectID: projectID,
-        formId: res.formId,
-        actualReceivAmount: actualReceivAmount,
-        theoryReceivAmount: theoryReceivAmount,
-        planReceivDate: _this.dateFormat2(res.planReceivDate),
-      })
-    })
   },
   
 
@@ -142,36 +96,36 @@ Page({
             file: _this.data.uploadFilePath,
             fileName: _this.data.uploadFilePath.replace("http://tmp/", ""),
           };
-          fileProgressJS.comitFileANDRecievedpay(recievedpay, fileInfo, function(res) {
-            console.log(res);
-            if (res.code == 1) {
-              wx.showToast({
-                title: '提交成功',
-                icon: 'success',
-                duration: 2000,
-                success() {
-                  setTimeout(() => {
-                    wx.navigateBack({
-                      delta: '1'
-                    })
-                  }, 1000)
-                }
-              })
-            } else {
-              wx.showToast({
-                title: '提交失败',
-                icon: 'success',
-                duration: 2000,
-                success() {
-                  setTimeout(() => {
-                    wx.navigateBack({
-                      delta: '1'
-                    })
-                  }, 1000)
-                }
-              })
-            }
-          })
+          // fileProgressJS.comitFileANDRecievedpay(recievedpay, fileInfo, function(res) {
+          //   console.log(res);
+          //   if (res.code == 1) {
+          //     wx.showToast({
+          //       title: '提交成功',
+          //       icon: 'success',
+          //       duration: 2000,
+          //       success() {
+          //         setTimeout(() => {
+          //           wx.navigateBack({
+          //             delta: '1'
+          //           })
+          //         }, 1000)
+          //       }
+          //     })
+          //   } else {
+          //     wx.showToast({
+          //       title: '提交失败',
+          //       icon: 'success',
+          //       duration: 2000,
+          //       success() {
+          //         setTimeout(() => {
+          //           wx.navigateBack({
+          //             delta: '1'
+          //           })
+          //         }, 1000)
+          //       }
+          //     })
+          //   }
+          // })
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
@@ -195,7 +149,7 @@ Page({
     })
   },
   // 时间格式化
-  dateFormat2(val) {
+  dateFormat(val) {
     if (val === null) {
       return "未知";
     }

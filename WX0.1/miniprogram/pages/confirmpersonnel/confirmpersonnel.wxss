@@ -1,0 +1,87 @@
+/* pages/confirmpersonnel/confirmpersonnel.wxss */
+
+.container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #f2f2f2;
+}
+
+.content {
+  padding-top: 26rpx;
+  margin: 0 auto;
+  width: 92%;
+  /* border: 1px solid; */
+}
+
+.file-item {
+  padding: 0 26rpx;
+  margin-bottom: 26rpx;
+  background-color: #fff;
+  border-radius: 6rpx;
+  overflow: hidden;
+}
+
+.top-text {
+  display: flex;
+  align-items: center;
+  height: 110rpx;
+  /* border: 1px solid; */
+}
+
+.file-item image {
+  width: 70rpx;
+  height: 70rpx;
+  /* border-radius: 6rpx; */
+}
+
+.file-item view.group {
+  margin-left: 20rpx;
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #666;
+  flex: 1;
+}
+
+.file-item view.date {
+  display: flex;
+  align-items: center;
+  color: #999;
+  font-size: 28rpx;
+  width: 200rpx;
+}
+
+.file-item view.date image {
+  margin-left: 15rpx;
+  width: 20rpx;
+  height: 20rpx;
+}
+
+.context {
+  margin: 10rpx auto;
+  margin-bottom: 17rpx;
+  padding-bottom: 10rpx;
+  width: 96%;
+  /* border: 1px solid; */
+  overflow: hidden;
+  background-color: #ececec;
+}
+
+.personner-data {
+  padding: 0 26rpx;
+  float: left;
+  /* border: 1px solid; */
+  width: 41%;
+  margin-top: 20rpx;
+}
+
+.personner-data view {
+  line-height: 44rpx;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.personner-data view text {
+  font-size: 29rpx;
+  color: #333;
+}

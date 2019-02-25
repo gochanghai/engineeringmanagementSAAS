@@ -1,28 +1,28 @@
 <!--产值登记-->
 <view class='container'>
   <view class='information'>
-    <view class='information_item'>
+    <!-- <view class='information_item'>
       <text style='width: 260rpx;'>产值表上传时间</text>
-      <picker mode="date" start="2010-01-01" end="2029-01-01" bindchange="InputValueUploadAt">
+      <picker mode="date" start="2010-01-01" end="2029-01-01" bindchange="inputValueUploadAt">
         <view class="picker" style='font-size:30rpx; color:#999;'>
-          {{valueUploadAt}}
+          {{uploadDate}}
         </view>
       </picker>
       <image src='/images/xia.png' class='down_img'></image>
-    </view>
+    </view> -->
     <view class='information_item'>
       <text>产值 (元)</text>
-      <input type='number' confirm-type="next" value='{{outputValue}}' bindinput='InputOutputValue' placeholder='请输入' placeholder-class='input_class' />
+      <input type='number' confirm-type="next" value='{{outputValue}}' bindinput='inputOutputValue' placeholder='请输入' placeholder-class='input_class' />
     </view>
     <view class='information_item'>
       <text>可收款 (元)</text>
-      <input type='number' confirm-type="next" value='{{receivableAmount}}' bindinput='InputReceivableAmount' placeholder='请输入' placeholder-class='input_class' />
+      <input type='number' confirm-type="next" value='{{receivableAmount}}' bindinput='inputReceivableAmount' placeholder='请输入' placeholder-class='input_class' />
     </view>
     <view class='information_item'>
       <text style='width: 260rpx;'>甲方确认时间</text>
-      <picker mode="date" start="2010-01-01" end="2029-01-01" bindchange="InputConfirmAt">
+      <picker mode="date" start="2010-01-01" end="2029-01-01" bindchange="inputConfirmAt">
         <view class="picker" style='font-size:30rpx; color:#999;'>
-          {{confirmAt}}
+          {{confirmDate}}
         </view>
       </picker>
       <image src='/images/xia.png' class='down_img'></image>
@@ -54,5 +54,20 @@
     <view class='ignore' bindtap='cancel'>取 消</view>
     <view class='solve' bindtap="uploadFile">上传附件</view>
     <view class='solve' bindtap='commitOutputVal'>确 定</view>
+  </view>
+
+  <view class='modal' wx:if="{{IsperList}}" bindtap='hideModal'></view>
+  <view class='per_list' wx:if="{{IsperList}}" animation='{{animationData}}'>
+    <view class='file_image'>
+      <image src='{{urlFileImg}}' bindtap='imgView' data-src="{{urlFileImg}}"></image>
+      <text class="file_txt" wx:if="{{urlFileImg == ''}}" bindtap='uploadFileUrl'>+选择文件</text>
+      <text class='file_again' wx:if="{{urlFileImg}}" bindtap='uploadFileUrl'>重新选择</text>
+      <view class='close' bindtap='hideModal'>关闭</view>
+    </view>
+    <view class="bottom_btn">
+      <button class='btn btn_file' bindtap='commitFileANDWorkerUnSignList'>
+        完 成
+      </button>
+    </view>
   </view>
 </view>

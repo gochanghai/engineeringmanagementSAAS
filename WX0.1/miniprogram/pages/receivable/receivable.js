@@ -1,5 +1,5 @@
 // pages/receivable/receivable.js
-const progressJS = require('../../action/progress.js');
+const receivepaylinesSaaSAction = require('../../backend/saasAction/receivepaylinesAction.js');
 Page({
 
   /**
@@ -10,49 +10,42 @@ Page({
   },
 
   onLoad: function(options) {
-
-    let totalAmount = this.getMoneyFormat(options.totalAmount)
     // 获取项目ID
     this.setData({
       projectID: options.projectID,
-      totalAmount: totalAmount
+      totalAmount: options.contractamount,
     });
-    this.getRecievedPayDatas();
+    this.getDateList(this.data.projectID);
   },
 
   // 回款列表
-  getRecievedPayDatas() {
-    let _this = this
-    let projectID = this.data.projectID;
-    progressJS.getRecievedPayList(projectID, function(res) {
-      // 格式化数据
+  getDateList(projectID){
+    let _than = this;
+    receivepaylinesSaaSAction.getLinesList(projectID, function (res) {
+      console.log(res);
+      let list = [];
       for (let index in res) {
-        res[index].actualReceivAmount2 = _this.getMoneyFormat(res[index].actualReceivAmount);
-        res[index].actualReceivDate = _this.dateFormat2(res[index].actualReceivAt);
-        res[index].planReceivDate = _this.dateFormat2(res[index].planReceivAt);
+        let item = {
+          returnDate: _than.dateFormat2(res[index].date),
+          returnAmount: _than.getMoneyFormat(res[index].amount),
+          id: res[index].id,
+        };
+        list.push(item);
       }
-      _this.setData({
-        list: res,
-      })
+      _than.setData({
+        list: list,
+      });
     })
+    
   },
 
   // 跳转到登记回款
   receivableRegistration(e) {
     let projectID = this.data.projectID;
-    let item = e.currentTarget.dataset.index
     let formId = item.formId;
-    let actualReceivAmount = item.actualReceivAmount;
-    let planReceivDate = item.planReceivDate;
-    let theoryReceivAmount = item.theoryReceivAmount;
-    let objectId = item.objectId;
     wx.navigateTo({
       url: '/pages/receivableregistration/receivableregistration?projectID=' + projectID +
-        "&formId=" + formId +
-        "&actualReceivAmount=" + actualReceivAmount +
-        "&theoryReceivAmount=" + theoryReceivAmount +
-        "&planReceivDate=" + planReceivDate +
-        "&objectId=" + objectId,
+        "&formId=" + formId,
     })
   },
 

@@ -1,25 +1,49 @@
-var wxCharts = require('../../utils/wxcharts.js');
-const statisticalJS = require('../../action/statistical.js');
-const messageCenterJS = require('../../action/messageCenter.js');
 // pages/home/home.js
+var wxCharts = require('../../utils/wxcharts.js');
+const storageJS = require('../../static/storage.js');
+const statisticalAction = require('../../backend/manageAction/statisticalAction.js');
+const messageCenterAction = require('../../backend/manageAction/messageCenterAction.js');
+const statisticalSaaSAction = require('../../backend/saasAction/statisticalAction.js');
 Page({
   data: {
     windowWidth: null,
     outValueDates: [],
     outValueDate: [],
-    sumProjectMoney: null
+    sumProjectMoney: null,
+    moneySwitch: true,
+    like: '/images/logo@2x.png'
   },
-  
+
   //下拉刷新
   onPullDownRefresh: function() {
-    // // 获取项目金额数据
-    // this.getSumProjectMoney();
-    // // 获取产值数据    
-    // this.getGraphOutputValue();
-    // // 获取安全数据
-    // this.getGraphSecurity();
     this.onShow();
-    return ;
+    return;
+  },
+
+  switch1Change(e) {
+    this.setData({
+      moneySwitch: e.detail.value,
+    })
+  },
+
+  accountPreview() {
+    wx.previewImage({
+      current: this.data.like,
+      urls: [this.data.like]
+    })
+  },
+
+  // 跳转到项目列表
+  navProjectList() {
+    wx.navigateTo({
+      url: '/pages/projectlist/projectlist',
+    })
+  },
+
+  shenhauDetail() {
+    wx.navigateTo({
+      url: '/pages/shenhua/shenhua',
+    })
   },
 
   // 产值图表
@@ -43,9 +67,9 @@ Page({
       },
       yAxis: {
         format: function(val) {
-          return (val / 100000000).toFixed(2);
+          return (val / 10000000).toFixed(2);
         },
-        title: '确认产值(亿元)',
+        // title: '确认产值(亿元)', 
         // disabled:true,
         gridColor: '#ffffff',
         min: 0
@@ -64,20 +88,30 @@ Page({
     });
   },
   // 安全图表
-  ChartData2: function(series) {
+  ChartData2: function(seriesData) {
     new wxCharts({
       canvasId: 'Canvas2',
-      type: 'ring',
-      extra: {
-        ringWidth: 24, //圆环的宽度
-        pie: {
-          offsetAngle: -45 //圆环的角度
-        }
+      type: 'column',
+      categories: [' '],
+      series: seriesData,
+      yAxis: {
+        format: function(val) {
+          return val;
+        },
+        gridColor: '#ffffff',
       },
-      series: series,
-      width: this.data.windowWidth - 180,
-      height: 220,
+      xAxis: {
+        disableGrid: true,
+      },
+      width: this.data.windowWidth - 202,
+      height: 130,
       dataLabel: false,
+      legend: false,
+      extra: {
+        column: {
+          width: 20 //柱的宽度
+        }
+      }
     });
   },
   // 进度图表
@@ -86,14 +120,15 @@ Page({
       canvasId: 'Canvas3',
       type: 'ring',
       extra: {
-        ringWidth: 24, //圆环的宽度
+        ringWidth: 20, //圆环的宽度
         pie: {
           offsetAngle: -45 //圆环的角度
         }
       },
       series: series,
+      legend: false,
       width: this.data.windowWidth - 180,
-      height: 220,
+      height: 170,
       dataLabel: false,
     });
   },
@@ -103,6 +138,37 @@ Page({
     this.setData({
       windowWidth: wx.getSystemInfoSync().windowWidth
     });
+    // 获取用户 姓名、公司、职位信息
+    this.setData({
+      headimg: '',
+      userName: storageJS.getUser().userName,
+      userArea: storageJS.getUser().userArea,
+      userPostion: storageJS.getUser().userTitle,
+    })    
+
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading'
+    });
+
+    let series = [{
+      name: '安全人数',
+      data: [0],
+      color: "#B122E6"
+    }, {
+      name: '未交底人数',
+      data: [0],
+      color: "#F5317F"
+    }, {
+      name: '未教育人数',
+      data: [0],
+      color: "#FF8359"
+    }, {
+      name: '未参保人数',
+      data: [0],
+      color: "#3399FF"
+    }];
+    this.ChartData2(series);
 
     // 获取项目金额数据
     this.getSumProjectMoney();
@@ -112,6 +178,10 @@ Page({
     this.getGraphSecurity();
     // 获取消息总数
     this.getCountMessageNo();
+    this.getGraphProgressData();
+
+    // 关闭加载框
+    wx.hideToast({});
 
     // console.log("s" + _this.data.graphOutputValue);
     // wx.setTabBarBadge({
@@ -123,117 +193,144 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
     this.onLoad();
   },
 
   // 获取项目金额数据
   getSumProjectMoney() {
-    let _this = this;
-    statisticalJS.sumProjectMoney(function(res) {
-      var sumProjectMoney = res;
-      // console.log("sumProjectMoney");
-      // console.log(sumProjectMoney);
-      let amount = _this.getMoneyFormat(sumProjectMoney.totalReceivableAmount_ActualReceivAmount)
-      _this.setData({
-        sumProjectMoney: sumProjectMoney,
-        totalReceivableAmount_ActualReceivAmount: amount,
-        totalAmount: _this.getMoneyFormat(sumProjectMoney.totalAmount),
-        totalOutputvalue: _this.getMoneyFormat(sumProjectMoney.totalOutputvalue),
-        actualReceivAmount: _this.getMoneyFormat(sumProjectMoney.actualReceivAmount),
-        actualReceivAmount1: _this.getMoneyFormat((sumProjectMoney.actualReceivAmount) / 1000),
-        shouldReceivAmount: _this.getMoneyFormat((sumProjectMoney.totalReceivableAmount_ActualReceivAmount) / 10000),
-        unOutvalueAmount: _this.getMoneyFormat((sumProjectMoney.totalAmount - sumProjectMoney.totalOutputvalue) / 10000),
+    let _than = this;
+    statisticalSaaSAction.getPStatis(function(res) {
+      console.log('getPStatis');
+      console.log(res);
+      _than.setData({
+        contractAmount: _than.getMoneyFormat(res.contractamountsum),
+        totalReturnAmount: _than.getMoneyFormat(res.actualreceivamountsum),
+        totalOutputvalue: _than.getMoneyFormat(res.outputvaluesum),
+        totalUnReturnAmount: _than.getMoneyFormat(res.outputvaluesum - res.actualreceivamountsum),
       });
-      // 设置进度图表数据
-      let series = [{
-        name: '未完成产值',
-        data: (sumProjectMoney.totalAmount - sumProjectMoney.totalOutputvalue) / 10,
-        stroke: false
-      }, {
-        name: '未确认产值',
-        data: sumProjectMoney.actualReceivAmount,
-        stroke: false
-      }, {
-        name: '累计回款',
-        data: sumProjectMoney.actualReceivAmount,
-        stroke: false
-      }, {
-        name: '可回款',
-        data: sumProjectMoney.totalReceivableAmount_ActualReceivAmount / 10,
-        stroke: false
-      }];
-      // console.log("可回款" + series);
-      _this.ChartData3(series);
-      _this.setData({
-        series: series,
-      });
+
     })
   },
   // 获取产值数据
   getGraphOutputValue() {
-    let _this = this;
-    statisticalJS.getGraphOutputValue(function(res) {
-      var graphOutputValue = res;
-      // console.log("graphOutputValue");
-      // console.log(graphOutputValue);
-      _this.setData({
-        graphOutputValue: graphOutputValue,
-      });
-
+    let _than = this;
+    statisticalAction.getGraphOutputValue(function(res) {
+      console.log('getGraphOutputValue');
+      console.log(res);
+      let outputValueList = res;
       let categories = [];
       let datas = [];
-      for (let index in graphOutputValue) {
-        let item = graphOutputValue[index];
-        categories.push(item.date);
-        datas.push(item.sumOutputValue);
+      for (let index in outputValueList) {
+        let item = outputValueList[index];
+        categories.push(_than.valueUndefinedTo0(item.date));
+        datas.push(_than.valueUndefinedTo0(item.sumOutputValue));
       }
-      _this.ChartData(categories, datas);
+      _than.setData({
+        outputValueList: outputValueList,
+      });
+      _than.ChartData(categories, datas);
     })
   },
+
   // 获取安全数据
   getGraphSecurity() {
-    let _this = this;
-    statisticalJS.getGraphSecurity(function(res) {
-      var graphSecurity = res;
-      // console.log("graphSecurity");
-      // console.log(graphSecurity);
-      _this.setData({
-        graphSecurity: graphSecurity,
+    let _than = this;
+    statisticalAction.getGraphSecurity(function(res) {
+      console.log('graphSecurity');
+      console.log(res);
+      let securityData = {
+        totalWorker: _than.valueUndefinedTo0(res.totalWorker),
+        totalUnDisclose: _than.valueUndefinedTo0(res.totalUnDisclose),
+        totalUnEducation: _than.valueUndefinedTo0(res.totalUnEducation),
+        totalUnInsurance: _than.valueUndefinedTo0(res.totalUnInsurance),
+      };
+      let isSecurityChart = false;
+      // 判断是否有数据
+      if (res.totalWorker != null && res.totalUnDisclose != null && res.totalUnEducation != null && res.totalUnInsurance != null) {
+        isSecurityChart = true;
+      }
+      _than.setData({
+        securityData: securityData,
+        isSecurityChart: isSecurityChart,
       });
 
-      // 设置安全图表数据
       let series = [{
-        name: '未教育人数',
-        data: graphSecurity.totalUnEducation,
-        stroke: false
-      }, {
-        name: '未参保人数',
-        data: graphSecurity.totalUnInsurance,
-        stroke: false
-      }, {
         name: '安全人数',
-        data: graphSecurity.totalWorker,
-        stroke: false
+        data: [securityData.totalWorker],
+        color: "#B122E6"
       }, {
         name: '未交底人数',
-        data: graphSecurity.totalUnDisclose,
+        data: [securityData.totalUnDisclose],
+        color: "#F5317F"
+      }, {
+        name: '未教育人数',
+        data: [securityData.totalUnEducation],
+        color: "#FF8359"
+      }, {
+        name: '未参保人数',
+        data: [securityData.totalUnInsurance],
+        color: "#3399FF"
+      }];
+
+      _than.ChartData2(series);
+    })
+  },
+
+  getGraphProgressData() {
+    let _than = this;
+    statisticalSaaSAction.getGraphProgressData(function(res) {
+      console.log('getGraphProgressData');
+      console.log(res);
+      // 设置进度图表数据
+      let progressData = {
+        unOutputValue: _than.getMoneyFormat(res.unconfirmvaluesum / 10000),
+        unconfirmValue: _than.getMoneyFormat(res.unconfirmvaluesum / 10000),
+        actualreceivAmount: _than.getMoneyFormat(res.actualreceivamountsum / 10000),
+        receivablePay: _than.getMoneyFormat(res.receivablepaysum / 10000),
+      };
+      let series = [{
+        name: '未完成产值',
+        data: res.unconfirmvaluesum / 10000,
+        stroke: false
+      }, {
+        name: '未确认产值',
+        data: res.unconfirmvaluesum / 10000,
+        stroke: false
+      }, {
+        name: '累计回款',
+        data: res.actualreceivamountsum / 10000,
+        stroke: false
+      }, {
+        name: '可回款',
+        data: res.receivablepaysum / 10000,
         stroke: false
       }];
-      // console.log(series);
-      _this.ChartData2(series);
+      _than.ChartData3(series);
+      let isProgressChart = false;
+      // 判断是否有数据
+      if (res.receivablePay != null && res.receivablePay != null && res.actualreceivamountsum != null && res.unconfirmvaluesum != null) {
+        isProgressChart = true;
+      }
+      _than.setData({
+        progressData: progressData,
+        isProgressChart: true,
+      })
     })
+
   },
 
   // 获取消息总数
   getCountMessageNo() {
-    let _this = this;
-    messageCenterJS.countMessageNo(function (countTotal) {
+    let _than = this;
+    messageCenterAction.countMessageNo(function(res) {
       // countTotal = 0;
-      if (countTotal > 0) {
+      console.log('countTotal');
+      console.log(res);
+      if (res > 0) {
         wx.setTabBarBadge({
           index: 3,
-          text: '' + countTotal
+          text: '' + res
         })
       }
     })
@@ -266,4 +363,10 @@ Page({
     var ret = intSum + dot;
     return ret;
   },
+  valueUndefinedTo0(val) {
+    if (undefined != val || '' != val || null != val) {
+      return 0;
+    }
+    return val;
+  }
 })

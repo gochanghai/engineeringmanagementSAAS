@@ -1,18 +1,18 @@
 <!--上传附件-->
 <view class='container'>
-  <view class='none_bg' wx:if="{{IsnoneMes}}">
+  <view class='none_bg' wx:if="{{isnoneMes}}">
     <image src='/images/none_img.png'></image>
     <text>暂无数据</text>
   </view>
   <view class='information' wx:if="{{list}}">
     <scroll-view scroll-y style='height:{{WinHeight}}'>
-      <view class='information-item' wx:for='{{list}}'>
+      <view class='information-item' wx:for='{{list}}' wx:key="index">
         <view class='informatiob_flex'>
           <view class="file_check">
             <checkbox style="transform:scale(.7);margin-top:0rpx;" checked="{{item.checked}}" data-type="{{item.checked}}" data-index="{{index}}" bindtap="changeChecked" />
           </view>
           <view class='file_info'>
-            <view>班组：{{item.groupName}}</view>
+            <view>班组：{{item.groupname}}</view>
             <view>人员：{{item.name}}</view>
           </view>
         </view>

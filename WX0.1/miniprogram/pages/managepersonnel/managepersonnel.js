@@ -1,5 +1,5 @@
 // pages/managepersonnel/managepersonnel.js
-const personnelJS = require('../../action/personnel.js');
+const personnelAction = require('../../backend/manageAction/personnelAction.js');
 Page({
   data: {
     swiperIndex: '0',
@@ -12,14 +12,12 @@ Page({
   },
 
   //下拉刷新
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
     this.onShow();
   },
 
   onLoad: function(options) {
-    // console.log(options.typeID);
-    // console.log("typeID: " + options.typeID);
-    // console.log("projectID" + options.projectID);
+    console.log("projectID" + options.projectID);
     let typeID = options.typeID;
     var _this = this;
     this.setData({
@@ -28,57 +26,93 @@ Page({
       swiperIndex: options.typeID,
       projectID: options.projectID,
     });
-    
+    this.getManagerList();
+    this.getConstructionList();
+    this.getGroupList();
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-    // this.onLoad();
-    this.getDataList();
-  },
-  getDataList(){
-    var _this = this;
-    // 获取项目ID
+  onShow: function() {
     let projectID = this.data.projectID;
-    // 获取管理人员数据
-    let managerList;
-    personnelJS.getManagerList(projectID, function (res) {
-      managerList = res;
-      // 格式化数据
-      for (let index in managerList) {
-        managerList[index].telphoneNo = _this.isNullReturnNnknown(managerList[index].telphoneNo);
+    this.getManagerList();
+    this.getConstructionList();
+    this.getGroupList();
+  },
+
+  // 获取管理人员列表
+  getManagerList() {
+    let _than = this;
+    let projectID = this.data.projectID;
+    personnelAction.getManagerList(projectID, function(res) {
+      console.log(res);
+      console.log("managerlist");
+      let list = [];
+      for (let index in res) {
+        let item = {
+          id: index,
+          name: res[index].managername,
+          position: res[index].managertype,
+          telePhone: _than.phoneFormat(res[index].telphoneno),
+        }
+        list.push(item);
       }
-      _this.setData({
-        managerList: managerList,
-        projectID: projectID
+      _than.setData({
+        managerList: list
       })
-    });
-    // 获取施工班组数据
-    let groupList;
-    personnelJS.getGroupList(projectID, function (res) {
-      groupList = res;
-      // console.log(groupList);
-      _this.setData({
-        groupList: groupList,
-      })
-    });
-    // 获取施工人员数据
-    let constructionList;
-    personnelJS.getConstructionList(projectID, function (res) {
-      constructionList = res;
-      // console.log(constructionList);
-      // 格式化数据
-      for (let index in constructionList) {
-        constructionList[index].admissionDate = _this.dateFormat2(constructionList[index].admissionAt);
-        constructionList[index].telNo = _this.isNullReturnNnknown(constructionList[index].telNo);
-        constructionList[index].repay = _this.isNullReturnNnknown(constructionList[index].repay);
+    })
+
+  },
+  // 获取施工人员列表
+  getConstructionList() {
+    let _than = this;
+    let projectID = this.data.projectID;
+    personnelAction.getConstructionList(projectID, function(res) {
+      console.log('getConstructionList');
+      console.log(res);
+      let list = [];
+      for (let index in res) {
+        let item = {
+          id: index,
+          name: res[index].name,
+          groupName: _than.isNullReturnNnknown(res[index].groupname),
+          enterDate: _than.dateFormat2(res[index].admissionat),
+          telePhone: _than.phoneFormat(res[index].telno),
+          repay: res[index].repay,
+          age: res[index].age,
+        }
+        list.push(item);
       }
-      _this.setData({
-        constructionList: constructionList,
+      _than.setData({
+        constructionList: list,
       })
-    });
+    })
+
+  },
+  // 获取班组列表
+  getGroupList() {
+    let _than = this;
+    let projectID = this.data.projectID;
+    personnelAction.getGroupList(projectID, function(res) {
+      console.log('getGroupList');
+      console.log(res);
+      let list = [];
+      for (let index in res) {
+        let item = {
+          id: res[index].formid,
+          groupName: res[index].groupname,
+          totalNumber: res[index].totalnumber,
+          insuranceFileSign: res[index].insurancefilesign,
+          educationFileSign: res[index].educationfilesign,
+          discloseFileSign: res[index].disclosefilesign,
+        }
+        list.push(item);
+      }
+      _than.setData({
+        groupList: list
+      })
+    })
   },
 
 
@@ -134,5 +168,20 @@ Page({
       return "未知";
     }
     return val;
-  }
+  },
+
+  // 手机号码格式化 134-4444-5555
+  phoneFormat: function (val) {
+    if (val === null) {
+      return "未知";
+    }
+    if (val.length === 11) {
+      let a1 = val.substring(0, 3);
+      let a2 = val.substring(4, 7);
+      let a3 = val.substring(8, 11);
+      // console.log(date);
+      return a1 + '-' + a2 + '-' + a3;
+    }
+    return val;
+  },
 })

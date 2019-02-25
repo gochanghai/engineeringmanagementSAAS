@@ -3,5 +3,5 @@
   "navigationBarBackgroundColor": "#fff",
   "navigationBarTitleText": "新建任务",
   "navigationBarTextStyle": "black",
-  "disableScroll": true
+  "enablePullDownRefresh": false
 }

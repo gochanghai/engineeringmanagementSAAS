@@ -1,4 +1,5 @@
 // pages/mycente/mycenterr.js
+const storageJS = require('../../static/storage.js');
 Page({
   data: {
     userInfo: {},
@@ -40,6 +41,13 @@ Page({
     //     })
     //   }
     // })
+
+    this.setData({
+      headimg: '',
+      userName: storageJS.getUser().userName,
+      userArea: storageJS.getUser().userArea,
+      userPostion: storageJS.getUser().userTitle,
+    })
   },
 
   UpavatarUrl() {
@@ -62,8 +70,50 @@ Page({
     })
   },
 
+  accountCertification() {
+    wx.navigateTo({
+      url: '/pages/certification/certification',
+    })
+  },
+
   //下拉刷新
   onPullDownRefresh: function() {
     this.getUserINfo();
   },
+
+  loginOut() {
+    wx.showModal({
+      title: '退出登录',
+      content: '是否退出当前账号?',
+      success(res) {
+        if (res.confirm) {
+          console.log('logOut...')
+          try {
+            wx.clearStorageSync();
+            wx.showToast({
+              title: '',
+              icon: 'loading',
+            })
+            setTimeout(function() {
+              wx.hideToast({});
+              wx.showToast({
+                title: '操作成功',
+                icon: 'success',
+                duration: 2000,
+                success: function() {
+                  setTimeout(function() {
+                    wx.reLaunch({
+                      url: '/pages/login/login',
+                    })
+                  }, 1200)
+                }
+              })
+            }, 1200)
+          } catch (e) {}
+        } else if (res.cancel) {
+          console.log('取消');
+        }
+      }
+    })
+  }
 })

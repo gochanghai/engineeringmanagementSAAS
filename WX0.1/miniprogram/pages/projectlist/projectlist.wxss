@@ -10,18 +10,17 @@
 }
 
 .project-list {
-  margin: 35rpx auto;
-  width: 82%;
+  margin: 20rpx auto;
+  width: 92%;
 }
 
 .project-item {
-  padding-left: 35rpx;
-  margin-bottom: 35rpx;
+  margin-bottom: 20rpx;
   padding-bottom: 20rpx;
   background-color: #fff;
-  border-radius: 26rpx;
+  border-radius: 6rpx;
   overflow: hidden;
-  box-shadow: 0rpx 15rpx 40rpx #dadada;
+  /* box-shadow: 0rpx 15rpx 40rpx #dadada; */
 }
 
 .project-item > text.status {
@@ -53,6 +52,7 @@
 }
 
 .info {
+  padding-left: 35rpx;
   display: flex;
   align-items: center;
   height: 70rpx;
@@ -104,6 +104,7 @@
 
 .mes-info view {
   width: 33%;
+  text-align: center;
   position: relative;
 }
 
@@ -161,4 +162,8 @@
   margin-left: 10rpx;
   margin-bottom: 23rpx;
   border-bottom: 1px solid #e5e5e5;
+}
+
+.hover-row {
+  background-color: #e4e4e4;
 }

@@ -3,26 +3,26 @@
   <view class='add-task'>
     <view class='task_item'>
       <text>合同起始时间</text>
-      <picker mode="date" start="2010-01-01" disabled='1' end="2029-01-01" bindchange="InputBeginDate">
-        <view class="picker" style='font-size:30rpx; color:#999;'>
-          {{contractInfo.startFrom}}
-        </view>
-      </picker>
-      <image src='/images/xia.png'></image>
+      <!-- <picker mode="date" start="2010-01-01" disabled='1' end="2029-01-01" bindchange="InputBeginDate"> -->
+      <view class="picker" style='font-size:30rpx; color:#999;'>
+        {{contractInfo.startDate}}
+      </view>
+      <!-- </picker> -->
+      <!-- <image src='/images/xia.png'></image> -->
     </view>
     <view class='task_item'>
       <text>合同终止时间</text>
-      <picker mode="date" start="2010-01-01" disabled='1' end="2029-01-01" bindchange="InputEndDate">
-        <view class="picker" style='font-size:30rpx; color:#999;'>
-          {{contractInfo.endAt}}
-        </view>
-      </picker>
-      <image src='/images/xia.png'></image>
+      <!-- <picker mode="date" start="2010-01-01" disabled='1' end="2029-01-01" bindchange="InputEndDate"> -->
+      <view class="picker" style='font-size:30rpx; color:#999;'>
+        {{contractInfo.endDate}}
+      </view>
+      <!-- </picker> -->
+      <!-- <image src='/images/xia.png'></image> -->
     </view>
 
     <view class='task_item'>
       <text>申报时间类型</text>
-      <input type='number' confirm-type="next" bindinput="dayBindInput"/>
+      <input type='number' confirm-type="next" bindinput="dayBindInput" />
       <view style='font-size:30rpx; color:#999;width:50rpx;'>
         {{Day}}
       </view>
@@ -43,12 +43,19 @@
       </view>
       <scroll-view style='height:{{WinHeight}};margin-top:20rpx;' scroll-y>
         <view class='day_container'>
-          <view class='container-item' wx:for="{{declaretimeList}}" wx:if="{{item.status != 'deleteDetail'}}">
-            <view class='date-info'>{{item.dateNode}}
+          <view class='container-item' wx:for="{{declaretimeList}}" wx:key='｛{index}｝' wx:if="{{item.status != 'deleteDetail'}}">
+            <view class='date-info'>
+              <picker mode="date" value="{{seldate}}" start="2010-09-01" end="2209-09-01" bindchange="bindDateChange" id='{{index}}'>
+                <view class="picker_sel">
+                  {{seldate}}
+                </view>
+              </picker>
               <image src='/images/delete.png' data-index="{{index}}" bindtap='deleteDeclareTime'></image>
             </view>
             <view class='line'></view>
-            <view class='content'>备注，{{item.nodeDeclare}}</view>
+            <view class='content'>备注:
+              <textarea maxlength="{{maxlength}}" auto-height class='input_textarea' bindinput='intoutNoderemark' data-index='{{index}}'></textarea>
+            </view>
           </view>
         </view>
       </scroll-view>

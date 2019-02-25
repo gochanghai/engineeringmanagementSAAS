@@ -1,4 +1,5 @@
-const calendarJS = require('../../action/calendar.js');
+// 
+const calendarAction = require('../../backend/manageAction/calendarAction.js');
 Page({
 
   /**
@@ -6,6 +7,7 @@ Page({
    */
   data: {
     statusBgColor: "#04c704",
+    cellSize: 42,
     dayStyle: [{
         month: 'current',
         day: new Date().getDate(),
@@ -22,7 +24,7 @@ Page({
     chooseDay: null,
     IsToDay: false,
     days: '',
-    isNotice: false,
+    isNotice: true,
     noticeContent: ''
   },
   //给点击的日期设置一个背景颜色
@@ -62,21 +64,8 @@ Page({
       [changeBg]: "#FFA268"
     })
     // console.log(this.data.dayStyle);
-    // 清空数据
-    this.setData({
-      confirmvalueMessages: [],
-      recievedpayMessages: [],
-      insuranceMessages: [],
-      discloseMessages: [],
-      educationMessages: [],
-      confirmvalueNum: 0,
-      recievedpayNum: 0,
-      insuranceNum: 0,
-      discloseNum: 0,
-      educationNum: 0,
-    });
     // 获取某一天的消息
-    this.getThisDateMsaaage(this.data.chooseDay);
+    this.getMessageByDate(this.data.chooseDay);
 
   },
   onLoad: function() {
@@ -85,16 +74,18 @@ Page({
       IsToDay: true,
       days: '今天'
     });
-
-    console.log(this.data.chooseDay);
-    // 按日统计消息数据
-    this.getThisDateMsaaage(this.data.chooseDay);
+    // 获取消息数据
+    this.getMessageByDate('2019-01-19');
   },
 
   //消息查看
   mesInfo() {
-    wx.switchTab({
-      url: '/pages/message/message',
+    // wx.switchTab({
+    //   url: '/pages/message/message',
+    // })
+
+    wx.navigateTo({
+      url: '/pages/messagesolve/messagesolve',
     })
   },
 
@@ -105,100 +96,66 @@ Page({
     })
   },
 
-  // 按日统计消息数据
-  getThisDateMsaaage(chooseDay) {
-    let _this = this;
-    calendarJS.getMessageByDate(chooseDay, function(res) {
-      // console.log('calendarJS');
-      // console.log(res.confirmvalue.length);
-      // console.log(res);
-      // _this.getchooseDayMessage(_this.data.chooseDay,res);
-      _this.setData({
-        message: res,
-      })
-
-      if (_this.data.days === '今天') {
-        // 广播内容
-        _this.getNoticeContent(res);
+  // 按日返回消息列表
+  getMessageByDate(date) {
+    let _than = this;
+    calendarAction.getMessageByDate(date, function(res) {
+      console.log('calendarAction');
+      console.log(res);
+      let list = [{
+          title: '产值',
+          lightColor: '#FCD147',
+          list: ''
+        }, {
+          title: '回款',
+          lightColor: '#FCD147',
+          list: ''
+        },
+        {
+          title: '保险',
+          lightColor: '#f25022',
+          list: ''
+        },
+        {
+          title: '安全交底',
+          lightColor: '#f25022',
+          list: ''
+        },
+        {
+          title: '安全教育',
+          lightColor:'#f25022',
+          list: ''
+        }
+      ];
+      let newList = [];
+      for(let index in list){
+        let messageList = [];
+        for (let i = 0; i < 10; i++) {
+          let item = {
+            id: i,
+            type: '',
+            projectID: i + 1,            
+            lightColor: list[index].lightColor,
+            projectName: 'calendarAction' + i + 0,
+            content: 'calendarActioncalendarActioncalendarActioncalendarAction2019-02-20'
+          }
+          messageList.push(item);
+        }
+        let item2 = {
+          title: list[index].title + '(' + messageList.length + ')',
+          list: messageList,
+        }
+        newList.push(item2);
       }
-      _this.setData({
-        confirmvalueMessages: res.confirmvalue,
-        recievedpayMessages: res.recievedpay,
-        insuranceMessages: res.insurance,
-        discloseMessages: res.disclose,
-        educationMessages: res.education,
-        confirmvalueNum: res.confirmvalue.length,
-        recievedpayNum: res.recievedpay.length,
-        insuranceNum: res.insurance.length,
-        discloseNum: res.disclose.length,
-        educationNum: res.education.length,
+      _than.setData({
+        dataList: newList,
       });
-      
+      if (_than.data.days === '今天') {
+        // 广播内容
+        _than.getNoticeContent(res);
+      }
     })
-  },
-  // 消息数据过滤函数
-  getchooseDayMessage(date, data) {
-    let _this = this;
-    // 格式化数据
-    let confirmvalueMessages = [];
-    let recievedpayMessages = [];
-    let insuranceMessages = [];
-    let discloseMessages = [];
-    let educationMessages = [];
-    date = '' + date + '';
-    // 产值
-    let confirmvalue = data.confirmvalue;
-    for (let index in confirmvalue) {
-      console.log('confirmvalue' + date);
-      console.log(confirmvalue[index].createAt);
-      if (date === _this.dateFormat2(confirmvalue[index].createAt)) {
-        console.log('confirmvalue12: ' + date);
-        confirmvalueMessages.push = confirmvalue[index];
-      }
-    }
-    // 回款
-    let recievedpay = data.recievedpay;
-    for (let index in recievedpay) {
-      console.log('recievedpay[index].createAt' + date);
-      console.log(recievedpay[index].createAt);
-      if (date === _this.dateFormat2(recievedpay[index].createAt)) {
-        recievedpayMessages.push = recievedpay[index];
-      }
-    }
-    // 安全
-    let insurance = data.insurance;
-    for (let index in insurance) {
-      if (date === _this.dateFormat2(insurance[index].createAt)) {
-        insuranceMessages.push = insurance[index];
-      }
-    }
-    // 安全交底
-    let disclose = data.disclose;
-    for (let index in disclose) {
-      if (date === _this.dateFormat2(disclose[index].createAt)) {
-        discloseMessages.push = disclose[index];
-      }
-    }
-    // 安全教育
-    let education = data.education;
-    for (let index in education) {
-      if (date === _this.dateFormat2(education[index].createAt)) {
-        educationMessages.push = education[index];
-      }
-    }
-    // 设置数据
-    this.setData({
-      confirmvalueMessages: confirmvalueMessages,
-      recievedpayMessages: recievedpayMessages,
-      insuranceMessages: insuranceMessages,
-      discloseMessages: discloseMessages,
-      educationMessages: educationMessages,
-      confirmvalueNum: confirmvalueMessages.length,
-      recievedpayNum: recievedpayMessages.length,
-      insuranceNum: insuranceMessages.length,
-      discloseNum: discloseMessages.length,
-      educationNum: confirmvalueMessages.length,
-    });
+
   },
 
   // 时间格式化 2019-01-24
@@ -237,8 +194,8 @@ Page({
 
     // 根据广播内容来判断是否打开广播
     let isNotice = true;
-    if (noticeContent === ''){
-        isNotice = false
+    if (noticeContent === '') {
+      isNotice = false
     }
     this.setData({
       noticeContent: noticeContent,

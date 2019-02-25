@@ -1,110 +1,115 @@
 // pages/outputvalregister/outputvalregister.js
-const fileJS = require('../../action/file.js');
 const fileUtil = require('../../utils/fileUtil.js');
-const fileProgressJS = require('../../action/file_progress.js')
-const confirmvalueJS = require('../../action/confirmvalue.js');
+const fileAction = require('../../backend/manageAction/fileAction.js');
+const confirmvalueAction = require('../../backend/manageAction/confirmvalueAction.js');
+const fileConfirmvalueAction = require('../../backend/manageAction/file_confirmvalueAction.js');
 Page({
   data: {
-    valueUploadAt: '请选择日期',
-    confirmAt: '请选择日期',
     outputValue: '',
     receivableAmount: '',
     fileName: "未选择文件",
     uploadFilePath: '',
     fileList: [],
+    IsperList: false,
+    urlFileImg: '',
+    animationData: {}
+  },
+
+  hideModal() {
+    var that = this;
+    var animation = wx.createAnimation({
+      duration: 1000,
+      timingFunction: 'linear'
+    })
+    that.animation = animation
+    animation.translateY(0).step()
+    that.setData({
+      animationData: animation.export()
+
+    })
+    setTimeout(function() {
+      animation.translateY(0).step()
+      that.setData({
+        animationData: animation.export(),
+        IsperList: false
+      })
+    }, 10)
   },
 
   onLoad: function(options) {
-    // 获取数据
-    // 判断金额是否为空
-    let outputValue = 0.00;
-    if (options.outputValue != null) {
-      receivableAmount = options.outputValue
-    }
-    let receivableAmount = 0.00;
-    if (options.receivableAmount != null) {
-      receivableAmount = options.receivableAmount
-    }
-    let confirmAt = 0.00;
-    if (options.confirmAt != null) {
-      confirmAt = options.confirmAt
-    }
-    // 设置数据
     this.setData({
-      objectId: options.objectId,
-      formId: options.formId,
+      formID: options.formID,
       projectID: options.projectID,
-      receivableAmount: receivableAmount,
-      ownerPayPercent: options.ownerPayPercent != null ? options.ownerPayPercent : 1,
-      outputValue: options.outputValue,
-      valueUploadAt: options.valueUploadAt,
-      confirmAt: options.confirmAt,
-      progressNodeID: options.progressNodeID,
-      ownerPayTime: options.ownerPayTime,
     });
-    this.getconfirmvalue();
-    this.getFileList();
+    
+    this.getData(this.data.formID,this.data.projectID);
+    this.getFileList(this.data.formID, this.data.projectID);
   },
 
   // 产值表上传时间输入
-  InputValueUploadAt(e) {
-    // console.log(e.detail.value);
+  inputValueUploadAt(e) {
     this.setData({
-      valueUploadAt: e.detail.value
+      uploadDate: e.detail.value
     })
   },
   // 产值输入
-  InputOutputValue(e) {
+  inputOutputValue(e) {
     var _this = this;
-    console.log(e.detail.value);
     this.setData({
-      outputValue: e.detail.value,
-      receivableAmount: e.detail.value * _this.data.ownerPayPercent
+      outputValue: e.detail.value
     })
   },
   // 可收款输入
-  InputReceivableAmount(e) {
-    // console.log(e.detail.value);
+  inputReceivableAmount(e) {
     this.setData({
       receivableAmount: e.detail.value
     })
   },
   // 甲方确认时间输入
-  InputConfirmAt(e) {
-    // console.log(e.detail.value);
+  inputConfirmAt(e) {
     this.setData({
-      confirmAt: e.detail.value
+      confirmDate: e.detail.value
     })
   },
 
-  // 获取产值信息
-  getconfirmvalue() {
-    let _this = this;
-    confirmvalueJS.getConfirmvalue(this.data.formId, function(res) {
-      // console.log(res);
-      let outputValue = 0.00;
-      if (res.outputValue != null) {
-        receivableAmount = res.outputValue
-      }
-      let receivableAmount = 0.00;
-      if (res.receivableAmount != null) {
-        receivableAmount = res.receivableAmount
-      }
-      let confirmAt = 0.00;
-      if (res.confirmAt != null) {
-        confirmAt = res.confirmAt
-      }
-      _this.setData({
-        objectId: res.objectId,
-        formId: res.formId,
-        receivableAmount: receivableAmount,
-        outputValue: outputValue,
-        valueUploadAt: _this.dateFormat2(res.valueUploadAt),
-        confirmAt: _this.dateFormat2(res.confirmAt),
-        progressNodeID: res.progressNodeID,
-        ownerPayTime: res.ownerPayTime,
-      });
+  //  获取数据
+  getData(formID,projectID) {
+    let _than = this;
+    confirmvalueAction.getConfirmvalue(formID, projectID, function(res) {
+      console.log(res);
+      _than.setData({
+        uploadDate: _than.dateFormat(res.valueuploadat),
+        outputValue: res.outputvalue,
+        receivableAmount: res.receivableamount,
+        confirmDate: _than.dateFormat(res.confirmat),
+      })
     });
+  },
+  // 获取已上传的文件列表
+  getFileList(formID,projectID){
+    let _than = this;
+    let fileInfo = {
+      projectid: projectID,
+      formname: 'confirmvalue',
+      belongidlist: formID,
+      filebelong: '确认产值',
+    }
+    fileAction.getFileList(fileInfo, function (res) {
+      console.log('bfileList');
+      console.log(res);
+      let fileList = [];
+      for(let index in res){
+          let item = {
+            fileId: res[index].fileid,
+            fileName: res[index].filename,
+            formName: res[index].formname,
+          }
+          fileList.push(item);
+      }
+      _than.setData({
+        fileList: fileList,
+      })
+    })
   },
 
   // 预览
@@ -113,21 +118,21 @@ Page({
     let item = e.currentTarget.dataset.index
     let fileId = item.fileId;
     let fileName = item.fileName;
-    let formobjId = this.data.objectId;
+    let formobjId = this.data.formID;
 
     // 调用预览函数    
     this.reviewFile(formobjId, fileId, fileName);
 
   },
 
-
+  // 取消按钮
   cancel() {
     wx.navigateBack({
       delta: 1
     })
   },
 
-  // 提交数据
+  // 确定按钮
   commitOutputVal() {
     var _this = this;
     // 判断回款金额是否为空
@@ -149,7 +154,7 @@ Page({
       })
       return;
     }
-    if (this.data.confirmAt == "" || this.data.confirmAt == null) {
+    if (this.data.confirmDate == "" || this.data.confirmDate == null) {
       wx.showModal({
         title: '提示',
         content: '甲方确认时间不能为空',
@@ -158,31 +163,38 @@ Page({
       })
       return;
     }
-    // 获取数据
+    // 准备要提交的数据
+    // 附件
+    let fileInfo = {
+      file: _this.data.uploadFilePath,
+      filename: _this.data.fileName,
+    };
+    // 产值登记信息
     let confirmvalueInfo = {
-      confirmAt: this.data.confirmAt,
-      outputValue: this.data.outputValue,
-      receivableAmount: this.data.receivableAmount,
-      valueUploadAt: this.data.valueUploadAt,
-      formId: this.data.formId,
-      projectID: this.data.projectID,
-      progressNodeID: this.data.progressNodeID,
-      ownerPayTime: this.data.ownerPayTime,
-    }
+      confirmat: this.data.confirmDate,
+      outputvalue: this.data.outputValue,
+      receivableamount: this.data.receivableAmount,
+      valueuploadat: this.data.uploadDate,
+    };
+    // 表单ID
+    let formID = this.data.formID;
+    // 项目ID
+    let projectID = this.data.projectID;
     wx.showModal({
       title: '提示',
       content: '确定提交吗？',
       confirmColor: '#F0880C',
       success(res) {
         if (res.confirm) {
-          // console.log('Commit');
+          console.log('Commit');
           // 更新产值登记
-          let fileInfo = {
-            file: _this.data.uploadFilePath,
-            fileName: _this.data.uploadFilePath.replace("http://tmp/", ""),
-          };
-          fileProgressJS.comitFileANDConfirmValue(confirmvalueInfo, fileInfo, function(res) {
-            console.log(res)
+          console.log(fileInfo);
+          console.log(confirmvalueInfo);
+          console.log(formID);
+          console.log(projectID);
+          // 提交数据
+          fileConfirmvalueAction.comitFileANDConfirmValue(fileInfo,confirmvalueInfo,formID, projectID, function(res) {
+            console.log(res.code);
             if (res.code == 1) {
               wx.showToast({
                 title: '提交成功',
@@ -219,74 +231,98 @@ Page({
     })
   },
 
-  // 上传附件
-  uploadFile() {
+  // 选择文件按钮
+  uploadFileUrl() {
     var _this = this;
     wx.chooseImage({
       count: 1, //张数， 默认9
       sourceType: ['album', 'camera'], // 来源是相册、相机
       success: function(res) {
-        const tempFilePaths = res.tempFilePaths
+        // console.log(res);
+        // const tempFilePaths = res.tempFilePaths[0]
+        console.log(res.tempFilePaths[0])
         _this.setData({
-          uploadFilePath: tempFilePaths[0],
-          fileName: tempFilePaths[0].replace("http://tmp/", "")
+          uploadFilePath: res.tempFilePaths[0],
+          urlFileImg: res.tempFilePaths[0],
+          fileName: res.tempFilePaths[0].replace("http://tmp/", "")
         })
       },
     })
   },
-  // 获取文件列表
-  getFileList() {
-    // console.log("getFileList");
-    let _this = this;
-    let fileInfo = {
-      projectID: this.data.projectID,
-      formName: 'confirmvalue',
-      belongIdList: this.data.formId,
-      fileBelong: '确认产值',
-    }
-    // let fileInfo = {
-    //   projectID: "SHXF-201810102",
-    //   formName: 'confirmvalue',
-    //   belongIdList: "7bbff459-a030-442f-abbc-07b7a8595cd5",
-    //   fileBelong: '确认产值',
-    // }
-    fileJS.getFileList(fileInfo, function(res) {
-      _this.setData({
-        fileList: res,
-      })
+  
+  // 完成按钮
+  commitFileANDWorkerUnSignList() {
+    this.setData({
+      IsperList: false
     })
+  },
+
+  imgView() {
+    wx.previewImage({
+      current: this.data.urlFileImg,
+      urls: [this.data.urlFileImg]
+    })
+  },
+
+  // 上传附件按钮
+  uploadFile() {
+    var that = this;
+    var animation = wx.createAnimation({
+      duration: 500,
+      timingFunction: 'linear'
+    })
+    that.animation = animation
+    animation.translateY(600).step()
+    that.setData({
+      animationData: animation.export(),
+      IsperList: true
+    })
+    setTimeout(function() {
+      animation.translateY(0).step()
+      that.setData({
+        animationData: animation.export()
+      })
+    }, 200)
   },
 
 
   // 获取文件数据并预览  
   reviewFile(formobjId, fileId, fileName) {
     let fileInfo = {
-      formName: "confirmvalue",
+      formname: "confirmvalue",
       formobjId: formobjId, // 产值表objectId
-      fileId: fileId, // 文件的fileId
-      fileName: fileName, // 文件全名
+      fileid: fileId, // 文件的fileId
+      filename: fileName, // 文件全名
     }
-    fileJS.fileGetPath(fileInfo, function(res) {
+    fileAction.fileGetPath(fileInfo, function(res) {
       const downloadTask = wx.downloadFile({
         url: res.fileURL,
         success(res) {
           // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
           console.log(res);
           if (res.statusCode === 200) {
-            // .....................................preview文件预览.................................     
-            // 预览-2019/1/22
+            // .....................................preview文件预览................................. 
             let previewFileInfo = {
-              fileName: fileName,
+              filename: fileName,
               filePath: res.tempFilePath,
               fileType: fileUtil.getSux(fileName),
             }
-            fileJS.previewFile(previewFileInfo)
+            fileAction.previewFile(previewFileInfo)
             // .....................................preview文件预览.................................     
           }
         },
         fail(res) {}
       })
       downloadTask.onProgressUpdate((res) => {
+        wx.showToast({
+          title: '正在加载',
+          icon: 'loading',
+          mask: true
+        })
+
+        if (res.totalBytesWritten == res.totalBytesExpectedToWrite) {
+          wx.hideToast({})
+        }
         console.log('下载进度', res.progress)
         console.log('已经下载的数据长度', res.totalBytesWritten)
         console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
@@ -295,7 +331,7 @@ Page({
   },
 
   // 时间格式化
-  dateFormat2(val) {
+  dateFormat(val) {
     if (val === null) {
       return "未知";
     }

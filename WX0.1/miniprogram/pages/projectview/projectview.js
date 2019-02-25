@@ -1,191 +1,143 @@
 // pages/projectview/projectview.js
-const projectlistJS = require('../../action/projectlist.js');
-const messageCenterJS = require('../../action/messageCenter.js');
+const projectlistSaaSAction = require('../../backend/saasAction/projectlistAction.js');
 Page({
   data: {
-    scrollLeft: "0",
-    scrollY: false,
-    itemWidth: '10000px',
-    progressRadius: '40',
-    swiperIndex: 0,
-    projectList: [{
-      id: 0,
-      projectName: '腾讯大厦',
-    }, {
-      id: 1,
-      projectName: '汉京大厦',
-    }, {
-      id: 2,
-      projectName: '达实二扩',
-    }],
-
-    activeList: {
-      imagesel: '/images/building_sel.png',
-      image: '/images/building_nor.png',
-      color: '#fff',
-      fontSize: '27rpx'
-    },
-    banMove: 'ban-move'
-  },
-
-  //下拉刷新
-  onPullDownRefresh: function() {
-    // 获取项目列表数据
-    // this.getProjectList();
-    this.onShow();
-    return;
+    WinHeightCon: null,
+    selectModuleIndex: '0',
+    swiperIndex: '0',
+    selectList: [{
+        label: "工程",
+        id: "0"
+      },
+      {
+        label: "维保",
+        id: "1"
+      },
+      {
+        label: "销售",
+        id: "2"
+      },
+      {
+        label: "检测",
+        id: "3"
+      },
+      {
+        label: "维修",
+        id: "4",
+      },
+      {
+        label: "服务",
+        id: "5"
+      }
+    ]
   },
 
   onLoad: function(options) {
-    var _this = this;
+    this.setData({
+      WinHeightCon: wx.getSystemInfoSync().windowHeight - 57 + 'px',
+    });
 
-    // 获取项目列表数据
+    // 获取项目列表
     this.getProjectList();
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    this.onLoad();
+  //进入项目详情
+  navProjectDetail(event) {
+    let data = event.currentTarget.dataset.data;
+    wx.navigateTo({
+      url: '/pages/projectdetail/projectdetail?id=' + data.id + '&no=' + data.no,
+    })
+  },
+
+  selectModule(e) {
+    this.setData({
+      selectModuleIndex: e.currentTarget.dataset.index,
+      swiperIndex: e.currentTarget.dataset.index
+    })
+  },
+
+  currentFun(e) {
+    this.setData({
+      selectModuleIndex: e.detail.current,
+      swiperIndex: e.detail.current
+    })
   },
 
   // 获取项目列表数据
   getProjectList() {
-    var _this = this;
-    projectlistJS.getProjectList(function(res) {
-      var projectList = res;
-      // console.log(projectList.length);
-      // console.log("projectPageList" + projectList);
-      _this.setData({
-        projectList: projectList,
-        itemWidth: (260 * projectList.length + 'rpx').toString()
-      });
-
-      // 获取选中的项目信息
-      let projectInfo = _this.data.projectList[_this.data.swiperIndex];
-      _this.setData({
-        projectInfo: projectInfo
-      });
+    let _than = this;
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading'
     })
-  },
+    console.log('get ProjectRes:');
+    projectlistSaaSAction.getProjectList(function(res) {
+      console.log('ProjectRes:');
+      console.log(res)
+      // 获取请求返回的数据
+      let tbList = res;
+      // 定义一个模块数组
+      let swiperList = [];
+      // 处理数据
+      for (let index in tbList) {
+        // 获取每一组数据
+        let item = tbList[index];
+        // 定义模块里面的项目数组
+        let list = [];
+        // 处理每一组里面的每一条数据
+        for (let index in item) {
+          let project = {
+            id: item[index].projectid,
+            name: item[index].projectname,
+            date: item[index].startdate + ' 至 ' + item[index].enddate,
+            status: _than.getStatusToText(item[index].projectstage),
+            no: item[index].code,
+            amount: _than.getMoneyFormat(item[index].usablemoney),
+            outputValueRatio: _than.getMunberToRatio(item[index].outpustvalueratio),
+            returnRatio: _than.getMunberToRatio(item[index].receivedpayratio),
+          }
+          list.push(project);
+        }
+        swiperList.push(list);
+      }
 
-  selProject(event) {
-    let index = event.currentTarget.dataset.index;
-    if (index >= 2) {
-      this.setData({
-        scrollLeft: 98 + (index - 2) * 110
+
+      _than.setData({
+        swiperList: swiperList
       })
+    })
+    // 关闭加载框
+    wx.hideToast({});
+  },
+
+
+
+  //=====================  数据格式化区域 start =====================//
+  //财务金额格式化
+  getMoneyFormat(val) {
+    if (val === '' || val === null) {
+      return '0.00';
     }
-    let projectInfo = this.data.projectList[index];
-    this.setData({
-      swiperIndex: index,
-      projectInfo: projectInfo
-    })
+    var str = parseInt(val).toFixed(2) + '';
+    var intSum = str.substring(0, str.indexOf(".")).replace(/\B(?=(?:\d{3})+$)/g, ',');
+    var dot = str.substring(str.length, str.indexOf("."));
+    var ret = intSum + dot;
+    return ret;
   },
-
-  currentFun(event) {
-    this.setData({
-      swiperIndex: event.detail.current,
-      scrollLeft: 98 + (event.detail.current - 2) * 110
-    })
-  },
-
-  navPersonnel(event) {
-    let type = event.currentTarget.dataset.type;
-    // 获取选择的项目ID
-    let projectID = this.data.projectList[this.data.swiperIndex].projectID;
-    console.log("projectID" + type);
-    wx.navigateTo({
-      url: '/pages/managepersonnel/managepersonnel?typeID=' + type + "&projectID=" + projectID
-    })
-  },
-
-  catchTouchMove(res) {
-    return false
-  },
-
-  addProject() {
-    wx.navigateTo({
-      url: '/pages/addproject/addproject',
-    })
-  },
-
-  // 跳转到项目设置
-  projectSet() {
-    // 获取选择的项目ID
-    let projectID = this.data.projectList[this.data.swiperIndex].projectID;
-    wx.navigateTo({
-      url: '/pages/projectsetting/projectsetting?projectID=' + projectID,
-    })
-  },
-
-  // 跳转到工程节点设置
-  projectNode() {
-    // 获取选择的项目ID
-    let projectID = this.data.projectList[this.data.swiperIndex].projectID;
-    wx.navigateTo({
-      url: '/pages/projectnode/projectnode?projectID=' + projectID,
-    })
-  },
-
-  // 跳转到申报时间设置
-  declareTime() {
-    // 获取选择的项目ID
-    let projectID = this.data.projectList[this.data.swiperIndex].projectID;
-    wx.navigateTo({
-      url: '/pages/declaretime/declaretime?projectID=' + projectID,
-    })
-  },
-
-  // 查看产值明细
-  confirmValue(event) {
-    let projectID = event.currentTarget.dataset.index;
-    let totalAmount = event.currentTarget.dataset.type;
-    // console.log(projectID);
-    wx.navigateTo({
-      url: '/pages/confirmvalue/confirmvalue?projectID=' + projectID + "&totalAmount=" + totalAmount,
-    })
-  },
-  // 查看回款明细
-  receivable(event) {
-    let projectID = event.currentTarget.dataset.index;
-    let totalAmount = event.currentTarget.dataset.type;
-    wx.navigateTo({
-      url: '/pages/receivable/receivable?projectID=' + projectID + "&totalAmount=" + totalAmount,
-    })
-  },
-
-  messageCenter() {
-    wx.switchTab({
-      url: '/pages/message/message',
-    })
-  },
-
-  // 跳转到附件上传页面
-  personnerFile(e) {
-    // console.log(e.currentTarget.dataset.type);
-    let projectID = e.currentTarget.dataset.index;
-    let byTypeTitle = "";
-    let fileSign = '';
-    let txt = e.currentTarget.dataset.type;
-    switch (txt) {
-      case "0":
-        byTypeTitle = "上传附件-安全技术交底";
-        fileSign = 'disclose';
-        break;
-      case "1":
-        byTypeTitle = "上传附件-三级安全教育";
-        fileSign = 'education';
-        break;
-      case "2":
-        byTypeTitle = "上传附件-工伤意外保险";
-        fileSign = 'insurance';
+  // 获取数值百分比
+  getMunberToRatio(val) {
+    if (val === '' || val === null) {
+      return '0.00%'
     }
-    wx.navigateTo({
-      url: '/pages/uploadfile/uploadfile?byTypeTitle=' + byTypeTitle + 
-        '&projectID=' + projectID +
-        '&fileSign=' + fileSign,
-    })
+    return val * 100 + '%'
+  },
+
+  // 获取数值百分比
+  getStatusToText(val) {
+    if (val === '' || val === null) {
+      return '在建'
+    }
+    return val
   }
+  //=====================  数据格式化区域 end =====================//
 })

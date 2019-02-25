@@ -11,11 +11,11 @@
 
 .information {
   margin: 0 auto;
-  margin-top: 28rpx;
+  margin-top: 20rpx;
   padding-bottom: 14rpx;
   width: 92%;
   background-color: #fff;
-  border-radius: 16rpx;
+  border-radius: 6rpx;
 }
 
 .information-item {

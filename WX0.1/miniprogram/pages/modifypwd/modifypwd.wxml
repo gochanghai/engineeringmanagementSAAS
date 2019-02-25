@@ -9,7 +9,7 @@
       <text>新密码</text>
       <input type="password" bindinput="newPasswordInput"></input>
     </view>
-     <view class='userPwd-item'>
+    <view class='userPwd-item'>
       <text>确认密码</text>
       <input type="password" bindinput="newPassword1Input"></input>
     </view>

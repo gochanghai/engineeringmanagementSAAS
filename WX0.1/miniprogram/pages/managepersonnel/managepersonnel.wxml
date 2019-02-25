@@ -36,9 +36,9 @@
               <scroll-view scroll-y style='height:{{WinHeightCon}}'>
                 <view wx:for="{{managerList}}" wx:key='{{index}}' class='cell-row'>
                   <view class='information-item'>
-                    <text>{{item.managerName}}</text>
-                    <view>职位：{{item.managerType}}</view>
-                    <view>电话：{{item.telphoneNo}}</view>
+                    <text>{{item.name}}</text>
+                    <view>职位：{{item.position}}</view>
+                    <view>电话：{{item.telePhone}}</view>
                   </view>
                   <view class='item-line'></view>
                 </view>
@@ -67,9 +67,9 @@
                   <view class='information-item'>
                     <text>{{item.name}}</text>
                     <view>班组：{{item.groupName}}</view>
-                    <view>电话：{{item.telNo}}</view>
+                    <view>电话：{{item.telePhone}}</view>
                     <view>工价：{{item.repay}}</view>
-                    <view>入场时间：{{item.admissionDate}}</view>
+                    <view>入场时间：{{item.enterDate}}</view>
                   </view>
                   <view class='item-line'></view>
                 </view>

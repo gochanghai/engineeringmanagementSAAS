@@ -1,5 +1,5 @@
 // pages/projectnode/projectnode.js
-const projectNodeJS = require('../../action/projectNode.js');
+const projectNodeAction = require('../../backend/manageAction/projectNodeAction.js');
 Page({
 
   /**
@@ -27,20 +27,20 @@ Page({
       projectID: projectID,
     })
     // 获取项目进度节点
-    this.getProjectNodeList();
+    this.getProjectNodeList(this.data.projectID);
 
   },
 
   // 获取项目进度节点
-  getProjectNodeList() {
+  getProjectNodeList(projectID) {
     let _this = this;
-    let projectID = this.data.projectID
-    projectNodeJS.getProjectNodeList(projectID, function(res) {
+    projectNodeAction.getProjectNodeList('5', function (res) {
+    //   console.log(bNodeList);
       // console.log(res);
       // 格式化数据
       for (let index in res) {
-        res[index].startFrom = _this.dateFormat2(res[index].startFrom);
-        res[index].endAt = _this.dateFormat2(res[index].endAt);
+        res[index].startfrom = _this.dateFormat2(res[index].startfrom);
+        res[index].endat = _this.dateFormat2(res[index].endat);
       }
       _this.setData({
         nodeList: res,
@@ -122,21 +122,21 @@ Page({
   },
 
   // 开始时间输入
-  InputStartDate(e) {
+  inputStartDate(e) {
     let nodeList = this.data.nodeList;
     let index = e.currentTarget.dataset.index;
-    let startFrom = e.detail.value;
-    nodeList[index].startFrom = startFrom;
+    let startfrom = e.detail.value;
+    nodeList[index].startfrom = startfrom;
     this.setData({
       nodeList: nodeList
     })
   },
   // 结束时间输入
-  InputEndDate(e) {
+  inputEndDate(e) {
     let nodeList = this.data.nodeList;
     let index = e.currentTarget.dataset.index;
     let endAt = e.detail.value;
-    nodeList[index].endAt = endAt;
+    nodeList[index].endat = endAt;
     this.setData({
       nodeList: nodeList
     })
@@ -162,7 +162,7 @@ Page({
         if (res.confirm) {
           console.log('Commit');
           // 提交项目进度节点          
-          projectNodeJS.postProjectNode(projectID, nodeList, function(res) {
+          projectNodeAction.postProjectNode(projectID, nodeList, function(res) {
             // console.log(res)
           })
           wx.showToast({

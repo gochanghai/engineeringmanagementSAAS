@@ -45,6 +45,13 @@
   width: 463rpx;
 }
 
+.input_textarea {
+  padding-left: 20rpx;
+  margin-top: 12rpx;
+  flex: 1;
+  line-height: 45rpx;
+}
+
 .choose {
   position: fixed;
   width: 100%;
@@ -114,9 +121,18 @@
   justify-content: space-between;
   font-size: 30rpx;
   color: #666;
+  position: relative;
+  height: 40rpx;
+}
+
+.picker_sel {
+  /* border: 1px solid; */
 }
 
 .container-item view image {
+  position: absolute;
+  right: 0;
+  top: 6rpx;
   padding: 13rpx 18rpx;
   width: 24rpx;
   height: 34rpx;
@@ -128,6 +144,13 @@
   font-size: 30rpx;
   line-height: 62rpx;
   color: #666;
+  display: flex;
+}
+
+.container-item view.content input {
+  padding-left: 20rpx;
+  height: 62rpx;
+  flex: 1;
 }
 
 .btom-btns {

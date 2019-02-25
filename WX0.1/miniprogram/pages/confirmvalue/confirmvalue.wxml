@@ -16,10 +16,10 @@
   </view>
 
   <view class='data_content'>
-    <view class='list-data' wx:for="{{list}}" wx:key="{{index}}" data-index='{{item}}' bindtap='confirmRegistration'>
-      <view>上传时间：{{item.confirmAt}}</view>
-      <view>产值总额 (元)：{{item.outputValue2}}</view>
-      <view>可收款总额 (元)：{{item.receivableAmount2}}</view>
+    <view class='list-data' wx:for="{{list}}" wx:key="{{index}}" data-id='{{item.id}}' bindtap='confirmRegistration'>
+      <view>上传时间：{{item.uploadDate}}</view>
+      <view>产值总额 (元)：{{item.outputValue}}</view>
+      <view>可收款总额 (元)：{{item.receivableAmount}}</view>
       <view class='line'></view>
       <image src='/images/details.png'></image>
     </view>

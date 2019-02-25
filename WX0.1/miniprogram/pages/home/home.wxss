@@ -1,104 +1,151 @@
 /* pages/home/home.wxss */
 
 .container {
+  background-color: #f2f2f2;
   position: relative;
+  border: 1px solid #f2f2f2;
 }
 
-.top-info {
-  height: 400rpx;
+.hover-row {
+  background-color: #e4e4e4;
 }
 
-.top-info image {
-  width: 100%;
-  height: 310rpx;
-}
-
-.top-total {
-  position: absolute;
-  top: 100rpx;
-  right: 88rpx;
+.user-info {
   display: flex;
-  flex-direction: column;
-  line-height: 56rpx;
-  text-align: center;
-}
-
-.top-total text.txt {
-  font-size: 32rpx;
-  color: #fff;
-  font-weight: bold;
-}
-
-.top-total text.val {
-  font-size: 42rpx;
-  color: #fff;
-}
-
-.top-nav {
-  position: absolute;
-  top: 260rpx;
-  left: 4%;
+  flex-direction: row;
+  align-items: center;
+  margin: 0rpx auto;
+  margin-top: 20rpx;
   width: 92%;
-  margin: 0 auto;
-  height: 140rpx;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  box-shadow: 0px 10rpx 30rpx 5rpx #f0f0f0;
-  border-radius: 16rpx;
+  height: 180rpx;
   background-color: #fff;
-  color: #e5e5e5;
+  border-radius: 6rpx 6rpx 0 0;
 }
 
-.nav-item {
+.user-info image {
+  margin: 0 26rpx;
+  margin-left: 44rpx;
+  width: 130rpx;
+  height: 130rpx;
+}
+
+.details {
   display: flex;
   flex-direction: column;
-  width: 33.3%;
-  text-align: center;
-  align-items: center;
+  justify-content: space-between;
+  height: 124rpx;
+  flex: 1;
 }
 
-.nav-item text.label {
-  display: block;
-  font-size: 26rpx;
-  line-height: 40rpx;
-  color: #999;
-  width: 100%;
+.details view.name {
+  margin-top: 20rpx;
+  font-size: 30rpx;
+  color: #333;
   font-weight: bold;
 }
 
-.nav-item text.value {
-  display: block;
-  font-size: 26rpx;
-  line-height: 40rpx;
+.details view.name text {
+  margin-left: 10rpx;
+  padding: 4rpx 15rpx;
+  font-size: 24rpx;
   color: #f0880c;
-  width: 100%;
-  font-weight: bold;
+  border: 1px solid;
+  border-radius: 6rpx;
+}
+
+.details view.company, .details view.branch {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.money-info {
+  display: flex;
+  flex-direction: column;
+  margin: 0rpx auto;
+  width: 92%;
+  height: 230rpx;
+  background-color: #fff;
+  border-radius: 0 0 6rpx 6rpx;
+}
+
+.money-info view.line {
+  width: 86%;
+  margin: 0 auto;
+  margin-top: 10rpx;
+  border-top: 1px solid #e5e5e5;
+}
+
+.money-info view.switch-money {
+  padding-left: 61.5%;
+  display: flex;
+  align-items: center;
+  line-height: 88rpx;
+  font-size: 30rpx;
+  color: #333;
+}
+
+.money-info view.switch-money text {
+  display: block;
+  width: 150rpx;
+}
+
+.output-value {
+  display: flex;
+  justify-content: space-between;
+}
+
+.output-value view.item {
+  padding-top: 10rpx;
+  height: 120rpx;
+  width: 33%;
+  text-align: center;
+}
+
+.output-value view.item text {
+  font-size: 27rpx;
+  color: #666;
+  line-height: 60rpx;
+}
+
+.output-value view.item view {
+  font-size: 26rpx;
+  color: #333;
 }
 
 .canvas1 {
+  position: absolute;
+  top: 100rpx;
   padding-top: 30rpx;
   width: 100%;
+  height: 320rpx;
+  /* border: 1px solid; */
 }
 
 .data-charts {
   margin-top: 10rpx;
-  padding-bottom: 10rpx;
+  /* padding-bottom: 10rpx; */
 }
 
 .data-charts view text.title {
   margin-left: 14rpx;
-  font-size: 27rpx;
+  font-size: 29rpx;
   color: #333;
 }
 
 .data-charts view.visua {
-  padding: 20rpx 0;
+  position: relative;
+  padding-top: 20rpx;
   padding-bottom: 10rpx;
   margin: 20rpx auto;
   width: 92%;
   box-shadow: 0px 0rpx 30rpx 10rpx #f0f0f0;
+  border-radius: 6rpx;
   background-color: #fff;
+}
+
+.data-charts view.visua image {
+  width: 100%;
+  height: 360rpx;
   border-radius: 16rpx;
 }
 
@@ -107,7 +154,13 @@
 }
 
 .canvas2 {
-  margin-top: -40rpx;
+  margin-top: 30rpx;
+  width: 51%;
+  height: 280rpx;
+}
+
+.canvas3 {
+  margin-top: -30rpx;
   width: 51%;
   height: 320rpx;
 }
@@ -129,8 +182,8 @@
 
 .info-item text {
   display: inline-block;
-  width: 28rpx;
-  height: 28rpx;
+  width: 26rpx;
+  height: 26rpx;
   border-radius: 50%;
 }
 
@@ -138,4 +191,25 @@
   margin-left: 16rpx;
   font-size: 24rpx;
   color: #666;
+}
+
+.none {
+  text-align: center;
+  /* border: 1px solid; */
+  line-height: 330rpx;
+  color: #ccc;
+  font-size: 48rpx;
+  font-weight: Medium;
+}
+
+.data-none1 {
+  line-height: 330rpx;
+}
+
+.data-none2 {
+  line-height: 270rpx;
+}
+
+.data-none3 {
+  line-height: 270rpx;
 }

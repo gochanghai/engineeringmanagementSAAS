@@ -1,0 +1,107 @@
+/* pages/shenhua/shenhua.wxss */
+
+.container {
+  padding: 20rpx 0;
+  background-color: #f2f2f2;
+}
+
+.context {
+  width: 92%;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 6rpx;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  height: 100rpx;
+}
+
+.tab-item {
+  width: 50%;
+  text-align: center;
+  font-size: 30rpx;
+  color: #333;
+}
+
+.tab-item text {
+  margin: 0 auto;
+  margin-top: 8rpx;
+  display: block;
+  width: 70rpx;
+  height: 6rpx;
+  background-color: #fff;
+  border-radius: 6rpx;
+}
+
+.tab-item text.tab-item-active {
+  margin: 0 auto;
+  margin-top: 8rpx;
+  display: block;
+  width: 70rpx;
+  height: 6rpx;
+  background-color: #f0880c;
+  border-radius: 6rpx;
+}
+
+.content1 {
+  /* border: 1px solid; */
+}
+
+.content2 {
+  /* border: 1px solid; */
+  background-color: #f2f2f2;
+}
+
+.content1 image {
+  display: block;
+  margin: 0rpx auto;
+  margin-bottom: 20rpx;
+  width: 586rpx;
+  height: 422rpx;
+}
+
+.shenhuaDetail {
+  padding: 0 26rpx;
+  padding-bottom: 26rpx;
+  font-size: 28rpx;
+  color: #666;
+  letter-spacing: 2rpx;
+  line-height: 44rpx;
+  text-indent: 2em each-line;
+}
+
+.shenhua-honor {
+  padding-top: 10rpx;
+  padding-bottom: 30rpx;
+  margin-bottom: 20rpx;
+  background-color: #fff;
+  border-radius: 6rpx;
+}
+
+.shenhua-honor:last-child {
+  margin-bottom: 0;
+}
+
+.shenhua-honor image {
+  display: block;
+  margin: 20rpx auto;
+}
+
+.shenhua-honor text {
+  display: block;
+  text-align: center;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.honor1 image, .honor2 image {
+  width: 400rpx;
+  height: 584rpx;
+}
+
+.honor3 image, .honor4 image {
+  width: 600rpx;
+  height: 434rpx;
+}

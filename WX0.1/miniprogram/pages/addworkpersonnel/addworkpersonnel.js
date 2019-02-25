@@ -1,5 +1,5 @@
 // pages/addworkpersonnel/addworkpersonnel.js
-const workerJS = require('../../action/worker.js');
+const workerAction = require('../../backend/manageAction/workerAction.js');
 Page({
 
   /**
@@ -8,8 +8,7 @@ Page({
   data: {
     activeSty: 'color:#fff;border: 1px solid #FFA268;',
     activeSel: 'active-sel',
-    activeIndex: '1',
-
+    activeIndex: 0,
     admissionAt: '请选择入场时间',
     leavingAt: '请选择离场时间',
     projectID: '',
@@ -20,6 +19,7 @@ Page({
     repay: '',
     id_card: '',
     emergencyContact: '',
+    selGroup: null,
   },
   onLoad: function(options) {
     // 获取项目ID
@@ -27,13 +27,25 @@ Page({
     this.setData({
       projectID: projectID,
     })
+    //获取班组选择的数据
+    this.getSelGroup();
+  },
+
+  getSelGroup() {
+    var _this = this;
+    workerAction.getTeamNameList('5', function(bfireGroup) {
+      console.log(bfireGroup);
+      _this.setData({
+        selGroup: bfireGroup
+      })
+    })
   },
 
   selTeam(e) {
-    // console.log(e.currentTarget.dataset.type);
+    console.log(e.currentTarget.id);
     this.setData({
-      activeIndex: e.currentTarget.dataset.index,
-      groupId: e.currentTarget.dataset.index
+      activeIndex: e.detail.value,
+      groupId: e.currentTarget.id
     })
   },
 
@@ -115,7 +127,7 @@ Page({
     // 年龄
     if (this.data.age == "" || this.data.age < 18) {
       let content = '年龄不能为空';
-      if (this.data.age < 18){
+      if (this.data.age < 18) {
         content = '年龄不能小于18岁';
       }
       wx.showModal({
@@ -212,19 +224,18 @@ Page({
     }
 
     let worker = {
-      projectID: this.data.projectID,
-      groupId: this.data.groupId,
+      projectid: this.data.projectID,
+      groupid: this.data.groupId,
       name: this.data.name,
       age: this.data.age,
       repay: this.data.repay,
-      telNo: this.data.telNo,
-      IDCard: this.data.id_card,
-      admissionAt: this.data.admissionAt,
-      emergencyContract: this.data.emergencyContact,
-      leavingAt: this.data.leavingAt,
+      telno: this.data.telNo,
+      idcard: this.data.id_card,
+      admissionat: this.data.admissionAt,
+      emergencycontract: this.data.emergencyContact,
+      leavingat: this.data.leavingAt,
     }
-    // console.log(worker);
-    
+    console.log(worker);
     wx.showModal({
       title: '提示',
       content: '确定提交吗？',
@@ -232,26 +243,33 @@ Page({
       success(res) {
         if (res.confirm) {
           console.log('Commit');
-          workerJS.addWorker(worker, function(res) {
-            console.log(res);
-          })
-          wx.showToast({
-            title: '提交成功',
-            icon: 'success',
-            duration: 2000,
-            success() {
-              setTimeout(() => {
-                wx.navigateBack({
-                  delta: '1'
-                })
-              }, 1000)
+          workerAction.addWorker(worker, function(code) {
+            console.log(code.code);
+            if (code.code > 0) {
+              wx.showToast({
+                title: '提交成功',
+                icon: 'success',
+                duration: 2000,
+                success() {
+                  setTimeout(() => {
+                    wx.navigateBack({
+                      delta: '1'
+                    })
+                  }, 1200)
+                }
+              })
+            } else {
+              wx.showModal({
+                content: '新增失败',
+                showCancel: false,
+                confirmColor: '#F0880C'
+              })
             }
           })
         } else if (res.cancel) {
-          console.log('用户点击取消')
+          console.log('用户点击取消');
         }
       }
     })
   },
-
 })

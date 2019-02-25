@@ -2,5 +2,6 @@
   "backgroundTextStyle": "light",
   "navigationBarBackgroundColor": "#fff",
   "navigationBarTitleText": "消息",
-  "navigationBarTextStyle": "black"
+  "navigationBarTextStyle": "black",
+  "backgroundColor": "#F2F2F2"
 }

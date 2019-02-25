@@ -1,81 +1,93 @@
 <!--首页pages-->
 <view class='container'>
-  <view class='top-info'>
-    <image src='/images/home_bg.png'></image>
-    <view class='top-total'>
-      <text class='txt'>可收款总额</text>
-      <text class='val'>{{totalReceivableAmount_ActualReceivAmount}}</text>
-    </view>
-
-    <view class='top-nav'>
-      <view class='nav-item' bindtap='projectDetails'>
-        <text class='label'>合同总额</text>
-        <text class='value'>￥{{totalAmount}}</text>
-      </view>
-
-      <view class='nav-item' bindtap='projectDetails'>
-        <text class='label'>总产值</text>
-        <text class='value'>￥{{totalOutputvalue}}</text>
-      </view>
-
-      <view class='nav-item' bindtap='projectDetails'>
-        <text class='label'>总回款</text>
-        <text class='value'>￥{{actualReceivAmount}}</text>
+  <!-- 用户信息 -->
+  <view class='user-info'>
+    <image src='{{like}}' class='logo' bindtap='accountPreview'></image>
+    <view class='details' bindtap='shenhauDetail'>
+      <view class='company'>深华建设(股份)有限公司</view>
+      <view class='branch'>{{userArea}}</view>
+      <view class='name'>{{userName}}
+        <text>{{userPostion}}</text>
       </view>
     </view>
   </view>
-
-  <view class='data-charts'>
-    <view class='visua' style=' position: relative;'>
-      <text class='title'><text style='color:#FF9858;font-weight:bold'>丨</text>产值</text>
-      <canvas canvas-id="Canvas1" class="canvas1" data-canvas='产值' bindtap='refreshChart'></canvas>
+  <view class='money-info'>
+    <view class='line'></view>
+    <view class='switch-money'>
+      <text>金额可见</text>
+      <switch checked bindchange="switch1Change" style='zoom:.6;margin-left:12rpx;' />
     </view>
-    <view class='visua'>
+    <view class='output-value'>
+      <view class='item' bindtap='navProjectList' hover-class='hover-row'>
+        <text>合同金额</text>
+        <view wx:if="{{moneySwitch}}">￥{{contractAmount}}</view>
+        <view wx:else>- -</view>
+      </view>
+      <view class='item' bindtap='navProjectList' hover-class='hover-row'>
+        <text>总产值</text>
+        <view wx:if="{{moneySwitch}}">￥{{totalOutputvalue}}</view>
+        <view wx:else>- -</view>
+      </view>
+      <view class='item' bindtap='navProjectList' hover-class='hover-row'>
+        <text>总回款</text>
+        <view wx:if="{{moneySwitch}}">￥{{totalReturnAmount}}</view>
+        <view wx:else>- -</view>
+      </view>
+    </view>
+  </view>
+  <view class='data-charts'>
+    <view class='visua' style='position: relative;height:400rpx;'>
+      <text class='title'><text style='color:#FF9858;font-weight:bold'>丨</text>产值</text>
+      <view class='data-none1 none' wx:if='{{outputValueList.length < 0}}'>暂无数据</view>
+      <canvas canvas-id="Canvas1" wx:else class="canvas1" data-canvas='产值' bindtap='refreshChart'></canvas>
+    </view>
+    <view class='visua' style='height:330rpx;'>
       <text class='title'><text style='color:#FF9858;font-weight:bold'>丨</text>安全</text>
-      <view class='con'>
-        <canvas canvas-id="Canvas2" class="canvas2" data-canvas='安全' bindtap='refreshChart' style='margin-left:-37rpx;'>
+      <view class='data-none2 none' wx:if='{{!isSecurityChart}}'>暂无数据</view>
+      <view class='con' wx:else>
+        <canvas canvas-id="Canvas2" class="canvas2" data-canvas='安全' bindtap='refreshChart'>
         </canvas>
-        <view class='content-info' style='margin-left: 40rpx;'>
+        <view class='content-info' style='margin-left: 0rpx;'>
           <view class='info-item'>
             <text style='background-color:#B122E6'></text>
-            <view>安全人数：{{graphSecurity.totalWorker}}</view>
+            <view>安全人数：{{securityData.totalWorker}}</view>
           </view>
           <view class='info-item'>
             <text style='background-color:#F5317F'></text>
-            <view>未交底人数：{{graphSecurity.totalUnDisclose}}</view>
+            <view>未交底人数：{{securityData.totalUnDisclose}}</view>
           </view>
           <view class='info-item'>
             <text style='background-color:#FF8359'></text>
-            <view>未教育人数：{{graphSecurity.totalUnEducation}}</view>
+            <view>未教育人数：{{securityData.totalUnEducation}}</view>
           </view>
           <view class='info-item'>
             <text style='background-color:#3399FF'></text>
-            <view>未参保人数：{{graphSecurity.totalUnInsurance}}</view>
+            <view>未参保人数：{{securityData.totalUnInsurance}}</view>
           </view>
         </view>
       </view>
     </view>
-
-    <view class='visua'>
+    <view class='visua' style='height:330rpx;'>
       <text class='title'><text style='color:#FF9858;font-weight:bold'>丨</text>进度</text>
-      <view class='con'>
-        <canvas canvas-id="Canvas3" class="canvas2" data-canvas='进度' style='margin-left:-37rpx;' bindtap='refreshChart'></canvas>
+      <view class='data-none3 none' wx:if='{{!isProgressChart}}'>暂无数据</view>
+      <view class='con' wx:else>
+        <canvas canvas-id="Canvas3" class="canvas3" data-canvas='进度' style='margin-left:-37rpx;' bindtap='refreshChart'></canvas>
         <view class='content-info' style='margin-left: 40rpx;'>
           <view class='info-item'>
             <text style='background-color:#B122E6'></text>
-            <view>未完成产值：{{unOutvalueAmount}}万</view>
+            <view>未完成产值：{{progressData.unOutputValue}}万</view>
           </view>
           <view class='info-item'>
             <text style='background-color:#F5317F'></text>
-            <view>未确认产值：{{actualReceivAmount1}}万</view>
+            <view>未确认产值：{{progressData.unconfirmValue}}万</view>
           </view>
           <view class='info-item'>
             <text style='background-color:#FF8359'></text>
-            <view>累计回款：{{actualReceivAmount1}}万</view>
+            <view>累计回款：{{progressData.actualreceivAmount}}万</view>
           </view>
           <view class='info-item'>
             <text style='background-color:#3399FF'></text>
-            <view>可回款：{{shouldReceivAmount}}万</view>
+            <view>可回款：{{progressData.receivablePay}}万</view>
           </view>
         </view>
       </view>
