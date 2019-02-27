@@ -1,11 +1,11 @@
 const messageCenterAction = require('../../backend/manageAction/messageCenterAction.js');
 Page({
   data: {
-    activeIndex: '0',
-    swiperIndex: '0',
+    activeIndex: '1',
+    swiperIndex: '1',
     modalDialog: false,
     WinHeight: null,
-    toggleId: 0,
+    toggleId: 1,
     BgColorStatus: '#fcd147',
     BgIColorStatus: '#f25022',
     toggleStyle: {
@@ -87,19 +87,21 @@ Page({
       let projectMessageList = [];
       for (let index in messages) {
         let list = [];
-        for (let j = 0; j < 15; j++) {
+        for (let index2 in messages[index].messageData) {
+          let val = messages[index].messageData[index2];
           let item2 = {
-            type: '运营办' + j,
-            context: '你才是了才能分明是你才是了才能分明是你才是了才能分明是你才是了才能分明是你才是了才能分明是 ' + j,
-            date: '2019-02-19',
-            formID: j,
+            type: val.messagetype,
+            context: val.message,
+            date: _this.dateFormat2(val.createat),
+            formID: val.formid,
             projectID: messages[index].projectid,
+            pointtoID: val.pointtoid,
           }
           list.push(item2);
         }
         let item1 = {
           id: messages[index].projectid,
-          peojectName: '湖贝塔' + (1 + index) + "期工程",
+          peojectName: messages[index].projectabbreviation,
           total: messages[index].messageTotal,
           list: list,
         }
@@ -162,8 +164,9 @@ Page({
 
   // 新建任务
   addTask(event) {
-    let projectID = '5';
-    let projectAbbreviation = '湖贝塔 1 期工程';
+    let project = event.currentTarget.dataset.data;
+    let projectID = project.id;
+    let projectAbbreviation = project.peojectName;
     wx.navigateTo({
       url: '/pages/addtask/addtask?projectID=' + projectID + "&projectAbbreviation=" + projectAbbreviation,
     })

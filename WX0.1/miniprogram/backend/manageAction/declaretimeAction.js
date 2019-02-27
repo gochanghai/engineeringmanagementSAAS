@@ -1,4 +1,4 @@
-const httpJS = require('../net/http.js');
+const httpJS = require('../../static/http.js');
 const storageJS = require('../../static/storage.js');
 
 /**
@@ -6,7 +6,7 @@ const storageJS = require('../../static/storage.js');
  * cprojectid 项目id；
  * bdeclaretimeBaseInfo 返回的实体类数据；
  */
-function getDeclaretimeBaseInfo(cprojectid = null, callback) {
+export let getDeclaretimeBaseInfo = function (cprojectid = null, callback) {
   let bdeclaretimeBaseInfo = {};
   let datalist = {
     user: storageJS.getUser().account,
@@ -52,7 +52,7 @@ function getDeclaretimeBaseInfo(cprojectid = null, callback) {
  * cprojectid 项目id；
  * bdeclaretimeList 返回的实体类数据；
  */
-function getDeclaretimeList(cprojectid, callback) {
+export let getDeclaretimeList = function (cprojectid, callback) {
   let bdeclaretimeList = [];
   let datalist = {
     user: storageJS.getUser().account,
@@ -86,7 +86,7 @@ function getDeclaretimeList(cprojectid, callback) {
  * dateList 实体类数据，status = 'updateDetail'|'deleteDetail'|'addDetail'|''， f+单词 为实体类数据， c+单词 为匹配条件；
  * code 返回服务器的结果；
  */
-function postDeclaretiemList(dateList = [{
+export let postDeclaretiemList = function (dateList = [{
   status: null,
   fdatenode: null,
   fnodedeclare: null,
@@ -167,9 +167,3 @@ function postDeclaretiemList(dateList = [{
     });
   });
 };
-
-module.exports = {
-  getDeclaretimeBaseInfo: getDeclaretimeBaseInfo,
-  getDeclaretimeList: getDeclaretimeList,
-  postDeclaretiemList: postDeclaretiemList,
-}

@@ -1,4 +1,6 @@
-const httpJS = require('../net/http.js');
+import { getConstructionList } from './personnelAction.js';
+
+const httpJS = require('../../static/http.js');
 const storageJS = require('../../static/storage.js');
 const fileUtil = require('../../utils/fileUtil.js');
 
@@ -19,17 +21,17 @@ let fileCategoryList = {
  * filebelong: worker-"安全交底"|"保险"|"安全教育"|"身份证"||confirmvalue-"确认产值"||recievedpay-"回款";
  * code 服务器返回的结果;
  */
-function fileUpload(fileInfo = { projectid: null, belongidlist: null, file: null, filename: null, filebelong: null, formname: null }, callback) {
+export let fileUpload = function (fileInfo = { projectid: null, belongidlist: null, file: null, filename: null, filebelong: null, formname: null }, callback) {
     let formData = {
         user: storageJS.getUser().account,
-        platform: "WX",
+        platform: "WXP",
         projectid: fileInfo.projectid,
         belongidlist: fileInfo.belongidlist,
         filebelong: fileInfo.filebelong,
         file: fileInfo.file, //file对象
     };
     wx.uploadFile({
-        url: httpJS.serverAddress + "/file/upload/" + fileInfo.formname + "/0", // 仅为示例，非真实的接口地址
+        url: httpJS.serverAddress + "/file/upload/" + fileInfo.formname + "/0",
         filePath: fileInfo.file, //要上传文件资源的路径
         name: fileInfo.filename, //文件对应的 key，开发者在服务端可以通过这个 key 获取文件的二进制内容
         formData: formData, //HTTP 请求中其他额外的 form data
@@ -45,7 +47,7 @@ function fileUpload(fileInfo = { projectid: null, belongidlist: null, file: null
  * 下载 - 缓存文件：
  * fileInfo 实体类数据，其中 formname="worker"||"confirmvalue"||"recievedpay"  
  */
-function fileGetPath(fileInfo = { formname: null, formobjId: null, fileid: null, filename: null }, callback) {
+export let fileGetPath = function (fileInfo = { formname: null, formobjId: null, fileid: null, filename: null }, callback) {
     let datalist = {
         user: storageJS.getUser().account,
         platform: "WX",
@@ -61,11 +63,31 @@ function fileGetPath(fileInfo = { formname: null, formobjId: null, fileid: null,
 
 /**
  * 获取附件列表：
- * fileInfo 查询条件，其中 formname: "worker"||"confirmvalue"||"recievedpay"，filebelong: worker-"安全交底"|"保险"|"安全教育"|"身份证"||confirmvalue-"确认产值"||recievedpay-"回款";
+ * fileInfo 可定制的过滤条件，其中 formname: "worker"||"confirmvalue"||"recievedpay"，filebelong: worker-"安全交底"|"保险"|"安全教育"|"身份证"||confirmvalue-"确认产值"||recievedpay-"回款";
+ * fileInfo.projectid 项目id，为null则不作为过滤条件；
+ * fileInfo.formname 源表单，为null则不作为过滤条件；...
  * bfileList 返回的实体类数据；
  **/
-function getFileList(fileInfo = { projectid: null, formname: null, belongidlist: null, filebelong: null }, callback) {
+export let getFileList = function (fileInfo = { projectid: null, formname: null, belongidlist: null, filebelong: null }, callback) {
     let bfileList = [];
+    let conditionValue = [];
+    let conditionpushData = {};
+    if (null != fileInfo.projectid) {
+        conditionpushData = { field: "projectid", value: fileInfo.projectid, symbol: "=" }
+        conditionValue.push(conditionpushData)
+    }
+    if (null != fileInfo.formname) {
+        conditionpushData = { field: "formname", value: fileInfo.formname, symbol: "=" }
+        conditionValue.push(conditionpushData)
+    }
+    if (null != fileInfo.belongidlist) {
+        conditionpushData = { field: "belongidlist", value: fileInfo.belongidlist, symbol: "=" }
+        conditionValue.push(conditionpushData)
+    }
+    if (null != fileInfo.filebelong) {
+        conditionpushData = { field: "filebelong", value: fileInfo.filebelong, symbol: "=" }
+        conditionValue.push(conditionpushData)
+    }
     let datalist = {
         user: storageJS.getUser().account,
         form: "dc_mng_file_forms",
@@ -73,38 +95,23 @@ function getFileList(fileInfo = { projectid: null, formname: null, belongidlist:
         fields: [
             "fileid",
             "filename",
-            "formname"
+            "formname",
+            "uploadat"
         ],
         page: null,
-        condition: [{
-            field: "projectid",
-            value: fileInfo.projectid,
-            symbol: "="
-        }, {
-            field: "formname",
-            value: fileInfo.formname,
-            symbol: "="
-        }, {
-            field: "belongidlist",
-            value: fileInfo.belongidlist,
-            symbol: "="
-        }, {
-            field: "filebelong",
-            value: fileInfo.filebelong,
-            symbol: "="
-        }]
+        condition: conditionValue
     }
+    console.log(datalist)
     httpJS.request('/form', datalist, function (res) {
         if (JSON.parse(res.data).code > 0) {
             bfileList = JSON.parse(res.data).datalist.dc_mng_file_forms;
-            return typeof callback == 'function' && callback(bfileList)
         }
-        else return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code })
+        return typeof callback == 'function' && callback(bfileList)
     });
 };
 
 // 返回多项目的6大类文件总条数
-function countFileListSortType(callback) {
+export let countFileListSortType = function (callback) {
     let projectList = storageJS.getProjectList();
     let ids = "";
     for (let item of projectList) {
@@ -164,7 +171,7 @@ function countFileListSortType(callback) {
 };
 
 // 返回多项目的按时间排列的总条数
-function countFileListSortTime(callback) {
+export let countFileListSortTime = function (callback) {
     let projectList = storageJS.getProjectList();
     let ids = "";
     for (let item of projectList) {
@@ -204,7 +211,7 @@ function countFileListSortTime(callback) {
 };
 
 // 由文件类型返回多个项目的文件列表
-function getFileListByType(filebelong = '安全交底' || '安全教育' || '保险' || '确认产值' || '身份证' || '回款', callback) {
+export let getFileListByType = function (filebelong = '安全交底' || '安全教育' || '保险' || '确认产值' || '身份证' || '回款', callback) {
     let projectList = storageJS.getProjectList();
     let ids = "";
     for (let item of projectList) {
@@ -265,7 +272,7 @@ function getFileListByType(filebelong = '安全交底' || '安全教育' || '保
 };
 
 // 由时间返回多个项目的文件列表
-function getFileListByTime(date, callback) {
+export let getFileListByTime = function (date, callback) {
     let projectList = storageJS.getProjectList();
     let ids = "";
     for (let item of projectList) {
@@ -325,8 +332,8 @@ function getFileListByTime(date, callback) {
  * 缓存后预览文件：
  * fileInfo 实体类数据；
  */
-function previewFile(fileInfo = { filename: null, filePath: null, fileType: null }) {
-    let fileCase = fileUtil.recFileCase(fileUtil.getSux(fileInfo.filename))
+export let previewFile = function (fileInfo = { fileName: null, filePath: null, fileType: null }) {
+    let fileCase = fileUtil.recFileCase(fileUtil.getSux(fileInfo.fileName))
     switch (fileCase) {
         case 'document':
             wx.openDocument({
@@ -354,16 +361,4 @@ function previewFile(fileInfo = { filename: null, filePath: null, fileType: null
             })
             break
     }
-}
-
-
-module.exports = {
-    fileUpload: fileUpload,
-    fileGetPath: fileGetPath,
-    getFileList: getFileList,
-    countFileListSortType: countFileListSortType,
-    countFileListSortTime: countFileListSortTime,
-    getFileListByType: getFileListByType,
-    getFileListByTime: getFileListByTime,
-    previewFile: previewFile,
 }

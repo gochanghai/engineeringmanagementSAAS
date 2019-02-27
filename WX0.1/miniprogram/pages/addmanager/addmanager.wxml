@@ -14,7 +14,7 @@
   </view>
 
   <view class='btom-btns'>
-    <view class='ignore' bindtap='cancel'>取消</view>
-    <view class='solve' bindtap='commitManager'>确定</view>
+    <view class='ignore' bindtap='cancel' hover-class='btn-hover-class'>取 消</view>
+    <view class='solve' bindtap='commitManager' hover-class='btn-hover-class'>确 定</view>
   </view>
 </view>

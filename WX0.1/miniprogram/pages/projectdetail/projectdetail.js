@@ -26,7 +26,7 @@ Page({
     // (顶部弹框)
     projectSaaSAction.getProjectInfo(projectID, function(res) {
       // console.log(res);
-      let amount = _than.getMoneyFormat(res.contractamount);      
+      let amount = _than.getMoneyFormat(res.contractamount);          
       _than.setData({
         projectIntroduce: res,
         'projectIntroduce.contractamount': amount
@@ -37,7 +37,10 @@ Page({
       console.log(res);
       // 金额转财务数据
       res.usablemoney = _than.getMoneyFormat(res.usablemoney);
-      res.marginmoney = _than.getMoneyFormat(res.marginmoney);
+      res.marginmoney = _than.getMoneyFormat(res.marginmoney); 
+      res.confirmvalueratio = _than.getMunberToRatio(res.confirmvalueratio);
+      res.receivableamountratio = _than.getMunberToRatio(res.receivableamountratio);
+      res.receivedpayratio = _than.getMunberToRatio(res.receivedpayratio);       
       _than.setData({
         projectModule: res
       })
@@ -140,6 +143,13 @@ Page({
     var dot = str.substring(str.length, str.indexOf("."));
     var ret = intSum + dot;
     return ret;
+  },
+  // 获取数值百分比
+  getMunberToRatio(val) {
+    if (val === '' || val === null) {
+      return '0.00%'
+    }
+    return val.toFixed(4) * 100
   },
   
 })

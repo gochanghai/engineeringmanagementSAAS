@@ -1,11 +1,11 @@
 //请求域名
-const host = 'https://mysaas.gdsh119.com';
-// const host = 'http://192.168.1.43:3300';
+// const serverAddress = 'https://mysaas.gdsh119.com';
+export const serverAddress = 'http://192.168.1.43:3330';
 
 //POST 请求
-function request(api, jsondata, callback) {
+export let request = function (api, jsondata, callback) {
   wx.request({
-    url: host + api,
+    url: serverAddress + api,
     data: {
       data: JSON.stringify(jsondata)
     },
@@ -14,7 +14,7 @@ function request(api, jsondata, callback) {
     },
     method: "POST",
     success: function (res) {
-      console.log("=================================request:" + host + api);
+      console.log("=================================request:" + serverAddress + api);
       console.log("---------------------------------response:");
       console.log(res);
       console.log("=======================================================================");
@@ -27,10 +27,10 @@ function request(api, jsondata, callback) {
 }
 
 //使用form-data的方式发送request请求
-function formRequest(api, jsondata, callback) {
+export let formRequest = function (api, jsondata, callback) {
   console.log(jsondata);
   wx.request({
-    url: host + api,
+    url: serverAddress + api,
     data: jsondata,
     header: {
       "Content-Type": "multipart/form-data"
@@ -43,10 +43,4 @@ function formRequest(api, jsondata, callback) {
       return typeof callback == "function" && callback(res)
     }
   });
-}
-
-module.exports = {
-  serverAddress: host,
-  request: request,
-  formRequest: formRequest,
 }

@@ -9,7 +9,7 @@
       <text>任务板块</text>
       <!-- <input type='text' disabled='disabled' confirm-type="next" value='{{messageModuleName}}' placeholder='请选择' bindtap='selType' /> -->
       <picker bindchange="selType" value="{{activeIndex1}}" range="{{messageTypeList}}" range-key="name">
-        <view class="picker" style='font-size:30rpx; color:#999; '>
+        <view class="picker" style='font-size:32rpx; color:#666; '>
           {{messageTypeList[activeIndex1].name}}
         </view>
       </picker>
@@ -24,13 +24,13 @@
 
     <view class='task_item' style='padding-bottom:30rpx;'>
       <text>任务内容</text>
-      <textarea type='text' show-confirm-bar bindinput='inputTaskContent' class='textarea_content' placeholder='请输入' style='font-size:30rpx;' />
+      <textarea type='text' show-confirm-bar bindinput='inputTaskContent' class='textarea_content' placeholder='请输入' style='font-size:32rpx;' />
     </view>
     <view class='task_item'>
       <text>任务要求</text>
       <!-- <input disabled='disabled' type='text' confirm-type="next" bindtap='actionAskTap' value='{{messageDemand}}' placeholder='请选择' /> -->
       <picker bindchange="selAsk" value="{{activeIndex2}}" range="{{AskList}}">
-        <view class="picker" style='font-size:30rpx; color:#999; '>
+        <view class="picker" style='font-size:32rpx; color:#666; '>
           {{AskList[activeIndex2]}}
         </view>
       </picker>
@@ -48,7 +48,7 @@
       <!-- <input disabled='disabled' type='text' bindtap='actionUserkTap' confirm-type="next" value='{{selUser}}' placeholder='请选择' /> -->
 
       <picker bindchange="selUser" value="{{activeIndex3}}" range="{{assignUserList}}" range-key='managername'>
-        <view class="picker" style='font-size:30rpx; color:#999; '>
+        <view class="picker" style='font-size:32rpx; color:#666; '>
           {{assignUserList[activeIndex3].managername}}
         </view>
       </picker>
@@ -63,7 +63,7 @@
   </view>
 
   <view class='btom-btns'>
-    <view class='ignore' bindtap='cancel'>取消</view>
-    <view class='solve' bindtap='newTask'>确定</view>
+    <view class='ignore' bindtap='cancel' hover-class='btn-hover-class'>取 消</view>
+    <view class='solve' bindtap='newTask' hover-class='btn-hover-class'>确 定</view>
   </view>
 </view>

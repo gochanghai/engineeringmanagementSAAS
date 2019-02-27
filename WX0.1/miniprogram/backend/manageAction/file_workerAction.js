@@ -1,4 +1,4 @@
-const httpJS = require('../net/http.js');
+const httpJS = require('../../static/http.js');
 const storageJS = require('../../static/storage.js');
 const fileAction = require('./fileAction.js');
 const workerAction = require('./workerAction.js');
@@ -9,7 +9,7 @@ const workerAction = require('./workerAction.js');
  * fileSign 文件类型标志，disclose|education|insurance；
  * bWorkerList 返回的实体类数据；
  */
-function getUnSignWorkerList(cprojectid, fileSign, callback) {
+export let getUnSignWorkerList = function (cprojectid, fileSign, callback) {
   let bWorkerList = [];
   let conditionValue = [{
     field: "projectid",
@@ -78,7 +78,7 @@ function getUnSignWorkerList(cprojectid, fileSign, callback) {
  * packageData 打包发送的数据，其中fileSign=disclose|education|insurance；
  * code 返回的服务器结果；
  */
-function packageComitFileANDWorkerSignList(packageData = {
+export let packageComitFileANDWorkerSignList = function (packageData = {
   workerFormIdlist: null,
   projectid: null,
   file: null,
@@ -102,20 +102,12 @@ function packageComitFileANDWorkerSignList(packageData = {
   }
   let fileInfo = {
     projectid: packageData.projectid,
-    belongIdList: packageData.workerFormIdlist,
+    belongidlist: packageData.workerFormIdlist,
     file: packageData.file,
-    fileName: packageData.fileName,
-    fileBelong: fileBelong,
-    formName: 'worker'
+    filename: packageData.fileName,
+    filebelong: fileBelong,
+    formname: 'worker'
   }
-  // let fileInfo = {
-  //     projectid : 'SHXF-201810102',
-  //     belongIdList : '1',
-  //     file: tempFilePaths[0],
-  //     fileName: '文件.jpg',
-  //     fileBelong: '确认产值',
-  //     formName: 'confirmvalue'
-  // }
   // 先提交附件
   fileAction.fileUpload(fileInfo, function (res) {
     if (res.code == 1) {
@@ -129,10 +121,4 @@ function packageComitFileANDWorkerSignList(packageData = {
       code: res.code
     })
   })
-}
-
-
-module.exports = {
-  packageComitFileANDWorkerSignList: packageComitFileANDWorkerSignList,
-  getUnSignWorkerList: getUnSignWorkerList,
 }

@@ -1,4 +1,5 @@
 // pages/confirmpersonnel/confirmpersonnel.js
+const fileAction = require('../../backend/manageAction/fileAction.js');
 const workerAction = require('../../backend/manageAction/workerAction.js');
 Page({
   data: {
@@ -16,7 +17,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     wx.setNavigationBarTitle({
       title: this.fileSignToTitle(options.fileSign),
     })
@@ -46,17 +47,36 @@ Page({
   },
 
   // 获取数据
-  getDataList(projectID, fileSign){
+  getDataList(projectID, fileSign) {
     let _than = this;
-    workerAction.getSignedWorkerList(projectID, fileSign, function (res) {
-      console.log('bWorkerList');
-      console.log(res);
+    let filebelongvalue = '';
+    switch (fileSign) {
+      case 'disclose':
+        filebelongvalue = "安全交底";
+        break;
+      case 'education':
+        filebelongvalue = "安全教育";
+        break;
+      case 'insurance':
+        filebelongvalue = "保险";
+        break;
+      default:
+        filebelongvalue = null;
+        break;
+    }
+    let fileInfo = {
+      projectid: projectID,
+      formname: 'worker',
+      filebelong: filebelongvalue,
+    }
+    fileAction.getFileList(fileInfo, function (bfileList) {
       let groupList = [];
-      for(let index in res){
+      if (bfileList.length > 0) {
+        for (let index of bfileList) {
           let item = {
-            group: res[index].groupname,
+            filename: index.filename,
             file: '/images/mesimage2.png',
-            createDate: "2019-02-19",
+            createDate: index.uploadat,
             personnerList: [{
               name: "张三",
               gender: "男",
@@ -71,7 +91,8 @@ Page({
               date: "2018-11-03"
             }]
           }
-        groupList.push(item);
+          groupList.push(item);
+        }
       }
       _than.setData({
         groupList: groupList,

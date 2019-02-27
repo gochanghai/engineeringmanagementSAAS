@@ -1,4 +1,4 @@
-const httpJS = require('../net/http.js');
+const httpJS = require('../../static/http.js');
 const storageJS = require('../../static/storage.js');
 const md5JS = require('../../utils/md5.js');
 const sendingSystemJS = require('../../utils/sendingSystem.js');
@@ -10,7 +10,7 @@ const dateUtilJS = require('../../utils/date.js');
  * fpwd 密码；
  * code 返回的服务器结果；
  */
-function signIn(faccount = null, fpwd = null, callback) {
+export let signIn = function(faccount = null, fpwd = null, callback) {
     let datalist = {
         user: null,
         datetime: dateUtilJS.formatTime(),
@@ -34,7 +34,7 @@ function signIn(faccount = null, fpwd = null, callback) {
     })
 }
 
-function restoreProjectList(callback) {
+export let restoreProjectList = function (callback) {
     if (null != storageJS.getUser().account && 'undefined' != typeof (storageJS.getUser().account)) {
         let datalist = {
             user: storageJS.getUser().account
@@ -57,7 +57,7 @@ function restoreProjectList(callback) {
  * newPassword 新密码；
  * code 返回的服务器结果；
  */
-function modifyPWD(oldPassword = null, newPassword = null, callback) {
+export let modifyPWD = function (oldPassword = null, newPassword = null, callback) {
     let datalist = {
         user: storageJS.getUser().account,
         datetime: dateUtilJS.formatTime(),
@@ -76,10 +76,4 @@ function modifyPWD(oldPassword = null, newPassword = null, callback) {
     httpJS.request('/user', datalist, function (res) {
         return typeof callback == 'function' && callback({ code: res.data.code })
     });
-}
-
-module.exports = {
-    signIn: signIn,
-    modifyPWD: modifyPWD,
-    restoreProjectList: restoreProjectList,
 }

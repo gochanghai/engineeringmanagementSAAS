@@ -10,14 +10,14 @@
   width: 92%;
   line-height: 80rpx;
   display: flex;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1rpx solid #e5e5e5;
   /* align-items: center; */
 }
 
 .task_item text {
   display: inline-block;
   width: 130rpx;
-  font-size: 30rpx;
+  font-size: 32rpx;
   color: #333;
 }
 
@@ -26,8 +26,8 @@
   text-align: right;
   /* border: 1px solid; */
   height: 78rpx;
-  font-size: 30rpx;
-  color: #999;
+  font-size: 32rpx;
+  color: #666;
 }
 
 .task_item image {
@@ -73,12 +73,16 @@
 }
 
 .btom-btns view.ignore {
-  border: 1px solid #b5b5b5;
+  border: 1rpx solid #b5b5b5;
   color: #666;
 }
 
 .btom-btns view.solve {
   background-color: #e95207;
-  border: 1px solid #e95207;
+  border: 1rpx solid #e95207;
   color: #fff;
+}
+
+.btn-hover-class {
+  background-color: rgba(0, 0, 0, 0.1);
 }

@@ -54,10 +54,11 @@ Page({
   getContractInfo(projectID) {
     let _than = this;
     declaretimeAction.getDeclaretimeBaseInfo(projectID, function(res) {
+      console.log('projectID');
       console.log(res);
       let contractInfo = {
-        startDate: res.startdate,
-        endDate: res.enddate,
+        startDate: res.start_date,
+        endDate: res.end_date,
       }
       _than.setData({
         contractInfo: contractInfo,
@@ -69,6 +70,7 @@ Page({
   getDeclaretimeList(projectID) {
     let _than = this;
     declaretimeAction.getDeclaretimeList(projectID, function(res) {
+      console.log('resprojectID');
       console.log(res);
       let list = [];
       for (let index in res) {

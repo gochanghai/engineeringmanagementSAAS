@@ -1,14 +1,14 @@
 /**
  * 对接首页
  */
-const httpJS = require('../net/http.js');
+const httpJS = require('../../static/http.js');
 const storageJS = require('../../static/storage.js');
 
 /**
  * 获取所有项目的统计数据——合同金额、产值、回款：
  * bstatis 返回的实体类数据；
  */
-function getPStatis(callback) {
+export let getPStatis = function (callback) {
   let bstatis = {};
   let projectList = storageJS.getProjectList();
   let ids = "";
@@ -43,7 +43,7 @@ function getPStatis(callback) {
  * 获取所有项目的绘图进度数据——未完成产值、累计回款、可回款：
  * bprogressData 返回的实体类数据；
  */
-function getGraphProgressData(callback) {
+export let getGraphProgressData = function (callback) {
   let bprogressData = {};
   let projectList = storageJS.getProjectList();
   let ids = "";
@@ -62,8 +62,8 @@ function getGraphProgressData(callback) {
     if (res.data.code > 0) {
       let resdatalist = res.data.datalist;
       if (null != resdatalist) {
-        // 未确认产值
-        bprogressData.unconfirmvaluesum = null != resdatalist.project.dc_projects[0].contractamountsum || null != resdatalist.confirmvalue.dc_mng_project_confirmvalues[0].outputvaluesum
+        // 未完成产值
+        bprogressData.outputvaluerest = null != resdatalist.project.dc_projects[0].contractamountsum || null != resdatalist.confirmvalue.dc_mng_project_confirmvalues[0].outputvaluesum
           ? resdatalist.project.dc_projects[0].contractamountsum - resdatalist.confirmvalue.dc_mng_project_confirmvalues[0].outputvaluesum : 0;
         // 累计回款
         bprogressData.actualreceivamountsum = resdatalist.recievedpay.dc_project_statistics[0].actualreceivamountsum || 0;
@@ -74,9 +74,4 @@ function getGraphProgressData(callback) {
     }
     return typeof callback == 'function' && callback(bprogressData)
   })
-}
-
-module.exports = {
-  getPStatis: getPStatis,
-  getGraphProgressData: getGraphProgressData,
 }

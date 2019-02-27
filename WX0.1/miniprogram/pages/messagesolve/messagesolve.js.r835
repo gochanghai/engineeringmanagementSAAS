@@ -55,43 +55,20 @@ Page({
           // 消息忽略          
           messageCenterAction.mesIgnore(projectID, formID, messageModule, function (res) {
             console.log(res);
-            if (res.code == 1) {
-              wx.showToast({
-                title: '已忽略',
-                icon: 'success',
-                duration: 2000,
-                success() {
-                  setTimeout(() => {
-                    wx.navigateBack({
-                      delta: '1'
-                    })
-                    // 返回消息中心
-                    wx.switchTab({
-                      url: '/pages/message/message',
-                    })
-                  }, 1000)
-                }
-              })
-            } else {
-              wx.showToast({
-                title: '忽略失败',
-                icon: 'success',
-                duration: 2000,
-                success() {
-                  setTimeout(() => {
-                    wx.navigateBack({
-                      delta: '1'
-                    })
-                    // 返回消息中心
-                    // wx.switchTab({
-                    //   url: '/pages/message/message',
-                    // })
-                  }, 1000)
-                }
-              })
+          })
+          wx.showToast({
+            title: '已忽略',
+            icon: 'success',
+            duration: 2000,
+            success() {
+              setTimeout(() => {
+                // 返回消息中心
+                wx.navigateBack({
+                  delta: '1'
+                })
+              }, 1200)
             }
           })
-
         } else if (res.cancel) {
           console.log('用户点击取消');
         }

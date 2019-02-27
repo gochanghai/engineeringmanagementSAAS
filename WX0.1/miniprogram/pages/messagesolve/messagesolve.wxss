@@ -10,12 +10,14 @@
 }
 
 .message_solve {
+  position: relative;
   padding-top: 26rpx;
   width: 710rpx;
-  height: 746rpx;
+  height: auto;
   margin: 20rpx auto;
   background-color: #fff;
   border-radius: 6rpx;
+  border: 1rpx solid #fff;
 }
 
 .mes-content view.item {
@@ -33,11 +35,24 @@
   display: flex;
 }
 
+.text-flex text {
+  display: inline-block;
+  width: 90rpx;
+  line-height: 60rpx;
+}
+
+.text-flex view {
+  width: 370rpx;
+  padding-top: 5rpx;
+  flex: 1;
+  line-height: 50rpx;
+  word-wrap: break-word;
+}
+
 .btom-btns {
-  margin: 0 auto;
-  margin-top: 200rpx;
+  margin: 70rpx auto;
+  margin-top: 100rpx;
   width: 90%;
-  padding-bottom: 50rpx;
   display: flex;
   justify-content: space-around;
 }
@@ -63,11 +78,12 @@
 }
 
 .arc {
-  width: 100%;
+  width: 106%;
   display: flex;
   justify-content: space-between;
   position: absolute;
-  top: 538rpx;
+  left: -3%;
+  bottom: 23%;
 }
 
 .arc text {

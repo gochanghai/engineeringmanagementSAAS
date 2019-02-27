@@ -85,3 +85,9 @@
   font-size: 29rpx;
   color: #333;
 }
+
+.data-none {
+  text-align: center;
+  color: #ccc;
+  font-size: 48rpx;
+}

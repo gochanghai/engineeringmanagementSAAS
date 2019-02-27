@@ -1,5 +1,4 @@
 // miniprogram/testpages/test/test.js
-const httpJS = require('../../backend/net/http.js');
 const messageCenterAction = require('../../backend/manageAction/messageCenterAction.js');
 const personnelAction = require('../../backend/manageAction/personnelAction.js');
 const calendarAction = require('../../backend/manageAction/calendarAction.js');
@@ -42,7 +41,7 @@ Page({
     //   console.log(bmessageList);
     // })
     // 获取单条消息详情-2019/2/19
-    // messageCenterAction.getMessagePage('5','',function(bmessageInfo){
+    // messageCenterAction.getMessagePage('15e183f0-f2ac-4a35-bfa1-aec84a2e7fb0',"8",function(bmessageInfo){
     //   console.log(bmessageInfo);
     // })
     // 消息忽略-2019/2/14
@@ -123,12 +122,12 @@ Page({
     //     console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
     //   })
     // })
-    // 分类获取文件列表-2019/2/14
+    // 分类获取文件列表-2019/2/14-2019/2/26
     // let fileInfo = {
-    //   projectID: '',
-    //   formName: '',
-    //   belongIdList: '',
-    //   fileBelong: '',
+    //   projectid: '5',
+    //   formname: 'confirmvalue',
+    //   belongidlist: '4',
+    //   filebelong: '确认产值',
     // }
     // fileAction.getFileList(fileInfo, function (bfileList) {
     //   console.log(bfileList);
@@ -159,7 +158,7 @@ Page({
     //   console.log(bcalendarData);
     // })
     // 按日返回消息列表-2019/2/14
-    // calendarAction.getMessageByDate('2019-01-19',function(bmessageSortList){
+    // calendarAction.getMessageByDate('2019-02-26',function(bmessageSortList){
     //   console.log(bmessageSortList);
     // })
     // =================================calendar万年历=====================================
@@ -265,16 +264,16 @@ Page({
     // ===========================declaretime项目申报时间节点页=============================
 
     // ===============================confirmvalue产值登记===============================
-    // 获取单项目多条产值信息-2019/2/14
-    // confirmvalueAction.getConfirmvalueList('test', function (bconfirmvalueList) {
+    // 获取单项目多条产值信息-2019/2/14-2019/2/25
+    // confirmvalueAction.getConfirmvalueList('5', function (bconfirmvalueList) {
     //   console.log(bconfirmvalueList);
     // });
     // 删除单条产值信息-2019/2/14
-    // confirmvalueAction.deleteConfirmvalue('4d9c1134-2f44-4104-9642-229949975c6e','test', function (res) {
+    // confirmvalueAction.deleteConfirmvalue('4d9c1134-2f44-4104-9642-229949975c6e','5', function (res) {
     //   console.log(res.code);
     // });
-    // 获取单条产值信息-2019/2/14
-    // confirmvalueAction.getConfirmvalue('4d9c1134-2f44-4104-9642-229949975c6e','test', function (bconfirmvalue) {
+    // 获取单条产值信息-2019/2/14-2019/2/25
+    // confirmvalueAction.getConfirmvalue('a301fec0-3956-4f83-a89a-339a8bfeeb61','5', function (bconfirmvalue) {
     //   console.log(bconfirmvalue);
     // });
     // 新增产值登记-2019/2/14
@@ -283,7 +282,7 @@ Page({
     //   outputvalue: '143232',
     //   receivableamount: '231231',
     //   valueuploadat: new Date(),
-    //   projectid: 'test'
+    //   projectid: '5'
     // }
     // confirmvalueAction.addConfirmvalue(fconfirmvalue, function (res) {
     //   console.log(res)
@@ -294,13 +293,17 @@ Page({
     //   outputvalue: '00000',
     //   receivableamount: '00000',
     //   valueuploadat: new Date(),
-    // }, cformid = '4d9c1134-2f44-4104-9642-229949975c6e', cprojectID = 'test';
+    // }, cformid = '4d9c1134-2f44-4104-9642-229949975c6e', cprojectID = '5';
     // confirmvalueAction.updateConfirmvalue(fconfirmvalue, cformid, cprojectID, function (res) {
     //   console.log(res)
     // });
     // 打包提交附件与产值信息-2019/2/19
     // let fconfirmvalueInfo = {}, ffileInfo = {} , cconfirmvalueformid = '', cprojectid = '';
     // fileConfirmvalueAction.comitFileANDConfirmValue(fconfirmvalueInfo, ffileInfo, cconfirmvalueformid, cprojectid, function (res) {
+    //   console.log(res.code);
+    // })
+    // 打包提交附件、新建产值信息-2019/2/26
+    // fileConfirmvalueAction.addFileANDConfirmValue(fconfirmvalueInfo, ffileInfo,function(res){
     //   console.log(res.code);
     // })
     // ===============================confirmvalue产值登记页===============================
@@ -317,6 +320,9 @@ Page({
     // })
     // 获取项目管理人员-2019/2/14-2019/2/20
     // addtaskAction.getAssignUser('5',function(bassignUser){
+    //   console.log(bassignUser);
+    // })
+    // addtaskTestAction.getAssignUser('5', function (bassignUser) {
     //   console.log(bassignUser);
     // })
     // ===================================addtask新建任务页================================
@@ -427,6 +433,7 @@ Page({
     // 2019/2/20
     // 2019/2/21
     // 2019/2/22
+    // 2019/2/26
   },
 
 })

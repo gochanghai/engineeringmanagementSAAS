@@ -50,6 +50,13 @@ Page({
     })
   },
 
+  //公司信息
+  shenhauDetail(){
+    wx.navigateTo({
+      url: '/pages/shenhua/shenhua',
+    })
+  },
+
   UpavatarUrl() {
     wx.chooseImage({
       count: 1, //张数， 默认9

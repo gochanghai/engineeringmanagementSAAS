@@ -12,24 +12,31 @@
     <swiper-item wx:for='{{swiperList}}' wx:key='index'>
       <scroll-view style='height:{{WinHeightCon}}' scroll-y>
         <view class='project-list'>
-          <view class='project-item' wx:for='{{item}}' wx:key='index' data-data='{{item}}' bindtap='navProjectDetail'>
-            <view class='top-info'>
-              <text class='date'>{{item.date}}</text>
-              <text class='status'>{{item.status}}</text>
-            </view>
-            <view class='line'></view>
-            <view class='project-context'>
-              <view class='name'>{{item.name}}</view>
-              <view class='project-number'>({{item.no}})</view>
-              <view class='situation'>
-                <text>余额：{{item.amount}}元</text>
-                <text>产值：{{item.outputValueRatio}}</text>
-                <text>回款：{{item.returnRatio}}</text>
+          <view class='data-none' style='line-height:{{WinHeightCon}}' wx:if='{{item.isData != true}}'>暂无数据</view>
+          <view wx:if='{{item.isData == true}}'>
+            <view class='project-item' wx:for='{{item.list}}' wx:key='index' data-data='{{item}}' bindtap='navProjectDetail'>
+              <view class='top-info'>
+                <text class='date'>{{item.date}}</text>
+                <text class='status'>{{item.status}}</text>
+              </view>
+              <view class='line'></view>
+              <view class='project-context'>
+                <view class='name'>{{item.name}}</view>
+                <view class='project-number'>({{item.no}})</view>
+                <view class='situation'>
+                  <text>余额：{{item.amount}}元</text>
+                  <text>产值：{{item.outputValueRatio}}</text>
+                  <text>回款：{{item.returnRatio}}</text>
+                </view>
               </view>
             </view>
           </view>
+
         </view>
       </scroll-view>
     </swiper-item>
+    <!-- <swiper-item>
+      
+    </swiper-item> -->
   </swiper>
 </view>

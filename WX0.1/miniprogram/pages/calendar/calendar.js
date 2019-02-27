@@ -25,13 +25,14 @@ Page({
     IsToDay: false,
     days: '',
     isNotice: true,
-    noticeContent: ''
+    noticeContent: '',
+    toMonth: null
   },
   //给点击的日期设置一个背景颜色
   dayClick: function(event) {
     let [year, month, day] = [event.detail.year, event.detail.month, event.detail.day];
     this.setData({
-      chooseDay: year + "-" + month + "-" + day
+      chooseDay: year + "-" + month + "-" + day,
     })
     if (this.data.dayStyle[0].day.toString() == day) {
       this.setData({
@@ -68,24 +69,85 @@ Page({
     this.getMessageByDate(this.data.chooseDay);
 
   },
+
+  //下一月
+  next(e) {
+    let toMonth = this.data.toMonth;
+    if (toMonth < e.detail.currentMonth) {
+      this.setData({
+        dayStyle: []
+      })
+    } else if (toMonth == e.detail.currentMonth) {
+      this.MonthCurrent();
+    }
+  },
+
+  //上一月
+  prev: function(e) {
+    let toMonth = this.data.toMonth;
+    if (toMonth == e.detail.currentMonth) {
+      this.MonthCurrent();
+    } else if (toMonth > e.detail.currentMonth) {
+      this.setData({
+        dayStyle: []
+      })
+    }
+  },
+
+  //手动选择月
+  dateChange: function(e) {
+    let toMonth = this.data.toMonth;
+    if (toMonth < e.detail.currentMonth || toMonth > e.detail.currentMonth) {
+      this.setData({
+        dayStyle: []
+      })
+    } else {
+      this.MonthCurrent();         
+    }
+  },
+
+  //如果当前显示的是本月全月日历
+  MonthCurrent() {
+    let dayStyle = [{
+        month: 'current',
+        day: new Date().getDate(),
+        color: 'white',
+        background: '#AAD4F5'
+      },
+      {
+        month: 'current',
+        day: new Date().getDate(),
+        color: 'white',
+        background: '#AAD4F5'
+      }
+    ];
+    this.setData({
+      dayStyle: dayStyle
+    })
+  },
+
   onLoad: function() {
     this.setData({
       chooseDay: new Date().getFullYear() + "-" + (1 + new Date().getMonth()) + "-" + new Date().getDate(),
       IsToDay: true,
-      days: '今天'
+      days: '今天',
+      toMonth: new Date().getMonth() + 1
     });
     // 获取消息数据
-    this.getMessageByDate('2019-01-19');
+    this.getMessageByDate(this.data.chooseDay);
   },
 
   //消息查看
-  mesInfo() {
-    // wx.switchTab({
-    //   url: '/pages/message/message',
-    // })
-
+  mesInfo(event) {
+    let message = event.currentTarget.dataset.data;
+    let byTypeTitle = "消息详情"; //消息标题/任务标题
+    if (message.type === 'task') {
+      byTypeTitle = '任务详情'
+    }
     wx.navigateTo({
-      url: '/pages/messagesolve/messagesolve',
+      url: '/pages/messagesolve/messagesolve?formID=' + message.formID +
+        "&projectID=" + message.projectID +
+        "&byTypeTitle=" + byTypeTitle,
     })
   },
 
@@ -101,48 +163,61 @@ Page({
     let _than = this;
     calendarAction.getMessageByDate(date, function(res) {
       console.log('calendarAction');
+      console.log(date);
       console.log(res);
-      let list = [{
+      let moduleList = [{
           title: '产值',
           lightColor: '#FCD147',
-          list: ''
+          list: res.confirmvalue
         }, {
           title: '回款',
           lightColor: '#FCD147',
-          list: ''
+          list: res.recievedpay
         },
         {
           title: '保险',
           lightColor: '#f25022',
-          list: ''
+          list: res.insurance
         },
         {
           title: '安全交底',
           lightColor: '#f25022',
-          list: ''
+          list: res.disclose
         },
         {
           title: '安全教育',
-          lightColor:'#f25022',
-          list: ''
+          lightColor: '#f25022',
+          list: res.education
+        },
+        {
+          title: '进度',
+          lightColor: '#FCD147',
+          list: res.progress
+        },
+        {
+          title: '安全',
+          lightColor: '#f25022',
+          list: res.security
         }
       ];
       let newList = [];
-      for(let index in list){
+      for (let index in moduleList) {
         let messageList = [];
-        for (let i = 0; i < 10; i++) {
+        for (let index2 in moduleList[index].list) {
+          let message = moduleList[index].list[index2];
           let item = {
-            id: i,
-            type: '',
-            projectID: i + 1,            
-            lightColor: list[index].lightColor,
-            projectName: 'calendarAction' + i + 0,
-            content: 'calendarActioncalendarActioncalendarActioncalendarAction2019-02-20'
+            id: message.formid,
+            type: message.messagetype,
+            projectID: message.projectid,
+            formID: message.formid,
+            lightColor: moduleList[index].lightColor,
+            projectName: message.projectabbreviation,
+            content: message.message,
           }
           messageList.push(item);
         }
         let item2 = {
-          title: list[index].title + '(' + messageList.length + ')',
+          title: moduleList[index].title + '(' + messageList.length + ')',
           list: messageList,
         }
         newList.push(item2);

@@ -79,7 +79,7 @@
 .line {
   margin: 8rpx auto;
   width: 92%;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1rpx solid #e5e5e5;
 }
 
 .project-context view.name {
@@ -108,4 +108,10 @@
   line-height: 60rpx;
   font-size: 26rpx;
   color: #666;
+}
+
+.data-none {
+  font-size: 48rpx;
+  color: #ccc;
+  text-align: center;
 }

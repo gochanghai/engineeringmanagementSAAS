@@ -1,4 +1,4 @@
-const httpJS = require('../net/http.js');
+const httpJS = require('../../static/http.js');
 const storageJS = require('../../static/storage.js');
 const dateUtilJS = require('../../utils/date.js')
 
@@ -7,30 +7,38 @@ const dateUtilJS = require('../../utils/date.js')
  * cprojectid 项目id；
  * bconfirmvalueList 返回实体类数组数据；
  */
-function getConfirmvalueList(cprojectid, callback) {
+export let getConfirmvalueList = function (cprojectid, callback) {
     let bconfirmvalueList = [];
     let datalist = {
         user: storageJS.getUser().account,
         form: "dc_mng_project_confirmvalues",
-        action: "get",
-        distinct: false,
-        fields: [
-            "formid",
-            "confirmat",
-            "outputvalue",
-            "receivableamount",
-            "valueuploadat",
-        ],
+        action: "leftJoin",
+        fields: {
+            dc_mng_project_confirmvalues: [
+                "formid",
+                "confirmat",
+                "outputvalue",
+                "receivableamount",
+                "valueuploadat",
+            ],
+            dc_mng_contract: ["ownerpaypercent"]
+        },
+        join: [{
+            dc_mng_project_confirmvalues: "projectid",
+            dc_mng_contract: "projectid"
+        }],
         page: null,
-        condition: [{
-            field: "projectid",
-            value: cprojectid,
-            symbol: "="
-        }]
+        condition: {
+            dc_mng_project_confirmvalues: [{
+                field: "projectid",
+                value: cprojectid,
+                symbol: "="
+            }]
+        }
     };
-    httpJS.request('/form', datalist, function (res) {
+    httpJS.request('/mform', datalist, function (res) {
         try {
-            bconfirmvalueList = JSON.parse(res.data).datalist.dc_mng_project_confirmvalues || null;
+            bconfirmvalueList = res.data.datalist.dc_mng_project_confirmvalues || null;
         } catch (error) { }
         return typeof callback == 'function' && callback(bconfirmvalueList);
     });
@@ -42,37 +50,45 @@ function getConfirmvalueList(cprojectid, callback) {
  * cprojectid 项目id；
  * bconfirmvalue 返回实体类数据；
  */
-function getConfirmvalue(cformid, cprojectid, callback) {
+export let getConfirmvalue = function (cformid, cprojectid, callback) {
     let bconfirmvalue = {};
     let datalist = {
         user: storageJS.getUser().account,
         form: "dc_mng_project_confirmvalues",
-        action: "get",
-        distinct: false,
-        fields: [
-            "formid",
-            "confirmat",
-            "outputvalue",
-            "receivableamount",
-            "valueuploadat",
-        ],
+        action: "leftJoin",
+        fields: {
+            dc_mng_project_confirmvalues: [
+                "formid",
+                "confirmat",
+                "outputvalue",
+                "receivableamount",
+                "valueuploadat",
+            ],
+            dc_mng_contract: ["ownerpaypercent"]
+        },
+        join: [{
+            dc_mng_project_confirmvalues: "projectid",
+            dc_mng_contract: "projectid"
+        }],
         page: {
             "pageSize": 1,
             "pageIndex": 0
         },
-        condition: [{
-            field: "formid",
-            value: cformid,
-            symbol: "="
-        }, {
-            field: "projectid",
-            value: cprojectid,
-            symbol: "="
-        }]
+        condition: {
+            dc_mng_project_confirmvalues: [{
+                field: "formid",
+                value: cformid,
+                symbol: "="
+            }, {
+                field: "projectid",
+                value: cprojectid,
+                symbol: "="
+            }]
+        }
     };
-    httpJS.request('/form', datalist, function (res) {
+    httpJS.request('/mform', datalist, function (res) {
         try {
-            bconfirmvalue = JSON.parse(res.data).datalist.dc_mng_project_confirmvalues[0] || null;
+            bconfirmvalue = res.data.datalist.dc_mng_project_confirmvalues[0] || null;
         } catch (error) { }
         return typeof callback == 'function' && callback(bconfirmvalue);
     });
@@ -85,7 +101,7 @@ function getConfirmvalue(cformid, cprojectid, callback) {
  * cprojectid 项目id；
  * code 返回服务器的结果；
  */
-function updateConfirmvalue(fconfirmvalue = { confirmat: null, outputvalue: null, receivableamount: null, valueuploadat: null }, cformid = null, cprojectid = null, callback) {
+export let updateConfirmvalue = function (fconfirmvalue = { confirmat: null, outputvalue: null, receivableamount: null, valueuploadat: null }, cformid = null, cprojectid = null, callback) {
     let datalist = {
         user: storageJS.getUser().account,
         form: "dc_mng_project_confirmvalues",
@@ -119,7 +135,7 @@ function updateConfirmvalue(fconfirmvalue = { confirmat: null, outputvalue: null
  * cprojectid 项目id；
  * code 返回服务器的结果；
  */
-function deleteConfirmvalue(cformid = null, cprojectid = null, callback) {
+export let deleteConfirmvalue = function (cformid = null, cprojectid = null, callback) {
     let datalist = {
         user: storageJS.getUser().account,
         form: "dc_mng_project_confirmvalues",
@@ -145,12 +161,14 @@ function deleteConfirmvalue(cformid = null, cprojectid = null, callback) {
  * 新增产值登记数据：
  * fconfirmvalue 实体类数据；
  * code 返回服务器的结果；
+ * forid 返回新增记录的表单id；
  */
-function addConfirmvalue(fconfirmvalue = { confirmat: null, outputvalue: null, receivableamount: null, valueuploadat: null, projectid: null }, callback) {
+export let addConfirmvalue = function (fconfirmvalue = { confirmat: null, outputvalue: null, receivableamount: null, valueuploadat: null, projectid: null }, callback) {
     let datalist = {
         user: storageJS.getUser().account,
         form: "dc_mng_project_confirmvalues",
         action: "add",
+        formIdSign: true,
         fields: [{
             confirmat: dateUtilJS.formatTime(fconfirmvalue.confirmat),
             outputvalue: fconfirmvalue.outputvalue,
@@ -163,16 +181,6 @@ function addConfirmvalue(fconfirmvalue = { confirmat: null, outputvalue: null, r
     };
     console.log(datalist);
     httpJS.request('/form', datalist, function (res) {
-        return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code })
+        return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code, formid: JSON.parse(res.data).formid })
     });
 };
-
-
-
-module.exports = {
-    updateConfirmvalue: updateConfirmvalue,
-    addConfirmvalue: addConfirmvalue,
-    getConfirmvalue: getConfirmvalue,
-    getConfirmvalueList: getConfirmvalueList,
-    deleteConfirmvalue: deleteConfirmvalue,
-}

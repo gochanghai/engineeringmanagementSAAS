@@ -1,4 +1,4 @@
-const httpJS = require('../net/http.js');
+const httpJS = require('../../static/http.js');
 const storageJS = require('../../static/storage.js');
 
 /**
@@ -6,7 +6,7 @@ const storageJS = require('../../static/storage.js');
  * fmanager 实体类数据；
  * code 返回的服务器结果；
  *  */
-function addManager(fmanager = { projectid: null, managerName: null, telphoneNo: null, managerType: null }, callback) {
+export let addManager = function (fmanager = { projectid: null, managerName: null, telphoneNo: null, managerType: null }, callback) {
     let datalist = {
         user: storageJS.getUser().account,
         addUser: {
@@ -19,8 +19,4 @@ function addManager(fmanager = { projectid: null, managerName: null, telphoneNo:
     httpJS.request('/mysaas/project/addprojectmnguser/add/0', datalist, function (res) {
         return typeof callback == 'function' && callback(res.data.code);
     });
-}
-
-module.exports = {
-    addManager: addManager
 }

@@ -1,4 +1,4 @@
-const httpJS = require('../net/http.js');
+const httpJS = require('../../static/http.js');
 const storageJS = require('../../static/storage.js');
 
 /**
@@ -6,7 +6,7 @@ const storageJS = require('../../static/storage.js');
  * cprojectid 项目id；
  * bstatisdata 返回的实体类数据；
  */
-function getWorkerstatis(cprojectid, callback) {
+export let getWorkerstatis = function getWorkerstatis(cprojectid, callback) {
     let bstatisdata = [];
     let datalist = {
         user: storageJS.getUser().account,
@@ -21,8 +21,3 @@ function getWorkerstatis(cprojectid, callback) {
         return typeof callback == 'function' && callback(bstatisdata);
     });
 };
-
-
-module.exports = {
-    getWorkerstatis: getWorkerstatis,
-}

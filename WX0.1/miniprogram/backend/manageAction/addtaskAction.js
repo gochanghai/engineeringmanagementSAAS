@@ -1,4 +1,4 @@
-const httpJS = require('../net/http.js');
+const httpJS = require('../../static/http.js');
 const storageJS = require('../../static/storage.js');
 const dateUtilJS = require('../../utils/date.js')
 
@@ -8,7 +8,7 @@ const dateUtilJS = require('../../utils/date.js')
  * ftaskInfo 实体类数据；
  * code 返回的服务器结果；
  */
-function postTask(ftaskInfo = { projectid: null, messagemodule: null, pointtoaccount: null, message: null, messagedemand: null, }, callback) {
+export let postTask = function (ftaskInfo = { projectid: null, messagemodule: null, pointtoaccount: null, message: null, messagedemand: null, }, callback) {
     let datalist = {
         user: storageJS.getUser().account,
         form: "dc_mng_project_messagedrives",
@@ -35,7 +35,7 @@ function postTask(ftaskInfo = { projectid: null, messagemodule: null, pointtoacc
  * 从缓存中获取项目下拉列表：
  * bprojectNameList 返回的实体类数据；
  */
-function getProjectNameList(callback) {
+export let getProjectNameList = function (callback) {
     let bprojectNameList = [];
     let projectList = storageJS.getProjectList();
     for (let item of projectList) {
@@ -53,7 +53,7 @@ function getProjectNameList(callback) {
  * cprojectid 项目id；
  * bassignUser 返回的实体类数据
  */
-function getAssignUser(cprojectid, callback) {
+export let getAssignUser = function (cprojectid, callback) {
     let bassignUser = [];
     let datalist = {
         user: storageJS.getUser().account,
@@ -76,10 +76,4 @@ function getAssignUser(cprojectid, callback) {
         }
         else return typeof callback == 'function' && callback({ code: -1 })
     });
-}
-
-module.exports = {
-    postTask: postTask,
-    getProjectNameList: getProjectNameList,
-    getAssignUser: getAssignUser,
 }

@@ -1,4 +1,4 @@
-const httpJS = require('../net/http.js');
+const httpJS = require('../../static/http.js');
 const storageJS = require('../../static/storage.js');
 
 
@@ -7,7 +7,7 @@ const storageJS = require('../../static/storage.js');
  * cprojectid 项目id；
  * bmangageInfo 返回实体类数据；
  * */
-function getManageInfo(cprojectid = null, callback) {
+export let getManageInfo = function (cprojectid = null, callback) {
     let bmangageInfo = {};
     let datalist = {
         user: storageJS.getUser().account,
@@ -15,6 +15,7 @@ function getManageInfo(cprojectid = null, callback) {
         action: "get",
         distinct: false,
         fields: [
+            "projectname",
             "projectabbreviation",
             "ownerapprovaltime",
             "ownerpaypercent",
@@ -40,7 +41,7 @@ function getManageInfo(cprojectid = null, callback) {
  * cprojectid 项目id；
  * code 返回服务器的结果；
  */
-function updateManageInfo(fmanageInfo = { projectabbreviation: null, ownerapprovaltime: null, ownerpaypercent: null, ownerpaytime: null, }, cprojectid = null, callback) {
+export let updateManageInfo = function (fmanageInfo = { projectabbreviation: null, ownerapprovaltime: null, ownerpaypercent: null, ownerpaytime: null, }, cprojectid = null, callback) {
     let datalist = {
         user: storageJS.getUser().account,
         form: "dc_mng_contract",
@@ -61,9 +62,4 @@ function updateManageInfo(fmanageInfo = { projectabbreviation: null, ownerapprov
     httpJS.request('/form', datalist, function (res) {
         return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code });
     });
-}
-
-module.exports = {
-    getManageInfo: getManageInfo,
-    updateManageInfo: updateManageInfo,
 }

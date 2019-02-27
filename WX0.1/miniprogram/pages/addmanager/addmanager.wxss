@@ -72,12 +72,16 @@
 }
 
 .btom-btns view.ignore {
-  border: 1px solid #b5b5b5;
+  border: 1rpx solid #b5b5b5;
   color: #666;
 }
 
 .btom-btns view.solve {
   background-color: #e95207;
-  border: 1px solid #e95207;
+  border: 1rpx solid #e95207;
   color: #fff;
+}
+
+.btn-hover-class {
+  background-color: rgba(0, 0, 0, 0.1);
 }

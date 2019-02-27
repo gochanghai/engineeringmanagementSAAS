@@ -1,7 +1,7 @@
 {
   "usingComponents": {},
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#ffffff",
-    "navigationBarTitleText": "深华建设",
-    "navigationBarTextStyle": "black"
+  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarTitleText": "深华建设",
+  "navigationBarTextStyle": "black",
+  "enablePullDownRefresh": false
 }

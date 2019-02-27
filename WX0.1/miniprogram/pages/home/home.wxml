@@ -14,8 +14,11 @@
   <view class='money-info'>
     <view class='line'></view>
     <view class='switch-money'>
-      <text>金额可见</text>
-      <switch checked bindchange="switch1Change" style='zoom:.6;margin-left:12rpx;' />
+      <view></view>
+      <view>
+        <text>金额可见</text>
+        <switch checked bindchange="switch1Change" style='zoom:.5;margin-left:12rpx;margin-top:-9rpx;' />
+      </view>
     </view>
     <view class='output-value'>
       <view class='item' bindtap='navProjectList' hover-class='hover-row'>
@@ -38,7 +41,7 @@
   <view class='data-charts'>
     <view class='visua' style='position: relative;height:400rpx;'>
       <text class='title'><text style='color:#FF9858;font-weight:bold'>丨</text>产值</text>
-      <view class='data-none1 none' wx:if='{{outputValueList.length < 0}}'>暂无数据</view>
+      <view class='data-none1 none' wx:if='{{outputValueList.length > 0}}'>暂无数据</view>
       <canvas canvas-id="Canvas1" wx:else class="canvas1" data-canvas='产值' bindtap='refreshChart'></canvas>
     </view>
     <view class='visua' style='height:330rpx;'>
@@ -72,15 +75,15 @@
       <view class='data-none3 none' wx:if='{{!isProgressChart}}'>暂无数据</view>
       <view class='con' wx:else>
         <canvas canvas-id="Canvas3" class="canvas3" data-canvas='进度' style='margin-left:-37rpx;' bindtap='refreshChart'></canvas>
-        <view class='content-info' style='margin-left: 40rpx;'>
+        <view class='content-info content-info3' style='margin-left: 40rpx;'>
           <view class='info-item'>
             <text style='background-color:#B122E6'></text>
             <view>未完成产值：{{progressData.unOutputValue}}万</view>
           </view>
-          <view class='info-item'>
+          <!-- <view class='info-item'>
             <text style='background-color:#F5317F'></text>
             <view>未确认产值：{{progressData.unconfirmValue}}万</view>
-          </view>
+          </view> -->
           <view class='info-item'>
             <text style='background-color:#FF8359'></text>
             <view>累计回款：{{progressData.actualreceivAmount}}万</view>

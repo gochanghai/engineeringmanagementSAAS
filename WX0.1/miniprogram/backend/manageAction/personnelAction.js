@@ -1,4 +1,4 @@
-const httpJS = require('../net/http.js');
+const httpJS = require('../../static/http.js');
 const storageJS = require('../../static/storage.js');
 
 /**
@@ -6,7 +6,7 @@ const storageJS = require('../../static/storage.js');
  * cprojectid 项目id；
  * bmanagerList 返回的实体类数据；
  **/
-function getManagerList(cprojectid = null, callback) {
+export let getManagerList = function (cprojectid = null, callback) {
     var bmanagerList = [];
     let datalist = {
         user: storageJS.getUser().account,
@@ -37,7 +37,7 @@ function getManagerList(cprojectid = null, callback) {
  * cprojectid 项目id；
  * bgroupList 返回的实体类数据；
  */
-function getGroupList(cprojectid, callback) {
+export let getGroupList = function (cprojectid, callback) {
     var bgroupList = [];
     let datalist = {
         user: storageJS.getUser().account,
@@ -80,7 +80,7 @@ function getGroupList(cprojectid, callback) {
  * cprojectid 项目id；
  * bconstructionList 返回的实体类数据；
  */
-function getConstructionList(cprojectid, callback) {
+export let getConstructionList = function (cprojectid, callback) {
     var bconstructionList = [];
     let datalist = {
         user: storageJS.getUser().account,
@@ -117,10 +117,4 @@ function getConstructionList(cprojectid, callback) {
         }
         return typeof callback == 'function' && callback(bconstructionList);
     })
-}
-
-module.exports = {
-    getManagerList: getManagerList,
-    getGroupList: getGroupList,
-    getConstructionList: getConstructionList,
 }

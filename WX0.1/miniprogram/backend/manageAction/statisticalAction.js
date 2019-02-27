@@ -1,4 +1,4 @@
-const httpJS = require('../net/http.js');
+const httpJS = require('../../static/http.js');
 const storageJS = require('../../static/storage.js');
 
 
@@ -6,7 +6,7 @@ const storageJS = require('../../static/storage.js');
  * 获取产值曲线图数据：
  * bgraphOutputValueData 返回的实体类数据；
  */
-function getGraphOutputValue(callback) {
+export let getGraphOutputValue = function (callback) {
   var bgraphOutputValueData = [];
   let projectList = storageJS.getProjectList();
   let ids = "";
@@ -62,7 +62,7 @@ function getGraphOutputValue(callback) {
  * 获取劳务人员绘图数据：
  * bgraphSecurityData 返回的实体类数据；
  */
-function getGraphSecurity(callback) {
+export let getGraphSecurity = function (callback) {
   var bgraphSecurityData = {
     totalWorker: 0, //总人数
     totalUnDisclose: 0, //安全交底
@@ -108,7 +108,3 @@ function getGraphSecurity(callback) {
     return typeof callback == 'function' && callback(bgraphSecurityData)
   });
 };
-module.exports = {
-  getGraphOutputValue: getGraphOutputValue,
-  getGraphSecurity: getGraphSecurity,
-}

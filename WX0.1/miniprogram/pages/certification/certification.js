@@ -169,8 +169,8 @@ Page({
     }
     if (val.length === 11) {
       let a1 = val.substring(0, 3);
-      let a2 = val.substring(4, 7);
-      let a3 = val.substring(8, 11);
+      let a2 = val.substring(3,7);
+      let a3 = val.substring(7, 11);
       // console.log(date);
       return a1 + '-' + a2 + '-' + a3;
     }

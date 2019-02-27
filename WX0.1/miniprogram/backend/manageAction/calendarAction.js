@@ -1,4 +1,4 @@
-const httpJS = require('../net/http.js');
+const httpJS = require('../../static/http.js');
 const storageJS = require('../../static/storage.js');
 const dateUtilJS = require('../../utils/date.js')
 
@@ -6,7 +6,7 @@ const dateUtilJS = require('../../utils/date.js')
  * 统计6大风险信息条数：
  * bcalendarData 返回的实体类数据
  */
-function countCelendarMessage(callback) {
+export let countCelendarMessage = function (callback) {
     let bcalendarData = [];
     let projectList = storageJS.getProjectList();
     let ids = "";
@@ -22,8 +22,8 @@ function countCelendarMessage(callback) {
         action: "dStatis",
         form: "dc_mng_project_messagedrives",
         fields: [
-            "SUM(case when dc_mng_project_messagedrives.messagemodule = 'confirmValue' then 1 else 0 end) as confirmMessageCount",
-            "SUM(case when dc_mng_project_messagedrives.messagemodule = 'recievedPay' then 1 else 0 end) as recievedMessageCount",
+            "SUM(case when dc_mng_project_messagedrives.messagemodule = 'confirmvalue' then 1 else 0 end) as confirmMessageCount",
+            "SUM(case when dc_mng_project_messagedrives.messagemodule = 'recievedpay' then 1 else 0 end) as recievedMessageCount",
             "SUM(case when dc_mng_project_messagedrives.messagemodule = 'inclose' then 1 else 0 end) as incloseMessageCount",
             "SUM(case when dc_mng_project_messagedrives.messagemodule = 'insurance' then 1 else 0 end) as insuranceMessageCount",
             "SUM(case when dc_mng_project_messagedrives.messagemodule = 'education' then 1 else 0 end) as educationMessageCount"
@@ -41,7 +41,7 @@ function countCelendarMessage(callback) {
     };
     httpJS.request('/form', datalist, function (res) {
         try {
-            let resmessagedrive = JSON.parse(res.data).datalist.messagedrive;
+            let resmessagedrive = JSON.parse(res.data).datalist.dc_mng_project_messagedrives;
             if (null != resmessagedrive) {
                 for (let item of resmessagedrive) {
                     let events = {
@@ -67,8 +67,16 @@ function countCelendarMessage(callback) {
  * cdate 查询日期；
  * bmessageSortList 返回的实体类数据；
  */
-function getMessageByDate(cdate = null, callback) {
-    let bmessageSortList = {};
+export let getMessageByDate = function (cdate = null, callback) {
+    let bmessageSortList = {
+        confirmvalue: [],
+        recievedpay: [],
+        disclose: [],
+        education: [],
+        insurance: [],
+        progress: [],
+        security: []
+    };
     let projectList = storageJS.getProjectList();
     let ids = "";
     for (let item of projectList) {
@@ -117,8 +125,8 @@ function getMessageByDate(cdate = null, callback) {
         }
     };
     httpJS.request('/mform', datalist, function (res) {
-        try {
-            let messageList = JSON.parse(res.data).datalist.messagedrive;
+        let messageList = res.data.datalist.dc_mng_project_messagedrives;
+        if (null != messageList) {
             bmessageSortList.confirmvalue = messageList.filter(function (resMessDataPage, index, array) {
                 return resMessDataPage.messagemodule == this;
             }, "confirmvalue");
@@ -134,12 +142,13 @@ function getMessageByDate(cdate = null, callback) {
             bmessageSortList.insurance = messageList.filter(function (resMessDataPage, index, array) {
                 return resMessDataPage.messagemodule == this;
             }, "insurance");
-        } catch (error) { }
+            bmessageSortList.progress = messageList.filter(function (resMessDataPage, index, array) {
+                return resMessDataPage.messagemodule == this;
+            }, "progress");
+            bmessageSortList.security = messageList.filter(function (resMessDataPage, index, array) {
+                return resMessDataPage.messagemodule == this;
+            }, "security");
+        }
         return typeof callback == 'function' && callback(bmessageSortList);
     });
 };
-
-module.exports = {
-    countCelendarMessage: countCelendarMessage,
-    getMessageByDate: getMessageByDate,
-}

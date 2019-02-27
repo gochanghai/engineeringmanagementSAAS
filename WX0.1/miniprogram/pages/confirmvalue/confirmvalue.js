@@ -10,19 +10,25 @@ Page({
     // 获取项目ID
     this.setData({
       projectID: options.projectID,
-      totalAmount: options.contractamount,      
+      totalAmount: options.contractamount,
     });
     // 获取产值数据
     this.getOutputValueList(this.data.projectID);
   },
-  onShow: function () {
+  onShow: function() {
     this.getOutputValueList(this.data.projectID);
   },
 
   // 获取产值列表数据
-  getOutputValueList(projectID){
+  getOutputValueList(projectID) {
     let _than = this;
-    confirmvalueAction.getConfirmvalueList(projectID, function (res) {
+    // 打开加载框
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading'
+    })
+    // 调用函数接口获取数据
+    confirmvalueAction.getConfirmvalueList(projectID, function(res) {
       console.log(res);
       let list = [];
       for (let index in res) {
@@ -35,9 +41,11 @@ Page({
         list.push(item);
       }
       _than.setData({
-        list: list,        
+        list: list,
       });
-    });    
+      // 关闭加载框
+      wx.hideToast({});
+    });
   },
 
   // 跳转到登记产值
@@ -46,6 +54,14 @@ Page({
     let formID = event.currentTarget.dataset.id;
     wx.navigateTo({
       url: '/pages/outputvalregister/outputvalregister?projectID=' + projectID + "&formID=" + formID
+    })
+  },
+
+  //新增产值
+  addConfirmValue() {
+    let projectID = this.data.projectID;
+    wx.navigateTo({
+      url: '/pages/outputvalregister/outputvalregister?title=新增产值&projectID=' + projectID,
     })
   },
 

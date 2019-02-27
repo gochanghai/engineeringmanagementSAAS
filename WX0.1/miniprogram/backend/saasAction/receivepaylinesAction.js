@@ -1,7 +1,7 @@
 /**
  * 对接回款-流水线
  */
-const httpJS = require('../net/http.js');
+const httpJS = require('../../static/http.js');
 const storageJS = require('../../static/storage.js');
 
 /**
@@ -9,7 +9,7 @@ const storageJS = require('../../static/storage.js');
  * cprojectid 项目id；
  * blinesList 返回的实体类数据；
  */
-function getLinesList(cprojectid, callback) {
+export let getLinesList = function (cprojectid, callback) {
     let blinesList = [];
     let datalist = {
         user: storageJS.getUser().account,
@@ -55,7 +55,7 @@ function getLinesList(cprojectid, callback) {
  * cid 表单id；
  * blines 返回的实体类数据；
  */
-function getLinesLPage(cprojectid, cid, callback) {
+export let getLinesLPage = function (cprojectid, cid, callback) {
     let blines = {};
     let datalist = {
         user: storageJS.getUser().account,
@@ -98,8 +98,3 @@ function getLinesLPage(cprojectid, cid, callback) {
         return typeof callback == 'function' && callback(blines);
     });
 };
-
-module.exports = {
-    getLinesList: getLinesList,
-    getLinesLPage: getLinesLPage,
-}

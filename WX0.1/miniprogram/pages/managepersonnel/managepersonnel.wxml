@@ -42,6 +42,7 @@
                   </view>
                   <view class='item-line'></view>
                 </view>
+                <!-- <view class='data-none' style='line-height:{{WinHeight}}'>暂无数据</view> -->
               </scroll-view>
             </view>
           </view>

@@ -111,10 +111,6 @@ Page({
       success(res) {
         if (res.confirm) {
           console.log('Commit');
-          //  新增
-          // fireGroupJS.addFireGroup(fireGroup,function(res){
-          //   console.log(res);
-          // })
           fireGroupAction.addFireGroup(fireGroup, function(code) {
             console.log(fireGroup);
             console.log(code);

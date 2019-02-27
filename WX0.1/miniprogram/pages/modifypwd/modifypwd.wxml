@@ -15,5 +15,5 @@
     </view>
   </view>
 
-  <view class="ok-btn" bindtap="save">完成</view>
+  <view class="ok-btn" bindtap="save">完 成</view>
 </view>

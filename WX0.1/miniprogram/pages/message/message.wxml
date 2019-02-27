@@ -14,17 +14,20 @@
     <swiper style='height:{{WinHeight}}' current='{{swiperIndex}}' bindchange="currentFun">
       <block>
         <swiper-item>
-          <scroll-view style='height:{{WinHeight}}' scroll-y>
-            <view class='context-item' bindtap='noticeDetail' wx:for="{{noticeList}}" data-item='{{item}}' wx:key="index">
-              <view class='text'>
-                <view class='context'>{{item.context}}</view>
+          <view class="data-none" style='line-height:{{WinHeight}}' wx:if='{{noticeList.length>0}}'>暂无数据</view>
+          <view wx:if='{{noticeList.length <0}}'>
+            <scroll-view style='height:{{WinHeight}}' scroll-y>
+              <view class='context-item' bindtap='noticeDetail' wx:for="{{noticeList}}" data-item='{{item}}' wx:key="index">
+                <view class='text'>
+                  <view class='context'>{{item.context}}</view>
+                </view>
+                <view class='info'>
+                  <text>发送部门：{{item.sendDept}}</text>
+                  <text>发送日期：{{item.sendDate}}</text>
+                </view>
               </view>
-              <view class='info'>
-                <text>发送部门：{{item.sendDept}}</text>
-                <text>发送日期：{{item.sendDate}}</text>
-              </view>
-            </view>
-          </scroll-view>
+            </scroll-view>
+          </view>
         </swiper-item>
       </block>
 
@@ -38,7 +41,7 @@
                     <view class="name">{{item.peojectName}} （{{item.total}}条）
                       <image src="{{toggleId == index ? toggleStyle.imgSel: toggleStyle.img}}"></image>
                     </view>
-                    <text catchtap='addTask' data-index="{{item}}">+任务</text>
+                    <text catchtap='addTask' data-data="{{item}}">+任务</text>
                   </view>
                   <view class='mes-container' wx:if="{{item.total > 0}}">
                     <view class='progress' wx:if="{{item.list != null}}">

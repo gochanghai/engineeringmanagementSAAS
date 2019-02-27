@@ -159,19 +159,7 @@
   font-size: 30rpx;
   color: #666;
   line-height: 110rpx;
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.mes-deal text {
-  display: inline-block;
-  width: 70rpx;
-  line-height: 40rpx;
-  margin-left: 20rpx;
-  text-align: center;
-  font-size: 28rpx;
-  color: #fefefe;
-  background-color: #e95207;
-  border-radius: 30rpx;
+  border-bottom: 1rpx solid #e5e5e5;
 }
 
 .mes-deal image {

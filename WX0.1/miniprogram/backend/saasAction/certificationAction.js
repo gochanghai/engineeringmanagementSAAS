@@ -1,14 +1,14 @@
 /**
  * 对接SaaS系统的认证信息页
  */
-const httpJS = require('../net/http.js');
+const httpJS = require('../../static/http.js');
 const storageJS = require('../../static/storage.js');
 
 /**
  * 获取认证信息：
  * bsertification 返回的实体类数据；
  */
-function getSertification(callback) {
+export let getSertification = function (callback) {
     let bsertification = {};
     let datalist = {
         user: storageJS.getUser().account,
@@ -54,8 +54,4 @@ function getSertification(callback) {
         }
         return typeof callback == 'function' && callback(bsertification)
     });
-}
-
-module.exports = {
-    getSertification: getSertification,
 }

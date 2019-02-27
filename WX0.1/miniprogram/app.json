@@ -1,18 +1,17 @@
 {
   "pages": [
     "pages/login/login",
-    "pages/projectnode/projectnode",
-    "pages/uploadfile/uploadfile",
-    "pages/declaretime/declaretime",    
+    "pages/projectview/projectview",
     "pages/home/home",
     
     "pages/mycenter/mycenter",
-    "pages/projectlist/projectlist",
-    "pages/projectview/projectview",
     "pages/message/message",
-    "pages/projectdetail/projectdetail",
     "pages/calendar/calendar",
-    "pages/modifypwd/modifypwd",
+    "pages/declaretime/declaretime",
+    "pages/projectnode/projectnode",
+    "pages/uploadfile/uploadfile",
+    "pages/projectlist/projectlist",
+    "pages/projectdetail/projectdetail",
     "pages/addworkpersonnel/addworkpersonnel",
     "pages/addmanager/addmanager",
     "pages/addgroup/addgroup",
@@ -20,21 +19,19 @@
     "pages/outputvalregister/outputvalregister",
     "pages/certification/certification",
     "pages/shenhua/shenhua",
+    "pages/modifypwd/modifypwd",
     "pages/addtask/addtask",
     "pages/messagesolve/messagesolve",
     "pages/receivableregistration/receivableregistration",
-    
     "pages/receivable/receivable",
     "pages/confirmvalue/confirmvalue",
     "pages/mespersonner/mespersonner",
     "pages/managepersonnel/managepersonnel",
-    "pages/projectsetting/projectsetting",
-    "testpages/test/test"
-    
+    "testpages/test/test",
+    "pages/projectsetting/projectsetting"
   ],
   "window": {
-    "backgroundColor": "#dedede",
-    "backgroundTextStyle": "light",
+    "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "工程管理系统",
     "navigationBarTextStyle": "black",

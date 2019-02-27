@@ -1,4 +1,4 @@
-const httpJS = require('../net/http.js');
+const httpJS = require('../../static/http.js');
 const storageJS = require('../../static/storage.js');
 
 /**
@@ -6,7 +6,7 @@ const storageJS = require('../../static/storage.js');
  * projectid 项目id；
  * bgroupList 返回的实体类数据；
  */
-function getGroupList(projectid, callback) {
+export let getGroupList = function (projectid, callback) {
     let bgroupList = [];
     let datalist = {
         user: storageJS.getUser().account,
@@ -35,7 +35,7 @@ function getGroupList(projectid, callback) {
  * 新增班组时获取基础班组列表：
  * bbasegroupList 返回的实体类数据；
  */
-function getBaseGroupList(callback) {
+export let getBaseGroupList = function (callback) {
     let bbasegroupList = [];
     let datalist = {
         user: storageJS.getUser().account,
@@ -61,7 +61,7 @@ function getBaseGroupList(callback) {
  * ffireGroup 实体类数据；
  * code 返回的服务器结果；
  */
-function addFireGroup(ffireGroup = { projectid: null, groupname: null, groupid: null, grouptype: null }, callback) {
+export let addFireGroup = function (ffireGroup = { projectid: null, groupname: null, groupid: null, grouptype: null }, callback) {
     let datalist = {
         user: storageJS.getUser().account,
         action: "add",
@@ -77,10 +77,4 @@ function addFireGroup(ffireGroup = { projectid: null, groupname: null, groupid: 
     httpJS.request('/form', datalist, function (res) {
         return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code });
     });
-}
-
-module.exports = {
-    getGroupList: getGroupList,
-    getBaseGroupList: getBaseGroupList,
-    addFireGroup: addFireGroup
 }

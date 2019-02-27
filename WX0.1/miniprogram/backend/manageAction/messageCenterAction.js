@@ -1,4 +1,4 @@
-const httpJS = require('../net/http.js');
+const httpJS = require('../../static/http.js');
 const storageJS = require('../../static/storage.js');
 const dateUtilJS = require('../../utils/date.js')
 
@@ -51,22 +51,20 @@ function getAllMessage(messageList, callback) {
         }
     };
     httpJS.request('/mform', datalist, function (res) {
-        try {
-            let resMesData = JSON.parse(res.data).datalist.dc_mng_project_messagedrives;
-            if (null != resMesData) {
-                for (let item of messageList) {
-                    item.messageData = resMesData.filter(function (
-                        resMessDataPage,
-                        index,
-                        array
-                    ) {
-                        return resMessDataPage.projectid == this;
-                    },
-                        item.projectid);
-                    item.messageTotal = item.messageData.length;
-                }
+        let resMesData = res.data.datalist.dc_mng_project_messagedrives;
+        if (null != resMesData && messageList.length > 0) {
+            for (let item of messageList) {
+                item.messageData = resMesData.filter(function (
+                    resMessDataPage,
+                    index,
+                    array
+                ) {
+                    return resMessDataPage.projectid == this;
+                },
+                    item.projectid);
+                item.messageTotal = item.messageData.length;
             }
-        } catch (error) { }
+        }
         return typeof callback == 'function' && callback(messageList)
     });
 };
@@ -75,14 +73,16 @@ function getAllMessage(messageList, callback) {
  * 多项目获取所有消息：
  * bmessageList 返回的实体类数据；
  */
-function mountedAllMessage(callback) {
+export let mountedAllMessage = function (callback) {
     var bmessageList = [];
     let projectList = storageJS.getProjectList();
     for (let item of projectList) {
         let pushBaseProject = {
             projectid: item.projectid,
             messageTotal: 0,
-            messageData: []
+            messageData: [],
+            projectabbreviation: item.projectabbreviation,
+            projectname: item.projectname,
         };
         bmessageList.push(pushBaseProject);
     }
@@ -97,7 +97,7 @@ function mountedAllMessage(callback) {
  * cprojectid 项目id；
  * bmessageInfo 返回的实体类数据
  */
-function getMessagePage(cformid, cprojectid, callback) {
+export let getMessagePage = function (cformid, cprojectid, callback) {
     let bmessageInfo = {};
     let datalist = {
         user: storageJS.getUser().account,
@@ -138,7 +138,7 @@ function getMessagePage(cformid, cprojectid, callback) {
     };
     httpJS.request('/mform', datalist, function (res) {
         try {
-            let resMesData = JSON.parse(res.data).datalist.dc_mng_project_messagedrives;
+            let resMesData = res.data.datalist.dc_mng_project_messagedrives;
             if (null != resMesData) {
                 bmessageInfo = resMesData[0];
             }
@@ -152,7 +152,7 @@ function getMessagePage(cformid, cprojectid, callback) {
  * 多项目查询消息条数：
  * bcountNo=0 返回的消息条数；
  */
-function countMessageNo(callback) {
+export let countMessageNo = function (callback) {
     let bcountNo = 0;
     let projectList = storageJS.getProjectList();
     let ids = "";
@@ -182,9 +182,9 @@ function countMessageNo(callback) {
     }
     httpJS.request('/form', datalist, function (res) {
         if (JSON.parse(res.data).code > 0) {
-          let resmessagedrive = JSON.parse(res.data).datalist.dc_mng_project_messagedrives;
+            let resmessagedrive = JSON.parse(res.data).datalist.dc_mng_project_messagedrives;
             if (null != resmessagedrive)
-              bcountNo = resmessagedrive[0].counttotal
+                bcountNo = resmessagedrive[0].counttotal
         }
         return typeof callback == 'function' && callback(bcountNo);
     })
@@ -197,14 +197,14 @@ function countMessageNo(callback) {
  * cmessagemodule 消息类型；
  * code 返回服务器的结果；
  */
-function mesIgnore(cprojectid = null, cformid = null, cmessagemodule = null, callback) {
+export let mesIgnore = function (cprojectid = null, cformid = null, cmessagemodule = null, callback) {
     let datalist = {
         user: storageJS.getUser().account,
         batchFun: "serverTrans",
         source: null,
         batchList: [{
-          name: "dc_mng_project_messagedrives",
-          form: "dc_mng_project_messagedrives",
+            name: "dc_mng_project_messagedrives",
+            form: "dc_mng_project_messagedrives",
             action: "updateList",
             fields: {
                 status: "已忽略",
@@ -222,8 +222,8 @@ function mesIgnore(cprojectid = null, cformid = null, cmessagemodule = null, cal
             page: null
         },
         {
-          name: "dc_mng_project_messagedeal",
-          form: "dc_mng_project_messagedeal",
+            name: "dc_mng_project_messagedeals",
+            form: "dc_mng_project_messagedeals",
             action: "add",
             fields: [{
                 projectid: cprojectid,
@@ -241,12 +241,3 @@ function mesIgnore(cprojectid = null, cformid = null, cmessagemodule = null, cal
         return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code })
     });
 };
-
-
-
-module.exports = {
-    mountedAllMessage: mountedAllMessage,
-    getMessagePage: getMessagePage,
-    countMessageNo: countMessageNo,
-    mesIgnore: mesIgnore,
-}

@@ -1,14 +1,14 @@
 /**
  * 对接项目列表页
  */
-const httpJS = require('../net/http.js');
+const httpJS = require('../../static/http.js');
 const storageJS = require('../../static/storage.js');
 
 /**
  * 获取项目列表：
  * bprojectList 返回的实体类数据：t0 工程、t1 维保、t2 销售、t3 检测、t4 维修、t5 服务；
  */
-function getProjectList(callback) {
+export let getProjectList = function (callback) {
   let bprojectList = {
     t0: [],
     t1: [],
@@ -86,33 +86,3 @@ function getProjectList(callback) {
     return typeof callback == 'function' && callback(bprojectList)
   });
 };
-
-function countWorkerFileUnSign(projectid, projectPage, callback) {
-  let datalist = {
-    user: storageJS.getUser().account,
-    form: "worker",
-    action: "get",
-    fields: [
-      "SUM(if(discloseFileSign = 'false',1,0)) as sumUnDisclose", //安全交底
-      "SUM(if(educationFileSign = 'false',1,0)) as sumUnEducation", //安全教育
-      "SUM(if(insuranceFileSign = 'false',1,0)) as sumUnInsurance" //保险
-    ],
-    page: null,
-    condition: [{
-      field: "projectid",
-      symbol: "=",
-      value: projectid
-    }]
-  };
-  httpJS.request('/form', datalist, function (res) {
-    let resWorkerData = JSON.parse(res.data).datalist.worker[0];
-    projectPage.DiscloseData = resWorkerData.sum1;
-    projectPage.EducationData = resWorkerData.sum2;
-    projectPage.InsuranceData = resWorkerData.sum3;
-    return typeof callback == 'function' && callback(projectPage)
-  });
-};
-
-module.exports = {
-  getProjectList: getProjectList,
-}

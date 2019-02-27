@@ -223,8 +223,12 @@ Page({
       let datas = [];
       for (let index in outputValueList) {
         let item = outputValueList[index];
-        categories.push(_than.valueUndefinedTo0(item.date));
-        datas.push(_than.valueUndefinedTo0(item.sumOutputValue));
+        let date = _than.valueUndefinedRsturn0(item.date);
+        let number = _than.valueUndefinedRsturn0(item.sumOutputValue);
+        if (date != '0000-00-00'){
+          categories.push(date);
+          datas.push(number);
+        }        
       }
       _than.setData({
         outputValueList: outputValueList,
@@ -284,20 +288,16 @@ Page({
       console.log(res);
       // 设置进度图表数据
       let progressData = {
-        unOutputValue: _than.getMoneyFormat(res.unconfirmvaluesum / 10000),
-        unconfirmValue: _than.getMoneyFormat(res.unconfirmvaluesum / 10000),
+        unOutputValue: _than.getMoneyFormat(res.outputvaluerest / 10000),
+        // unconfirmValue: _than.getMoneyFormat(res.outputvaluerest / 10000),
         actualreceivAmount: _than.getMoneyFormat(res.actualreceivamountsum / 10000),
         receivablePay: _than.getMoneyFormat(res.receivablepaysum / 10000),
       };
       let series = [{
         name: '未完成产值',
-        data: res.unconfirmvaluesum / 10000,
+        data: res.outputvaluerest / 10000,
         stroke: false
-      }, {
-        name: '未确认产值',
-        data: res.unconfirmvaluesum / 10000,
-        stroke: false
-      }, {
+      },{
         name: '累计回款',
         data: res.actualreceivamountsum / 10000,
         stroke: false
@@ -309,7 +309,7 @@ Page({
       _than.ChartData3(series);
       let isProgressChart = false;
       // 判断是否有数据
-      if (res.receivablePay != null && res.receivablePay != null && res.actualreceivamountsum != null && res.unconfirmvaluesum != null) {
+      if (res.receivablePay != null && res.actualreceivamountsum != null && res.outputvaluerest != null) {
         isProgressChart = true;
       }
       _than.setData({
@@ -363,9 +363,9 @@ Page({
     var ret = intSum + dot;
     return ret;
   },
-  valueUndefinedTo0(val) {
+  valueUndefinedRsturn0(val) {
     if (undefined != val || '' != val || null != val) {
-      return 0;
+      return '0000-00-00';
     }
     return val;
   }

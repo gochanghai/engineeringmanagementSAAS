@@ -3,9 +3,14 @@
   <view class='information'>
     <view class='information_item'>
       <text>项目名称</text>
-      <text class='value'>{{projectabbreviation}}</text>
+      <text class='value'>{{projectName}}</text>
     </view>
     <view class='information_item'>
+      <text>项目简称</text>
+      <!-- <text class='value'>{{projectAbbreviation}}</text> -->
+      <input value='{{projectAbbreviation}}' type='text'></input>
+    </view>
+    <!-- <view class='information_item'>
       <text>合同编号</text>
       <text class='value'>{{contractInfo.contractNo}}</text>
     </view>
@@ -20,7 +25,7 @@
     <view class='information_item'>
       <text>合同金额(元)</text>
       <text class='value'>{{contractInfo.contractAmount}}</text>
-    </view>
+    </view> -->
     <view class='information_item'>
       <text>业务审批付款周期(天)</text>
       <input type='number' confirm-type="next" value='{{ownerPayTime}}' placeholder-class='input_class' bindinput='inputOwnerPayTime' />
@@ -36,7 +41,7 @@
   </view>
 
   <view class='btom-btns'>
-    <view class='ignore' bindtap='cancel'>取消</view>
-    <view class='solve' bindtap='commitProSetting'>确定</view>
+    <view class='ignore' bindtap='cancel' hover-class='btn-hover-class'>取 消</view>
+    <view class='solve' bindtap='commitProSetting' hover-class='btn-hover-class'>确 定</view>
   </view>
 </view>

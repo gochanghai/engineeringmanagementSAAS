@@ -1,4 +1,4 @@
-const httpJS = require('../net/http.js');
+const httpJS = require('../../static/http.js');
 const storageJS = require('../../static/storage.js');
 
 /**
@@ -7,7 +7,7 @@ const storageJS = require('../../static/storage.js');
  * cformid 劳务人员表单id；
  * bworkerInfo 返回的实体类数据；
  */
-function getWorkerPage(cprojectid = null, cformid = null, callback) {
+export let getWorkerPage = function (cprojectid = null, cformid = null, callback) {
     let bworkerInfo = {};
     let datalist = {
         user: storageJS.getUser().account,
@@ -58,7 +58,7 @@ function getWorkerPage(cprojectid = null, cformid = null, callback) {
  * cformidList 劳务人员表单id集合字符串；
  * bworkerList 返回的实体类数据；
  */
-function getWorkerList(cprojectid = null, cformidList = null, callback) {
+export let getWorkerList = function (cprojectid = null, cformidList = null, callback) {
     let bworkerList = [];
     let datalist = {
         user: storageJS.getUser().account,
@@ -107,7 +107,7 @@ function getWorkerList(cprojectid = null, cformidList = null, callback) {
  * fworker 实体类数据；
  * code 返回的服务器结果；
  */
-function addWorker(fworker = { projectid: null, groupid: null, name: null, age: null, repay: null, telno: null, idcard: null, admissionat: null, emergencycontract: null, leavingat: null, }, callback) {
+export let addWorker = function (fworker = { projectid: null, groupid: null, name: null, age: null, repay: null, telno: null, idcard: null, admissionat: null, emergencycontract: null, leavingat: null, }, callback) {
     let datalist = {
         user: storageJS.getUser().account,
         form: "dc_mng_worker",
@@ -141,7 +141,7 @@ function addWorker(fworker = { projectid: null, groupid: null, name: null, age: 
  * cformid 表单id；
  * code 返回的服务器结果；
  */
-function updateWorker(fworker = { idcard: null, admissionat: null, age: null, emergencycontract: null, groupid: null, leavingat: null, name: null, projectid: null, repay: null, telno: null, }, cformid = null, callback) {
+export let updateWorker = function (fworker = { idcard: null, admissionat: null, age: null, emergencycontract: null, groupid: null, leavingat: null, name: null, projectid: null, repay: null, telno: null, }, cformid = null, callback) {
     let datalist = {
         user: storageJS.getUser().account,
         form: "dc_mng_worker",
@@ -177,7 +177,7 @@ function updateWorker(fworker = { idcard: null, admissionat: null, age: null, em
  * cworkerformidlist 更新的劳务人员表单id集合字符串；
  * code 返回的服务器结果；
  */
-function updateWorkerSignList(fileSign = null, cprojectid = null, cworkerformidlist = null, callback) {
+export let updateWorkerSignList = function (fileSign = null, cprojectid = null, cworkerformidlist = null, callback) {
     let fieldsValue = {};
     switch (fileSign) {
         case "disclose":
@@ -196,7 +196,7 @@ function updateWorkerSignList(fileSign = null, cprojectid = null, cworkerformidl
         {
             name: "dc_mng_worker",
             form: "dc_mng_worker",
-            action: "update",
+            action: "updateList",
             fields: fieldsValue,
             page: null,
             condition: [
@@ -210,7 +210,7 @@ function updateWorkerSignList(fileSign = null, cprojectid = null, cworkerformidl
         {
             name: "dc_mng_project_messagedrives",
             form: "dc_mng_project_messagedrives",
-            action: "update",
+            action: "updateList",
             fields: {
                 status: "已处理"
             },
@@ -227,12 +227,15 @@ function updateWorkerSignList(fileSign = null, cprojectid = null, cworkerformidl
         user: storageJS.getUser().account,
         clientip: null,
         platform: "WXP",
-        batchFun: "jsonTrans",
+        batchFun: "serverTrans",
         source: null,
         batchList: postList
     };
+    console.log("datalist")
+    console.log(datalist)
     httpJS.request('/sbatch', datalist, function (res) {
-        return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code })
+        console.log(res)
+        return typeof callback == 'function' && callback({ code: res.data.code })
     });
 }
 
@@ -241,7 +244,7 @@ function updateWorkerSignList(fileSign = null, cprojectid = null, cworkerformidl
  * cprojectid 项目id；
  * bfireGroup 返回的实体类数据；
  */
-function getTeamNameList(cprojectid, callback) {
+export let getTeamNameList = function (cprojectid, callback) {
     let bfireGroup = [];
     let datalist = {
         user: storageJS.getUser().account,
@@ -272,7 +275,7 @@ function getTeamNameList(cprojectid, callback) {
  * fileSign 文件类型标志，disclose|education|insurance；
  * bWorkerList 返回的实体类数据；
  */
-function getSignedWorkerList(cprojectid, fileSign, callback) {
+export let getSignedWorkerList = function (cprojectid, fileSign, callback) {
     let bWorkerList = [];
     let conditionValue = [{
         field: "projectid",
@@ -335,14 +338,3 @@ function getSignedWorkerList(cprojectid, fileSign, callback) {
         return typeof callback == 'function' && callback(bWorkerList)
     });
 };
-
-
-module.exports = {
-    getWorkerPage: getWorkerPage,
-    getWorkerList: getWorkerList,
-    addWorker: addWorker,
-    updateWorker: updateWorker,
-    getTeamNameList: getTeamNameList,
-    updateWorkerSignList: updateWorkerSignList,
-    getSignedWorkerList: getSignedWorkerList,
-}

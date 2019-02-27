@@ -4,7 +4,7 @@
     <view class='task_item'>
       <text>合同起始时间</text>
       <!-- <picker mode="date" start="2010-01-01" disabled='1' end="2029-01-01" bindchange="InputBeginDate"> -->
-      <view class="picker" style='font-size:30rpx; color:#999;'>
+      <view class="picker" style='font-size:32rpx; color:#666;'>
         {{contractInfo.startDate}}
       </view>
       <!-- </picker> -->
@@ -13,7 +13,7 @@
     <view class='task_item'>
       <text>合同终止时间</text>
       <!-- <picker mode="date" start="2010-01-01" disabled='1' end="2029-01-01" bindchange="InputEndDate"> -->
-      <view class="picker" style='font-size:30rpx; color:#999;'>
+      <view class="picker" style='font-size:32rpx; color:#666;'>
         {{contractInfo.endDate}}
       </view>
       <!-- </picker> -->
@@ -23,7 +23,7 @@
     <view class='task_item'>
       <text>申报时间类型</text>
       <input type='number' confirm-type="next" bindinput="dayBindInput" />
-      <view style='font-size:30rpx; color:#999;width:50rpx;'>
+      <view style='font-size:32rpx; color:#666;width:50rpx;'>
         {{Day}}
       </view>
       <!-- <image src='/images/xia.png'></image> -->
@@ -61,8 +61,8 @@
       </scroll-view>
     </view>
     <view class='btom-btns'>
-      <view class='ignore' bindtap='cancel'>取消</view>
-      <view class='solve' bindtap='commitDeclareTime'>确定</view>
+      <view class='ignore' bindtap='cancel' hover-class='btn-hover-class'>取 消</view>
+      <view class='solve' bindtap='commitDeclareTime' hover-class='btn-hover-class'>确 定</view>
     </view>
     <!-- 底部弹出 -->
     <view class='maskLayer' wx:if="{{chooseSize}}" bindtap='hideModal'></view>

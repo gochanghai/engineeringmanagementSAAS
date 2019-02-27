@@ -98,7 +98,11 @@ Page({
           }
           list.push(project);
         }
-        swiperList.push(list);
+        let projectList = {
+          isData: list.length>0,
+          list: list,
+        }
+        swiperList.push(projectList);
       }
 
 
@@ -129,10 +133,10 @@ Page({
     if (val === '' || val === null) {
       return '0.00%'
     }
-    return val * 100 + '%'
+    return val.toFixed(4) * 100 + '%'
   },
 
-  // 获取数值百分比
+  //
   getStatusToText(val) {
     if (val === '' || val === null) {
       return '在建'

@@ -38,7 +38,7 @@
 }
 
 .details view.name {
-  margin-top: 20rpx;
+  margin-top: 10rpx;
   font-size: 30rpx;
   color: #333;
   font-weight: bold;
@@ -46,8 +46,8 @@
 
 .details view.name text {
   margin-left: 10rpx;
-  padding: 4rpx 15rpx;
-  font-size: 24rpx;
+  padding: 3rpx 12rpx;
+  font-size: 23rpx;
   color: #f0880c;
   border: 1px solid;
   border-radius: 6rpx;
@@ -72,21 +72,27 @@
   width: 86%;
   margin: 0 auto;
   margin-top: 10rpx;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1rpx solid #e5e5e5;
 }
 
 .money-info view.switch-money {
-  padding-left: 61.5%;
+  width: 88%;
+  margin: 0 auto;
   display: flex;
-  align-items: center;
+  justify-content: space-between;
   line-height: 88rpx;
-  font-size: 30rpx;
-  color: #333;
+  font-size: 28rpx;
+  color: #666;
 }
 
-.money-info view.switch-money text {
+.money-info view.switch-money view {
+  display: flex;
+  align-items: center;
+}
+
+.money-info view.switch-money view text {
   display: block;
-  width: 150rpx;
+  width: 120rpx;
 }
 
 .output-value {
@@ -95,10 +101,19 @@
 }
 
 .output-value view.item {
+  padding: 0 4rpx;
   padding-top: 10rpx;
   height: 120rpx;
-  width: 33%;
+  width: 30%;
   text-align: center;
+}
+
+.output-value view.item:last-child {
+  padding-right: 26rpx;
+}
+
+.output-value view.item:first-child {
+  padding-left: 26rpx;
 }
 
 .output-value view.item text {
@@ -172,6 +187,10 @@
   display: flex;
   flex-direction: column;
   align-items: left;
+}
+
+.content-info3 {
+  margin-top: 35rpx;
 }
 
 .info-item {

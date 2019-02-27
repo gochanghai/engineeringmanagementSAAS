@@ -41,9 +41,12 @@ Page({
       formID: options.formID,
       projectID: options.projectID,
     });
-    
-    this.getData(this.data.formID,this.data.projectID);
+
+    this.getData(this.data.formID, this.data.projectID);
     this.getFileList(this.data.formID, this.data.projectID);
+    wx.setNavigationBarTitle({
+      title: options.title
+    })
   },
 
   // 产值表上传时间输入
@@ -73,9 +76,10 @@ Page({
   },
 
   //  获取数据
-  getData(formID,projectID) {
+  getData(formID, projectID) {
     let _than = this;
     confirmvalueAction.getConfirmvalue(formID, projectID, function(res) {
+      console.log('getConfirmvalue');
       console.log(res);
       _than.setData({
         uploadDate: _than.dateFormat(res.valueuploadat),
@@ -86,7 +90,7 @@ Page({
     });
   },
   // 获取已上传的文件列表
-  getFileList(formID,projectID){
+  getFileList(formID, projectID) {
     let _than = this;
     let fileInfo = {
       projectid: projectID,
@@ -94,17 +98,17 @@ Page({
       belongidlist: formID,
       filebelong: '确认产值',
     }
-    fileAction.getFileList(fileInfo, function (res) {
+    fileAction.getFileList(fileInfo, function(res) {
       console.log('bfileList');
       console.log(res);
       let fileList = [];
-      for(let index in res){
-          let item = {
-            fileId: res[index].fileid,
-            fileName: res[index].filename,
-            formName: res[index].formname,
-          }
-          fileList.push(item);
+      for (let index in res) {
+        let item = {
+          fileId: res[index].fileid,
+          fileName: res[index].filename,
+          formName: res[index].formname,
+        }
+        fileList.push(item);
       }
       _than.setData({
         fileList: fileList,
@@ -193,7 +197,7 @@ Page({
           console.log(formID);
           console.log(projectID);
           // 提交数据
-          fileConfirmvalueAction.comitFileANDConfirmValue(fileInfo,confirmvalueInfo,formID, projectID, function(res) {
+          fileConfirmvalueAction.comitFileANDConfirmValue(fileInfo, confirmvalueInfo, formID, projectID, function(res) {
             console.log(res.code);
             if (res.code == 1) {
               wx.showToast({
@@ -249,7 +253,7 @@ Page({
       },
     })
   },
-  
+
   // 完成按钮
   commitFileANDWorkerUnSignList() {
     this.setData({
@@ -335,8 +339,10 @@ Page({
     if (val === null) {
       return "未知";
     }
-    let date = val.substring(0, 10);
-    return date;
+    if (val.length >= 10) {
+      return val.substring(0, 10);
+    }
+    return val;
   },
 
 })

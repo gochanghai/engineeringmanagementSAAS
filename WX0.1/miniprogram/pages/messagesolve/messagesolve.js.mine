@@ -6,7 +6,8 @@ Page({
     message: {}
   },
 
-  onLoad: function (options) {
+  onLoad: function(options) {
+
     //根据任务 or 消息来设置当前页面的标题
     wx.setNavigationBarTitle({
       title: options.byTypeTitle
@@ -22,7 +23,7 @@ Page({
   // 获取消息信息
   getMessage(formID, projectID) {
     let _than = this;
-    messageCenterAction.getMessagePage(formID, projectID, function (res) {
+    messageCenterAction.getMessagePage(formID, projectID, function(res) {
       console.log('bmessageInfo');
       console.log(res);
       _than.setData({
@@ -52,8 +53,9 @@ Page({
       confirmColor: '#F0880C',
       success(res) {
         if (res.confirm) {
+          // console.log('Commit');
           // 消息忽略          
-          messageCenterAction.mesIgnore(projectID, formID, messageModule, function (res) {
+          messageCenterAction.mesIgnore(projectID, formID, messageModule, function(res) {
             console.log(res);
             if (res.code == 1) {
               wx.showToast({
@@ -83,9 +85,9 @@ Page({
                       delta: '1'
                     })
                     // 返回消息中心
-                    // wx.switchTab({
-                    //   url: '/pages/message/message',
-                    // })
+                    wx.switchTab({
+                      url: '/pages/message/message',
+                    })
                   }, 1000)
                 }
               })

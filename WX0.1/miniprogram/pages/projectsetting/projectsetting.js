@@ -28,7 +28,8 @@ Page({
     projectManageAction.getManageInfo(projectID, function(res) {
       console.log(res);
       _than.setData({
-        projectabbreviation: res.projectabbreviation,
+        projectAbbreviation: res.projectabbreviation,
+        projectName: res.projectname,
         ownerPayPercent: res.ownerpaypercent,
         ownerPayTime: res.ownerpaytime,
         ownerApprovalTime: res.ownerapprovaltime,

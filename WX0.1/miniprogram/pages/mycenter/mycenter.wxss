@@ -41,7 +41,7 @@
 }
 
 .details view.name {
-  margin-bottom: 20rpx;
+  margin-bottom: 10rpx;
   font-size: 30rpx;
   color: #333;
   font-weight: bold;

@@ -21,6 +21,12 @@ Page({
   // 回款列表
   getDateList(projectID){
     let _than = this;
+    // 打开加载框
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading'
+    })
+    // 调用函数接口获取数据
     receivepaylinesSaaSAction.getLinesList(projectID, function (res) {
       console.log(res);
       let list = [];
@@ -35,6 +41,8 @@ Page({
       _than.setData({
         list: list,
       });
+      // 关闭加载框
+      wx.hideToast({});
     })
     
   },

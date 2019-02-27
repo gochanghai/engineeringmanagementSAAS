@@ -319,3 +319,9 @@
   width: 130rpx;
   height: 130rpx;
 }
+
+.data-none{
+  font-size: 48rpx;
+  color: #cccccc;
+  text-align: center;
+}

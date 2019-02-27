@@ -40,16 +40,12 @@ Page({
       },
     ],
     assignUserList: [],
-    selName: '腾讯大厦',
-    messageModule: '进度',
+    selName: '',
+    messageModule: 'confirmvalue',
     messageDemand: '请立即处理',
     taskContent: '',
     selUser: "",
-    pointToAccount: '13625846963',
-    projectNameList: [{
-      projectName: "腾讯大厦",
-      ProjectID: 'sh-001'
-    }],
+    pointToAccount: '',
   },
 
   onLoad: function(options) {
@@ -66,6 +62,7 @@ Page({
       console.log(bassignUser);
       _than.setData({
         assignUserList: bassignUser,
+        pointToAccount: bassignUser[0].manageraccount,
       })
     })
   },

@@ -1,6 +1,6 @@
 <view class='container'>
   <view class='calendar-container'>
-    <calendar calendar-style="calendar" header-style="calendar-header" board-style="calendar-board" days-color="{{dayStyle}}" weeks-type="cn" binddayClick="dayClick" lunar cell-size="{{cellSize}}" />
+    <calendar calendar-style="calendar" header-style="calendar-header" board-style="calendar-board" days-color="{{dayStyle}}" weeks-type="cn" binddayClick="dayClick" lunar cell-size="{{cellSize}}" bindnextMonth="next" bindprevMonth="prev" binddateChange="dateChange"/>
   </view>
 
   <!-- <view class='line'></view> -->
@@ -12,7 +12,7 @@
       <view class='type-information' wx:for="{{dataList}}" wx:key="index">
         <text class='title'>{{item.title}}</text>
         <view class='content'>
-          <view wx:for="{{item.list}}" wx:key="index" class='items' bindtap='mesInfo' hover-class='hover-row'>
+          <view wx:for="{{item.list}}" wx:key="index" class='items' bindtap='mesInfo' data-data='{{item}}' hover-class='hover-row'>
             <text class='status' style='background-color:{{item.lightColor}}'></text> 【{{item.projectName}}】{{item.content}}
           </view>
         </view>

@@ -20,13 +20,13 @@
  * user.userTitle 职位“副总经理”’；
  * user.userType 帐号类型“商务经理”；
  */
-function getUser() {
+export let getUser = function () {
   var user = wx.getStorageSync('user');
   return user;
 }
 
 //登录时传入，程序在login.js，但只有account传入了，而name为空，待决定用户的姓名由何处获取
-function setUser(userInfo) {
+export let setUser = function (userInfo) {
   wx.removeStorageSync('user')
   let user = {
     account: userInfo.user,
@@ -41,16 +41,16 @@ function setUser(userInfo) {
 /**
  * 获取缓存的当前项目列表信息：
  * projectList 返回的实体类数据，其中：
- * projectList[x].projectAbbreviation 项目简称；
+ * projectList[x].projectabbreviation 项目简称；
  * projectList[x].projectid 项目id；
- * projectList[x].projectName 项目全称；
+ * projectList[x].projectname 项目全称；
  */
-function getProjectList() {
+export let getProjectList = function () {
   var projectList = wx.getStorageSync('projectList');
   return projectList;
 };
 
-function setProjectList(projectList) {
+export let setProjectList = function (projectList) {
   wx.removeStorageSync('projectList')
   let storagedPojectList = [];
   if (null != projectList) {
@@ -64,14 +64,4 @@ function setProjectList(projectList) {
     }
   }
   wx.setStorageSync("projectList", storagedPojectList);
-}
-
-module.exports = {
-
-  getUser: getUser,
-  setUser: setUser,
-
-  getProjectList: getProjectList,
-  setProjectList: setProjectList,
-
 }

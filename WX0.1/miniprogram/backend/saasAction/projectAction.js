@@ -1,4 +1,4 @@
-const httpJS = require('../net/http.js');
+const httpJS = require('../../static/http.js');
 const storageJS = require('../../static/storage.js');
 
 /**
@@ -6,7 +6,7 @@ const storageJS = require('../../static/storage.js');
  * cprojectid 项目id；
  * bprojectInfo 返回的实体类数据；
  */
-function getProjectInfo(cprojectid, callback) {
+export let getProjectInfo = function (cprojectid, callback) {
     let bprojectInfo = {};
     let datalist = {
         user: storageJS.getUser().account,
@@ -64,7 +64,7 @@ function getProjectInfo(cprojectid, callback) {
  * 获取项目详情的其他模块数据：
  * bmoduleinfo 返回的实体类数据；
  */
-function getModuleInfo(cprojectid, callback) {
+export let getModuleInfo = function (cprojectid, callback) {
     let bmoduleinfo = {};
     let datalist = {
         user: storageJS.getUser().account,
@@ -110,10 +110,4 @@ function getModuleInfo(cprojectid, callback) {
         }
         return typeof callback == 'function' && callback(bmoduleinfo)
     })
-}
-
-
-module.exports = {
-    getProjectInfo: getProjectInfo,
-    getModuleInfo: getModuleInfo,
 }

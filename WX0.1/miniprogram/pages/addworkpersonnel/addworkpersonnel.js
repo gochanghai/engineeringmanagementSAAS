@@ -12,7 +12,7 @@ Page({
     admissionAt: '请选择入场时间',
     leavingAt: '请选择离场时间',
     projectID: '',
-    groupId: 1,
+    groupId: '',
     name: '',
     age: '',
     telNo: '',
@@ -28,15 +28,16 @@ Page({
       projectID: projectID,
     })
     //获取班组选择的数据
-    this.getSelGroup();
+    this.getSelGroup(this.data.projectID);
   },
-
-  getSelGroup() {
+  // 获取班组数据
+  getSelGroup(projectID) {
     var _this = this;
-    workerAction.getTeamNameList('5', function(bfireGroup) {
+    workerAction.getTeamNameList(projectID, function(bfireGroup) {
       console.log(bfireGroup);
       _this.setData({
-        selGroup: bfireGroup
+        selGroup: bfireGroup,
+        groupId: bfireGroup[0].formid,
       })
     })
   },
@@ -244,6 +245,8 @@ Page({
         if (res.confirm) {
           console.log('Commit');
           workerAction.addWorker(worker, function(code) {
+            console.log('worker');
+            console.log(worker);
             console.log(code.code);
             if (code.code > 0) {
               wx.showToast({

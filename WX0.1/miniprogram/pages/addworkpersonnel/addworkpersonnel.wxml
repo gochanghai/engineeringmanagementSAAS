@@ -28,7 +28,7 @@
     <view class='information_item'>
       <text>班组</text>
       <picker bindchange="selTeam" value="{{activeIndex}}" range="{{selGroup}}" range-key="groupname" id='{{selGroup[activeIndex].formid}}'>
-        <view class="picker" style='font-size:30rpx; color:#999; '>
+        <view class="picker" style='font-size:32rpx; color:#666; '>
           {{selGroup[activeIndex].groupname}}
         </view>
       </picker>
@@ -37,7 +37,7 @@
     <view class='information_item '>
       <text>入场时间</text>
       <picker mode="date" start="2010-01-01" end="2029-01-01" bindchange="InputAdmissionAt">
-        <view class="picker" style='font-size:30rpx; color:#999; '>
+        <view class="picker" style='font-size:32rpx; color:#666; '>
           {{admissionAt}}
         </view>
       </picker>
@@ -46,7 +46,7 @@
     <view class='information_item '>
       <text>离场时间</text>
       <picker mode="date" start="{{admissionAt}}" end="2029-01-01" bindchange="InputLeavingAt">
-        <view class="picker" style='font-size:30rpx; color:#999; '>
+        <view class="picker" style='font-size:32rpx; color:#666; '>
           {{leavingAt}}
         </view>
       </picker>
@@ -55,7 +55,7 @@
   </view>
 
   <view class='btom-btns '>
-    <view class='ignore ' bindtap='cancel'>取消</view>
-    <view class='solve ' bindtap='commitWorker'>确定</view>
+    <view class='ignore ' bindtap='cancel' hover-class='btn-hover-class'>取 消</view>
+    <view class='solve ' bindtap='commitWorker' hover-class='btn-hover-class'>确 定</view>
   </view>
 </view>

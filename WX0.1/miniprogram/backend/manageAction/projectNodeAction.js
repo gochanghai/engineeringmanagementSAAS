@@ -1,4 +1,4 @@
-const httpJS = require('../net/http.js');
+const httpJS = require('../../static/http.js');
 const storageJS = require('../../static/storage.js');
 
 
@@ -8,7 +8,7 @@ const storageJS = require('../../static/storage.js');
  * cprojectid 项目id；
  * code 返回的服务器结果；
  */
-function postProjectNode(cprojectid, fnodeList = [{ nodeid: null, nodename: null, startfrom: null, endat: null, projectid: null, rowlevel: null, nodeparentname: null, finishstatus: null, }], callback) {
+export let postProjectNode = function (cprojectid, fnodeList = [{ nodeid: null, nodename: null, startfrom: null, endat: null, projectid: null, rowlevel: null, nodeparentname: null, finishstatus: null, }], callback) {
     let datalist = {
         user: storageJS.getUser().account,
         form: "dc_mng_project_progressnodes",
@@ -61,7 +61,7 @@ function postProjectNode(cprojectid, fnodeList = [{ nodeid: null, nodename: null
  * cprojectid 项目id；
  * bNodeList 返回的实体类数据；
  */
-function getProjectNodeList(cprojectid, callback) {
+export let getProjectNodeList = function (cprojectid, callback) {
     let bNodeList = [];
     let datalist = {
         user: storageJS.getUser().account,
@@ -91,9 +91,5 @@ function getProjectNodeList(cprojectid, callback) {
         }
         return typeof callback == 'function' && callback(bNodeList);
     });
-}
-module.exports = {
-    postProjectNode: postProjectNode,
-    getProjectNodeList: getProjectNodeList,
 }
 
