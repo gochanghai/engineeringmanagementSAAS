@@ -1,24 +1,54 @@
 <view class='container'>
-  <view class='calendar-container'>
-    <calendar calendar-style="calendar" header-style="calendar-header" board-style="calendar-board" days-color="{{dayStyle}}" weeks-type="cn" binddayClick="dayClick" lunar cell-size="{{cellSize}}" bindnextMonth="next" bindprevMonth="prev" binddateChange="dateChange"/>
-  </view>
-
-  <!-- <view class='line'></view> -->
-  <view class='information'>
-    <view class='chooseDay'>
-      <text wx:if="IsToDay">{{days}}</text> {{chooseDay}}
+  <scroll-view scroll-y style='height:{{windowHeight}}'>
+    <view class='calendar-container'>
+      <calendar calendar-style="calendar" header-style="calendar-header" board-style="calendar-board" days-color="{{dayStyle}}" weeks-type="cn" binddayClick="dayClick" lunar cell-size="{{cellSize}}" bindnextMonth="next" bindprevMonth="prev" binddateChange="dateChange"
+      />
     </view>
-    <view class='.information_cons'>
-      <view class='type-information' wx:for="{{dataList}}" wx:key="index">
-        <text class='title'>{{item.title}}</text>
-        <view class='content'>
-          <view wx:for="{{item.list}}" wx:key="index" class='items' bindtap='mesInfo' data-data='{{item}}' hover-class='hover-row'>
-            <text class='status' style='background-color:{{item.lightColor}}'></text> 【{{item.projectName}}】{{item.content}}
+    <view class='information'>
+      <view class='chooseDay'>
+        <text wx:if="IsToDay">{{chooseDay}} </text>{{days}}
+      </view>
+      <view class='today-data'>
+        <scroll-view scroll-x style='width: 100%' scroll-with-animation="{{scrollAnimation}}" scroll-left="{{scrollLeft}}">
+          <view class='title'>
+            <view wx:for="{{dataList}}" wx:key="index" data-index="{{index}}" bindtap='selModule' class='title-item {{selectModuleIndex == index ? "active-title" : "un-active-title"}}'>
+              {{item.title}}
+              <text class='{{selectModuleIndex == index ? "active" : "un-active"}}'></text>
+            </view>
+          </view>
+        </scroll-view>
+        <swiper class='swiper-con' current='{{selectModuleIndex}}' bindchange="currentFun" style='height:{{heightView}}'>
+          <swiper-item wx:for="{{dataList}}" wx:key="index" class="swiper-list">
+            <view class='content'>
+              <view wx:if="{{item.list.length <= 0}}" class="data-none">暂无数据</view>
+              <view wx:else>
+                <view wx:for="{{item.list}}" wx:key="index" class='items' bindtap='mesInfo' data-data='{{item}}' hover-class='hover-row'>
+                  <view class='name'>
+                    <text class='status' style='background-color:{{item.lightColor}}'></text>
+                    <text class='name-text'>{{item.projectName}}</text>
+                  </view>
+                  <view class='text'>{{item.content}}</view>
+                </view>
+              </view>
+            </view>
+          </swiper-item>
+        </swiper>
+      </view>
+    </view>
+    <!-- <view class='information' wx:else> -->
+    <!-- <view class='chooseDay'>
+        <text wx:if="IsToDay">{{days}}</text> {{chooseDay}}
+      </view>
+      <view class='.information_cons'>
+        <view class='type-information' wx:for="{{dataList}}" wx:key="index">
+          <text class='title'>{{item.title}}</text>
+          <view class='content'>
+            <view wx:for="{{item.list}}" wx:key="index" class='items' bindtap='mesInfo' data-data='{{item}}' hover-class='hover-row'>
+              <text class='status' style='background-color:{{item.lightColor}}'></text> 【{{item.projectName}}】{{item.content}}
+            </view>
           </view>
         </view>
-      </view>
-
-    </view>
+      </view> -->
 
     <!-- 通知 -->
     <!-- <view class='notice' wx:if="{{isNotice}}">
@@ -28,5 +58,6 @@
       </view>
       <image src='/images/notice_close.png' class='notice_close' bindtap='noticeClose'></image>
     </view> -->
-  </view>
+    <!-- </view> -->
+  </scroll-view>
 </view>

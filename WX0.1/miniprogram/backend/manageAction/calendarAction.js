@@ -22,11 +22,11 @@ export let countCelendarMessage = function (callback) {
         action: "dStatis",
         form: "dc_mng_project_messagedrives",
         fields: [
-            "SUM(case when dc_mng_project_messagedrives.messagemodule = 'confirmvalue' then 1 else 0 end) as confirmMessageCount",
-            "SUM(case when dc_mng_project_messagedrives.messagemodule = 'recievedpay' then 1 else 0 end) as recievedMessageCount",
-            "SUM(case when dc_mng_project_messagedrives.messagemodule = 'inclose' then 1 else 0 end) as incloseMessageCount",
-            "SUM(case when dc_mng_project_messagedrives.messagemodule = 'insurance' then 1 else 0 end) as insuranceMessageCount",
-            "SUM(case when dc_mng_project_messagedrives.messagemodule = 'education' then 1 else 0 end) as educationMessageCount"
+            "SUM(case when dc_mng_project_messagedrives.messagemodule = 'confirmvalue' then 1 else 0 end) as confirmmessagecount",
+            "SUM(case when dc_mng_project_messagedrives.messagemodule = 'recievedpay' then 1 else 0 end) as recievedmessagecount",
+            "SUM(case when dc_mng_project_messagedrives.messagemodule = 'inclose' then 1 else 0 end) as inclosemessagecount",
+            "SUM(case when dc_mng_project_messagedrives.messagemodule = 'insurance' then 1 else 0 end) as insurancemessagecount",
+            "SUM(case when dc_mng_project_messagedrives.messagemodule = 'education' then 1 else 0 end) as educationmessagecount"
         ],
         page: null,
         dField: "createat",
@@ -36,6 +36,10 @@ export let countCelendarMessage = function (callback) {
                 field: "projectid",
                 symbol: "=",
                 value: ids
+            }, {
+                field: "status",
+                value: "未处理",
+                symbol: "="
             }
         ]
     };
@@ -120,6 +124,10 @@ export let getMessageByDate = function (cdate = null, callback) {
                     field: "createat",
                     value: "'" + cdate + "' and '" + dateUtilJS.addDate(cdate, 1) + "'",
                     symbol: "BETWEEN"
+                }, {
+                    field: "status",
+                    value: "未处理",
+                    symbol: "="
                 }
             ]
         }

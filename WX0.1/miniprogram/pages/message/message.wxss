@@ -19,7 +19,7 @@
   justify-content: center;
   align-items: center;
   background-color: #fff;
-  border-radius: 6rp 6rpx 0 0;
+  border-radius: 16rp 16rpx 0 0;
 }
 
 .tab view.tab-item {
@@ -28,15 +28,16 @@
   height: 50rpx;
   line-height: 50rpx;
   text-align: center;
-  border: 2rpx solid #e5e5e5;
   display: block;
-  font-size: 30rpx;
-  /* overflow-x: hidden; */
+  font-size: 28rpx;
+}
+
+.uncheck-item {
+  border: 2rpx solid #cfcfcf;
 }
 
 .mes-count {
   padding: 0 12rpx;
-  /* padding-left: 12rpx; *//* padding-top: 2rpx; */
   position: absolute;
   top: -20rpx;
   right: 10rpx;
@@ -50,12 +51,13 @@
 }
 
 .tab view.one {
-  border-radius: 24rpx 0 0 0;
+  border-radius: 12rpx 0 0 12rpx;
   border-right: none;
 }
 
 .tab view.two {
-  border-radius: 0 24rpx 0 0;
+  border-radius: 0 12rpx 12rpx 0;
+  border-left: none;
 }
 
 .tab-item-active {
@@ -133,6 +135,10 @@
   background-color: #fff;
 }
 
+.mes-list:first-child view.mes-list-item {
+  border-radius: 0 0 6rpx 6rpx;
+}
+
 .mes-title {
   padding-left: 20rpx;
   padding-right: 20rpx;
@@ -144,9 +150,17 @@
   color: #333;
 }
 
+.mes-title view.name {
+  width: 550rpx;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .mes-title text {
   font-size: 27rpx;
-  color: #39f;
+  color: #f0880c;
 }
 
 .mes-container {
@@ -182,9 +196,10 @@
   margin-left: 20rpx;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1rpx solid #e5e5e5;
   height: 90rpx;
   line-height: 90rpx;
+  /* border: 1px solid; */
 }
 
 .mes-item-for {
@@ -202,7 +217,7 @@
 .mes-item-for text.content {
   display: inline-block;
   height: 90rpx;
-  width: 350rpx;
+  width: 400rpx;
   font-size: 30rpx;
   color: #666;
   overflow: hidden;
@@ -219,8 +234,8 @@
 
 .mes-item-for text.status {
   display: inline-block;
-  width: 24rpx;
-  height: 24rpx;
+  width: 21rpx;
+  height: 21rpx;
   text-align: center;
   color: #fff;
   border-radius: 50%;
@@ -320,8 +335,8 @@
   height: 130rpx;
 }
 
-.data-none{
+.data-none {
   font-size: 48rpx;
-  color: #cccccc;
+  color: #ccc;
   text-align: center;
 }

@@ -7,7 +7,7 @@ const storageJS = require('../../static/storage.js');
  * bgraphOutputValueData 返回的实体类数据；
  */
 export let getGraphOutputValue = function (callback) {
-  var bgraphOutputValueData = [];
+  let bgraphOutputValueData = [];
   let projectList = storageJS.getProjectList();
   let ids = "";
   for (let item of projectList) {
@@ -21,16 +21,11 @@ export let getGraphOutputValue = function (callback) {
     user: storageJS.getUser().account,
     form: "dc_mng_project_confirmvalues",
     action: "dStatis",
-    fields: ["SUM(outputvalue) as sumOutputValue"],
+    fields: ["SUM(outputvalue) as sumoutputvalue"],
     dField: "confirmat",
     statisType: "Month", //Year,Month,Season
     page: null,
     condition: [
-      // {
-      //   field: "confirmat",
-      //   symbol: ">=",
-      //   value: "2018/7/1"
-      // }, 
       {
         field: "projectid",
         symbol: "=",
@@ -39,22 +34,25 @@ export let getGraphOutputValue = function (callback) {
         "field": "confirmat",
         "symbol": "!=",
         "value": null
-      }]
+      }],
+    group: "confirmat", //增加group和order能使结果按日期排序
+    order: "statisdate asc"
+
   };
   httpJS.request('/form', datalist, function (res) {
-    try {
+    if (JSON.parse(res.data).code > 0) {
       let resconfirmvalue = JSON.parse(res.data).datalist.dc_mng_project_confirmvalues;
       if (null != resconfirmvalue) {
         for (let item of resconfirmvalue) {
           let pushData = {
-            date: item.Date,
-            sumOutputValue: item.sumOutputValue
-          }
+            statisDate: item.statisdate,
+            sumOutputValue: item.sumoutputvalue || 0,
+          };
           bgraphOutputValueData.push(pushData);
         }
       }
-      return typeof callback == 'function' && callback(bgraphOutputValueData)
-    } catch (error) { }
+    }
+    return typeof callback == 'function' && callback(bgraphOutputValueData)
   });
 };
 
@@ -83,10 +81,10 @@ export let getGraphSecurity = function (callback) {
     form: "dc_mng_worker",
     action: "get",
     fields: [
-      "count(1) as totalWorker",
-      "SUM( case when dc_mng_worker.discloseFileSign = 'false' then 1 else 0 end ) as totalUnDisclose",
-      "SUM( case when dc_mng_worker.educationFileSign = 'false' then 1 else 0 end ) as totalUnEducation",
-      "SUM( case when dc_mng_worker.insuranceFileSign = 'false' then 1 else 0 end ) as totalUnInsurance"
+      "count(1) as totalworker",
+      "SUM( case when dc_mng_worker.discloseFileSign = 'false' then 1 else 0 end ) as totalundisclose",
+      "SUM( case when dc_mng_worker.educationFileSign = 'false' then 1 else 0 end ) as totaluneducation",
+      "SUM( case when dc_mng_worker.insuranceFileSign = 'false' then 1 else 0 end ) as totaluninsurance"
     ],
     page: null,
     condition: [{
@@ -96,13 +94,14 @@ export let getGraphSecurity = function (callback) {
     }]
   };
   httpJS.request('/form', datalist, function (res) {
+    console.log(res)
     try {
       let resWorkerData = JSON.parse(res.data).datalist.dc_mng_worker;
       if (null != resWorkerData) {
-        bgraphSecurityData.totalWorker = resWorkerData[0].totalWorker; //总人数
-        bgraphSecurityData.totalUnDisclose = resWorkerData[0].totalUnDisclose; //安全交底
-        bgraphSecurityData.totalUnEducation = resWorkerData[0].totalUnEducation; //安全教育
-        bgraphSecurityData.totalUnInsurance = resWorkerData[0].totalUnInsurance; //保险 
+        bgraphSecurityData.totalWorker = resWorkerData[0].totalworker; //总人数
+        bgraphSecurityData.totalUnDisclose = resWorkerData[0].totalundisclose; //安全交底
+        bgraphSecurityData.totalUnEducation = resWorkerData[0].totaluneducation; //安全教育
+        bgraphSecurityData.totalUnInsurance = resWorkerData[0].totaluninsurance; //保险 
       }
     } catch (error) { }
     return typeof callback == 'function' && callback(bgraphSecurityData)

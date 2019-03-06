@@ -72,7 +72,7 @@
 }
 
 .top-info text.status {
-  font-size: 28rpx;
+  font-size: 27rpx;
   color: #e95207;
 }
 

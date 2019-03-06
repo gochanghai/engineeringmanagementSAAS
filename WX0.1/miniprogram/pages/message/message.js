@@ -41,7 +41,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this.onLoad();
+    this.getMessageList();
+    this.getCountMessageNo();
   },
 
   // 获取消息内容
@@ -87,8 +88,10 @@ Page({
       let projectMessageList = [];
       for (let index in messages) {
         let list = [];
-        for (let index2 in messages[index].messageData) {
-          let val = messages[index].messageData[index2];
+        let projectAName = '';
+        for (let val of messages[index].messageData) {
+          // let val = messages[index].messageData[index2];
+          projectAName = val.projectabbreviation;
           let item2 = {
             type: val.messagetype,
             context: val.message,
@@ -101,7 +104,7 @@ Page({
         }
         let item1 = {
           id: messages[index].projectid,
-          peojectName: messages[index].projectabbreviation,
+          projectName: projectAName,
           total: messages[index].messageTotal,
           list: list,
         }
@@ -121,10 +124,10 @@ Page({
       console.log(bcountNo);
       console.log('bcountNo');
       if (bcountNo > 0) {
-        wx.setTabBarBadge({
-          index: 3,
-          text: '' + bcountNo
-        })
+        // wx.setTabBarBadge({
+        //   index: 3,
+        //   text: '' + bcountNo
+        // })
         _this.setData({
           projectMsgTotal: bcountNo,
         });
@@ -166,7 +169,9 @@ Page({
   addTask(event) {
     let project = event.currentTarget.dataset.data;
     let projectID = project.id;
-    let projectAbbreviation = project.peojectName;
+    let projectAbbreviation = project.projectName;
+    // console.log('console.log(projectAbbreviation)');
+    // console.log(projectAbbreviation);
     wx.navigateTo({
       url: '/pages/addtask/addtask?projectID=' + projectID + "&projectAbbreviation=" + projectAbbreviation,
     })
@@ -189,6 +194,7 @@ Page({
     return date;
   },
 
+  // 消息/公告切换
   bindChange(e) {
     this.setData({
       activeIndex: e.currentTarget.dataset.active,

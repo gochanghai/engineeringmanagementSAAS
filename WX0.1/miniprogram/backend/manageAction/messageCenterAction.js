@@ -115,11 +115,15 @@ export let getMessagePage = function (cformid, cprojectid, callback) {
                 "createAt",
                 "status"
             ],
-            dc_mng_contract: ["projectabbreviation"]
+            dc_mng_contract: ["projectabbreviation"],
+            dc_mng_manager: ["managername as pointtomanager"],
         },
         join: [{
             dc_mng_project_messagedrives: "projectid",
             dc_mng_contract: "projectid"
+        },{
+            dc_mng_project_messagedrives: "pointtoaccount",
+            dc_mng_manager: "manageraccount"
         }],
         page: null,
         condition: {
@@ -168,7 +172,7 @@ export let countMessageNo = function (callback) {
         form: "dc_mng_project_messagedrives",
         action: "get",
         distinct: false,
-        fields: ["COUNT(objectid) AS countTotal"],
+        fields: ["COUNT(objectid) AS counttotal"],
         page: null,
         condition: [{
             field: "projectid",
@@ -238,6 +242,58 @@ export let mesIgnore = function (cprojectid = null, cformid = null, cmessagemodu
         ]
     }
     httpJS.request('/sbatch', datalist, function (res) {
-        return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code })
+        return typeof callback == 'function' && callback({ code: res.data.code })
+    });
+};
+
+/**
+ * 消息置为已处理：
+ * cprojectid 项目id；
+ * cformid 表单id；
+ * cmessagemodule 消息类型；
+ * code 返回服务器的结果；
+ */
+export let mesSolve = function (cprojectid = null, cformid = null, cmessagemodule = null, callback) {
+    let datalist = {
+        user: storageJS.getUser().account,
+        batchFun: "serverTrans",
+        source: null,
+        batchList: [{
+            name: "dc_mng_project_messagedrives",
+            form: "dc_mng_project_messagedrives",
+            action: "updateList",
+            fields: {
+                status: "已处理",
+                dealat: dateUtilJS.formatTime()
+            },
+            condition: [{
+                field: "formid",
+                value: cformid,
+                symbol: "="
+            }, {
+                field: "status",
+                value: "未处理",
+                symbol: "="
+            }],
+            page: null
+        },
+        {
+            name: "dc_mng_project_messagedeals",
+            form: "dc_mng_project_messagedeals",
+            action: "add",
+            fields: [{
+                projectid: cprojectid,
+                driveid: cformid,
+                drivestatus: "已处理",
+                dealat: dateUtilJS.formatTime(),
+                drivetype: cmessagemodule,
+            }],
+            condition: null,
+            page: null
+        }
+        ]
+    }
+    httpJS.request('/sbatch', datalist, function (res) {
+        return typeof callback == 'function' && callback({ code: res.data.code })
     });
 };

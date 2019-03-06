@@ -100,6 +100,7 @@ Page({
       let list = [];
       for (let index in res) {
         let item = {
+          basegroupname: res[index].basegroupname,
           id: res[index].formid,
           groupName: res[index].groupname,
           totalNumber: res[index].totalnumber,
@@ -158,9 +159,10 @@ Page({
     if (val === null || val === '') {
       return "未知";
     }
-    let date = val.substring(0, 10);
-    // console.log(date);
-    return date;
+    if (val.length >= 10) {
+      return val.substring(0, 10);
+    }
+    return val;
   },
   // 判断是否为 null
   isNullReturnNnknown(val) {

@@ -21,6 +21,7 @@
 }
 
 .mes-content view.item {
+  display: flex;
   font-size: 28rpx;
   color: #666;
   padding-left: 26rpx;
@@ -28,6 +29,10 @@
 }
 
 .mes-content view.item text {
+  text-align: right;
+  display: block;
+  width: 150rpx;
+  /* border: 1px solid; */
   font-size: 30rpx;
 }
 
@@ -42,7 +47,8 @@
 }
 
 .text-flex view {
-  width: 370rpx;
+  /* width: 344rpx; */
+  padding-right: 26rpx;
   padding-top: 5rpx;
   flex: 1;
   line-height: 50rpx;
@@ -67,13 +73,13 @@
 }
 
 .btom-btns view.ignore {
-  border: 1px solid #b5b5b5;
+  border: 1rpx solid #b5b5b5;
   color: #666;
 }
 
 .btom-btns view.solve {
   background-color: #e95207;
-  border: 1px solid #e95207;
+  border: 1rpx solid #e95207;
   color: #fff;
 }
 
@@ -92,4 +98,8 @@
   height: 36rpx;
   border-radius: 50%;
   background-color: #f0880c;
+}
+
+.btn-hover-class {
+  background-color: rgba(0, 0, 0, 0.1);
 }

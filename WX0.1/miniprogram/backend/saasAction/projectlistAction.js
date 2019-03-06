@@ -40,28 +40,29 @@ export let getProjectList = function (callback) {
         // projectid
         projectid: item.projectid,
         // 项目类型
-        projecttype: null != resprojectdataPage.project[0] ? resprojectdataPage.project[0].project_type : "",
+        projecttype: null != resprojectdataPage.project[0] ? resprojectdataPage.project[0].project_type || '' : "",
         // 项目名称
-        projectname: null != resprojectdataPage.project[0] ? resprojectdataPage.project[0].name : "",
+        projectname: null != resprojectdataPage.project[0] ? resprojectdataPage.project[0].name || '' : "",
         // 项目简称
-        projectabbreviation: null != resprojectdataPage.contract[0] ? resprojectdataPage.contract[0].projectabbreviation : "",
+        projectabbreviation: null != resprojectdataPage.contract[0] ? resprojectdataPage.contract[0].projectabbreviation || '' : "",
         // 项目编码
-        code: null != resprojectdataPage.project ? resprojectdataPage.project[0].code : "",
+        code: null != resprojectdataPage.project[0] ? resprojectdataPage.project[0].code || 0 : "",
         // 项目开始日期
-        startdate: null != resprojectdataPage.project ? resprojectdataPage.project[0].start_date : "",
+        startdate: null != resprojectdataPage.project[0] ? resprojectdataPage.project[0].start_date || '' : "",
         // 项目结束日期
-        enddate: null != resprojectdataPage.project ? resprojectdataPage.project[0].end_date : "",
+        enddate: null != resprojectdataPage.project[0] ? resprojectdataPage.project[0].end_date || '' : "",
         // 项目状态
-        projectstage: null != resprojectdataPage.project ? resprojectdataPage.project[0].project_stage || "无状态" : "",
+        projectstage: null != resprojectdataPage.project[0] ? resprojectdataPage.project[0].project_stage || "无状态" : "",
         // 可用余额
-        usablemoney: null != resprojectdataPage.recievedpay ? resprojectdataPage.recievedpay[0].usable_money || 0 : 0,
+        usablemoney: null != resprojectdataPage.recievedpay[0] ? resprojectdataPage.recievedpay[0].usable_money || 0 : 0,
         // 产值百分比
-        outpustvalueratio: null != resprojectdataPage.confirmvalue && null != resprojectdataPage.contract_amount
+        outpustvalueratio: null != resprojectdataPage.confirmvalue[0] && null != resprojectdataPage.contract_amount[0]
           && null != resprojectdataPage.confirmvalue[0].outputvaluesum && null != resprojectdataPage.contract_amount[0].contractamountsum
-          && 0 != resprojectdataPage.contract_amount[0].contractamountsum ?
-          resprojectdataPage.confirmvalue[0].outputvaluesum / resprojectdataPage.contract_amount[0].contractamountsum : 0,
+          && 0 != resprojectdataPage.contract_amount[0].contractamountsum 
+          ? resprojectdataPage.confirmvalue[0].outputvaluesum / resprojectdataPage.contract_amount[0].contractamountsum || 0
+          : 0,
         // 回款百分比
-        receivedpayratio: null != resprojectdataPage.recievedpay ? resprojectdataPage.recievedpay[0].returned_ratio || 0 : 0,
+        receivedpayratio: null != resprojectdataPage.recievedpay[0] ? resprojectdataPage.recievedpay[0].returned_ratio || 0 : 0,
       }
       dealingprojectlist.push(pushData);
     }

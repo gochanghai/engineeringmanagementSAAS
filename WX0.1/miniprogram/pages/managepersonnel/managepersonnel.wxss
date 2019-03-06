@@ -107,7 +107,7 @@
 
 .information-item text {
   display: block;
-  color: #333;
+  color: #555;
   font-weight: bold;
   font-size: 30rpx;
   line-height: 60rpx;

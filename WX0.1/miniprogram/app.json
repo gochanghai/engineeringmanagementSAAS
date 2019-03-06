@@ -1,22 +1,22 @@
 {
   "pages": [
     "pages/login/login",
+    "pages/home/home",    
     "pages/projectview/projectview",
-    "pages/home/home",
-    
-    "pages/mycenter/mycenter",
-    "pages/message/message",
-    "pages/calendar/calendar",
-    "pages/declaretime/declaretime",
     "pages/projectnode/projectnode",
     "pages/uploadfile/uploadfile",
+    "pages/message/message",
+    "pages/calendar/calendar",
+    "pages/mycenter/mycenter",
+    "pages/outputvalregister/outputvalregister",
+    "pages/declaretime/declaretime",
+    "testpages/test/test",
+    "pages/confirmpersonnel/confirmpersonnel",
     "pages/projectlist/projectlist",
     "pages/projectdetail/projectdetail",
     "pages/addworkpersonnel/addworkpersonnel",
     "pages/addmanager/addmanager",
     "pages/addgroup/addgroup",
-    "pages/confirmpersonnel/confirmpersonnel",
-    "pages/outputvalregister/outputvalregister",
     "pages/certification/certification",
     "pages/shenhua/shenhua",
     "pages/modifypwd/modifypwd",
@@ -27,7 +27,6 @@
     "pages/confirmvalue/confirmvalue",
     "pages/mespersonner/mespersonner",
     "pages/managepersonnel/managepersonnel",
-    "testpages/test/test",
     "pages/projectsetting/projectsetting"
   ],
   "window": {

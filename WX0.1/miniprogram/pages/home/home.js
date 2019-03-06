@@ -10,8 +10,9 @@ Page({
     outValueDates: [],
     outValueDate: [],
     sumProjectMoney: null,
-    moneySwitch: true,
-    like: '/images/logo@2x.png'
+    moneySwitch: false,
+    like: '/images/logo@2x.png',
+    avatarUrl: '',    
   },
 
   //下拉刷新
@@ -23,13 +24,6 @@ Page({
   switch1Change(e) {
     this.setData({
       moneySwitch: e.detail.value,
-    })
-  },
-
-  accountPreview() {
-    wx.previewImage({
-      current: this.data.like,
-      urls: [this.data.like]
     })
   },
 
@@ -63,7 +57,7 @@ Page({
       }],
       xAxis: { //是否隐藏x轴分割线
         disableGrid: true,
-        gridColor: '#7cb5ec'
+        fontColor: '#000'
       },
       yAxis: {
         format: function(val) {
@@ -72,6 +66,7 @@ Page({
         // title: '确认产值(亿元)', 
         // disabled:true,
         gridColor: '#ffffff',
+        fontColor: '#000',
         min: 0
       },
       extra: {
@@ -99,11 +94,13 @@ Page({
           return val;
         },
         gridColor: '#ffffff',
+        fontColor: '#000',
+        min: 0
       },
       xAxis: {
         disableGrid: true,
       },
-      width: this.data.windowWidth - 202,
+      width: this.data.windowWidth - 210,
       height: 130,
       dataLabel: false,
       legend: false,
@@ -139,12 +136,13 @@ Page({
       windowWidth: wx.getSystemInfoSync().windowWidth
     });
     // 获取用户 姓名、公司、职位信息
-    this.setData({
-      headimg: '',
-      userName: storageJS.getUser().userName,
-      userArea: storageJS.getUser().userArea,
-      userPostion: storageJS.getUser().userTitle,
-    })    
+    // this.setData({
+    //   headimg: '',
+    //   userName: storageJS.getUser().userName,
+    //   userArea: storageJS.getUser().userArea,
+    //   userPostion: storageJS.getUser().userTitle,
+    //   avatarUrl: getApp().globalData.avatarUrl,
+    // })
 
     wx.showToast({
       title: '加载中',
@@ -169,16 +167,7 @@ Page({
       color: "#3399FF"
     }];
     this.ChartData2(series);
-
-    // 获取项目金额数据
-    this.getSumProjectMoney();
-    // 获取产值数据    
-    this.getGraphOutputValue();
-    // 获取安全数据
-    this.getGraphSecurity();
-    // 获取消息总数
-    this.getCountMessageNo();
-    this.getGraphProgressData();
+    
 
     // 关闭加载框
     wx.hideToast({});
@@ -194,8 +183,24 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this.onLoad();
-  },
+    this.setData({
+      headimg: '',
+      userName: storageJS.getUser().userName,
+      userArea: storageJS.getUser().userArea,
+      userPostion: storageJS.getUser().userTitle,
+      avatarUrl: getApp().globalData.avatarUrl,
+      avatarUrl: wx.getStorageSync('avatarUrl'),
+    })
+    // 获取项目金额数据
+    this.getSumProjectMoney();
+    // 获取产值数据    
+    this.getGraphOutputValue();
+    // 获取安全数据
+    this.getGraphSecurity();
+    // 获取消息总数
+    this.getCountMessageNo();
+    this.getGraphProgressData();
+  },  
 
   // 获取项目金额数据
   getSumProjectMoney() {
@@ -217,21 +222,24 @@ Page({
     let _than = this;
     statisticalAction.getGraphOutputValue(function(res) {
       console.log('getGraphOutputValue');
-      console.log(res);
-      let outputValueList = res;
+      // console.log(res);
       let categories = [];
       let datas = [];
-      for (let index in outputValueList) {
-        let item = outputValueList[index];
-        let date = _than.valueUndefinedRsturn0(item.date);
-        let number = _than.valueUndefinedRsturn0(item.sumOutputValue);
-        if (date != '0000-00-00'){
-          categories.push(date);
-          datas.push(number);
-        }        
+      let newList = [];
+      for (let item of res) {
+        // console.log(item);
+        let newItem = {
+          date: item.statisDate,
+          number: item.sumOutputValue
+        }
+        categories.push(item.statisDate);
+        datas.push(item.sumOutputValue);
+        newList.push(newItem);
       }
       _than.setData({
-        outputValueList: outputValueList,
+        outputValueList: newList,
+        // categories: categories,
+        // datas: datas
       });
       _than.ChartData(categories, datas);
     })
@@ -242,16 +250,16 @@ Page({
     let _than = this;
     statisticalAction.getGraphSecurity(function(res) {
       console.log('graphSecurity');
-      console.log(res);
+      // console.log(res);
       let securityData = {
-        totalWorker: _than.valueUndefinedTo0(res.totalWorker),
-        totalUnDisclose: _than.valueUndefinedTo0(res.totalUnDisclose),
-        totalUnEducation: _than.valueUndefinedTo0(res.totalUnEducation),
-        totalUnInsurance: _than.valueUndefinedTo0(res.totalUnInsurance),
+        totalWorker: res.totalWorker,
+        totalUnDisclose: res.totalUnDisclose,
+        totalUnEducation: res.totalUnEducation,
+        totalUnInsurance: res.totalUnInsurance,
       };
       let isSecurityChart = false;
       // 判断是否有数据
-      if (res.totalWorker != null && res.totalUnDisclose != null && res.totalUnEducation != null && res.totalUnInsurance != null) {
+      if (securityData.totalWorker != 0 || securityData.totalUnDisclose != 0 || securityData.totalUnEducation != 0 || securityData.totalUnInsurance != 0) {
         isSecurityChart = true;
       }
       _than.setData({
@@ -285,7 +293,7 @@ Page({
     let _than = this;
     statisticalSaaSAction.getGraphProgressData(function(res) {
       console.log('getGraphProgressData');
-      console.log(res);
+      // console.log(res);
       // 设置进度图表数据
       let progressData = {
         unOutputValue: _than.getMoneyFormat(res.outputvaluerest / 10000),
@@ -295,17 +303,18 @@ Page({
       };
       let series = [{
         name: '未完成产值',
-        data: res.outputvaluerest / 10000,
+        data: parseInt(res.outputvaluerest / 1000000),
         stroke: false
-      },{
+      }, {
         name: '累计回款',
-        data: res.actualreceivamountsum / 10000,
+        data: parseInt(res.actualreceivamountsum / 1000000),
         stroke: false
       }, {
         name: '可回款',
-        data: res.receivablepaysum / 10000,
+        data: parseInt(res.receivablepaysum / 1000000),
         stroke: false
       }];
+      console.log(series)
       _than.ChartData3(series);
       let isProgressChart = false;
       // 判断是否有数据
@@ -328,10 +337,10 @@ Page({
       console.log('countTotal');
       console.log(res);
       if (res > 0) {
-        wx.setTabBarBadge({
-          index: 3,
-          text: '' + res
-        })
+        // wx.setTabBarBadge({
+        //   index: 3,
+        //   text: '' + res
+        // })
       }
     })
   },
@@ -343,6 +352,14 @@ Page({
     })
   },
 
+  // 头像放大
+  imagePreview() {
+    wx.previewImage({
+      current: this.data.avatarUrl,
+      urls: [this.data.avatarUrl]
+    })
+  },
+
   //图表刷新
   refreshChart(e) {
     let sizeCanvas = e.currentTarget.dataset.canvas;
@@ -351,7 +368,7 @@ Page({
     } else if (sizeCanvas === "安全") {
       this.getGraphSecurity();
     } else {
-      this.getSumProjectMoney();
+      this.getGraphProgressData();
     }
   },
 
@@ -363,9 +380,10 @@ Page({
     var ret = intSum + dot;
     return ret;
   },
+  
   valueUndefinedRsturn0(val) {
-    if (undefined != val || '' != val || null != val) {
-      return '0000-00-00';
+    if ('undefined' != val || '' != val || null != val) {
+      return 0;
     }
     return val;
   }

@@ -86,7 +86,6 @@ Page({
     }, 200)
   },
 
-
   hideModal: function(e) {
     var that = this;
     var animation = wx.createAnimation({
@@ -131,27 +130,42 @@ Page({
 
   // 提交人员名单与附件
   commitFileANDWorkerUnSignList() {
-    let packageData = {
-      workerFormIdlist: this.data.workerFormIdlist, // ======================
-      projectid: this.data.projectID,
-      file: this.data.urlFileImg,
-      fileName: this.data.urlFileImg.replace("http://tmp/", ""),
-      fileSign: this.data.fileSign,
-    }
-    fileWorkerAction.packageComitFileANDWorkerSignList(packageData, function(res) {
-      wx.showToast({
-        title: '提交成功',
-        icon: 'success',
-        duration: 2000,
-        success() {
-          setTimeout(() => {
-            wx.navigateBack({
-              delta: '1'
-            })
-          }, 1200)
-        }
+    var than = this;
+    if (this.data.urlFileImg) {
+      wx.showLoading({
+        title: '提交中',
       })
-    })
+      let packageData = {
+        workerFormIdlist: this.data.workerFormIdlist, // ======================
+        projectid: this.data.projectID,
+        file: this.data.urlFileImg,
+        fileName: this.data.urlFileImg.replace("http://tmp/", ""),
+        fileSign: this.data.fileSign,
+      }
+      fileWorkerAction.packageComitFileANDWorkerSignList(packageData, function(res) {
+        wx.hideLoading({});
+        than.hideModal();
+        wx.showToast({
+          title: '提交成功',
+          icon: 'success',
+          duration: 2000,
+          success() {
+            setTimeout(() => {
+              wx.navigateBack({
+                delta: '1'
+              })
+            }, 1200)
+          }
+        })
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '未选择文件',
+        showCancel: false,
+        confirmColor: '#F0880C'
+      })
+    }
   },
 
   /**

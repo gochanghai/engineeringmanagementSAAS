@@ -10,7 +10,6 @@ Page({
     // 获取项目ID
     this.setData({
       projectID: options.projectID,
-      totalAmount: options.contractamount,
     });
     // 获取产值数据
     this.getOutputValueList(this.data.projectID);
@@ -30,18 +29,21 @@ Page({
     // 调用函数接口获取数据
     confirmvalueAction.getConfirmvalueList(projectID, function(res) {
       console.log(res);
+      let totalAmount = 0;
       let list = [];
-      for (let index in res) {
+      for (let index of res) {
+        totalAmount += index.outputvalue;
         let item = {
-          id: res[index].formid,
-          uploadDate: _than.dateFormat2(res[index].valueuploadat),
-          outputValue: _than.getMoneyFormat(res[index].outputvalue),
-          receivableAmount: _than.getMoneyFormat(res[index].receivableamount),
+          id: index.formid,
+          uploadDate: _than.dateFormat2(index.valueuploadat),
+          outputValue: _than.getMoneyFormat(index.outputvalue),
+          receivableAmount: _than.getMoneyFormat(index.receivableamount),
         };
         list.push(item);
       }
       _than.setData({
         list: list,
+        totalAmount: _than.getMoneyFormat(totalAmount),
       });
       // 关闭加载框
       wx.hideToast({});
@@ -53,7 +55,7 @@ Page({
     let projectID = this.data.projectID;
     let formID = event.currentTarget.dataset.id;
     wx.navigateTo({
-      url: '/pages/outputvalregister/outputvalregister?projectID=' + projectID + "&formID=" + formID
+      url: '/pages/outputvalregister/outputvalregister?projectID=' + projectID + "&formID=" + formID + "&title=产值登记"
     })
   },
 
@@ -61,7 +63,7 @@ Page({
   addConfirmValue() {
     let projectID = this.data.projectID;
     wx.navigateTo({
-      url: '/pages/outputvalregister/outputvalregister?title=新增产值&projectID=' + projectID,
+      url: '/pages/outputvalregister/outputvalregister?title=新增产值&projectID=' + projectID + "&formID=" + '',
     })
   },
 

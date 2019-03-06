@@ -1,4 +1,7 @@
 // miniprogram/testpages/test/test.js
+const userAction = require('../../backend/commonsAction/userAction.js');
+const userWechatAction = require('../../backend/commonsAction/user_wechatAction.js');
+
 const messageCenterAction = require('../../backend/manageAction/messageCenterAction.js');
 const personnelAction = require('../../backend/manageAction/personnelAction.js');
 const calendarAction = require('../../backend/manageAction/calendarAction.js');
@@ -10,11 +13,11 @@ const projectManageAction = require('../../backend/manageAction/projectManageAct
 const projectNodeAction = require('../../backend/manageAction/projectNodeAction.js');
 const declaretimeAction = require('../../backend/manageAction/declaretimeAction.js');
 const confirmvalueAction = require('../../backend/manageAction/confirmvalueAction.js');
-const userAction = require('../../backend/commonsAction/userAction.js');
 const addtaskAction = require('../../backend/manageAction/addtaskAction.js');
 const fileWorkerAction = require('../../backend/manageAction/file_workerAction.js');
 const fileConfirmvalueAction = require('../../backend/manageAction/file_confirmvalueAction.js');
 const statisticalAction = require('../../backend/manageAction/statisticalAction.js');
+
 const workerSaaSAction = require('../../backend/saasAction/workerAction.js');
 const receivepaylinesSaaSAction = require('../../backend/saasAction/receivepaylinesAction.js');
 const projectlistSaaSAction = require('../../backend/saasAction/projectlistAction.js');
@@ -46,6 +49,10 @@ Page({
     // })
     // 消息忽略-2019/2/14
     // messageCenterAction.mesIgnore('','','',function(res){
+    //   console.log(res.code);
+    // })
+    // 消息/任务置为已处理-2019/3/5
+    // messageCenterAction.mesSolve('','','',function(res){
     //   console.log(res.code);
     // })
     // 获取消息总条数-2019/2/14
@@ -240,15 +247,20 @@ Page({
     // projectNodeAction.getProjectNodeList('5',function(bNodeList){
     //   console.log(bNodeList);
     // })
-    // 提交项目进度节点-2019/2/19
+    // 提交项目进度节点-2019/2/19-已失效
     // let fnodeList = [{}, {}]
     // projectNodeAction.postProjectNode('5', fnodeList, function (res) {
     //   console.log(res)
     // })
+    // 提交项目进度结点设置-2019/3/1
+    // let nodeList = [{}]
+    // projectNodeAction.postProjectNode_2(nodeList,function(res){
+    //   console.log(res.code);
+    // })
     // =============================projectnode项目进度节点页===============================
 
     // ===========================declaretime项目申报时间节点页=============================
-    // // 获取项目的合同启止与申报类型-2019/2/14
+    // // 获取项目的合同启止与申报类型,节点个数-2019/2/14-2019/2/28
     // declaretimeAction.getDeclaretimeBaseInfo('5', function (bdeclaretimeBaseInfo) {
     //   console.log(bdeclaretimeBaseInfo);
     // });
@@ -261,10 +273,15 @@ Page({
     // declaretimeAction.postDeclaretiemList(dateList,function(res){
     //   console.log(res.code);
     // })
+    // 申报节点个数为0的时候更新申报日并新建申报时间列表-2019/2/28
+    // let fconfirmdate, fdateList = [{}], cprojectid = '';
+    // declaretimeAction.bornDeclaretiemList(fconfirmdate, fdateList, cprojectid, function (res) {
+    //   console.log(res.code)
+    // })
     // ===========================declaretime项目申报时间节点页=============================
 
     // ===============================confirmvalue产值登记===============================
-    // 获取单项目多条产值信息-2019/2/14-2019/2/25
+    // 获取单项目多条产值信息-2019/2/14-2019/2/25-2019/2/28
     // confirmvalueAction.getConfirmvalueList('5', function (bconfirmvalueList) {
     //   console.log(bconfirmvalueList);
     // });
@@ -272,7 +289,7 @@ Page({
     // confirmvalueAction.deleteConfirmvalue('4d9c1134-2f44-4104-9642-229949975c6e','5', function (res) {
     //   console.log(res.code);
     // });
-    // 获取单条产值信息-2019/2/14-2019/2/25
+    // 获取单条产值信息-2019/2/14-2019/2/25-2019/2/28
     // confirmvalueAction.getConfirmvalue('a301fec0-3956-4f83-a89a-339a8bfeeb61','5', function (bconfirmvalue) {
     //   console.log(bconfirmvalue);
     // });
@@ -297,12 +314,16 @@ Page({
     // confirmvalueAction.updateConfirmvalue(fconfirmvalue, cformid, cprojectID, function (res) {
     //   console.log(res)
     // });
+    // 获取单项目的未申报时间节点列表-2019/2/28
+    // confirmvalueAction.getUnConfirmNode('5', function (bnodeList) {
+    //   console.log(bnodeList)
+    // })
     // 打包提交附件与产值信息-2019/2/19
     // let fconfirmvalueInfo = {}, ffileInfo = {} , cconfirmvalueformid = '', cprojectid = '';
     // fileConfirmvalueAction.comitFileANDConfirmValue(fconfirmvalueInfo, ffileInfo, cconfirmvalueformid, cprojectid, function (res) {
     //   console.log(res.code);
     // })
-    // 打包提交附件、新建产值信息-2019/2/26
+    // 打包提交附件、新建产值信息-2019/2/26-2019/2/28
     // fileConfirmvalueAction.addFileANDConfirmValue(fconfirmvalueInfo, ffileInfo,function(res){
     //   console.log(res.code);
     // })
@@ -421,11 +442,41 @@ Page({
     // userAction.restoreProjectList(function(res){
     //   console.log(res)
     // })
+    // 新增绑定平台帐号与微信帐号-2019/2/27
+    // let fwxinfo = {
+    //   nickname: 1,
+    //   gender: 1,
+    //   language: 1,
+    //   city: 1,
+    //   province: 1,
+    //   country: 1,
+    //   avatarurl: 1,
+    //   signature: 1,
+    //   encrypteddata: 1,
+    //   iv: 1,
+    //   openid: 1,
+    // }
+    // userWechatAction.addUSERbindWXID(fwxinfo,function(res){
+    //   console.log(res.code)
+    // })
+    // 用户授权获取平台帐号及其他信息-2019/3/1-2019/3/5
+    // userWechatAction.getUSERbindWXID(function(bwxmnguser){
+    //   console.log(bwxmnguser)
+    // })
+    // 项管系统账户已绑定微信号授权登录-2019/3/1
+    // userWechatAction.wxopenidSignIn('ofSPN4kcsTD90fQVr6wO5uULktFY',function(res){
+    //   console.log(res.code);
+    // })
+    // 解绑项管系统账户与已绑定微信号-2019/3/5
+    // userWechatAction.unboundUSERandWXID('',function(res){
+    //   console.log(res.code);
+    // })
     // =====================================user用户操作===================================
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~commons~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     // 接口产生或修改时间列表
     // 确认后使用
+    // 已失效
     // 2019/2/14
     // 2019/2/15
     // 2019/2/18
@@ -434,6 +485,10 @@ Page({
     // 2019/2/21
     // 2019/2/22
     // 2019/2/26
+    // 2019/2/27
+    // 2019/2/28
+    // 2019/3/1
+    // 2019/3/5
   },
 
 })

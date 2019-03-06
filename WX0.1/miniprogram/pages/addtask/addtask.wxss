@@ -37,7 +37,6 @@
   width: 20rpx;
   height: 14rpx;
 }
-
 .task_item picker {
   text-align: right;
   flex: 1;

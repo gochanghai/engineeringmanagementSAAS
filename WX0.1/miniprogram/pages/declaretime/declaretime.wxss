@@ -185,3 +185,16 @@
 .btn-hover-class {
   background-color: rgba(0, 0, 0, 0.1);
 }
+
+.set-up {
+  margin-left: 20rpx;
+  padding: 0;
+  height: 50rpx;
+  width: 90rpx;
+  line-height: 50rpx;
+  text-align: center;
+  font-size: 24rpx;
+  background-color: #e95207;
+  border: 1rpx solid #e95207;
+  color: #fff;
+}

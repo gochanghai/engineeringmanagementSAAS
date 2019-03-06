@@ -14,10 +14,18 @@ Page({
     this.setData({
       projectID: options.id,
       projectNO: options.no,
+      projectAName: options.name,
       usablemoney: this.getMoneyFormat(this.data.usablemoney),
       projectmargin: this.getMoneyFormat(this.data.projectmargin)
     })
     this.getCurrentProject(options.id);
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    this.getCurrentProject(this.data.projectID);
   },
 
   //获取单个项目详情的数据
@@ -25,22 +33,24 @@ Page({
     var _than = this;
     // (顶部弹框)
     projectSaaSAction.getProjectInfo(projectID, function(res) {
-      // console.log(res);
+      console.log(res);
       let amount = _than.getMoneyFormat(res.contractamount);          
+      console.log('getProjectInfoRes');      
       _than.setData({
         projectIntroduce: res,
         'projectIntroduce.contractamount': amount
       })
     });
- 
+
     projectSaaSAction.getModuleInfo(projectID, function(res) {
+      console.log('getModuleInfoRes');
       console.log(res);
       // 金额转财务数据
       res.usablemoney = _than.getMoneyFormat(res.usablemoney);
-      res.marginmoney = _than.getMoneyFormat(res.marginmoney); 
+      res.marginmoney = _than.getMoneyFormat(res.marginmoney);
       res.confirmvalueratio = _than.getMunberToRatio(res.confirmvalueratio);
       res.receivableamountratio = _than.getMunberToRatio(res.receivableamountratio);
-      res.receivedpayratio = _than.getMunberToRatio(res.receivedpayratio);       
+      res.receivedpayratio = _than.getMunberToRatio(res.receivedpayratio);
       _than.setData({
         projectModule: res
       })
@@ -146,10 +156,10 @@ Page({
   },
   // 获取数值百分比
   getMunberToRatio(val) {
-    if (val === '' || val === null) {
-      return '0.00%'
+    if (val > 0) {      
+      return (val * 100).toFixed(2);
     }
-    return val.toFixed(4) * 100
+    return 0.00;
   },
-  
+
 })

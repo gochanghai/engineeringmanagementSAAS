@@ -3,7 +3,8 @@
   <view class='top-info'>
     <image src='/images/mycenter.png'></image>
     <view class='user-info'>
-      <image src='/images/logo@2x.png' class='logo'></image>
+      <image src='/images/logo@2x.png' class='logo' wx:if="{{avatarUrl== ''}}"></image>
+      <image src='{{avatarUrl}}' wx:else class='logo' bindtap='imagePreview'></image>
       <view class='details' bindtap='shenhauDetail'>
         <view class='name'>{{userName}}
           <text>{{userPostion}}</text>
@@ -47,4 +48,6 @@
       </view>
     </view>
   </view>
+
+  <button class='binding' wx:if="{{avatarUrl== ''}}" hover-class="binding-hover" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">绑定微信</button>
 </view>

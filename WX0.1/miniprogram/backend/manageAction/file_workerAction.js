@@ -106,7 +106,7 @@ export let packageComitFileANDWorkerSignList = function (packageData = {
     file: packageData.file,
     filename: packageData.fileName,
     filebelong: fileBelong,
-    formname: 'worker'
+    formname: 'dc_mng_worker'
   }
   // 先提交附件
   fileAction.fileUpload(fileInfo, function (res) {

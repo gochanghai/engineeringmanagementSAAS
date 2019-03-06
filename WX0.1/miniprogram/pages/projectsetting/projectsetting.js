@@ -37,7 +37,13 @@ Page({
     })
   },
 
-
+  // 项目简称输入
+  inputProjectAbbreviation(e){
+    this.setData({
+      projectAbbreviation: e.detail.value
+    })
+  },
+  
   // 业务审批付款周期输入
   inputOwnerPayTime(e) {
     this.setData({
@@ -84,6 +90,7 @@ Page({
       ownerpaytime: this.data.ownerPayTime,
       ownerapprovaltime: this.data.ownerApprovalTime,
       projectabbreviation: this.data.projectAbbreviation,
+      projectname: this.data.projectname,
     };
 
     wx.showModal({

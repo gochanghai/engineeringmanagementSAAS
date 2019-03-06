@@ -2,7 +2,7 @@
 <!--项目详情页-->
 <view class='container'>
   <view class='project-information'>
-    <view class='name'>{{projectIntroduce.projectname}}</view>
+    <view class='name'>{{projectAName}}</view>
     <view class='info' bindtap='detailsFun'>
       <view class='context'>
         <text>项目编号：{{projectIntroduce.code}}</text>
@@ -130,7 +130,7 @@
       <view class='statusType'>
         <view hover-class="hover-row">
           <view class='not-deal mes-deal' bindtap='projectSet'>
-            基本信息设置
+            项目管理设置
             <image src='/images/details.png'></image>
           </view>
         </view>
@@ -154,9 +154,11 @@
   <view class='background-layer' wx:if="{{modalDialog}}" bindtap='closeFun'></view>
   <view class='modal' wx:if="{{modalDialog}}">
     <image src='/images/modal_close.png' class='close' bindtap='closeFun'></image>
-    <view class='name'>{{projectIntroduce.projectname}}</view>
+    <view class='name'>{{projectAName}}</view>
     <view class='info'>
       <view class='info-item'>
+        <text>项目全称</text> {{projectIntroduce.projectname}}</view>
+        <view class='info-item'>
         <text>项目编号</text> {{projectIntroduce.code}}</view>
       <view class='info-item'>
         <text>项目类型</text> {{projectIntroduce.projecttype}}</view>

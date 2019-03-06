@@ -3,6 +3,7 @@ const fileUtil = require('../../utils/fileUtil.js');
 const fileAction = require('../../backend/manageAction/fileAction.js');
 const confirmvalueAction = require('../../backend/manageAction/confirmvalueAction.js');
 const fileConfirmvalueAction = require('../../backend/manageAction/file_confirmvalueAction.js');
+
 Page({
   data: {
     outputValue: '',
@@ -12,7 +13,22 @@ Page({
     fileList: [],
     IsperList: false,
     urlFileImg: '',
-    animationData: {}
+    animationData: {},
+    formID: '',
+    projectID: '',
+    uploadDate: '',
+    outputValue: '',
+    receivableAmount: '',
+    confirmDate: '',
+    UnConfirmNodeList: null,
+    activeIndex: 0,
+    typeTitle:''
+  },
+
+  selNode(e) {
+    this.setData({
+      activeIndex: e.detail.value
+    })
   },
 
   hideModal() {
@@ -40,12 +56,28 @@ Page({
     this.setData({
       formID: options.formID,
       projectID: options.projectID,
+      typeTitle: options.title
     });
-
-    this.getData(this.data.formID, this.data.projectID);
-    this.getFileList(this.data.formID, this.data.projectID);
     wx.setNavigationBarTitle({
       title: options.title
+    })
+    if (this.data.formID != '') {
+      this.getData(this.data.formID, this.data.projectID);
+      this.getFileList(this.data.formID, this.data.projectID);
+    }
+    // this.getFileList(this.data.formID, this.data.projectID);
+    this.getUnConfirmNode(this.data.projectID);
+  },
+
+  // 获取单项目的未申报时间节点列表
+  getUnConfirmNode(projectID) {
+    var _this = this;
+    confirmvalueAction.getUnConfirmNode(projectID, function(bnodeList) {
+      // console.log('获取单项目的未申报时间节点列表')
+      console.log(bnodeList)
+      _this.setData({
+        UnConfirmNodeList: bnodeList
+      })
     })
   },
 
@@ -94,7 +126,7 @@ Page({
     let _than = this;
     let fileInfo = {
       projectid: projectID,
-      formname: 'confirmvalue',
+      formname: 'dc_mng_project_confirmvalues',
       belongidlist: formID,
       filebelong: '确认产值',
     }
@@ -167,23 +199,34 @@ Page({
       })
       return;
     }
+    if (this.data.file == "" || this.data.file == null) {
+      wx.showModal({
+        title: '提示',
+        content: '请长传产值表！',
+        showCancel: false,
+        confirmColor: '#F0880C'
+      })
+      return;
+    }
     // 准备要提交的数据
     // 附件
     let fileInfo = {
       file: _this.data.uploadFilePath,
       filename: _this.data.fileName,
     };
-    // 产值登记信息
-    let confirmvalueInfo = {
-      confirmat: this.data.confirmDate,
-      outputvalue: this.data.outputValue,
-      receivableamount: this.data.receivableAmount,
-      valueuploadat: this.data.uploadDate,
-    };
     // 表单ID
     let formID = this.data.formID;
     // 项目ID
     let projectID = this.data.projectID;
+    // 产值登记信息
+    let confirmvalueInfo = {
+      uploadDate: this.data.uploadDate,
+      confirmat: this.data.confirmDate,
+      outputvalue: this.data.outputValue,
+      receivableamount: this.data.receivableAmount,
+      valueuploadat: this.data.uploadDate,
+      projectid: projectID,
+    };
     wx.showModal({
       title: '提示',
       content: '确定提交吗？',
@@ -197,36 +240,69 @@ Page({
           console.log(formID);
           console.log(projectID);
           // 提交数据
-          fileConfirmvalueAction.comitFileANDConfirmValue(fileInfo, confirmvalueInfo, formID, projectID, function(res) {
-            console.log(res.code);
-            if (res.code == 1) {
-              wx.showToast({
-                title: '提交成功',
-                icon: 'success',
-                duration: 2000,
-                success() {
-                  setTimeout(() => {
-                    wx.navigateBack({
-                      delta: '1'
-                    })
-                  }, 1000)
-                }
-              })
-            } else {
-              wx.showToast({
-                title: '提交失败',
-                icon: 'success',
-                duration: 2000,
-                success() {
-                  setTimeout(() => {
-                    wx.navigateBack({
-                      delta: '1'
-                    })
-                  }, 1000)
-                }
-              })
-            }
-          })
+          if (formID != '') {
+            fileConfirmvalueAction.comitFileANDConfirmValue(fileInfo, confirmvalueInfo, formID, projectID, function(res) {
+              console.log(res.code);
+              if (res.code == 1) {
+                wx.showToast({
+                  title: '提交成功',
+                  icon: 'success',
+                  duration: 2000,
+                  success() {
+                    setTimeout(() => {
+                      wx.navigateBack({
+                        delta: '1'
+                      })
+                    }, 1000)
+                  }
+                })
+              } else {
+                wx.showToast({
+                  title: '提交失败',
+                  icon: 'success',
+                  duration: 2000,
+                  success() {
+                    setTimeout(() => {
+                      wx.navigateBack({
+                        delta: '1'
+                      })
+                    }, 1000)
+                  }
+                })
+              }
+            })
+          } else {
+            fileConfirmvalueAction.addFileANDConfirmValue(fileInfo, confirmvalueInfo, function(res) {
+              console.log(res.code);
+              if (res.code == 1) {
+                wx.showToast({
+                  title: '提交成功',
+                  icon: 'success',
+                  duration: 2000,
+                  success() {
+                    setTimeout(() => {
+                      wx.navigateBack({
+                        delta: '1'
+                      })
+                    }, 1000)
+                  }
+                })
+              } else {
+                wx.showToast({
+                  title: '提交失败',
+                  icon: 'success',
+                  duration: 2000,
+                  success() {
+                    setTimeout(() => {
+                      wx.navigateBack({
+                        delta: '1'
+                      })
+                    }, 1000)
+                  }
+                })
+              }
+            })
+          }
 
         } else if (res.cancel) {
           console.log('用户点击取消')
@@ -256,9 +332,19 @@ Page({
 
   // 完成按钮
   commitFileANDWorkerUnSignList() {
-    this.setData({
-      IsperList: false
-    })
+    console.log(this.data.urlFileImg);
+    if (this.data.urlFileImg) {
+      this.setData({
+        IsperList: false
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '未选择文件',
+        showCancel: false,
+        confirmColor: '#F0880C'
+      })
+    }
   },
 
   imgView() {

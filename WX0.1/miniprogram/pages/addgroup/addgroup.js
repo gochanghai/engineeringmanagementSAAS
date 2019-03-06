@@ -111,10 +111,10 @@ Page({
       success(res) {
         if (res.confirm) {
           console.log('Commit');
-          fireGroupAction.addFireGroup(fireGroup, function(code) {
+          fireGroupAction.addFireGroup(fireGroup, function(res) {
             console.log(fireGroup);
-            console.log(code);
-            if (code.code > 0) {
+            console.log(res);
+            if (res.code == 1) {
               wx.showToast({
                 title: '提交成功',
                 icon: 'success',

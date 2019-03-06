@@ -10,34 +10,35 @@ Page({
     activeIndex2: 0,
     activeIndex3: 0,
     AskList: ["请立即处理", "三天内处理", "一周内处理"],
-    messageTypeList: [{
-        type: 'confirmvalue',
-        name: '产值'
-      },
+    messageTypeList: [
+      // {
+      //   type: 'confirmvalue',
+      //   name: '产值'
+      // },
       {
         type: 'progress',
         name: '进度'
       },
-      {
-        type: 'recievedpay',
-        name: '回款'
-      },
+      // {
+      //   type: 'recievedpay',
+      //   name: '回款'
+      // },
       {
         type: 'security',
         name: '安全'
       },
-      {
-        type: 'insurance',
-        name: '保险'
-      },
-      {
-        type: 'education',
-        name: '安全教育'
-      },
-      {
-        type: 'disclose',
-        name: '安全交底'
-      },
+      // {
+      //   type: 'insurance',
+      //   name: '保险'
+      // },
+      // {
+      //   type: 'education',
+      //   name: '安全教育'
+      // },
+      // {
+      //   type: 'disclose',
+      //   name: '安全交底'
+      // },
     ],
     assignUserList: [],
     selName: '',

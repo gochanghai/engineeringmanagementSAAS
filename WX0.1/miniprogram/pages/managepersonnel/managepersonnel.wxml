@@ -98,7 +98,7 @@
               <scroll-view scroll-y style='height:{{WinHeightCon}}'>
                 <view wx:for="{{groupList}}" wx:key='{{index}}' class='cell-row'>
                   <view class='information-item'>
-                    <text>消防水：{{item.groupName}}</text>
+                    <text>{{item.basegroupname}}：{{item.groupName}}</text>
                     <view>施工人数：{{item.totalNumber}}</view>
                     <view>参保人数：{{item.insuranceFileSign}}</view>
                     <view>安全教育：{{item.educationFileSign}}</view>

@@ -28,11 +28,20 @@ export let getPStatis = function (callback) {
       let resdatalist = res.data.datalist;
       if (null != resdatalist) {
         // 合同金额
-        bstatis.contractamountsum = resdatalist.project.dc_projects[0].contractamountsum;
+        let contractamountsum = null != resdatalist.project.datalist.dc_projects[0]
+          ? resdatalist.project.datalist.dc_projects[0].contractamountsum || 0
+          : 0;
+        bstatis.contractamountsum = contractamountsum;
         // 产值
-        bstatis.outputvaluesum = resdatalist.confirmvalue.dc_mng_project_confirmvalues[0].outputvaluesum;
+        let outputvaluesum = null != resdatalist.confirmvalue.datalist.dc_mng_project_confirmvalues[0]
+          ? resdatalist.confirmvalue.datalist.dc_mng_project_confirmvalues[0].outputvaluesum || 0
+          : 0;
+        bstatis.outputvaluesum = outputvaluesum;
         // 回款
-        bstatis.actualreceivamountsum = resdatalist.recievedpay.dc_project_statistics[0].actualreceivamountsum;
+        let actualreceivamountsum = null != resdatalist.recievedpay.datalist.dc_project_statistics[0]
+          ? resdatalist.recievedpay.datalist.dc_project_statistics[0].actualreceivamountsum || 0
+          : 0;
+        bstatis.actualreceivamountsum = actualreceivamountsum;
       }
     }
     return typeof callback == 'function' && callback(bstatis)
@@ -63,13 +72,20 @@ export let getGraphProgressData = function (callback) {
       let resdatalist = res.data.datalist;
       if (null != resdatalist) {
         // 未完成产值
-        bprogressData.outputvaluerest = null != resdatalist.project.dc_projects[0].contractamountsum || null != resdatalist.confirmvalue.dc_mng_project_confirmvalues[0].outputvaluesum
-          ? resdatalist.project.dc_projects[0].contractamountsum - resdatalist.confirmvalue.dc_mng_project_confirmvalues[0].outputvaluesum : 0;
+        let contractamountsum = null != resdatalist.project.datalist.dc_projects[0]
+          ? resdatalist.project.datalist.dc_projects[0].contractamountsum || 0
+          : 0;
+        let outputvaluesum = null != resdatalist.confirmvalue.datalist.dc_mng_project_confirmvalues[0]
+          ? resdatalist.confirmvalue.datalist.dc_mng_project_confirmvalues[0].outputvaluesum || 0
+          : 0;
+        bprogressData.outputvaluerest = contractamountsum - outputvaluesum;
         // 累计回款
-        bprogressData.actualreceivamountsum = resdatalist.recievedpay.dc_project_statistics[0].actualreceivamountsum || 0;
+        let actualreceivamountsum = null != resdatalist.recievedpay.datalist.dc_project_statistics[0]
+          ? resdatalist.recievedpay.datalist.dc_project_statistics[0].actualreceivamountsum || 0
+          : 0;
+        bprogressData.actualreceivamountsum = actualreceivamountsum;
         // 可收款
-        bprogressData.receivablepaysum = null != resdatalist.confirmvalue.dc_mng_project_confirmvalues[0].outputvaluesum || resdatalist.recievedpay.dc_project_statistics[0].actualreceivamountsum
-          ? resdatalist.confirmvalue.dc_mng_project_confirmvalues[0].outputvaluesum - resdatalist.recievedpay.dc_project_statistics[0].actualreceivamountsum : 0;
+        bprogressData.receivablepaysum = outputvaluesum - actualreceivamountsum;
       }
     }
     return typeof callback == 'function' && callback(bprogressData)

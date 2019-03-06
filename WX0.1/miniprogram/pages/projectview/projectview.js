@@ -3,6 +3,8 @@ const projectlistSaaSAction = require('../../backend/saasAction/projectlistActio
 Page({
   data: {
     WinHeightCon: null,
+    duration:300,
+    circular:true,
     selectModuleIndex: '0',
     swiperIndex: '0',
     selectList: [{
@@ -41,11 +43,18 @@ Page({
     this.getProjectList();
   },
 
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    this.getProjectList();
+  },
+
   //进入项目详情
   navProjectDetail(event) {
     let data = event.currentTarget.dataset.data;
     wx.navigateTo({
-      url: '/pages/projectdetail/projectdetail?id=' + data.id + '&no=' + data.no,
+      url: '/pages/projectdetail/projectdetail?id=' + data.id + '&no=' + data.no + '&name=' + data.name,
     })
   },
 
@@ -88,7 +97,7 @@ Page({
         for (let index in item) {
           let project = {
             id: item[index].projectid,
-            name: item[index].projectname,
+            name: item[index].projectabbreviation,
             date: item[index].startdate + ' 至 ' + item[index].enddate,
             status: _than.getStatusToText(item[index].projectstage),
             no: item[index].code,
@@ -119,7 +128,7 @@ Page({
   //=====================  数据格式化区域 start =====================//
   //财务金额格式化
   getMoneyFormat(val) {
-    if (val === '' || val === null) {
+    if (val === '' || val === null || val === 0) {
       return '0.00';
     }
     var str = parseInt(val).toFixed(2) + '';
@@ -130,10 +139,10 @@ Page({
   },
   // 获取数值百分比
   getMunberToRatio(val) {
-    if (val === '' || val === null) {
+    if (val === '' || val === null || val === 0) {
       return '0.00%'
     }
-    return val.toFixed(4) * 100 + '%'
+    return (val*100).toFixed(2) + '%';
   },
 
   //

@@ -30,6 +30,7 @@
   margin-left: 44rpx;
   width: 130rpx;
   height: 130rpx;
+  border-radius: 50%;
 }
 
 .details {
@@ -106,4 +107,22 @@
 
 .hover-row {
   background-color: #e4e4e4;
+}
+
+.binding {
+  margin-top: 200rpx;
+  width: 300rpx;
+  height: 75rpx;
+  line-height: 75rpx;
+  background-color: #fff;
+  color: #e95207;
+  font-size: 30rpx;
+  font-weight: bold;
+  border: 1rpx solid #f0880c;
+}
+
+.binding-hover {
+  background-color: #e95207;
+  border: 1rpx solid #e95207;
+  color: #fff;
 }

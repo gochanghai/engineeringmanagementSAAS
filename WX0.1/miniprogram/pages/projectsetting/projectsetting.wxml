@@ -8,7 +8,7 @@
     <view class='information_item'>
       <text>项目简称</text>
       <!-- <text class='value'>{{projectAbbreviation}}</text> -->
-      <input value='{{projectAbbreviation}}' type='text'></input>
+      <input value='{{projectAbbreviation}}'bindinput='inputProjectAbbreviation' type='text'></input>
     </view>
     <!-- <view class='information_item'>
       <text>合同编号</text>
@@ -31,7 +31,7 @@
       <input type='number' confirm-type="next" value='{{ownerPayTime}}' placeholder-class='input_class' bindinput='inputOwnerPayTime' />
     </view>
     <view class='information_item'>
-      <text>付款比例(%)</text>
+      <text>付款比例(0~100%)</text>
       <input type='number' confirm-type="next" value='{{ownerPayPercent * 100}}' placeholder-class='input_class' bindinput='inputOwnerPayPercent' />
     </view>
     <view class='information_item'>

@@ -8,7 +8,7 @@
       </view>
     </view>
   </scroll-view>
-  <swiper style='height:{{WinHeightCon}}' current='{{swiperIndex}}' bindchange="currentFun">
+  <swiper style='height:{{WinHeightCon}}' current='{{swiperIndex}}' bindchange="currentFun" duration="{{duration}}" circular="{{circular}}">
     <swiper-item wx:for='{{swiperList}}' wx:key='index'>
       <scroll-view style='height:{{WinHeightCon}}' scroll-y>
         <view class='project-list'>
@@ -31,12 +31,8 @@
               </view>
             </view>
           </view>
-
         </view>
       </scroll-view>
     </swiper-item>
-    <!-- <swiper-item>
-      
-    </swiper-item> -->
   </swiper>
 </view>

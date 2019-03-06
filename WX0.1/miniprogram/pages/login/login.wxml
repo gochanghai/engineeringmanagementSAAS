@@ -17,5 +17,6 @@
     </view>
     <!-- 按钮 -->
     <view class='login' bindtap='signIn'>登 录</view>
+    <!-- <view class='login' open-type="getUserInfo"  bindgetuserinfo="onGotUserInfo">登 录</view> -->
   </view>
 </view>

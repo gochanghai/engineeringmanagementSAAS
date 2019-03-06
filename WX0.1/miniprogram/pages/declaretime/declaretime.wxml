@@ -21,11 +21,14 @@
     </view>
 
     <view class='task_item'>
-      <text>申报时间类型</text>
-      <input type='number' confirm-type="next" bindinput="dayBindInput" />
-      <view style='font-size:32rpx; color:#666;width:50rpx;'>
+      <text>每月申报日</text>
+      <input type='number' value='{{today}}' confirm-type="next" bindinput="dayBindInput" disabled='{{dayDisabled}}' style='{{dayDisabled == true ? "color:#999" : "color:#666"}}' />
+      <view style='font-size:32rpx; width:50rpx; {{dayDisabled == true ? "color:#999" : "color:#666"}}'>
         {{Day}}
       </view>
+      <button class='set-up' bindtap='settingDay' data-type='{{btnType}}'>
+        {{btnType}}
+      </button>
       <!-- <image src='/images/xia.png'></image> -->
       <!-- <action-sheet hidden="{{declareHidden}}">
         <block wx:for="{{declareType}}" wx:key="">
@@ -45,9 +48,9 @@
         <view class='day_container'>
           <view class='container-item' wx:for="{{declaretimeList}}" wx:key='｛{index}｝' wx:if="{{item.status != 'deleteDetail'}}">
             <view class='date-info'>
-              <picker mode="date" value="{{seldate}}" start="2010-09-01" end="2209-09-01" bindchange="bindDateChange" id='{{index}}'>
+              <picker mode="date" value="{{item.fdatenode}}" start="{{contractInfo.pickerDateStart}}" end="2209-09-01" bindchange="bindDateChange" data-index='{{index}}'>
                 <view class="picker_sel">
-                  {{seldate}}
+                  {{item.fdatenode}}
                 </view>
               </picker>
               <image src='/images/delete.png' data-index="{{index}}" bindtap='deleteDeclareTime'></image>

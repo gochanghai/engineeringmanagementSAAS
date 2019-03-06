@@ -22,11 +22,13 @@
   border-radius: 6rpx 6rpx 0 0;
 }
 
-.user-info image {
+.user-info image.logo {
   margin: 0 26rpx;
-  margin-left: 44rpx;
+  margin-left: 70rpx;
   width: 130rpx;
   height: 130rpx;
+  /* border: 1px solid; */
+  border-radius: 50%;
 }
 
 .details {
@@ -35,6 +37,7 @@
   justify-content: space-between;
   height: 124rpx;
   flex: 1;
+  /* border: 1px solid; */
 }
 
 .details view.name {
@@ -49,12 +52,12 @@
   padding: 3rpx 12rpx;
   font-size: 23rpx;
   color: #f0880c;
-  border: 1px solid;
+  border: 2rpx solid #f0880c;
   border-radius: 6rpx;
 }
 
 .details view.company, .details view.branch {
-  font-size: 24rpx;
+  font-size: 25rpx;
   color: #666;
 }
 
@@ -66,12 +69,12 @@
   height: 230rpx;
   background-color: #fff;
   border-radius: 0 0 6rpx 6rpx;
+  /* border: 1px solid; */
 }
 
 .money-info view.line {
   width: 86%;
   margin: 0 auto;
-  margin-top: 10rpx;
   border-top: 1rpx solid #e5e5e5;
 }
 
@@ -106,6 +109,9 @@
   height: 120rpx;
   width: 30%;
   text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .output-value view.item:last-child {
@@ -130,10 +136,9 @@
 .canvas1 {
   position: absolute;
   top: 100rpx;
-  padding-top: 30rpx;
-  width: 100%;
+  margin-left: 1%;
+  width: 98%;
   height: 320rpx;
-  /* border: 1px solid; */
 }
 
 .data-charts {
@@ -166,31 +171,33 @@
 
 .con {
   display: flex;
+  align-items: center;
 }
 
 .canvas2 {
+  margin-left: 8rpx;
   margin-top: 30rpx;
-  width: 51%;
-  height: 280rpx;
+  width: 50%;
+  height: 260rpx;
 }
 
 .canvas3 {
+  margin-left: 38rpx;
   margin-top: -30rpx;
-  width: 51%;
+  width: 50%;
   height: 320rpx;
 }
 
 .con view.content-info {
   margin-left: 35rpx;
-  padding-top: 24rpx;
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: left;
+  align-items: center;
 }
 
 .content-info3 {
-  margin-top: 35rpx;
+  /* margin-top: 35rpx; */
 }
 
 .info-item {
@@ -201,15 +208,21 @@
 
 .info-item text {
   display: inline-block;
-  width: 26rpx;
-  height: 26rpx;
+  width: 24rpx;
+  height: 24rpx;
   border-radius: 50%;
 }
 
 .info-item view {
+  display: inline-block;
+  width: 270rpx;
   margin-left: 16rpx;
   font-size: 24rpx;
   color: #666;
+  /* border: 1px solid; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .none {
@@ -231,4 +244,10 @@
 
 .data-none3 {
   line-height: 270rpx;
+}
+
+.user-info image.img-detail {
+  padding-right: 48rpx;
+  width: 10rpx;
+  height: 23rpx;
 }

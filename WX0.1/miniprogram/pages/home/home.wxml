@@ -1,8 +1,9 @@
 <!--首页pages-->
 <view class='container'>
   <!-- 用户信息 -->
-  <view class='user-info'>
-    <image src='{{like}}' class='logo' bindtap='accountPreview'></image>
+  <view class='user-info'> 
+    <image src='{{avatarUrl}}'wx:if="{{avatarUrl != ''}}" class='logo'></image>
+    <image src='{{like}}'wx:if="{{avatarUrl == ''}}" class='logo'></image>
     <view class='details' bindtap='shenhauDetail'>
       <view class='company'>深华建设(股份)有限公司</view>
       <view class='branch'>{{userArea}}</view>
@@ -10,6 +11,7 @@
         <text>{{userPostion}}</text>
       </view>
     </view>
+    <image src='/images/more.png' class='img-detail'></image>
   </view>
   <view class='money-info'>
     <view class='line'></view>
@@ -17,21 +19,21 @@
       <view></view>
       <view>
         <text>金额可见</text>
-        <switch checked bindchange="switch1Change" style='zoom:.5;margin-left:12rpx;margin-top:-9rpx;' />
+        <switch color="#e95207" checked="{{moneySwitch}}" bindchange="switch1Change" style='zoom:.5;margin-left:12rpx;margin-top:-9rpx;' />            
       </view>
     </view>
     <view class='output-value'>
-      <view class='item' bindtap='navProjectList' hover-class='hover-row'>
+      <view class='item'>
         <text>合同金额</text>
         <view wx:if="{{moneySwitch}}">￥{{contractAmount}}</view>
         <view wx:else>- -</view>
       </view>
-      <view class='item' bindtap='navProjectList' hover-class='hover-row'>
+      <view class='item'>
         <text>总产值</text>
         <view wx:if="{{moneySwitch}}">￥{{totalOutputvalue}}</view>
         <view wx:else>- -</view>
       </view>
-      <view class='item' bindtap='navProjectList' hover-class='hover-row'>
+      <view class='item'>
         <text>总回款</text>
         <view wx:if="{{moneySwitch}}">￥{{totalReturnAmount}}</view>
         <view wx:else>- -</view>
@@ -41,7 +43,7 @@
   <view class='data-charts'>
     <view class='visua' style='position: relative;height:400rpx;'>
       <text class='title'><text style='color:#FF9858;font-weight:bold'>丨</text>产值</text>
-      <view class='data-none1 none' wx:if='{{outputValueList.length > 0}}'>暂无数据</view>
+      <view class='data-none1 none' wx:if='{{outputValueList.length <= 0}}'>暂无数据</view>
       <canvas canvas-id="Canvas1" wx:else class="canvas1" data-canvas='产值' bindtap='refreshChart'></canvas>
     </view>
     <view class='visua' style='height:330rpx;'>
@@ -50,7 +52,7 @@
       <view class='con' wx:else>
         <canvas canvas-id="Canvas2" class="canvas2" data-canvas='安全' bindtap='refreshChart'>
         </canvas>
-        <view class='content-info' style='margin-left: 0rpx;'>
+        <view class='content-info' style='margin-left: -7rpx;'>
           <view class='info-item'>
             <text style='background-color:#B122E6'></text>
             <view>安全人数：{{securityData.totalWorker}}</view>
@@ -75,7 +77,7 @@
       <view class='data-none3 none' wx:if='{{!isProgressChart}}'>暂无数据</view>
       <view class='con' wx:else>
         <canvas canvas-id="Canvas3" class="canvas3" data-canvas='进度' style='margin-left:-37rpx;' bindtap='refreshChart'></canvas>
-        <view class='content-info content-info3' style='margin-left: 40rpx;'>
+        <view class='content-info content-info3' style='margin-left: 44rpx;'>
           <view class='info-item'>
             <text style='background-color:#B122E6'></text>
             <view>未完成产值：{{progressData.unOutputValue}}万</view>

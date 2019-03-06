@@ -1,6 +1,7 @@
 // pages/confirmpersonnel/confirmpersonnel.js
 const fileAction = require('../../backend/manageAction/fileAction.js');
 const workerAction = require('../../backend/manageAction/workerAction.js');
+const fileUtilJS = require('../../utils/fileUtil.js');
 Page({
   data: {
     windowHeight: null,
@@ -8,9 +9,10 @@ Page({
     toggleStyle: {
       heightSel: 'auto',
       imgSel: '/images/up.png',
-      height: '110rpx',
+      height: '170rpx',
       img: '/images/down.png'
     },
+    personnerList: [],
     groupList: [],
   },
 
@@ -36,13 +38,83 @@ Page({
    */
   downSwitch(event) {
     // console.log(event.currentTarget.id);
+    let _this = this;
     let index = event.currentTarget.id;
     let showID = this.data.toggleId;
     if (showID === index) {
       index = -1;
     }
+    if (index != -1) {
+      _this.getWorkerList(_this.data.projectID, _this.data.groupList[index].belongidlist);
+    }
     this.setData({
       toggleId: index,
+    })
+  },
+
+  previewFile(event) {
+    // console.log(event.currentTarget.id);
+    let _this = this;
+    let index = event.currentTarget.id;
+    let fileInfo = {
+      formname: _this.data.groupList[index].formname,
+      formobjid: _this.data.groupList[index].formobjid,
+      fileid: _this.data.groupList[index].fileid,
+      filename: _this.data.groupList[index].filename,
+    }
+    _this.dopreviewFile(fileInfo)
+
+  },
+
+  /**
+   * 获取文件依赖劳务人员
+   */
+  getWorkerList(projectID, belongidlist) {
+    let _this = this;
+    _this.data.personnerList = []
+    workerAction.getWorkerList(projectID, belongidlist, function (bworkerList) {
+      if (null != bworkerList && null != bworkerList.length && bworkerList.length > 0) {
+        for (let item of bworkerList) {
+          let pushData = {
+            admissionat: item.admissionat,
+            name: item.name,
+            groupname: item.groupname
+          }
+          _this.data.personnerList.push(pushData);
+        }
+      }
+      _this.setData({
+        personnerList: _this.data.personnerList
+      })
+    });
+  },
+
+  dopreviewFile(fileInfo = { formname: null, formobjid: null, fileid: null, filename: null }) {
+    console.log(fileInfo)
+    fileAction.fileGetPath(fileInfo, function (res) {
+      console.log(res.fileURL)
+      const downloadTask = wx.downloadFile({
+        url: res.fileURL,
+        success(res) {
+          console.log(res)
+          if (res.statusCode === 200) {
+            let previewFileInfo = {
+              fileName: fileInfo.filename,
+              filePath: res.tempFilePath,
+              fileType: fileUtilJS.getSux(fileInfo.filename),
+            }
+            fileAction.previewFile(previewFileInfo)
+          }
+        },
+        fail(res) {
+          console.log(res)
+        }
+      })
+      downloadTask.onProgressUpdate((res) => {
+        console.log('下载进度', res.progress)
+        console.log('已经下载的数据长度', res.totalBytesWritten)
+        console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
+      })
     })
   },
 
@@ -66,30 +138,20 @@ Page({
     }
     let fileInfo = {
       projectid: projectID,
-      formname: 'worker',
+      formname: 'dc_mng_worker',
       filebelong: filebelongvalue,
     }
     fileAction.getFileList(fileInfo, function (bfileList) {
       let groupList = [];
-      if (bfileList.length > 0) {
+      if (null != bfileList && null != bfileList.length && bfileList.length > 0) {
         for (let index of bfileList) {
           let item = {
+            formobjid: index.formobjid,
+            fileid: index.fileid,
+            formname: index.formname,
             filename: index.filename,
-            file: '/images/mesimage2.png',
             createDate: index.uploadat,
-            personnerList: [{
-              name: "张三",
-              gender: "男",
-              date: "2018-11-03"
-            }, {
-              name: "张三",
-              gender: "男",
-              date: "2018-11-03"
-            }, {
-              name: "张三",
-              gender: "男",
-              date: "2018-11-03"
-            }]
+            belongidlist: index.belongidlist,
           }
           groupList.push(item);
         }
@@ -108,16 +170,16 @@ Page({
     // let fileSign =  "disclose"||"education"||"insurance"
     switch (val) {
       case 'disclose':
-        return '已交底人员';
+        return '附件列表：安全交底';
         break;
       case 'education':
-        return '已教育人员';
+        return '附件列表：安全教育';
         break;
       case 'insurance':
-        return '已参保人员';
+        return '附件列表：保险';
         break;
       default:
-        return '已参保人员';
+        return '附件列表';
         break;
     }
   },

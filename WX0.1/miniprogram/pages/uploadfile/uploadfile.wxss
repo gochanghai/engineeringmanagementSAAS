@@ -21,8 +21,8 @@
 .information-item {
   margin: 0 auto;
   width: 92%;
-  padding: 20rpx 0;
-  padding-top: 35rpx;
+  padding: 10rpx 0;
+  padding-top: 25rpx;
   height: 110rpx;
   border-bottom: 1rpx solid #e5e5e5;
 }
@@ -45,6 +45,10 @@
 .file_info view {
   font-size: 28rpx;
   line-height: 50rpx;
+}
+
+.file_info view:last-child {
+  color: #999;
 }
 
 .file_check {
@@ -190,6 +194,7 @@
   text-align: center;
   color: #ccc;
 }
+
 /* 
 .none_bg text {
   display: block;
@@ -202,3 +207,27 @@
   width: 360rpx;
   height: 250rpx;
 } */
+
+checkbox .wx-checkbox-input {
+  border-radius: 50%;
+  width: 50rpx;
+  height: 50rpx;
+}
+
+checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+  background: #e95207;
+  border-color: #e95207;
+}
+
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+  border-radius: 50%;
+  width: 46rpx;
+  height: 46rpx;
+  line-height: 46rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #fff;
+  background: transparent;
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
+}

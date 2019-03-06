@@ -1,36 +1,77 @@
 <!--工程节点-->
 <view class='container'>
-  <view class='select'>
+  <!-- <view class='select'>
     <checkbox checked="{{all_checked}}" data-index="{{all_checked}}" bindtap="changeAllChecked" style="transform:scale(.7);margin-top:0rpx;" />全选
     <text bindtap="deleteNode">删除节点</text>
-  </view>
+  </view> -->
   <scroll-view style='height:{{WinHeight}}' scroll-y>
-    <view class='information'>
-      <view class='information_item' wx:for="{{nodeList}}" wx:key="" wx:if="nodeList.length">
-        <checkbox checked="{{item.checked}}" data-type="{{item.checked}}" data-index="{{index}}" bindtap="changeChecked" style="transform:scale(.7);margin-top:-18rpx;" />
-        <view class='name'>
-          <text>{{item.nodename}}</text>
-          <text>{{item.finishstatus}}</text>
+    <!-- <view class='information'>
+      <view wx:for="{{nodeList}}" wx:key="" wx:if="nodeList.length">
+        <view class='information_item' style="{{item.status == 'delete' || item.status == null ||  item.status == 'null'? 'background-color:#ABABAB' : ''}}">
+          <checkbox checked="{{item.checked}}" data-type="{{item.checked}}" data-index="{{index}}" bindtap="changeChecked" style="transform:scale(.7);margin-top:-18rpx;" disabled='{{item.status == "delete" ? true : false}}' />
+          <view class='name'>
+            <text>{{item.id}} {{item.nodeName}}</text>
+            <text>{{item.finishStatus}}</text>
+          </view>
+          <view class='date'>
+            <picker value='{{item.startTime}}' mode="date" data-index='{{index}}' bindchange="inputStartDate" disabled='{{item.status == "delete" ? true : false}}'>
+              <view class="picker" style='font-size:30rpx; color:#666; {{item.status == "delete" ? "background-color:#ABABAB;border:1px solid #000" : ""}}'>
+                {{item.startTime || "开始日期"}}
+                <image src='/images/xia.png' class='down_img'></image>
+              </view>
+            </picker>
+            <picker value="{{item.endTime}}" mode="date" data-index='{{index}}' bindchange="inputEndDate" disabled='{{item.status == "delete" ? true : false}}'>
+              <view class="picker" style='font-size:30rpx; color:#666;{{item.status == "delete" ? "background-color:#ABABAB;border:1px solid #000" : ""}}'>
+                {{item.endTime || "结束日期"}}
+                <image src='/images/xia.png' class='down_img'></image>
+              </view>
+            </picker>
+          </view>
+          <text class='delete-item' bindtap='selDataDelete' id="{{index}}">删除</text>
         </view>
-        <view class='date'>
-          <picker value='{{item.startfrom}}' mode="date" start="2010-01-01" end="2029-01-01" data-index='{{index}}' bindchange="inputStartDate">
-            <view class="picker" style='font-size:30rpx; color:#999;'>
-              {{item.startfrom}}
-              <image src='/images/xia.png' class='down_img'></image>
+      </view>
+    </view> -->
+
+    <view class='information'>
+      <view class='information-item' wx:for="{{nodeList}}" wx:key="" wx:if="nodeList.length">
+        <view class='node-name'>
+          <text style='{{item.checked == false ? "color:#dcdcdc" : "color:#333"}}'>{{item.id}} {{item.nodeName}}</text>
+          <picker bindchange='selStatusItem' value="{{activeIndex}}" range="{{selStatus}}" id='{{index}}' data-checked='{{item.checked}}' disabled='{{!isEditor || !item.checked}}'>
+            <view class='finishStatus' style='{{item.checked == false ? "color:#dcdcdc" : "color:#e95207"}}' wx:if="{{isEditor}}">
+            {{item.finishStatus || "状态"}}
+            </view>
+            <view class='finishStatus' style='{{item.checked == false ? "color:#dcdcdc" : "color:#e95207"}}' wx:elif="{{item.finishStatus!= '' && item.checked == true}}">
+              {{item.finishStatus}}
             </view>
           </picker>
-          <picker value="{{item.endat}}" mode="date" start="2010-01-01" end="2029-01-01" data-index='{{index}}' bindchange="inputEndDate">
-            <view class="picker" style='font-size:30rpx; color:#999;'>
-              {{item.endat}}
-              <image src='/images/xia.png' class='down_img'></image>
-            </view>
-          </picker>
+          <switch color="#e95207" style='zoom:.6;' bindchange="bindItemChange" data-item='{{item}}' checked="{{item.checked}}" id='{{index}}' wx:if="{{isEditor}}"></switch>
+        </view>
+        <view class='date-list'>
+          <view class='star date-item'>
+            <text class='mark star-logo' style='{{item.checked == false ? "background-color:#dcdcdc" : "background-color:#6bc935"}}'>起</text>
+            <picker mode="date" value='{{item.startTime}}' mode="date" data-index='{{index}}' bindchange="inputStartDate" disabled='{{!isEditor || !item.checked}}'>
+              <view style='{{item.checked == false ? "color:#dcdcdc" : "color:#333"}}' class='picker {{isEditor == false ? "border_none" : "border_normal"}}'>
+                {{item.startTime || "开始日期"}}
+              </view>
+            </picker>
+          </view>
+          <view class='end date-item'>
+            <text class='mark end-logo' style='{{item.checked == false ? "background-color:#dcdcdc" : "background-color:#e95207"}}'>止</text>
+            <picker mode="date" value="{{item.endTime}}" mode="date" data-index='{{index}}' bindchange="inputEndDate" disabled='{{!isEditor || !item.checked}}'>
+              <view style='{{item.checked == false ? "color:#dcdcdc" : "color:#333"}}' class='picker {{isEditor == false ? "border_none" : "border_normal"}}'>
+                {{item.endTime || "结束日期"}}
+              </view>
+            </picker>
+          </view>
         </view>
       </view>
     </view>
   </scroll-view>
-  <view class='btom-btns'>
-    <view class='ignore' bindtap="cancel" hover-class='btn-hover-class'>取 消</view>
-    <view class='solve' bindtap='commitProNode' hover-class='btn-hover-class'>确 定</view>
+  <view class='bottombtn'>
+    <view class='btom-btns'>
+      <view class='ignore' bindtap="cancel" hover-class='btn-hover-class' data-type="{{cancelType}}">{{cancelType}}</view>
+      <view class='solve' bindtap='settings' hover-class='btn-hover-class' data-type='{{btnType}}'>{{btnType}}</view>
+      <!-- <view class='solve' bindtap='commitProNode' hover-class='btn-hover-class'>确 定</view> -->
+    </view>
   </view>
 </view>

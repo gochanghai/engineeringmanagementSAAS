@@ -92,7 +92,7 @@
   color: #fff;
   border-radius: 60rpx;
   background: linear-gradient(to right, #e95207, #f0880c);
-  box-shadow: 0rpx 10rpx 10rpx #dadada;
+  box-shadow: 0rpx 6rpx 10rpx #dadada;
 }
 
 .forgetpwd {

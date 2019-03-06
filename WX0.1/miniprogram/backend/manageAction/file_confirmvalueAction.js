@@ -24,7 +24,7 @@ export let comitFileANDConfirmValue = function (
                         file: ffileInfo.file,
                         filename: ffileInfo.filename,
                         filebelong: "确认产值",
-                        formname: 'confirmvalue'
+                        formname: 'dc_mng_project_confirmvalues'
                     }
                     fileAction.fileUpload(uploadfileInfo, function (res) {
                         return typeof callback == 'function' && callback({ code: res.code })
@@ -43,7 +43,7 @@ export let comitFileANDConfirmValue = function (
                         file: ffileInfo.file,
                         filename: ffileInfo.filename,
                         filebelong: "确认产值",
-                        formname: 'confirmvalue'
+                        formname: 'dc_mng_project_confirmvalues'
                     }
                     fileAction.fileUpload(uploadfileInfo, function (res) {
                         return typeof callback == 'function' && callback({ code: res.code })
@@ -57,15 +57,15 @@ export let comitFileANDConfirmValue = function (
 /**
  * 打包提交附件、新建产值信息：
  * ffileInfo 文件实体类数据，file 文件本件、filename 文件名称；
- * fconfirmvalueInfo 产值实体类数据；
+ * fconfirmvalueInfo 产值实体类数据，其中：
+ * fconfirmvalueInfo.confirmnodeformid 申报节点的表单id；
  * code 返回的服务器结果；
  **/
 export let addFileANDConfirmValue = function (
     ffileInfo = { file: null, filename: null, },
-    fconfirmvalueInfo = { projectid: null, confirmat: null, outputvalue: null, receivableamount: null, valueuploadat: null },
+    fconfirmvalueInfo = { confirmnodeformid: null, projectid: null, confirmat: null, outputvalue: null, receivableamount: null, valueuploadat: null },
     callback) {
-    fconfirmvalueInfo.projectid = cprojectid;
-    confirmvalueAction.addConfirmvalue(fconfirmvalueInfo, function (res) {
+    confirmvalueAction.addConfirmvaluebformid(fconfirmvalueInfo, fconfirmvalueInfo.confirmnodeformid, function (res) {
         if (res.code == 1) {
             if (null != ffileInfo && null != ffileInfo.file && '' != ffileInfo.file) {
                 let uploadfileInfo = {
@@ -74,7 +74,7 @@ export let addFileANDConfirmValue = function (
                     file: ffileInfo.file,
                     filename: ffileInfo.filename,
                     filebelong: "确认产值",
-                    formname: 'confirmvalue'
+                    formname: 'dc_mng_project_confirmvalues'
                 }
                 fileAction.fileUpload(uploadfileInfo, function (res) {
                     return typeof callback == 'function' && callback({ code: res.code })

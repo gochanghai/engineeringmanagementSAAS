@@ -8,6 +8,7 @@ Page({
   data: {
     statusBgColor: "#04c704",
     cellSize: 42,
+    scrollLeft: 0,
     dayStyle: [{
         month: 'current',
         day: new Date().getDate(),
@@ -21,12 +22,16 @@ Page({
         background: '#AAD4F5'
       }
     ],
+    scrollAnimation: true,
     chooseDay: null,
     IsToDay: false,
     days: '',
     isNotice: true,
     noticeContent: '',
-    toMonth: null
+    toMonth: null,
+    windowHeight: null,
+    selectModuleIndex: 0,
+    heightView: ''
   },
   //给点击的日期设置一个背景颜色
   dayClick: function(event) {
@@ -74,9 +79,7 @@ Page({
   next(e) {
     let toMonth = this.data.toMonth;
     if (toMonth < e.detail.currentMonth) {
-      this.setData({
-        dayStyle: []
-      })
+      this.dayChange();
     } else if (toMonth == e.detail.currentMonth) {
       this.MonthCurrent();
     }
@@ -88,9 +91,7 @@ Page({
     if (toMonth == e.detail.currentMonth) {
       this.MonthCurrent();
     } else if (toMonth > e.detail.currentMonth) {
-      this.setData({
-        dayStyle: []
-      })
+      this.dayChange();
     }
   },
 
@@ -98,11 +99,68 @@ Page({
   dateChange: function(e) {
     let toMonth = this.data.toMonth;
     if (toMonth < e.detail.currentMonth || toMonth > e.detail.currentMonth) {
+      this.dayChange();
+    } else {
+      this.MonthCurrent();
+    }
+  },
+
+  //选择其他月份的某一天
+  dayChange() {
+    this.setData({
+      dayStyle: [{
+        month: 'current',
+        day: "",
+        color: 'white',
+        background: '#AAD4F5'
+      }, {
+        month: 'current',
+        day: "",
+        color: 'white',
+        background: '#AAD4F5'
+      }]
+    })
+  },
+
+  selModule(e) {
+    let index = e.currentTarget.dataset.index;
+    console.log(index);
+    this.scrollLeft(index);
+    this.setData({
+      selectModuleIndex: e.currentTarget.dataset.index
+    })
+  },
+
+  currentFun(e) {
+    let length = this.data.dataList[e.detail.current].list.length;
+    if (length <= 2) {
       this.setData({
-        dayStyle: []
+        heightView: 2 * 132 + 'rpx'
       })
     } else {
-      this.MonthCurrent();         
+      this.setData({
+        heightView: length * 132 + 'rpx'
+      })
+    }
+    this.setData({
+      selectModuleIndex: e.detail.current,
+      swiperIndex: e.detail.current
+    })
+    this.scrollLeft(e.detail.current);
+  },
+
+  //滚动时动态设置滚动条位置
+  scrollLeft(index) {
+    if (index <= 4) {
+      if (index >= 3) {
+        this.setData({
+          scrollLeft: index * 54
+        })
+      } else if (index <= 3) {
+        this.setData({
+          scrollLeft: 0
+        })
+      }
     }
   },
 
@@ -131,9 +189,17 @@ Page({
       chooseDay: new Date().getFullYear() + "-" + (1 + new Date().getMonth()) + "-" + new Date().getDate(),
       IsToDay: true,
       days: '今天',
-      toMonth: new Date().getMonth() + 1
+      toMonth: new Date().getMonth() + 1,
+      windowHeight: wx.getSystemInfoSync().windowHeight + 'px'
     });
     // 获取消息数据
+    this.getMessageByDate(this.data.chooseDay);
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
     this.getMessageByDate(this.data.chooseDay);
   },
 
@@ -161,7 +227,25 @@ Page({
   // 按日返回消息列表
   getMessageByDate(date) {
     let _than = this;
+    this.setData({
+      selectModuleIndex: 0
+    });
+    // 打开加载框
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading'
+    })
     calendarAction.getMessageByDate(date, function(res) {
+      console.log(res.confirmvalue.length);
+      if (res.confirmvalue.length <= 2) {
+        _than.setData({
+          heightView: 2 * 132 + 'rpx'
+        })
+      } else {
+        _than.setData({
+          heightView: res.confirmvalue.length * 132 + 'rpx'
+        })
+      }
       console.log('calendarAction');
       console.log(date);
       console.log(res);
@@ -201,6 +285,7 @@ Page({
         }
       ];
       let newList = [];
+      let totalMessage = 0;
       for (let index in moduleList) {
         let messageList = [];
         for (let index2 in moduleList[index].list) {
@@ -213,6 +298,7 @@ Page({
             lightColor: moduleList[index].lightColor,
             projectName: message.projectabbreviation,
             content: message.message,
+            // content: _than.valueSubString(message.message),
           }
           messageList.push(item);
         }
@@ -221,16 +307,19 @@ Page({
           list: messageList,
         }
         newList.push(item2);
+        totalMessage += messageList.length;
       }
       _than.setData({
         dataList: newList,
+        totalMessage: totalMessage,
       });
       if (_than.data.days === '今天') {
         // 广播内容
-        _than.getNoticeContent(res);
+        // _than.getNoticeContent(res);
       }
+      // 关闭加载框
+      wx.hideToast({});
     })
-
   },
 
   // 时间格式化 2019-01-24
@@ -241,6 +330,13 @@ Page({
     let date = val.substring(0, 10);
     // console.log(date);
     return date;
+  },
+  // 时间格式化
+  valueSubString(val) {
+    if (val.length > 80) {
+      return val.substring(0, 40) + "...";
+    }
+    return val;
   },
   // 通知内容整合
   getNoticeContent(val) {

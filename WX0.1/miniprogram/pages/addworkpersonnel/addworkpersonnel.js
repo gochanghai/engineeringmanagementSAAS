@@ -43,10 +43,11 @@ Page({
   },
 
   selTeam(e) {
-    console.log(e.currentTarget.id);
+    let groupId = this.data.selGroup[e.detail.value].formid;
+    console.log(groupId);
     this.setData({
       activeIndex: e.detail.value,
-      groupId: e.currentTarget.id
+      groupId: groupId
     })
   },
 
@@ -114,6 +115,19 @@ Page({
 
   // 提交数据
   commitWorker() {
+    // let worker = {
+    //   projectid: this.data.projectID,
+    //   groupid: this.data.groupId,
+    //   name: this.data.name,
+    //   age: this.data.age,
+    //   repay: this.data.repay,
+    //   telno: this.data.telNo,
+    //   idcard: this.data.id_card,
+    //   admissionat: this.data.admissionAt,
+    //   emergencycontract: this.data.emergencyContact,
+    //   leavingat: this.data.leavingAt,
+    // }
+    // console.log(worker);
     // 数据校验
     // 姓名
     if (this.data.name == "") {
@@ -244,11 +258,11 @@ Page({
       success(res) {
         if (res.confirm) {
           console.log('Commit');
-          workerAction.addWorker(worker, function(code) {
+          workerAction.addWorker(worker, function(res) {
             console.log('worker');
             console.log(worker);
-            console.log(code.code);
-            if (code.code > 0) {
+            console.log(res.code);
+            if (res.code == 1) {
               wx.showToast({
                 title: '提交成功',
                 icon: 'success',

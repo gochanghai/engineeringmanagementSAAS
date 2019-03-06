@@ -6,14 +6,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    totalAmount: '0.00',
   },
 
   onLoad: function(options) {
     // 获取项目ID
     this.setData({
       projectID: options.projectID,
-      totalAmount: options.contractamount,
     });
     this.getDateList(this.data.projectID);
   },
@@ -29,17 +28,20 @@ Page({
     // 调用函数接口获取数据
     receivepaylinesSaaSAction.getLinesList(projectID, function (res) {
       console.log(res);
+      let totalAmount = 0;
       let list = [];
-      for (let index in res) {
+      for (let index of res) {
+        totalAmount += index.amount;
         let item = {
-          returnDate: _than.dateFormat2(res[index].date),
-          returnAmount: _than.getMoneyFormat(res[index].amount),
-          id: res[index].id,
+          returnDate: _than.dateFormat2(index.date),
+          returnAmount: _than.getMoneyFormat(index.amount),
+          id: index.id,
         };
         list.push(item);
       }
       _than.setData({
         list: list,
+        totalAmount: _than.getMoneyFormat(totalAmount),
       });
       // 关闭加载框
       wx.hideToast({});

@@ -1,16 +1,28 @@
 /* pages/projectnode/projectnode.wxss */
 
-.information_item {
-  padding: 30rpx 0;
+.container {
+  background-color: #f2f2f2;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/* .information_item {
+  padding: 30rpx;
   margin: 0rpx auto;
-  width: 92%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   border-bottom: 1rpx solid #e5e5e5;
 }
 
+.information_item:last-child {
+  border: none;
+}
+
 .information_item view.name {
-  font-size: 32rpx;
+  width: 190rpx;
+  font-size: 28rpx;
   color: #333;
 }
 
@@ -20,25 +32,27 @@
 }
 
 .information_item view.date {
-  padding: 0 20rpx;
+  width: 220rpx;
+  padding: 0 0rpx;
   height: 150rpx;
   flex: 1;
-  padding-right: 10rpx;
+  margin-right: 20rpx;
+  overflow: hidden;
 }
 
 .picker {
-  float: right;
   margin-bottom: 20rpx;
-  padding-left: 90rpx;
-  font-size: 32rpx;
-  width: 280rpx;
+  padding-left: 60rpx;
+  font-size: 30rpx;
+  width: 100%;
   color: #666;
   border: 1px solid #f0f0f0;
   background-color: #f0f0f0;
   line-height: 60rpx;
   display: flex;
   align-items: center;
-  border-radius: 10rpx;
+  border-radius: 6rpx;
+  text-align: center;
 }
 
 .down_img {
@@ -46,35 +60,127 @@
   float: right;
   width: 20rpx;
   height: 14rpx;
+} */
+
+.information {
+  width: 92%;
+  margin: 0 auto;
+  /* border: 1px solid; */
+}
+
+.node-name {
+  margin: 0 auto;
+  width: 92%;
+  line-height: 64rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1rpx solid #dcdcdc;
+}
+
+.node-name text {
+  display: inline-block;
+  width: 450rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #333;
+  font-size: 30rpx;
+  /* border: 1px solid; */
+}
+
+.node-name view.finishStatus {
+  padding-right: 20rpx;
+  color: #e95207;
+  font-size: 28rpx;
+}
+
+.date-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 92%;
+  margin: 0 auto;
+  height: 100rpx;
+}
+
+.date-list.star {
+}
+
+/* .picker */
+
+.date-item {
+  width: 46%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.date-item text {
+  margin-right: 10rpx;
+  padding: 4rpx 8rpx;
+  font-size: 22rpx;
+  color: #fff;
+}
+
+.date-item text.star-logo {
+  background-color: #6bc935;
+}
+
+.date-item text.end-logo {
+  background-color: #e95207;
+}
+
+.picker {
+  height: 60rpx;
+  width: 240rpx;
+  line-height: 60rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #333;
+  border: 1px solid #dcdcdc;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.information-item {
+  margin-top: 20rpx;
+  background-color: #fff;
+  border-radius: 6rpx;
+}
+
+.bottombtn {
+  position: absolute;
+  bottom: 0%;
+  width: 100%;
+  height: 98rpx;
+  background-color: #fff;
 }
 
 .btom-btns {
-  margin: 0 auto;
-  width: 80%;
-  padding-bottom: 50rpx;
+  width: 100%;
   display: flex;
-  justify-content: space-around;
-  margin-top: 40rpx;
+  height: 98rpx;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .btom-btns view {
-  width: 190rpx;
+  width: 170rpx;
   height: 70rpx;
   text-align: center;
   line-height: 70rpx;
   border-radius: 60rpx;
-  font-size: 31rpx;
+  font-size: 30rpx;
 }
 
 .btom-btns view.ignore {
-  border: 1rpx solid #b5b5b5;
-  color: #666;
+  color: #333;
 }
 
 .btom-btns view.solve {
-  background-color: #e95207;
-  border: 1rpx solid #e95207;
-  color: #fff;
+  color: #e95207;
 }
 
 .select {
@@ -93,4 +199,44 @@
 
 .btn-hover-class {
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+.delete-item {
+  text-align: left;
+  display: inline-block;
+  width: 130rpx;
+  font-size: 27rpx;
+  color: #e95207;
+}
+
+checkbox .wx-checkbox-input {
+  border-radius: 50%;
+  width: 50rpx;
+  height: 50rpx;
+}
+
+checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+  background: #e95207;
+  border-color: #e95207;
+}
+
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+  border-radius: 50%;
+  width: 46rpx;
+  height: 46rpx;
+  line-height: 46rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #fff;
+  background: transparent;
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
+}
+
+.border_none{
+  border: none;
+}
+
+.border_normal{
+  border: 1px solid #dcdcdc;
 }

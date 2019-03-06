@@ -63,37 +63,45 @@ export let getWorkerList = function (cprojectid = null, cformidList = null, call
     let datalist = {
         user: storageJS.getUser().account,
         form: "dc_mng_worker",
-        action: "get",
-        distinct: false,
-        fields: [
-            "projectid",
-            "groupid",
-            "name",
-            "age",
-            "repay",
-            "telno",
-            "idcard",
-            "admissionat",
-            "emergencycontract",
-            "leavingat",
-            "disclosefilesign",
-            "educationfilesign",
-            "insurancefilesign"
-        ],
+        action: "leftJoin",
+        fields: {
+            dc_mng_worker: [
+                "projectid",
+                "groupid",
+                "name",
+                "age",
+                "repay",
+                "telno",
+                "idcard",
+                "admissionat",
+                "emergencycontract",
+                "leavingat",
+                "disclosefilesign",
+                "educationfilesign",
+                "insurancefilesign"
+            ],
+            dc_mng_project_group: ["groupname"]
+        },
+        join: [{
+            dc_mng_worker: "groupid",
+            dc_mng_project_group: "formid"
+        }],
         page: null,
-        condition: [{
-            field: "projectid",
-            value: cprojectid,
-            symbol: "="
-        }, {
-            field: "formid",
-            value: cformidList,
-            symbol: "="
-        }]
-    }
-    httpJS.request('/form', datalist, function (res) {
-        if (JSON.parse(res.data).code > 0) {
-            let resworkerinfo = JSON.parse(res.data).datalist.dc_mng_worker;
+        condition: {
+            dc_mng_worker:  [{
+                field: "projectid",
+                value: cprojectid,
+                symbol: "="
+            }, {
+                field: "formid",
+                value: cformidList,
+                symbol: "="
+            }]
+        }
+    };
+    httpJS.request('/mform', datalist, function (res) {
+        if (res.data.code > 0) {
+            let resworkerinfo = res.data.datalist.dc_mng_worker;
             if (null != resworkerinfo) {
                 bworkerList = resworkerinfo;
             }
@@ -132,6 +140,46 @@ export let addWorker = function (fworker = { projectid: null, groupid: null, nam
     }
     httpJS.request('/form', datalist, function (res) {
         return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code });
+    });
+};
+
+/**
+ * 新增单条劳务人员信息并获取formid：
+ * fworker 实体类数据；
+ * code 返回的服务器结果；formid 返回的formid；
+ */
+export let addWorkerbformid = function (fworker = { projectid: null, groupid: null, name: null, age: null, repay: null, telno: null, idcard: null, admissionat: null, emergencycontract: null, leavingat: null, }, callback) {
+    let datalist = {
+        data: {
+            user: storageJS.getUser().account,
+            form: "dc_mng_worker",
+            action: "add",
+            retFields: ["formid"],
+            fields: [{
+                projectid: fworker.projectid,
+                groupid: fworker.groupid,
+                name: fworker.name,
+                age: fworker.age,
+                repay: fworker.repay,
+                telno: fworker.telno,
+                idcard: fworker.idcard,
+                admissionat: fworker.admissionat,
+                emergencycontract: fworker.emergencycontract,
+                leavingat: fworker.leavingat,
+                disclosefilesign: false,
+                educationfilesign: false,
+                insurancefilesign: false
+            }],
+            page: null,
+            condition: null
+        }
+    }
+    httpJS.request('/form', datalist, function (res) {
+        let bformid, resData = JSON.parse(res.data).datalist.dc_mng_worker;
+        if (null != resData) {
+            bformid = resData[0].formid;
+        }
+        return typeof callback == 'function' && callback({ code: JSON.parse(res.data).code, formid: bformid });
     });
 };
 

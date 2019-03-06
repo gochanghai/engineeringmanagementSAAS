@@ -12,25 +12,32 @@ export let getManageInfo = function (cprojectid = null, callback) {
     let datalist = {
         user: storageJS.getUser().account,
         form: "dc_mng_contract",
-        action: "get",
-        distinct: false,
-        fields: [
-            "projectname",
-            "projectabbreviation",
-            "ownerapprovaltime",
-            "ownerpaypercent",
-            "ownerpaytime",
-        ],
-        page: null,
-        condition: [{
-            field: "projectid",
-            value: cprojectid,
-            symbol: "="
+        action: "leftJoin",
+        fields: {
+            dc_mng_contract: [
+                "projectabbreviation",
+                "ownerapprovaltime",
+                "ownerpaypercent",
+                "ownerpaytime",
+            ],
+            dc_projects: ["name as projectname"]
+        },
+        join: [{
+            dc_mng_contract: "projectid",
+            dc_projects: "id"
         }],
+        page: null,
+        condition: {
+            dc_mng_contract: [{
+                field: "projectid",
+                value: cprojectid,
+                symbol: "="
+            }]
+        }
     };
-    httpJS.request('/form', datalist, function (res) {
-        if (JSON.parse(res.data).code > 0) {
-            bmangageInfo = JSON.parse(res.data).datalist.dc_mng_contract[0];
+    httpJS.request('/mform', datalist, function (res) {
+        if (res.data.code > 0) {
+            bmangageInfo = res.data.datalist.dc_mng_contract[0];
         }
         return typeof callback == 'function' && callback(bmangageInfo);
     });

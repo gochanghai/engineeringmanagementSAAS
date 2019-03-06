@@ -45,14 +45,18 @@ export let getGroupList = function (cprojectid, callback) {
         action: "leftJoin",
         fields: {
             dc_mng_project_group: ["groupname", "formid"],
+            dc_mng_base_group: ["typename as basegroupname"],
             default: [
-                "count(dc_mng_worker.objectid) as totalNumber",
-                "SUM(case when dc_mng_worker.discloseFileSign = 'false' then 1 else 0 end) as discloseFileSign",
-                "SUM(case when dc_mng_worker.educationFileSign = 'false' then 1 else 0 end) as educationFileSign",
-                "SUM(case when dc_mng_worker.insuranceFileSign = 'false' then 1 else 0 end) as insuranceFileSign"
+                "count(dc_mng_worker.objectid) as totalnumber",
+                "SUM(case when dc_mng_worker.discloseFileSign = 'false' then 1 else 0 end) as disclosefilesign",
+                "SUM(case when dc_mng_worker.educationFileSign = 'false' then 1 else 0 end) as educationfilesign",
+                "SUM(case when dc_mng_worker.insuranceFileSign = 'false' then 1 else 0 end) as insurancefilesign"
             ]
         },
         join: [{
+            dc_mng_base_group: "formId",
+            dc_mng_project_group: "groupid"
+        },{
             dc_mng_worker: "groupid",
             dc_mng_project_group: "formId"
         }],
@@ -63,7 +67,7 @@ export let getGroupList = function (cprojectid, callback) {
                 symbol: "="
             }]
         },
-        group: "dc_mng_project_group.groupname,dc_mng_project_group.formid"
+        group: "dc_mng_project_group.groupname,dc_mng_project_group.formid,dc_mng_base_group.typename"
     }
     httpJS.request('/mform', datalist, function (res) {
         if (res.data.code > 0) {

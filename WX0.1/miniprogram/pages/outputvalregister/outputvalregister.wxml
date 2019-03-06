@@ -1,7 +1,7 @@
 <!--产值登记-->
 <view class='container'>
   <view class='information'>
-    <!-- <view class='information_item'>
+    <!-- <view class='information_item' wx:if="{{formID == ''}}">
       <text style='width: 260rpx;'>产值表上传时间</text>
       <picker mode="date" start="2010-01-01" end="2029-01-01" bindchange="inputValueUploadAt">
         <view class="picker" style='font-size:30rpx; color:#999;'>
@@ -10,6 +10,15 @@
       </picker>
       <image src='/images/xia.png' class='down_img'></image>
     </view> -->
+    <view class='information_item'>
+      <text>工程时间节点</text>
+      <picker bindchange="selNode" value="{{activeIndex}}" range="{{UnConfirmNodeList}}" range-key="datenode" id='{{UnConfirmNodeList[activeIndex].datenode}}' disabled='{{typeTitle == "产值登记" ? true : false}}'>
+        <view class="picker" style='font-size:32rpx; color:#666; '>
+          {{UnConfirmNodeList[activeIndex].datenode}}
+        </view>
+      </picker>
+      <image src='/images/xia.png ' class='down_img' wx:if="{{typeTitle == '新增产值'}}"></image>
+    </view>
     <view class='information_item'>
       <text>产值 (元)</text>
       <input type='number' confirm-type="next" value='{{outputValue}}' bindinput='inputOutputValue' placeholder='请输入' placeholder-class='input_class' />

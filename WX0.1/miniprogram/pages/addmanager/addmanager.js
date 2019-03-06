@@ -142,9 +142,9 @@ Page({
           // managerJS.addManage(manager,function(res){
           //   console.log(res);
           // })
-          managerAction.addManager(manager, function(code) {
+          managerAction.addManager(manager, function(res) {
             console.log(code);
-            if (code > 0) {
+            if (res.code == 1) {
               wx.showToast({
                 title: '提交成功',
                 icon: 'success',

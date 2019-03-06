@@ -1,5 +1,7 @@
 // pages/login/login.js
+const userWechatAction = require('../../backend/commonsAction/user_wechatAction.js');
 const userAction = require('../../backend/commonsAction/userAction.js');
+var app = getApp();
 Page({
   data: {
     userName: 'test001',
@@ -20,7 +22,7 @@ Page({
   },
 
   //用户登录操作
-  signIn: function (){
+  signIn: function() {
     let _this = this;
     //判断用户名密码是否为空
     if (this.data.userName != '' && this.data.password != '') {
@@ -29,19 +31,34 @@ Page({
         title: '加载中',
         icon: 'loading'
       });
-      userAction.signIn('test001','123456', function (res) {
-        // 关闭加载框
-        wx.hideToast({});
+      let fwxinfo = this.data.userInfo;
+      userAction.signIn(this.data.userName, this.data.password, function(res) {
         if (res.code === 1) {
+          // 关闭加载框
+          wx.hideToast({});
+          // 绑定微信
+          console.log('开始获取微信信息');
+          console.log(app.globalData.openid);
+          userWechatAction.getUSERbindWXID(function (res) {
+            console.log('获取微信信息');
+            console.log(res);
+            if(res){
+              app.globalData.userInfo = res;
+              app.globalData.avatarUrl = res.avatarurl;
+              // 把头像放入缓存
+              wx.setStorageSync('avatarUrl', res.avatarurl);
+            }
+            
+          });
           wx.showToast({
             title: '登录成功',
-            success: function () {
+            success: function() {
               wx.switchTab({
                 url: '/pages/home/home',
               })
             }
           })
-        } else { 
+        } else {
           wx.showModal({
             title: '提示',
             showCancel: false,
@@ -70,6 +87,20 @@ Page({
 
   // 生命周期函数--监听页面加载
   onLoad: function(options) {
-    wx.clearStorageSync()
-  }
+    // this.getInfo(this);
+    wx.clearStorageSync();
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function() {},
+
+  // 获取微信授权信息
+  onGotUserInfo(e) {
+    console.log(e.detail.errMsg)
+    console.log(e.detail.userInfo)
+    console.log(e.detail.rawData)
+  },
+  
 })

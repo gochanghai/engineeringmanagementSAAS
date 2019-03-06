@@ -24,6 +24,9 @@ export let getProjectInfo = function (cprojectid, callback) {
                 "payment_mode as paymentmode", // 付款方式
                 "date_register as dateregister" // 登记日期
             ],
+            "dc_mng_contract": [
+                "projectabbreviation", // 项目简称
+            ],
             "dc_partners_a": [
                 "name as partnera", // 甲方公司
                 "partner_a", // 是否甲方公司
@@ -34,6 +37,9 @@ export let getProjectInfo = function (cprojectid, callback) {
             ]
         },
         join: [{
+            "dc_projects": "id",
+            "dc_mng_contract": "projectid"
+        },{
             "dc_projects": "partner_a_id",
             "dc_partners as dc_partners_a": "id"
         }, {
@@ -75,11 +81,11 @@ export let getModuleInfo = function (cprojectid, callback) {
             let resdatalist = res.data.datalist;
             if (null != resdatalist) {
                 // 账户可用余额
-                bmoduleinfo.usablemoney = resdatalist[cprojectid].recievedpay[0].usable_money || 0;
+                bmoduleinfo.usablemoney = null != resdatalist[cprojectid].recievedpay[0] ? resdatalist[cprojectid].recievedpay[0].usable_money || 0: 0;
                 // 经营保证金账户
-                bmoduleinfo.marginmoney = resdatalist[cprojectid].recievedpay[0].project_margin || 0;
+                bmoduleinfo.marginmoney = null != resdatalist[cprojectid].recievedpay[0] ? resdatalist[cprojectid].recievedpay[0].project_margin || 0: 0;
                 // 未交底
-                bmoduleinfo.undisclosecount = resdatalist[cprojectid].worker_undisclose[0].sumundisclose;
+                bmoduleinfo.undisclosecount = null != resdatalist[cprojectid].worker_undisclose[0] ? resdatalist[cprojectid].worker_undisclose[0].sumundisclose || 0 : 0;
                 // 未教育
                 bmoduleinfo.uneductioncount = resdatalist[cprojectid].worker_uneduction[0].sumuneducation;
                 // 未参保
@@ -92,13 +98,13 @@ export let getModuleInfo = function (cprojectid, callback) {
                 bmoduleinfo.insurecount = resdatalist[cprojectid].worker[0].workercount - resdatalist[cprojectid].worker_uninsure[0].sumuninsurance;
                 // 总产值比例
                 bmoduleinfo.confirmvalueratio = null != resdatalist[cprojectid].confirmvalue[0].outputvaluesum && null != resdatalist[cprojectid].contract_amount[0].contractamountsum && resdatalist[cprojectid].contract_amount[0].contractamountsum != 0
-                    ? resdatalist[cprojectid].confirmvalue[0].outputvaluesum / resdatalist[cprojectid].contract_amount[0].contractamountsum
+                    ? resdatalist[cprojectid].confirmvalue[0].outputvaluesum / resdatalist[cprojectid].contract_amount[0].contractamountsum || 0
                     : 0;
                 // 总回款比例
-                bmoduleinfo.receivedpayratio = resdatalist[cprojectid].recievedpay[0].returned_ratio || 0;
+                bmoduleinfo.receivedpayratio = null != resdatalist[cprojectid].recievedpay[0] ? resdatalist[cprojectid].recievedpay[0].returned_ratio || 0: 0;
                 // 可收款比例
                 bmoduleinfo.receivableamountratio = null != resdatalist[cprojectid].confirmvalue[0].outputvaluesum && null != resdatalist[cprojectid].recievedpay[0].usable_money && resdatalist[cprojectid].confirmvalue[0].outputvaluesum != 0
-                    ? resdatalist[cprojectid].confirmvalue[0].outputvaluesum - resdatalist[cprojectid].recievedpay[0].returned_amount / resdatalist[cprojectid].confirmvalue[0].outputvaluesum
+                    ? resdatalist[cprojectid].confirmvalue[0].outputvaluesum - resdatalist[cprojectid].recievedpay[0].returned_amount / resdatalist[cprojectid].confirmvalue[0].outputvaluesum || 0
                     : 0;
                 // 管理人员总数
                 bmoduleinfo.managercount = resdatalist[cprojectid].manager[0].managercount;

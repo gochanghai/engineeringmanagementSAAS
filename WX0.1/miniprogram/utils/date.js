@@ -1,3 +1,11 @@
+/**
+ * 格林威治时间转化为北京时间并格式化
+ * date 格林威治时间 
+ */
+export let transGMTtoBKGandformatTime = (date) =>{
+  return formatTime(date + "+0800");
+}
+
 export let formatTime = (t = new Date()) => {
   let d = new Date(t);
   let year = d.getFullYear();
