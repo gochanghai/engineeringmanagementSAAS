@@ -68,6 +68,38 @@ export let list = function (callback){
         return typeof callback == 'function' && callback(result);
     })
 }
+export let listByCompanyId = function (id, callback){
+    console.log("www: 获取历史作业数据");
+    let data = {
+        user: username,
+        form: tbl_work,
+        action: "get",
+        fields: tbl_work_fields,
+        condition: [{
+            field: "group_no",
+            symbol: "=",
+            value: id           
+        }],
+        order: "objectid desc"
+    };
+    httpServer.request('form', data, res => {
+        console.log(res.data);
+        let result = {
+            code : res.data.code,
+            list: [],
+        };
+        if(1 === res.data.code && null != res.data.datalist.work){
+            let list = res.data.datalist.work
+            for(let i=0 ; i<list.length; i++){
+                list[i].work_datetime = dateFormat(list[i].work_datetime);
+                list[i].work_date = dateFormat2(list[i].work_datetime);
+            }
+            result.list = list;
+            return typeof callback == 'function' && callback(result);
+        }
+        return typeof callback == 'function' && callback(result);
+    })
+}
 
 
 /**
@@ -84,6 +116,42 @@ export let listByStatus = function (status,callback){
             field: "group_no",
             symbol: "=",
             value: groupid           
+        },{
+            field: "status",
+            symbol: "=",
+            value: status           
+        }],
+        order: "objectid desc"
+    };
+    httpServer.request('form', data, res => {
+        console.log(res.data);
+        let result = {
+            code : res.data.code,
+            list: [],
+        };
+        if(1 === res.data.code && null != res.data.datalist.work){
+            let list = res.data.datalist.work
+            for(let i=0 ; i<list.length; i++){
+                list[i].work_datetime = dateFormat(list[i].work_datetime);
+                list[i].work_date = dateFormat2(list[i].work_datetime);
+            }
+            result.list = list;
+            return typeof callback == 'function' && callback(result);
+        }
+        return typeof callback == 'function' && callback(result);
+    })
+}
+export let listByCompanyIdAndStatus = function (id,status,callback){
+    console.log("www: 根据状态获取历史作业数据");
+    let data = {
+        user: username,
+        form: tbl_work,
+        action: "get",
+        fields: tbl_work_fields,
+        condition: [{
+            field: "group_no",
+            symbol: "=",
+            value: id           
         },{
             field: "status",
             symbol: "=",

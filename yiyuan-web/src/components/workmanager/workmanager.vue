@@ -71,25 +71,36 @@ export default {
       pageTotal: 0,
       workList: [],
       navList: ["全部", "进行中", "已完成"],
-      detailId: null
+      detailId: null,
+      status: "全部",
     };
   },
   created() {
-    this.getListData("全部");
+    this.getListData(this.companyId, "全部");
   },
   components: {
     workDetail
   },
-
+  props: {
+    // 获取值
+    companyId: {
+      type: String,
+      default: null
+    }
+  },
+  watch: {
+    companyId(val) {
+      this.getListData(val, this.status);
+    }    
+  },
   methods: {
     /**
      * 获取历史作业列表数据
      */
-    getListData(status) {
-      this.workIndex = status;
+    getListData(id, status) {      
       let _this = this;
       if ("全部" == status) {
-        workService.list(res => {
+        workService.listByCompanyId(id, res => {
           console.log(res);
           _this.workList = res.list;
         });
@@ -97,7 +108,7 @@ export default {
         if ("进行中" === status) {
           status = "作业中";
         }
-        workService.listByStatus(status, res => {
+        workService.listByCompanyIdAndStatus(id, status, res => {
           console.log(res);
           _this.workList = res.list;
           _this.pageTotal = res.list.length;
@@ -109,7 +120,8 @@ export default {
 
     select(index, item) {
       this.navIndex = index;
-      this.getListData(item);
+      this.status = item;
+      this.getListData(this.companyId, item);
     },
 
     selDetail(id) {

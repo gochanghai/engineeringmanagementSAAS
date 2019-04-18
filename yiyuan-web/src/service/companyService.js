@@ -44,6 +44,34 @@ export let getCompanyInfo = function (callback){
         return typeof callback == 'function' && callback(result)
     })
 }
+export let getCompanyInfoById = function (id, callback){
+    console.log("www: " );
+    let data = {
+        user: username,
+        form: tbl_group,
+        action: "get",
+        fields: tbl_group_fileds,
+        condition: [{
+            field: "group_no",
+            symbol: "=",
+            value: id
+        }]
+    };
+    console.log(data);
+    httpServer.request('form', data, res => {
+        console.log(res.data);
+        let result = {
+            code : res.data.code,
+            company: null
+        };
+        if(1 === res.data.code && null != res.data.datalist.company){
+            result.company = res.data.datalist.company[0];
+            result.company.established_time = dateFormat2(result.company.established_time);
+            return typeof callback == 'function' && callback(result)
+        }
+        return typeof callback == 'function' && callback(result)
+    })
+}
 
 /**
  * 

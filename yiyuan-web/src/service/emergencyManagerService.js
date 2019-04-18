@@ -43,6 +43,33 @@ export let list = function (callback){
         return typeof callback == 'function' && callback(result);
     })
 }
+export let listBycompanyId = function (id ,callback){
+    console.log("www: 获取应急管理列表数据");
+    let data = {
+        user: username,
+        form: tbl_emergencymanage,
+        action: "get",
+        fields: tbl_emergencymanage_fields,
+        condition: [{
+            field: "groupid",
+            symbol: "=",
+            value: id           
+        }],
+        order: "objectid desc"
+    };
+    httpServer.request('form', data, res => {
+        console.log(res.data);
+        let result = {
+            list: [],
+            code: res.data.code
+        };
+        if(1 === res.data.code &&　null != res.data.datalist.emergency){
+            result.list = res.data.datalist.emergency;
+            return typeof callback == 'function' && callback(result);
+        }
+        return typeof callback == 'function' && callback(result);
+    })
+}
 
 /**
  * 获取一个应急管理

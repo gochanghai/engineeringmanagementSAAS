@@ -276,6 +276,20 @@ export default {
     this.getInfo();
   },
 
+  props: {
+    // 获取值
+    companyId: {
+      type: String,
+      default: null
+    }
+  },
+  watch: {
+    companyId(val) {
+      this.getInfo(val);
+      console.log("this.getInfo(val);" + val)
+    }    
+  },
+
   methods: {
     edit() {
       this.isToogle = true;
@@ -309,9 +323,9 @@ export default {
     /**
      * 获取企业信息
      */
-    getInfo() {
+    getInfo(id) {
       let _this = this;      
-      companyService.getCompanyInfo(res => {
+      companyService.getCompanyInfoById(id, res => {
         if (1 == res.code && null !=res.company ) {
           console.log(res);
           var str = res.company.business_type.substring(1,res.company.business_type.length-1);

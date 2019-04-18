@@ -69,6 +69,33 @@ export let listOther = function (callback){
         return typeof callback == 'function' && callback(result);
     })
 }
+export let listOtherByCompanyId = function (id, callback){
+    console.log("www: 获取实时警告信息列表数据");
+    let data = {
+        user: username,
+        form: tbl_special_other,
+        action: "get",
+        fields: tbl_special_other_fileds,
+        condition: [
+            {field: "groupid", symbol: "=",value: id},
+            // {field: "status", symbol: "=",value: 0},          
+        ],
+        order: "objectid desc"
+    };
+    console.log(data);
+    httpServer.request('/form', data, res => {
+        console.log(res.data);
+        let result = {
+            code: res.data.code,
+            list: []
+        };
+        if(1 === res.data.code && null != res.data.datalist.special_other){
+            result.list = res.data.datalist.special_other;
+            return typeof callback == 'function' && callback(result);
+        }
+        return typeof callback == 'function' && callback(result);
+    })
+}
 
 /**
  * 获取一个其它信息
@@ -226,6 +253,33 @@ export let listEquipment = function (callback){
         fields: tbl_special_equipment_fileds,
         condition: [
             {field: "groupid", symbol: "=",value: groupid},
+            // {field: "status", symbol: "=",value: 0},          
+        ],
+        order: "objectid desc"
+    };
+    console.log(data);
+    httpServer.request('/form', data, res => {
+        console.log(res.data);
+        let result = {
+            code: res.data.code,
+            list: []
+        };
+        if(1 === res.data.code && null != res.data.datalist.special_equipment){
+            result.list = res.data.datalist.special_equipment;
+            return typeof callback == 'function' && callback(result);
+        }
+        return typeof callback == 'function' && callback(result);
+    })
+}
+export let listEquipmentByCompanyId = function (id, callback){
+    console.log("www: 获取实时警告信息列表数据");
+    let data = {
+        user: username,
+        form: tbl_special_equipment,
+        action: "get",
+        fields: tbl_special_equipment_fileds,
+        condition: [
+            {field: "groupid", symbol: "=",value: id},
             // {field: "status", symbol: "=",value: 0},          
         ],
         order: "objectid desc"
@@ -419,6 +473,33 @@ export let listBattery = function (callback){
         return typeof callback == 'function' && callback(result);
     })
 }
+export let listBatteryByCompanyId = function (id, callback){
+    console.log("www: 获取实时警告信息列表数据");
+    let data = {
+        user: username,
+        form: tbl_special_battery,
+        action: "get",
+        fields: tbl_special_battery_fileds,
+        condition: [
+            {field: "groupid", symbol: "=",value: id},
+            // {field: "status", symbol: "=",value: 0},          
+        ],
+        order: "objectid desc"
+    };
+    console.log(data);
+    httpServer.request('/form', data, res => {
+        console.log(res.data);
+        let result = {
+            code: res.data.code,
+            list: []
+        };
+        if(1 === res.data.code && null != res.data.datalist.special_battery){
+            result.list = res.data.datalist.special_battery;
+            return typeof callback == 'function' && callback(result);
+        }
+        return typeof callback == 'function' && callback(result);
+    })
+}
 
 /**
  * 获取一个锂电池信息
@@ -575,6 +656,33 @@ export let listChemical = function (callback){
         fields: tbl_special_chemical_fileds,
         condition: [
             {field: "groupid", symbol: "=",value: groupid},
+            // {field: "status", symbol: "=",value: 0},          
+        ],
+        order: "objectid desc"
+    };
+    console.log(data);
+    httpServer.request('/form', data, res => {
+        console.log(res.data);
+        let result = {
+            code: res.data.code,
+            list: []
+        };
+        if(1 === res.data.code && null != res.data.datalist.special_chemical){
+            result.list = res.data.datalist.special_chemical;
+            return typeof callback == 'function' && callback(result);
+        }
+        return typeof callback == 'function' && callback(result);
+    })
+}
+export let listChemicalByCompanyId = function (id, callback){
+    console.log("www: 获取实时警告信息列表数据");
+    let data = {
+        user: username,
+        form: tbl_special_chemical,
+        action: "get",
+        fields: tbl_special_chemical_fileds,
+        condition: [
+            {field: "groupid", symbol: "=",value: id},
             // {field: "status", symbol: "=",value: 0},          
         ],
         order: "objectid desc"
@@ -768,6 +876,32 @@ export let listDust = function (callback){
         return typeof callback == 'function' && callback(result);
     })
 }
+export let listDustByCompanyId = function (id, callback){
+    console.log("www: 获取实时警告信息列表数据");
+    let data = {
+        user: username,
+        form: tbl_special_dust,
+        action: "get",
+        fields: tbl_special_dust_fileds,
+        condition: [
+            {field: "groupid", symbol: "=",value: id},         
+        ],
+        order: "objectid desc"
+    };
+    console.log(data);
+    httpServer.request('/form', data, res => {
+        console.log(res.data);
+        let result = {
+            code: res.data.code,
+            list: []
+        };
+        if(1 === res.data.code && null != res.data.datalist.special_dust){
+            result.list = res.data.datalist.special_dust;
+            return typeof callback == 'function' && callback(result);
+        }
+        return typeof callback == 'function' && callback(result);
+    })
+}
 
 /**
  * 获取一个粉尘爆炸信息
@@ -944,6 +1078,33 @@ export let listH = function (callback){
         return typeof callback == 'function' && callback(result);
     })
 }
+export let listHByCompanyId = function (id, callback){
+    console.log("www: 获取实时警告信息列表数据");
+    let data = {
+        user: username,
+        form: tbl_special_h,
+        action: "get",
+        fields: tbl_special_h_fileds,
+        condition: [
+            {field: "groupid", symbol: "=", value: id},
+            // {field: "status", symbol: "=",value: 0},          
+        ],
+        order: "objectid desc"
+    };
+    console.log(data);
+    httpServer.request('/form', data, res => {
+        console.log(res.data);
+        let result = {
+            code: res.data.code,
+            list: []
+        };
+        if(1 === res.data.code && null != res.data.datalist.special_h){
+            result.list = res.data.datalist.special_h;
+            return typeof callback == 'function' && callback(result);
+        }
+        return typeof callback == 'function' && callback(result);
+    })
+}
 
 /**
  * 获取一个涉氢信息
@@ -1100,6 +1261,33 @@ export let listLtdSpace = function (callback){
         fields: tbl_special_ltd_space_fileds,
         condition: [
             {field: "groupid", symbol: "=",value: groupid},
+            // {field: "status", symbol: "=",value: 0},          
+        ],
+        order: "objectid desc"
+    };
+    console.log(data);
+    httpServer.request('/form', data, res => {
+        console.log(res.data);
+        let result = {
+            code: res.data.code,
+            list: []
+        };
+        if(1 === res.data.code && null != res.data.datalist.special_ltd_space){
+            result.list = res.data.datalist.special_ltd_space;
+            return typeof callback == 'function' && callback(result);
+        }
+        return typeof callback == 'function' && callback(result);
+    })
+}
+export let listLtdSpaceByCompanyId = function (id, callback){
+    console.log("www: 获取实时警告信息列表数据");
+    let data = {
+        user: username,
+        form: tbl_special_ltd_space,
+        action: "get",
+        fields: tbl_special_ltd_space_fileds,
+        condition: [
+            {field: "groupid", symbol: "=",value: id},
             // {field: "status", symbol: "=",value: 0},          
         ],
         order: "objectid desc"

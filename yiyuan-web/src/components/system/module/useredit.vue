@@ -155,8 +155,11 @@ export default {
       if(value){
         this.getAreaist1();
       }else{
-        this.$refs['form'].resetFields();
-        this.$refs['form2'].resetFields();
+        if(this.title === "添加企业人员名单"){
+          this.$refs['form'].resetFields();
+        }else{
+          this.$refs['form2'].resetFields();
+        }
         this.area_id1 = '';
         this.area_id2 = '';
         this.area_id3 = '';

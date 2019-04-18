@@ -24,12 +24,12 @@
     </div>
     <div class="components">
       <div class="components">
-        <space v-if="filterIndex==0"/>
-        <dust v-else-if="filterIndex==1"/>
-        <chemistry v-else-if="filterIndex==2"/>
-        <other v-else-if="filterIndex==3"/>
-        <ammonia v-else-if="filterIndex==4"/>
-        <lithium v-else-if="filterIndex==5"/>
+        <space v-if="filterIndex==0" :companyId="companyId"/>
+        <dust v-else-if="filterIndex==1" :companyId="companyId"/>
+        <chemistry v-else-if="filterIndex==2" :companyId="companyId"/>
+        <other v-else-if="filterIndex==3" :companyId="companyId"/>
+        <ammonia v-else-if="filterIndex==4" :companyId="companyId"/>
+        <lithium v-else-if="filterIndex==5" :companyId="companyId"/>
         <dev v-else/>
       </div>
     </div>
@@ -84,6 +84,13 @@ export default {
     ammonia,
     lithium,
     dev
+  },
+  props: {
+    // 获取值
+    companyId: {
+      type: String,
+      default: null
+    }
   },
 
   methods: {

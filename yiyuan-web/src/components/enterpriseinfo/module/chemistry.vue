@@ -35,15 +35,27 @@ export default {
     }
   },
   created(){
-    this.getListData();
+    this.getListData(this.companyId);
+  },
+  props: {
+    // 获取值
+    companyId: {
+      type: String,
+      default: null
+    }
+  },
+  watch: {
+    companyId(val) {
+      this.getListData(val);
+    }    
   },
   methods:{
     /**
      * 获取列表数据
      */
-    getListData() {
+    getListData(id) {
       let _this = this;
-      specialInfoService.listChemical(res => {
+      specialInfoService.listChemicalByCompanyId(id, res => {
         console.log(res);
         if (1 == res.code) {
           _this.listChemistry = res.list;

@@ -143,6 +143,97 @@ export let getUserList2 = function(callback){
         return typeof callback == 'function' && callback(result)
     })
 }
+export let getUserListByid = function(id, callback){
+    console.log("www: 获取组织架构");
+    let data = {
+        user: username,
+        batchFun: "jsonBatch",
+        source: [{
+            name: "company",
+            form: "company",
+            action: "get",
+            fields: ["name"],
+            condition: [{
+                field: "group_no",
+                symbol: "=",
+                value: id
+            }],
+            page: null
+        }, {
+            name: tbl_group_worker,
+            form: tbl_group_worker,
+            action: "get",
+            fields: tbl_group_worker_fileds,
+            condition: [{
+                "field": "group_no",
+                "symbol": "=",
+                "value": id
+            }],
+            page: null
+        }],
+        batchList: [{
+            name: "loginlog",
+            form: "login_logs",
+            action: "get",
+            fields: ["username", "loginat"],
+            condition: [{
+                field: "username",
+               symbol: "=",
+                value: "@worker.account"
+            }],
+            order: "loginat desc",
+            page: {
+                pageSize: 1,
+                pageIndex: 0
+            }
+        }]
+    };
+    httpServer.request('sbatch', data, res => {
+        let result = {
+            list: [],
+            code: res.data.code
+        };
+        // 对返回值进行整理
+        let list = res.data.datalist
+        if(null != list){
+            // 遍历返回的list
+            for(let item of list){
+                let user = {
+                    id: '',
+                    companyname: '',
+                    account: '',
+                    cellphone: '',
+                    idcard: '',
+                    loginat: '',
+                    position: '',
+                    duty: '',
+                }
+                // 判断返回的company是否存在
+                if(0 < item.datalist.company.length){
+                    user.companyname = item.datalist.company[0].name;
+                }
+                // 判断返回的worker是否存在
+                if(0 < item.datalist.worker.length){
+                    user.id = item.datalist.worker[0].id;
+                    user.account = item.datalist.worker[0].account;
+                    user.cellphone = item.datalist.worker[0].cellphone;
+                    user.idcard = item.datalist.worker[0].idcard;
+                    user.position = item.datalist.worker[0].position;
+                    user.duty = item.datalist.worker[0].duty;
+                }
+                // 判断返回的loginlog是否存在
+                if(0 < item.datalist.loginlog.length){
+                    user.loginat = item.datalist.loginlog[0].loginat;
+                }
+                result.list.push(user);
+            }            
+        }
+        if(1 === res.data.code){
+            return typeof callback == 'function' && callback(result)
+        }        
+        return typeof callback == 'function' && callback(result)
+    })
+}
 
 /**
  * user = {username:'', phone: ', companyName:'' .... }

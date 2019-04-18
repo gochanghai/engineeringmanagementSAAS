@@ -75,12 +75,23 @@ export default {
     };
   },
   created() {
-    this.getListData();
+    this.getListData(this.companyId);
   },
   components: {
     userEdit
   },
-
+  props: {
+    // 获取值
+    companyId: {
+      type: String,
+      default: null
+    }
+  },
+  watch: {
+    companyId(val) {
+      this.getListData(val);
+    }    
+  },
   methods: {
     edit(flag, id) {
       if (flag == "add") {
@@ -95,9 +106,9 @@ export default {
     /**
      * 获取组织架构列表数据
      */
-    getListData() {
+    getListData(id) {
       let _this = this;
-      workerService.getUserList2(res => {
+      workerService.getUserListByid(id, res => {
         console.log(res);
         if (1 == res.code) {
           _this.userList = res.list;
@@ -107,76 +118,7 @@ export default {
       });
     },
 
-    /**
-     * 获取组织架构图
-     */
-    getGroupImg() {
-      workerService.getUserGroupImg(res => {
-        console.log(res);
-        this.groupImg = res.file;
-      });
-    },
-
-    /**
-     * 获取文件名
-     */
-    getFile(event) {
-      this.groupFile.file = event.target.files[0];
-      this.groupFile.filename = this.groupFile.file.name;
-    },
-
-    /**
-     * 上传组织架构图
-     */
-    uploadGroupImage() {
-      if ("" == this.groupFile.filename) {
-        this.$notify.error({
-          title: "提示",
-          message: "请选择文件后再上传",
-          duration: 2000
-        });
-        return;
-      }
-      let _this = this;
-      let formData = new FormData();
-      formData.append("user", localStorage.getItem("username"));
-      formData.append("platform", "PCW");
-      formData.append("workid", localStorage.getItem("groupid"));
-      formData.append("formname", "worker_group");
-      formData.append("filebelong", "组织架构图");
-      formData.append("file", this.groupFile.file);
-      axios({
-        method: "post",
-        url: "/api/file/upload/worker_group/100",
-        data: formData,
-        headers: {
-          "Content-type": "multipart/form-data"
-        }
-      }).then(res => {
-        if (res.data.code == 1 && "上传成功" == res.data.reason) {
-          console.log(res.data);
-          this.$notify.success({
-            title: "提示",
-            message: "上传成功",
-            duration: 2000
-          });
-          setTimeout(function() {
-            _this.getGroupImg();
-          }, 1000);
-        } else {
-          this.$notify.error({
-            title: "上传失败",
-            message: "错误",
-            duration: 2000
-          });
-        }
-      });
-    },
-
-    /**
-     * 移除前提示
-     */
-    beforeRemove() {},
+    
     /**
      * 删除用户
      */

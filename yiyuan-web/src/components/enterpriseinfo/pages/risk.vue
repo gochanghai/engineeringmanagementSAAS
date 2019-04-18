@@ -69,21 +69,33 @@ export default {
   },
 
   created() {
-    this.getListData('有限空间');
+    this.getListData(this.companyId,'有限空间');
+  },
+  props: {
+    // 获取值
+    companyId: {
+      type: String,
+      default: null
+    }
+  },
+  watch: {
+    companyId(val) {
+      this.getListData(val, this.riskType);
+    }    
   },
   methods: {
     select(index, item) {
       [this.filterIndex, this.condition] = [index, item];
       this.riskType = item;
-      this.getListData(item);
+      this.getListData(this.companyId, item);
     },
 
     /**
      * 获取风险识别列表数据
      */
-    getListData(type) {
+    getListData(id, type) {
       let _this = this;
-      riskIdentifyService.list(type, res => {
+      riskIdentifyService.listByCompanyIdAndType(id,type, res => {
         console.log(res);
         _this.riskList = res.list;
         _this.pageTotal = res.list.length;

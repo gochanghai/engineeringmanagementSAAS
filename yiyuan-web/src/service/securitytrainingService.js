@@ -50,7 +50,7 @@ export let list = function (callback){
             list: [],
             code: res.data.code
         };
-        if(1 === res.data.code){
+        if(1 === res.data.code && null != res.data.datalist.file_forms){
             let files = res.data.datalist.file_forms;
             for(let i = 0; i < files.length; i++){
                 // 文件大小计算

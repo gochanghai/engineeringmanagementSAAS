@@ -131,7 +131,6 @@ export let checkOldPassword = function (oldPassword, callback){
  * 检查手机号码否存在
  */
 export let getPhoneValiCode = function (phone, callback){
-    console.log("www: " + phone);
     let data = {
         user: null,
         action: "vcode",
@@ -149,7 +148,6 @@ export let getPhoneValiCode = function (phone, callback){
  * 检查手机号码否存在
  */
 export let settingNewPassword = function (pdata, callback){
-    console.log("www: " + data);
     let data = {
         user: pdata.username,
         sms_code: pdata.code,

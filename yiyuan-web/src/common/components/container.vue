@@ -35,10 +35,12 @@
       </el-header>
       <el-container class="container">
         <el-aside width="260px" v-if="accountType=='manager'">
+          <!-- 组件值发生变化 -->
           <enterpriseList @on-change="getCurrentId"></enterpriseList>
         </el-aside>
         <el-main>
-          <router-view :cueerntId="cueerntId"></router-view>
+          <!-- 通过路由传值 -->
+          <router-view :cueerntId="cueerntId" :companyId="companyId"></router-view>
         </el-main>
       </el-container>
     </el-container>
@@ -60,7 +62,8 @@ export default {
       nickname: localStorage.getItem("nickname"),
       account: require("../../common/images/account.png"),
       message: require("../../common/images/message.png"),
-      cueerntId: null
+      cueerntId: null,
+      companyId: null,
     };
   },
 
@@ -74,8 +77,16 @@ export default {
       }
     },
 
-    getCurrentId(id) {
-      this.cueerntId = id;
+    /**
+     * 传参调用方法
+     */
+    getCurrentId(val) {
+      if("A" === val.substring(0,1)){
+        this.cueerntId = val.substring(2,val.length);
+      }else{
+        this.companyId = val.substring(2,val.length);
+      }
+      console.log(val.substring(2,val.length));   
     },
 
     /**
@@ -94,25 +105,25 @@ export default {
     logout() {
       console.log("logout...");
       this.$confirm("您确定要退出登录吗?", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        })
-        .then(() => {
-          // 清除缓存
-          localStorage.clear();
-          this.$router.push("/");
-          this.$message({
-            type: "success",
-            message: "操作成功!"
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消"
-          });
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+      .then(() => {
+        // 清除缓存
+        localStorage.clear();
+        this.$router.push("/");
+        this.$message({
+          type: "success",
+          message: "操作成功!"
         });
+      })
+      .catch(() => {
+        this.$message({
+          type: "info",
+          message: "已取消"
+        });
+      });
     }
   },
 

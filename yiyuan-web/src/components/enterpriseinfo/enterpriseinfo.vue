@@ -12,7 +12,7 @@
         <el-button size="small" class="search-btn" icon="el-icon-search"></el-button>
       </div>
     </div>
-    <router-view></router-view>
+    <router-view :companyId="companyId"></router-view>
   </div>
 </template>
 <script>
@@ -47,7 +47,13 @@ export default {
       ]
     }
   },
-
+  props: {
+    // 获取值
+    companyId: {
+      type: String,
+      default: null
+    }
+  },
   computed: {
     routeFun() {
       let routeName = this.$route.name;

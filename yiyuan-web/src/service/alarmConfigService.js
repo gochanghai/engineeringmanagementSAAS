@@ -43,6 +43,33 @@ export let list = function (callback){
         return typeof callback == 'function' && callback(result);
     })
 }
+export let listByCompanyId = function (id, callback){
+    console.log("www: 获取警告配置列表数据");
+    let data = {
+        user: username,
+        form: tbl_alarmconfig,
+        action: "get",
+        fields: tbl_alarmconfig_fields,
+        condition: [{
+            field: "groupid",
+            symbol: "=",
+            value: id           
+        }],
+        order: "objectid desc"
+    };
+    httpServer.request('form', data, res => {
+        console.log(res.data);
+        let result = {
+            list: [],
+            code: res.data.code
+        };
+        if(1 === res.data.code){
+            result.list = res.data.datalist.alarm_config;
+            return typeof callback == 'function' && callback(result);
+        }
+        return typeof callback == 'function' && callback(result);
+    })
+}
 
 /**
  * 获取一个警告配置

@@ -7,7 +7,7 @@
       </router-link>
     </div>
     <div class="main">
-      <router-view></router-view>
+      <router-view :companyId="companyId"></router-view>
     </div>
   </div>
 </template>
@@ -30,7 +30,13 @@ export default {
       }]
     }
   },
-
+  props: {
+    // 获取值
+    companyId: {
+      type: String,
+      default: null
+    }
+  },
   methods: {}
 }
 

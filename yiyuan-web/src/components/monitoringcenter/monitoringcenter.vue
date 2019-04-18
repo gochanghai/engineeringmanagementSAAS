@@ -71,15 +71,18 @@ export default {
   },
 
   props: {
+    // 获取值
     cueerntId: {
-      type: Number,
+      type: String,
       default: null
     }
   },
 
   watch: {
     cueerntId(val) {
+      console.log("val");
       console.log(val);
+      this.getAreaist(val);
     }
   },
 
@@ -92,7 +95,7 @@ export default {
       _this.initAMap();
       _this.optionsWidth = 'calc(100% - 780px)';
     }, 1000);
-    this.getAreaist();
+    this.getAreaist(localStorage.getItem("areaid"));
   },
   methods: {
     /**
@@ -150,8 +153,8 @@ export default {
     /**
      * 获取省份信息
      */
-    getAreaist() {
-      areaService.getChildAreasList(localStorage.getItem("areaid"), res => {
+    getAreaist(areaid) {
+      areaService.getChildAreasList(areaid, res => {
         console.log(res)
         // if(-1 === res.code){
         //   this.$router.go(0);

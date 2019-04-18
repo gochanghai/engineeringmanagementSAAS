@@ -48,20 +48,31 @@ export default {
     }
   },
   created() {
-    this.getListData();
+    this.getListData(this.companyId);
+  },
+  props: {
+    // 获取值
+    companyId: {
+      type: String,
+      default: null
+    }
+  },
+  watch: {
+    companyId(val) {
+      this.getListData(val);
+    }    
   },
   methods: {
     useredit() {
 
     },
 
-
     /**
      * 获取应急管理列表数据
      */
-    getListData() {
+    getListData(id) {
       let _this = this;
-      emergencyManagementService.list(res => {
+      emergencyManagementService.listBycompanyId(id,res => {
         console.log(res);
         _this.emergencyList = res.list;
         _this.pageTotal = res.list.length;

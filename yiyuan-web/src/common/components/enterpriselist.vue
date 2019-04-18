@@ -7,7 +7,7 @@
 const areaService = require('../../service/areaService.js');
 export default {
   data() {
-    return {
+    return {      
       data: [{
         label: '广东省',
         children: [{
@@ -72,11 +72,14 @@ export default {
 
   methods: {
     handleNodeClick(data) {
-      this.$emit('on-change', data.id);
+      
       if ("企业" === data.type) {
         // localStorage.setItem("groupid", data.id);
-        localStorage.setItem("groupid", data.groupid);
-        this.$router.go(0);
+        // localStorage.setItem("groupid", data.groupid);
+        // this.$router.go(0);
+        this.$emit('on-change', "C-" + data.id);
+      }else{
+        this.$emit('on-change', "A-" + data.id);
       }
     },
 
@@ -88,8 +91,14 @@ export default {
         console.log(res);
         if (-1 === res.code) {
           this.$router.go(0);
-        }
+        }        
         this.areas = res.list;
+        for(let item of res.list){
+          if(item.type === "政府"){
+            this.$emit('on-change', "A-" + item.id);
+            return;
+          }
+        }
       });
     },
   }

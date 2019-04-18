@@ -43,6 +43,33 @@ export let list = function (callback){
         return typeof callback == 'function' && callback(result);
     })
 }
+export let listByCompanyId = function (id,callback){
+    console.log("www: 获取器材设备列表数据");
+    let data = {
+        user: username,
+        form: tbl_equipment,
+        action: "get",
+        fields: tbl_equipment_fields,
+        condition: [{
+            field: "groupid",
+            symbol: "=",
+            value: id           
+        }],
+        order: "objectid desc"
+    };
+    httpServer.request('form', data, res => {
+        console.log(res.data);
+        let result = {
+            list: [],
+            code: res.data.code
+        };
+        if(1 === res.data.code){
+            result.list = res.data.datalist.equipment;
+            return typeof callback == 'function' && callback(result);
+        }
+        return typeof callback == 'function' && callback(result);
+    })
+}
 
 /**
  * 获取一个器材设备的信息

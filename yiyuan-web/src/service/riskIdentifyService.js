@@ -46,6 +46,38 @@ export let list = function (type,callback){
         return typeof callback == 'function' && callback(result)
     })
 }
+export let listByCompanyIdAndType = function (id,type,callback){
+    console.log("www: ");
+    let data = {
+        user: username,
+        form: table,
+        action: "get",
+        fields: tableFileds,
+        condition: [{
+            field: "groupid",
+            symbol: "=",
+            value: id
+        },{
+            field: "type",
+            symbol: "=",
+            value: type
+        }],
+        order: "objectid desc"
+    };
+    console.log(data);
+    httpServer.request('form', data, res => {
+        console.log(res.data);
+        let result = {
+            list: [],
+            code: res.data.code
+        };
+        if(1 === res.data.code && null != res.data.datalist.risk_identify){
+            result.list = res.data.datalist.risk_identify;
+            return typeof callback == 'function' && callback(result)
+        }
+        return typeof callback == 'function' && callback(result)
+    })
+}
 
 /**
  * 获取一个风险的信息

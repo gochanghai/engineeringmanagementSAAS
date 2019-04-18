@@ -48,7 +48,19 @@ export default {
     }
   },
   created() {
-    this.getListData();
+    this.getListData(this.companyId);
+  },
+  props: {
+    // 获取值
+    companyId: {
+      type: String,
+      default: null
+    }
+  },
+  watch: {
+    companyId(val) {
+      this.getListData(val);
+    }    
   },
   methods: {
     useredit() {
@@ -58,9 +70,9 @@ export default {
     /**
      * 获取器材列表数据
      */
-    getListData() {
+    getListData(id) {
       let _this = this;
-      equipmentService.list(res => {
+      equipmentService.listByCompanyId(id, res => {
         console.log(res);
         if (1 == res.code) {
           _this.materialList = res.list;
