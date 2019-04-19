@@ -14,10 +14,10 @@
           <el-input v-model="userForm.duty" clearable placeholder="总经理/主任/安全员"></el-input>
         </el-form-item>
         <el-form-item label="身份证" prop="idcard">
-          <el-input v-model="userForm.idcard" clearable placeholder="请输入"></el-input>
+          <el-input v-model="userForm.idcard" clearable :disabled="this.updateId != null" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="手机号" prop="cellphone">
-          <el-input v-model="userForm.cellphone" clearable placeholder="请输入"></el-input>
+          <el-input v-model="userForm.cellphone" clearable :disabled="this.updateId != null" placeholder="请输入"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -32,6 +32,9 @@ const workerService = require('../../../service/workerService.js');
 export default {
   data() {
     var checkidcard = (rule, value, callback) => {
+      if(this.updateId != null){
+        callback();
+      }
       if (value === null) {
         callback(new Error('身份证号不能为空'));
       } else {
@@ -51,6 +54,9 @@ export default {
       }
     };
     var checkPhone = (rule, value, callback) => {
+      if(this.updateId != null){
+        callback();
+      }
       if (value === null) {
         callback(new Error('联系方式不能为空'));
       } else {
@@ -135,6 +141,11 @@ export default {
         this.resetForm();
       }
       console.log("useree");
+    },
+    title: function(value){
+      if(value === "修改企业人员名单"){
+        this.isEdit = true;
+      }
     }
   },
   methods: {

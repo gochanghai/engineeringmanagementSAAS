@@ -32,10 +32,10 @@
             <el-button size="small" class="search-btn" icon="el-icon-search"></el-button>
           </div>
           <div class="operation">
-            <!-- <el-upload :action="uploadAction" :data="uploadFileData" :show-file-list="false" :on-success="uploadRes" :before-upload="beforeUpload">
+            <el-upload :action="uploadAction" :data="uploadFileData" :show-file-list="false" :on-success="uploadRes" :before-upload="beforeUpload">
               <el-button type="text" icon="el-icon-upload">上传</el-button>
-            </el-upload> -->
-            <el-button type="text" icon="el-icon-upload" @click="isVisible=true">上传</el-button>
+            </el-upload>
+            <!-- <el-button type="text" icon="el-icon-upload" @click="isVisible=true">上传</el-button> -->
             <el-button type="text" icon="el-icon-delete">删除</el-button>
           </div>
         </div>
@@ -138,7 +138,6 @@ export default {
       securitytrainingService.listAreaDataByTypeAndArea(area, type, res => {
         console.log(res);
         _this.fileList = res.list;
-        // _this.pageTotal = res.list.length;
         _this.closeLoading();
       });
     },
@@ -215,7 +214,6 @@ export default {
         lock: true,
         text: '正在加载中...',
         spinner: 'el-icon-loading',
-        // fullscreen: false,
         background: 'rgba(0, 0, 0, 0.7)'
       });      
     },

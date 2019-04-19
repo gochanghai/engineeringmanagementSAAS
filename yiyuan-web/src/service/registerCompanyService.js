@@ -150,7 +150,7 @@ export let registration = function (company, callback){
             cellphone: company.phone,
             account: company.phone,
             nickname: "Yy_" + company.phone,
-            password: company.password,
+            password: md5Util.hexMD5(company.password),
         }]
     }
 

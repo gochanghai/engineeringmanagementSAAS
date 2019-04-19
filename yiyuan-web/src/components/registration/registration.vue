@@ -386,11 +386,11 @@ export default {
   created() {
     let _this = this;
     registerCompanyService.registBerfor(res => {
-      console.log(res);
-      _this.createCode(6);
+      console.log(res);      
     });
     setTimeout(function() {
       _this.getAddressList1();
+      _this.createCode(6);
     }, 1000);
   },
 
@@ -400,11 +400,6 @@ export default {
       this.form.address3 = "";
       this.form.address4 = "";
       let fid = null;
-      // for(let item of this.addressList1){
-      //   if(item.region_name == value){
-      //     fid = item.id;
-      //   }
-      // }
       this.getAddressList2(value);
       this.addressList3 = [];
       this.addressList4 = [];
@@ -414,11 +409,6 @@ export default {
       this.form.address3 = "";
       this.form.address4 = "";
       let fid = null;
-      // for(let item of this.addressList1){
-      //   if(item.id == value){
-      //     fid = item.id;
-      //   }
-      // }
       this.getAddressList3(value);
       this.setAreaId();
     },
@@ -588,9 +578,6 @@ export default {
     save() {
       let _this = this;
       this.$refs["form"].validate(valid1 => {
-        // if (!valid) {
-        //   return;
-        // }
         this.$refs["form2"].validate(valid2 => {
           if (!valid1 && !valid2) {
             return;
@@ -603,7 +590,7 @@ export default {
           // 保存数据
           registerCompanyService.registration(company, res => {
             console.log(res);
-            this.$message.success("数据保存成功");
+            this.$message.success("注册成功");
             setTimeout(function() {
               _this.$refs["form"].resetFields();
               _this.$refs["form2"].resetFields();
@@ -613,19 +600,6 @@ export default {
           console.log(company);
         });
       });
-
-      // if(this.form2.checkCode != this.code || '' == this.form2.checkCode){
-      //   console.log("code");
-      //   if('' == this.form.checkCode){
-      //     this.$message.error("验证码不能为空");
-      //   }else{
-      //     this.$message.error("验证码错误");
-      //   }
-      //   return ;
-      // }else{
-
-      //   //
-      // }
     },
     /**
      * 返回登录
