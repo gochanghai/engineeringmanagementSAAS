@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: spring-boot-plus
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  jackson:
+    date-format: yyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  banner:
+    charset: UTF-8
+#    location: classpath:banner.txt
