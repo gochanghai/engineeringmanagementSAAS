@@ -20,6 +20,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.gochanghai.shirojwt2.cache.LoginRedisService;
 import com.gochanghai.shirojwt2.constant.CommonConstant;
 import com.gochanghai.shirojwt2.constant.CommonRedisKey;
+import com.gochanghai.shirojwt2.convert.SysUserConvert;
 import com.gochanghai.shirojwt2.dto.LoginDTO;
 import com.gochanghai.shirojwt2.entity.SysDepartment;
 import com.gochanghai.shirojwt2.entity.SysRole;
@@ -123,8 +124,7 @@ public class LoginServiceImpl implements LoginService {
         }
 
         // 将系统用户对象转换成登陆用户对象
-//        LoginSysUserVo loginSysUserVo = SysUserConvert.INSTANCE.sysUserToLoginSysUserVo(sysUser);
-        LoginSysUserVo loginSysUserVo = new LoginSysUserVo();
+        LoginSysUserVo loginSysUserVo = SysUserConvert.INSTANCE.sysUserToLoginSysUserVo(sysUser);
         BeanUtils.copyProperties(sysUser,loginSysUserVo);
 
         // 获取部门
