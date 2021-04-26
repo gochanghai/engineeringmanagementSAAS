@@ -31,7 +31,7 @@
         <reflections.version>0.9.11</reflections.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-codec.version>1.13</commons-codec.version>
-        <commons-io.version>2.6</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <ini4j.version>0.5.4</ini4j.version>
     </properties>
 
